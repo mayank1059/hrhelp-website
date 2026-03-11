@@ -1,0 +1,402 @@
+---
+import Layout from '../components/Layout.astro';
+
+const channels = [
+  { icon: 'mail', title: 'Email Us', value: 'info@hrhelp.nl', href: 'mailto:info@hrhelp.nl', desc: 'For general inquiries, partnerships, and project proposals.' },
+  { icon: 'phone_in_talk', title: 'Call Us', value: '+31 85 760 8188', href: 'tel:+31857608188', desc: 'Direct line for urgent HR consultation and immediate support.' },
+  { icon: 'schedule', title: 'Business Hours', value: 'Mon – Fri, 08:30 – 18:00', href: null, desc: 'Central European Time (CET). We respond within 24 hours.' },
+];
+
+const faqs = [
+  { q: 'How quickly can you start supporting our company?', a: 'For urgent needs, we arrange an initial consultation within 24 hours. Full project onboarding typically begins within 5 business days, depending on scope.' },
+  { q: 'Do you support companies outside the Netherlands?', a: 'Yes. While we specialize in Dutch employment law, our network of partners covers the EU and UK for cross-border employment matters, expat onboarding, and 30% ruling applications.' },
+  { q: 'What does a typical engagement look like?', a: 'We offer retainer-based advisory for ongoing support, and fixed-price projects for specific needs like restructuring, compliance audits, or recruitment campaigns. Every engagement starts with a free consultation.' },
+  { q: 'Are you a traditional HR consultancy?', a: 'No. We are a network organization — a boutique firm that collaborates with specialized partners to deliver best-in-class expertise across every HR discipline, from legal to payroll to talent strategy.' },
+];
+
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact HRHelp.nl",
+  "description": "Get in touch with HRHelp.nl for specialized HR support in the Netherlands.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "HRHelp.nl",
+    "telephone": "+31-85-760-8188",
+    "email": "info@hrhelp.nl",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Televisieweg 2",
+      "addressLocality": "Almere",
+      "postalCode": "1322 AC",
+      "addressCountry": "NL"
+    }
+  }
+};
+---
+
+<Layout title="Contact Us" description="Get in touch with HRHelp.nl — specialized HR support for international companies in the Netherlands. Free consultation, Almere office." schema={contactSchema}>
+
+<!-- ===== HERO ===== -->
+<section class="ct2-hero">
+  <div class="ct2-hero-mesh"></div>
+  <div class="container-wide ct2-hero-inner">
+    <div class="ct2-hero-content" data-animate="fade-up">
+      <span class="eyebrow-badge">Get In Touch</span>
+      <h1>Let's Build Your <br/><span class="text-orange">HR Strategy</span></h1>
+      <p class="ct2-hero-p">Whether you're entering the Dutch market, restructuring your team, or need expert compliance guidance — our senior consultants are ready to help.</p>
+      
+      <div class="ct2-hero-actions">
+        <a href="#contact-form" class="btn btn-primary btn-lg" style="box-shadow:none;">Book Free Consultation</a>
+        <a href="tel:+31857608188" class="btn btn-secondary btn-lg">
+          <span class="material-symbols-outlined" style="font-size:20px;">call</span>
+          +31 85 760 8188
+        </a>
+      </div>
+
+      <div class="ct2-hero-stats">
+        <div class="ct2-hero-stat">
+          <span class="ct2-stat-val">24h</span>
+          <span class="ct2-stat-lbl">Response Time</span>
+        </div>
+        <div class="ct2-hero-stat">
+          <span class="ct2-stat-val">Free</span>
+          <span class="ct2-stat-lbl">Initial Consult</span>
+        </div>
+        <div class="ct2-hero-stat">
+          <span class="ct2-stat-val">100%</span>
+          <span class="ct2-stat-lbl">Confidential</span>
+        </div>
+        <div class="ct2-hero-stat">
+          <span class="ct2-stat-val">NL</span>
+          <span class="ct2-stat-lbl">Native Experts</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ct2-hero-visual" data-animate="fade-left">
+      <div class="ct2-hero-img-card">
+        <img src="/images/founder/team-collaboration.jpg" alt="HRHelp.nl team consulting" />
+        <div class="ct2-img-label">
+          <span class="material-symbols-outlined">support_agent</span>
+          <span>Senior HR Consultants</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT CHANNELS ===== -->
+<section class="ct2-channels">
+  <div class="container">
+    <div class="ct2-channels-grid">
+      {channels.map((ch) => (
+        <div class="ct2-channel-card">
+          <div class="ct2-channel-icon">
+            <span class="material-symbols-outlined">{ch.icon}</span>
+          </div>
+          <h3>{ch.title}</h3>
+          <p class="ct2-channel-desc">{ch.desc}</p>
+          {ch.href ? (
+            <a href={ch.href} class="ct2-channel-value">{ch.value}</a>
+          ) : (
+            <span class="ct2-channel-value">{ch.value}</span>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT FORM + INFO ===== -->
+<section class="ct2-form-section" id="contact-form">
+  <div class="container">
+    <div class="ct2-form-layout">
+      <!-- Left: Info -->
+      <div class="ct2-form-info">
+        <h2>Send Us a Message</h2>
+        <p>Tell us about your situation and we'll connect you with the right expert from our network. Every inquiry starts with a free consultation.</p>
+
+        <div class="ct2-info-block">
+          <div class="ct2-info-item">
+            <span class="material-symbols-outlined">location_on</span>
+            <div>
+              <strong>Oeverwalweg 3</strong>
+              <p>1332 CG, Almere, Netherlands</p>
+            </div>
+          </div>
+          <div class="ct2-info-item">
+            <span class="material-symbols-outlined">mail</span>
+            <div>
+              <strong>info@hrhelp.nl</strong>
+              <p>We respond within 24 hours</p>
+            </div>
+          </div>
+          <div class="ct2-info-item">
+            <span class="material-symbols-outlined">phone_in_talk</span>
+            <div>
+              <strong>+31 85 760 8188</strong>
+              <p>Mon – Fri, 08:30 – 18:00 CET</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct2-promise">
+          <span class="material-symbols-outlined">verified</span>
+          <div>
+            <strong>Our Promise</strong>
+            <p>100% confidential. No spam. Direct access to senior consultants.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="ct2-form-card">
+        <form>
+          <div class="ct2-form-row">
+            <div class="ct2-form-group">
+              <label>Full Name *</label>
+              <input type="text" placeholder="Your name" required />
+            </div>
+            <div class="ct2-form-group">
+              <label>Company</label>
+              <input type="text" placeholder="Your company" />
+            </div>
+          </div>
+          <div class="ct2-form-row">
+            <div class="ct2-form-group">
+              <label>Email *</label>
+              <input type="email" placeholder="your@email.com" required />
+            </div>
+            <div class="ct2-form-group">
+              <label>Phone</label>
+              <input type="tel" placeholder="+31 ..." />
+            </div>
+          </div>
+          <div class="ct2-form-group">
+            <label>What can we help you with?</label>
+            <div class="ct2-select-wrap">
+              <select>
+                <option>Select a topic...</option>
+                <option>HR Compliance & Employment Law</option>
+                <option>Recruitment & Talent Strategy</option>
+                <option>Payroll & Benefits</option>
+                <option>Restructuring & Change Management</option>
+                <option>Expat Services & 30% Ruling</option>
+                <option>General Inquiry</option>
+              </select>
+              <span class="material-symbols-outlined ct2-select-arrow">expand_more</span>
+            </div>
+          </div>
+          <div class="ct2-form-group">
+            <label>Your Message</label>
+            <textarea placeholder="Tell us about your situation..." rows="5"></textarea>
+          </div>
+          <div class="ct2-form-footer">
+            <div class="ct2-form-check">
+              <input type="checkbox" id="privacy" />
+              <label for="privacy">I agree to the <a href="#">Privacy Policy</a></label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="box-shadow: none; width: 100%;">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="ct2-faq">
+  <div class="container" style="max-width: 800px;">
+    <div class="ct2-section-header">
+      <h2>Frequently Asked Questions</h2>
+      <p>Quick answers to common questions about working with us.</p>
+    </div>
+    <div class="ct2-faq-list">
+      {faqs.map((faq) => (
+        <details class="ct2-faq-item">
+          <summary>
+            <span>{faq.q}</span>
+            <span class="material-symbols-outlined ct2-faq-arrow">expand_more</span>
+          </summary>
+          <p>{faq.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.ct2-hero {
+  padding: 10rem 0 6rem;
+  background: var(--navy);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.ct2-hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(244,121,32,0.15), transparent 40%),
+              radial-gradient(circle at 10% 80%, rgba(255,255,255,0.05), transparent 40%);
+  z-index: 1;
+}
+.ct2-hero-inner {
+  display: flex; gap: 5rem; align-items: center; position: relative; z-index: 2;
+}
+.ct2-hero-content { flex: 1; }
+.ct2-hero-content h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
+.ct2-hero-p { font-size: 1.2rem; line-height: 1.7; color: rgba(255,255,255,0.85); max-width: 540px; }
+
+.ct2-hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem;
+}
+
+.ct2-hero-stats {
+  display: flex; gap: 3rem; margin-top: 3.5rem; padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.ct2-stat-val { display: block; font-size: 2rem; font-weight: 800; color: var(--orange); line-height: 1; }
+.ct2-stat-lbl { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-top: 0.5rem; display: block; }
+
+.ct2-hero-visual { flex: 0 0 500px; }
+.ct2-hero-img-card {
+  position: relative; border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+}
+.ct2-hero-img-card img { width: 100%; height: 500px; object-fit: cover; display: block; }
+.ct2-img-label {
+  position: absolute; bottom: 1.5rem; left: 1.5rem;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+  padding: 0.75rem 1.25rem; border-radius: var(--radius-md);
+  display: flex; align-items: center; gap: 0.75rem; color: var(--navy); font-weight: 700; font-size: 0.9rem;
+}
+.ct2-img-label span:first-child { color: var(--orange); }
+
+/* ===== CHANNELS ===== */
+.ct2-channels { padding: 6rem 0; background: white; border-bottom: 1px solid var(--gray-200); }
+.ct2-channels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.ct2-channel-card {
+  padding: 2.5rem; border-radius: var(--radius-lg); background: var(--cream);
+  border: 1px solid var(--gray-200); transition: all 0.3s ease;
+}
+.ct2-channel-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+.ct2-channel-icon {
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  background: rgba(244,121,32,0.1); color: var(--orange);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+}
+.ct2-channel-icon .material-symbols-outlined { font-size: 26px; }
+.ct2-channel-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--navy); }
+.ct2-channel-desc { font-size: 0.9rem; line-height: 1.6; color: var(--gray-500); margin-bottom: 1.25rem; }
+.ct2-channel-value { color: var(--orange); font-weight: 700; font-size: 1rem; text-decoration: none; }
+a.ct2-channel-value:hover { text-decoration: underline; }
+
+/* ===== FORM SECTION ===== */
+.ct2-form-section { padding: 6rem 0; background: var(--cream); }
+.ct2-form-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem; align-items: flex-start; }
+
+.ct2-form-info h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+.ct2-form-info > p { font-size: 1.1rem; line-height: 1.7; color: var(--gray-600); margin-bottom: 2.5rem; }
+
+.ct2-info-block { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
+.ct2-info-item { display: flex; gap: 1rem; align-items: flex-start; }
+.ct2-info-item > span { color: var(--orange); margin-top: 2px; }
+.ct2-info-item strong { display: block; font-size: 1rem; color: var(--navy); }
+.ct2-info-item p { font-size: 0.88rem; color: var(--gray-500); margin: 0; }
+
+.ct2-promise {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1.5rem; background: rgba(244,121,32,0.06); border-radius: var(--radius-md);
+  border: 1px solid rgba(244,121,32,0.15);
+}
+.ct2-promise > span { color: var(--orange); font-size: 28px; flex-shrink: 0; }
+.ct2-promise strong { display: block; color: var(--navy); margin-bottom: 0.25rem; }
+.ct2-promise p { font-size: 0.9rem; color: var(--gray-600); margin: 0; }
+
+/* Form Card */
+.ct2-form-card {
+  background: white; padding: 2.5rem; border-radius: var(--radius-lg);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.08); border: 1px solid var(--gray-200);
+}
+.ct2-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+.ct2-form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+.ct2-form-row .ct2-form-group { margin-bottom: 0; }
+.ct2-form-group label {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--navy);
+}
+.ct2-form-group input,
+.ct2-form-group textarea,
+.ct2-form-group select {
+  width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm); background: var(--gray-50);
+  font-family: var(--font-body); font-size: 0.95rem; color: var(--gray-800);
+  outline: none; transition: border-color 0.2s ease;
+}
+.ct2-form-group input:focus,
+.ct2-form-group textarea:focus,
+.ct2-form-group select:focus {
+  border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,58,110,0.08);
+}
+.ct2-form-group textarea { resize: vertical; min-height: 120px; }
+.ct2-select-wrap { position: relative; }
+.ct2-select-wrap select { appearance: none; cursor: pointer; padding-right: 2.5rem; }
+.ct2-select-arrow {
+  position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%);
+  color: var(--gray-500); pointer-events: none; font-size: 22px;
+}
+.ct2-form-footer { margin-top: 0.5rem; }
+.ct2-form-check { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+.ct2-form-check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--navy); }
+.ct2-form-check label { font-size: 0.85rem; color: var(--gray-500); }
+.ct2-form-check a { text-decoration: underline; color: var(--navy); }
+
+/* ===== FAQ ===== */
+.ct2-faq { padding: 6rem 0; background: white; }
+.ct2-section-header { text-align: center; margin-bottom: 3rem; }
+.ct2-section-header p { color: var(--gray-500); margin-top: 0.5rem; }
+.ct2-faq-list { display: flex; flex-direction: column; gap: 1rem; }
+.ct2-faq-item {
+  background: var(--cream); border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); overflow: hidden;
+}
+.ct2-faq-item summary {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.25rem 1.5rem; cursor: pointer; font-weight: 700;
+  font-size: 1.05rem; color: var(--navy); list-style: none;
+}
+.ct2-faq-item summary::-webkit-details-marker { display: none; }
+.ct2-faq-arrow { transition: transform 0.2s ease; color: var(--gray-400); }
+.ct2-faq-item[open] .ct2-faq-arrow { transform: rotate(180deg); }
+.ct2-faq-item p { padding: 0 1.5rem 1.25rem; font-size: 0.95rem; line-height: 1.7; color: var(--gray-600); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .ct2-hero-inner { gap: 3rem; }
+  .ct2-hero-visual { flex: 0 0 400px; }
+  .ct2-hero-content h1 { font-size: 3rem; }
+}
+
+@media (max-width: 992px) {
+  .ct2-hero { padding: 8rem 0 4rem; }
+  .ct2-hero-inner { flex-direction: column; text-align: center; }
+  .ct2-hero-visual { flex: none; width: 100%; max-width: 500px; }
+  .ct2-hero-p { margin: 0 auto; }
+  .ct2-hero-actions { justify-content: center; }
+  .ct2-hero-stats { justify-content: center; }
+  .ct2-hero-img-card img { height: 350px; }
+
+  .ct2-channels-grid { grid-template-columns: 1fr; }
+  .ct2-form-layout { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+@media (max-width: 576px) {
+  .ct2-hero-content h1 { font-size: 2.5rem; }
+  .ct2-hero-stats { flex-direction: column; gap: 1.5rem; }
+  .ct2-form-row { grid-template-columns: 1fr; }
+}
+
+</style>

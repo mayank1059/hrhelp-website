@@ -1,0 +1,563 @@
+---
+import Layout from '../../components/Layout.astro';
+
+const services = [
+  {
+    slug: 'hr-settlers',
+    name: 'HR Settlers',
+    tagline: 'Enter the Dutch market with confidence',
+    badge: 'Market Entry',
+    image: '/images/sections/sol-settlers.png',
+    description: 'Complete HR infrastructure for companies establishing their first presence in the Netherlands. From entity setup to your first hire.',
+    features: ['Entity & payroll setup', '30% ruling applications', 'Employment contracts', 'Visa & work permits', 'Compliance framework', 'First 90 days support'],
+    ideal: 'Companies opening their first Netherlands office or hiring their first Dutch employee.',
+    timeline: '2-6 weeks',
+    model: 'Project',
+  },
+  {
+    slug: 'hr-teams',
+    name: 'HR Teams',
+    tagline: 'Your outsourced HR department',
+    badge: 'Outsourced HR',
+    image: '/images/sections/sol-teams.png',
+    description: 'Full HR management with a dedicated HR manager for growing international businesses in the Netherlands.',
+    features: ['Dedicated HR Manager', 'Policy development', 'Employee lifecycle', 'Performance management', 'Strategic HR planning', 'Quarterly reviews'],
+    ideal: 'Growing companies with 5-50+ employees who need ongoing HR support without a full in-house team.',
+    timeline: 'Ongoing',
+    model: 'Retainer',
+  },
+  {
+    slug: 'hr-reset',
+    name: 'HR Reset',
+    tagline: 'Modernize your existing HR',
+    badge: 'Transformation',
+    image: '/images/sections/sol-reset.png',
+    description: 'HR audit and transformation for established companies with compliance gaps or legacy processes holding them back.',
+    features: ['Full HR compliance audit', 'Contract modernization', 'Process optimization', 'Restructuring support', 'Policy overhaul', 'Change management'],
+    ideal: 'Established companies with outdated HR policies, compliance concerns, or undergoing organizational change.',
+    timeline: '4-12 weeks',
+    model: 'Project',
+  },
+  {
+    slug: 'hr-sos',
+    name: 'HR S.O.S.',
+    tagline: 'Urgent HR crisis support',
+    badge: 'Urgent Support',
+    badgeClass: 'sol2-badge-red',
+    image: '/images/sections/sol-sos.png',
+    description: 'Rapid-response support for urgent HR situations — dismissals, workplace conflicts, legal disputes.',
+    features: ['Same-day response', 'Dismissal procedures', 'Settlement agreements', 'Conflict resolution', 'Legal liaison', 'UWV procedures'],
+    ideal: 'Any company facing an urgent HR crisis that requires immediate expert guidance.',
+    timeline: 'Immediate',
+    model: 'On-demand',
+  }
+];
+---
+
+<Layout title="Solutions" description="Expert HR solutions for every stage of your Netherlands journey. From market entry to full HR outsourcing.">
+
+<!-- ===== HERO ===== -->
+<section class="sol2-hero">
+  <div class="sol2-hero-mesh"></div>
+  <div class="container-wide sol2-hero-inner">
+    <div class="sol2-hero-text" data-animate="fade-up">
+      <span class="eyebrow-badge" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);">
+        <span class="sol2-dot"></span> Our Solutions
+      </span>
+      <h1>HR Solutions Built for<br/><span class="sol2-gradient-text">Every Business Stage</span></h1>
+      <p>From your first Dutch hire to full organizational transformation — we have the right HR solution for every chapter of your Netherlands journey.</p>
+      <div class="sol2-hero-btns">
+        <a href="/contact" class="btn btn-primary btn-lg">Book Free Consultation →</a>
+        <a href="#solutions" class="btn btn-ghost btn-lg">View Solutions</a>
+      </div>
+      <div class="sol2-hero-trust">
+        <div class="sol2-trust-item">
+          <span class="sol2-trust-value">75+</span>
+          <span class="sol2-trust-label">Clients Served</span>
+        </div>
+        <div class="sol2-trust-divider"></div>
+        <div class="sol2-trust-item">
+          <span class="sol2-trust-value">98%</span>
+          <span class="sol2-trust-label">Client Retention</span>
+        </div>
+        <div class="sol2-trust-divider"></div>
+        <div class="sol2-trust-item">
+          <span class="sol2-trust-value">25+</span>
+          <span class="sol2-trust-label">Years in NL</span>
+        </div>
+      </div>
+    </div>
+    <div class="sol2-hero-visual" data-animate="fade-left">
+      <div class="sol2-hero-image">
+        <img src="/images/dutch-business.jpg" alt="HR solutions for businesses in the Netherlands" />
+        <div class="sol2-hero-image-overlay"></div>
+      </div>
+      <!-- Floating accent -->
+      <div class="sol2-float-card sol2-float-compliant">
+        <span class="material-symbols-outlined" style="font-size:20px; color: #22c55e;">verified</span>
+        <div>
+          <span class="sol2-float-value">100%</span>
+          <span class="sol2-float-label">NL Compliant</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOLUTIONS SHOWCASE ===== -->
+<section class="sol2-showcase section-white" id="solutions">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow">Our Solutions</span>
+      <h2>Choose Your Path Forward</h2>
+      <p>Four specialized solutions designed for different stages and challenges of operating in the Netherlands.</p>
+    </div>
+
+    <div class="sol2-cards">
+      {services.map((service, i) => (
+        <a href={`/solutions/${service.slug}`} class="sol2-card" data-animate="fade-up" data-delay={i * 100}>
+          <div class="sol2-card-illus">
+            <img src={service.image} alt={service.name} />
+            <span class={`sol2-card-badge ${service.badgeClass || ''}`}>{service.badge}</span>
+          </div>
+          <div class="sol2-card-content">
+            <h3>{service.name}</h3>
+            <p class="sol2-card-tagline">{service.tagline}</p>
+            <p class="sol2-card-desc">{service.description}</p>
+            <ul class="sol2-card-features">
+              {service.features.map((f: string) => (
+                <li>
+                  <span class="material-symbols-outlined" style="font-size:14px; color: var(--orange);">check_circle</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <div class="sol2-card-meta">
+              <span class="sol2-meta-item">
+                <span class="material-symbols-outlined" style="font-size:16px;">schedule</span>
+                {service.timeline}
+              </span>
+              <span class="sol2-meta-item">
+                <span class="material-symbols-outlined" style="font-size:16px;">handshake</span>
+                {service.model}
+              </span>
+            </div>
+            <span class="sol2-card-link">Explore {service.name} →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPARISON TABLE ===== -->
+<section class="sol2-comparison section-cream">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow">Compare</span>
+      <h2>Which Solution Fits You?</h2>
+      <p>A quick comparison to help you decide.</p>
+    </div>
+    <div class="comp-table-wrap" data-animate="fade-up">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>HR Settlers</th>
+            <th>HR Teams</th>
+            <th>HR Reset</th>
+            <th>HR S.O.S.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Best for</td><td>Market entry</td><td>Ongoing HR</td><td>Transformation</td><td>Crises</td></tr>
+          <tr><td>Dedicated consultant</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Employment contracts</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td>—</td></tr>
+          <tr><td>Payroll setup</td><td class="check">✓</td><td class="check">✓</td><td>—</td><td>—</td></tr>
+          <tr><td>30% Ruling</td><td class="check">✓</td><td class="check">✓</td><td>—</td><td>—</td></tr>
+          <tr><td>HR policy development</td><td>Basic</td><td>Full</td><td>Full</td><td>—</td></tr>
+          <tr><td>Compliance audit</td><td>—</td><td>Annual</td><td class="check">✓</td><td>—</td></tr>
+          <tr><td>Dismissal support</td><td>—</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Same-day response</td><td>—</td><td>—</td><td>—</td><td class="check">✓</td></tr>
+          <tr><td>Engagement model</td><td>Project</td><td>Retainer</td><td>Project</td><td>On-demand</td></tr>
+          <tr><td>Timeline</td><td>2-6 weeks</td><td>Ongoing</td><td>4-12 weeks</td><td>Immediate</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="comp-cta" data-animate="fade-up">
+      <p>Not sure which fits? Let us help you decide.</p>
+      <a href="/contact" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section class="sol2-process section-white">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow">How It Works</span>
+      <h2>Getting Started is Simple</h2>
+    </div>
+    <div class="sol2-process-row">
+      <div class="sol2-process-step" data-animate="fade-up">
+        <div class="sol2-process-num">
+          <span class="material-symbols-outlined">call</span>
+        </div>
+        <h4>Free Discovery Call</h4>
+        <p>30-minute call to understand your situation and recommend the best solution.</p>
+      </div>
+      <div class="sol2-process-connector">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+      <div class="sol2-process-step" data-animate="fade-up" data-delay="150">
+        <div class="sol2-process-num">
+          <span class="material-symbols-outlined">description</span>
+        </div>
+        <h4>Custom Proposal</h4>
+        <p>Detailed scope, timeline, and fixed pricing within 48 hours. No surprises.</p>
+      </div>
+      <div class="sol2-process-connector">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+      <div class="sol2-process-step" data-animate="fade-up" data-delay="300">
+        <div class="sol2-process-num">
+          <span class="material-symbols-outlined">rocket_launch</span>
+        </div>
+        <h4>Start Immediately</h4>
+        <p>Your dedicated consultant begins work. Regular updates, full transparency.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="sol2-cta">
+  <div class="sol2-cta-bg">
+    <img src="/images/sections/story-teams.png" alt="" />
+  </div>
+  <div class="sol2-cta-overlay"></div>
+  <div class="container" style="position:relative; z-index:2; text-align:center;">
+    <h2 data-animate="fade-up">Ready to Take the Next Step?</h2>
+    <p data-animate="fade-up">Book a free 30-minute discovery call and let's find the right solution for your business.</p>
+    <div class="sol2-cta-actions" data-animate="fade-up">
+      <a href="/contact" class="btn btn-primary btn-lg">Book Free Consultation →</a>
+      <span class="sol2-cta-phone">Or call: <strong>+31 85 760 8188</strong></span>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.sol2-hero {
+  position: relative; overflow: hidden;
+  padding: 10rem 0 6rem;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+}
+.sol2-hero-mesh {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 50%, rgba(244,121,32,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 80% 20%, rgba(42,82,152,0.15) 0%, transparent 70%);
+  animation: meshShift 12s ease-in-out infinite alternate;
+}
+@keyframes meshShift {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+.sol2-hero-inner {
+  display: flex; align-items: center; gap: 5rem;
+  position: relative; z-index: 1;
+}
+.sol2-hero-text { flex: 1; }
+.sol2-hero-text h1 { color: white; margin-bottom: 1.5rem; font-size: clamp(2.4rem, 5vw, 3.6rem); }
+.sol2-hero-text p { color: rgba(255,255,255,0.7); font-size: 1.2rem; max-width: 540px; margin-bottom: 0; line-height: 1.8; }
+.sol2-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--orange); display: inline-block; margin-right: 2px;
+}
+.sol2-gradient-text {
+  background: linear-gradient(135deg, var(--orange), #ff9a4d);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.sol2-hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+
+/* Hero trust bar */
+.sol2-hero-trust {
+  display: flex; align-items: center; gap: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.sol2-trust-item { display: flex; flex-direction: column; }
+.sol2-trust-value { font-size: 1.5rem; font-weight: 900; color: var(--orange); line-height: 1; }
+.sol2-trust-label { font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.25rem; }
+.sol2-trust-divider { width: 1px; height: 32px; background: rgba(255,255,255,0.15); }
+
+/* Hero visual wrapper */
+.sol2-hero-visual {
+  flex: 0 0 500px; position: relative;
+}
+.sol2-hero-image {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+}
+.sol2-hero-image img {
+  width: 100%; height: 420px; object-fit: cover; display: block;
+  transition: transform 0.7s ease;
+}
+.sol2-hero-image:hover img { transform: scale(1.03); }
+.sol2-hero-image-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(255,255,255,0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Floating accent cards */
+.sol2-float-card {
+  position: absolute;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  z-index: 3;
+}
+.sol2-float-value {
+  font-size: 0.9rem; font-weight: 800; color: var(--navy); line-height: 1;
+  display: block;
+}
+.sol2-float-label {
+  font-size: 0.65rem; font-weight: 600; color: var(--gray-500);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  display: block;
+}
+.sol2-float-icon { font-size: 1.2rem; line-height: 1; }
+
+.sol2-float-compliant {
+  bottom: 24px; right: -20px;
+  animation: floatSlow 4s ease-in-out infinite;
+}
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ===== SOLUTIONS SHOWCASE ===== */
+.sol2-showcase { padding: var(--section-padding); }
+.sol2-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+
+.sol2-card {
+  display: flex; flex-direction: column;
+  text-decoration: none;
+  background: white;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.sol2-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(15,43,70,0.1);
+}
+
+.sol2-card-illus {
+  position: relative;
+  background: white;
+  display: flex; align-items: center; justify-content: center;
+  padding: 2.5rem 2rem;
+  min-height: 280px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.sol2-card-illus img {
+  max-width: 70%; max-height: 200px;
+  object-fit: contain;
+  transition: transform 0.6s ease;
+}
+.sol2-card:hover .sol2-card-illus img { transform: scale(1.05); }
+.sol2-card-badge {
+  position: absolute; top: 1rem; left: 1rem;
+  background: rgba(244,121,32,0.9); color: white;
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full); backdrop-filter: blur(4px);
+}
+.sol2-badge-red { background: rgba(220,38,38,0.9); }
+
+.sol2-card-content {
+  flex: 1; padding: 2.5rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.sol2-card-content h3 {
+  font-size: 1.8rem; font-weight: 800; color: var(--navy);
+  margin-bottom: 0.25rem;
+}
+.sol2-card-tagline {
+  font-size: 0.9rem; color: var(--orange); font-weight: 600;
+  margin-bottom: 1rem;
+}
+.sol2-card-desc {
+  font-size: 0.95rem; color: var(--gray-600); line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+.sol2-card-features {
+  list-style: none; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.4rem; margin-bottom: 1.25rem;
+}
+.sol2-card-features li {
+  font-size: 0.82rem; color: var(--gray-600);
+  display: flex; align-items: center; gap: 0.35rem;
+}
+.sol2-card-meta {
+  display: flex; gap: 1.5rem; margin-bottom: 1.25rem;
+}
+.sol2-meta-item {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.8rem; font-weight: 600; color: var(--navy);
+  background: var(--gray-50); padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-full);
+}
+.sol2-meta-item .material-symbols-outlined { color: var(--orange); }
+.sol2-card-link {
+  font-size: 0.9rem; font-weight: 700; color: var(--orange);
+  transition: gap 0.3s ease;
+}
+
+/* ===== COMPARISON TABLE ===== */
+.sol2-comparison { padding: var(--section-padding); }
+.comp-table-wrap {
+  overflow-x: auto; margin-bottom: 2.5rem;
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+}
+.comp-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.9rem; background: white;
+}
+.comp-table th, .comp-table td {
+  padding: 0.85rem 1.25rem; text-align: center;
+  border-bottom: 1px solid var(--gray-100);
+}
+.comp-table th:first-child, .comp-table td:first-child {
+  text-align: left; font-weight: 600; color: var(--navy); min-width: 180px;
+}
+.comp-table thead th {
+  background: var(--navy); color: white;
+  font-weight: 600; font-size: 0.85rem;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.comp-table thead th:first-child { border-radius: var(--radius-lg) 0 0 0; }
+.comp-table thead th:last-child { border-radius: 0 var(--radius-lg) 0 0; }
+.comp-table tbody tr:hover { background: rgba(244,121,32,0.03); }
+.comp-table .check { color: var(--orange); font-weight: 700; font-size: 1.1rem; }
+.comp-cta { text-align: center; }
+.comp-cta p { margin-bottom: 1rem; font-size: 1rem; }
+
+/* ===== PROCESS ===== */
+.sol2-process { padding: var(--section-padding); }
+.sol2-process-row {
+  display: flex; align-items: flex-start; justify-content: center;
+  gap: 1rem; max-width: 1000px; margin: 0 auto;
+}
+.sol2-process-step { text-align: center; flex: 1; max-width: 280px; }
+.sol2-process-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--orange); color: white;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+.sol2-process-num .material-symbols-outlined { font-size: 24px; }
+.sol2-process-step h4 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+.sol2-process-step p { font-size: 0.9rem; }
+.sol2-process-connector {
+  display: flex; align-items: center;
+  padding-top: 1.25rem; color: var(--gray-300);
+}
+
+/* ===== CTA ===== */
+.sol2-cta {
+  position: relative; overflow: hidden;
+  padding: 6rem 2rem;
+}
+.sol2-cta-bg {
+  position: absolute; inset: 0;
+}
+.sol2-cta-bg img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.sol2-cta-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(15,37,72,0.92) 0%, rgba(26,58,110,0.88) 100%);
+  z-index: 1;
+}
+.sol2-cta h2 { color: white; margin-bottom: 0.75rem; }
+.sol2-cta p { color: rgba(255,255,255,0.7); margin-bottom: 2rem; font-size: 1.1rem; }
+.sol2-cta-actions {
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+.sol2-cta-phone { font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+.sol2-cta-phone strong { color: white; }
+
+/* ===== SCROLL ANIMATIONS ===== */
+[data-animate] {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+[data-animate="fade-left"] { transform: translateX(30px); }
+[data-animate="fade-right"] { transform: translateX(-30px); }
+[data-animate].is-visible {
+  opacity: 1; transform: translate(0, 0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .sol2-hero-visual { flex: 0 0 420px; }
+  .sol2-hero-image img { height: 360px; }
+  .sol2-cards { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
+}
+
+@media (max-width: 768px) {
+  .sol2-hero { padding: 8.5rem 0 4rem; }
+  .sol2-hero-inner { flex-direction: column; gap: 2.5rem; }
+  .sol2-hero-text { text-align: center; }
+  .sol2-hero-text p { margin: 0 auto; }
+  .sol2-hero-btns { justify-content: center; }
+  .sol2-hero-trust { justify-content: center; }
+
+  .sol2-hero-visual { flex: none; width: 100%; }
+  .sol2-hero-image img { height: 280px; }
+  .sol2-float-card { display: none; }
+
+  .sol2-card, .sol2-card-reverse { flex-direction: column; }
+  .sol2-card-image { min-height: 220px; }
+  .sol2-card-content { padding: 1.5rem; }
+  .sol2-card-features { grid-template-columns: 1fr; }
+
+  .sol2-process-row { flex-direction: column; align-items: center; }
+  .sol2-process-connector { transform: rotate(90deg); padding-top: 0; }
+}
+</style>
+
+<script>
+  // Scroll animation observer
+  const animatedEls = document.querySelectorAll('[data-animate]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.getAttribute('data-delay');
+        if (delay) {
+          setTimeout(() => entry.target.classList.add('is-visible'), parseInt(delay));
+        } else {
+          entry.target.classList.add('is-visible');
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  animatedEls.forEach(el => observer.observe(el));
+</script>

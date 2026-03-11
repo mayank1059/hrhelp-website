@@ -1,0 +1,197 @@
+---
+import Layout from '../../components/Layout.astro';
+
+const partnerTypes = [
+  { icon: 'gavel', title: 'Legal & Compliance', desc: 'Boutique law firms specialized in Dutch labor law, collective bargaining, and international contract harmonization.' },
+  { icon: 'payments', title: 'Payroll & Benefits', desc: 'Expert providers managing complex payroll cycles, pension schemes, and 30% ruling administration.' },
+  { icon: 'person_search', title: 'Talent & Search', desc: 'Specialized recruiters and executive search partners focused on tech, finance, and industrial leadership.' },
+  { icon: 'memory', title: 'Tech & Tooling', desc: 'HRIS implementation specialists and software partners streamlining organizational efficiency.' },
+];
+
+const stats = [
+  { value: '15+', label: 'Trusted Partner Firms' },
+  { value: '100%', label: 'Dutch Compliance' },
+  { value: '6', label: 'Specialized Disciplines' },
+  { value: '24h', label: 'Partner Response Time' },
+];
+---
+
+<Layout title="Partners | Our Ecosystem" description="Discover the specialized partners that make up HRHelp.nl's network organization — delivering best-in-class HR expertise.">
+
+<!-- ===== HERO ===== -->
+<section class="pt-hero">
+  <div class="pt-hero-mesh"></div>
+  <div class="container-wide pt-hero-inner">
+    <div class="pt-hero-content">
+      <span class="eyebrow-badge">The Network Model</span>
+      <h1>A Powerful Ecosystem <br/><span class="pt-orange">of HR Specialists</span></h1>
+      <p class="pt-hero-p">We don't believe in "one size fits all." We curate the best specialists from across the Netherlands to serve your unique needs.</p>
+      <div class="pt-hero-stats">
+        {stats.map(stat => (
+          <div class="pt-hero-stat">
+            <span class="pt-stat-val">{stat.value}</span>
+            <span class="pt-stat-lbl">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="pt-hero-visual">
+      <img src="/images/founder/culture-montage.jpg" alt="Collaborative network partners at HRHelp.nl" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== BEST OF BOTH WORLDS ===== -->
+<section class="pt-intro">
+  <div class="container">
+    <div class="pt-intro-grid">
+      <div class="pt-intro-text">
+        <span class="eyebrow">Our Approach</span>
+        <h2>The Best of <span class="text-orange">Both Worlds</span></h2>
+        <p>By operating as a <strong>Network Organization</strong>, we offer our clients the agility and personal touch of a boutique firm, backed by the comprehensive expertise of a large enterprise.</p>
+        <p>Our partners are vetted specialists who share our values of transparency, high standards, and human-centric HR. Together, we deliver solutions that no single firm could offer alone.</p>
+      </div>
+      <div class="pt-intro-visual">
+        <img src="/images/founder/team-mentorship.jpg" alt="Team mentorship at HRHelp.nl" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARTNER DISCIPLINES ===== -->
+<section class="pt-disciplines section-cream">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Specialized Disciplines</span>
+      <h2>Expertise Through Deep Collaboration</h2>
+      <p>Category leaders in every field of HR and employment services.</p>
+    </div>
+    <div class="pt-disciplines-grid">
+      {partnerTypes.map(p => (
+        <div class="pt-discipline-card">
+          <div class="pt-disc-icon">
+            <span class="material-symbols-outlined">{p.icon}</span>
+          </div>
+          <h3>{p.title}</h3>
+          <p>{p.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="pt-cta-section">
+  <div class="container">
+    <div class="pt-cta-card">
+      <div class="pt-cta-inner">
+        <h2>Become a Network Partner</h2>
+        <p>Are you a boutique firm or independent specialist in HR, Law, or Benefits? We're always looking to expand our ecosystem of excellence.</p>
+        <a href="/contact" class="btn btn-primary btn-lg" style="box-shadow: none;">Inquire About Partnership</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.pt-hero {
+  padding: 10rem 0 6rem;
+  background: var(--navy);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.pt-hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(244,121,32,0.15), transparent 40%),
+              radial-gradient(circle at 10% 80%, rgba(255,255,255,0.05), transparent 40%);
+  z-index: 1;
+}
+.pt-hero-inner {
+  display: flex; gap: 5rem; align-items: center; position: relative; z-index: 2;
+}
+.pt-hero-content { flex: 1; }
+.pt-hero-content h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
+.pt-orange { color: var(--orange); }
+.pt-hero-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.8); max-width: 540px; }
+
+.pt-hero-stats {
+  display: flex; gap: 3rem; margin-top: 3.5rem; padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.pt-stat-val { display: block; font-size: 2rem; font-weight: 800; color: var(--orange); line-height: 1; }
+.pt-stat-lbl { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-top: 0.5rem; display: block; }
+
+.pt-hero-visual {
+  flex: 0 0 480px; border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+}
+.pt-hero-visual img { width: 100%; height: 440px; object-fit: cover; display: block; }
+
+/* ===== INTRO ===== */
+.pt-intro { padding: 8rem 0; }
+.pt-intro-grid {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center;
+}
+.pt-intro-text h2 { font-size: 2.5rem; margin: 0.75rem 0 1.5rem; }
+.pt-intro-text p { font-size: 1.1rem; line-height: 1.8; color: var(--gray-600); margin-bottom: 1.25rem; }
+.pt-intro-visual {
+  border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.12);
+}
+.pt-intro-visual img { width: 100%; height: 400px; object-fit: cover; display: block; }
+
+/* ===== DISCIPLINES ===== */
+.pt-disciplines { padding: 8rem 0; }
+.pt-disciplines-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+}
+.pt-discipline-card {
+  padding: 2.5rem; background: white; border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200); transition: all 0.3s ease;
+}
+.pt-discipline-card:hover { transform: translateY(-5px); border-color: var(--orange); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+.pt-disc-icon {
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  background: rgba(244,121,32,0.1); color: var(--orange);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+}
+.pt-discipline-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+.pt-discipline-card p { font-size: 0.95rem; line-height: 1.6; color: var(--gray-500); }
+
+/* ===== CTA ===== */
+.pt-cta-section { padding: 0 0 8rem; }
+.pt-cta-card {
+  background: var(--navy); padding: 5rem; border-radius: var(--radius-xl);
+  text-align: center; color: white;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+}
+.pt-cta-inner { max-width: 600px; margin: 0 auto; }
+.pt-cta-card h2 { font-size: 2.5rem; color: white; margin-bottom: 1rem; }
+.pt-cta-card p { color: rgba(255,255,255,0.7); font-size: 1.15rem; line-height: 1.7; margin-bottom: 2.5rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .pt-hero-inner { gap: 3rem; }
+  .pt-hero-visual { flex: 0 0 380px; }
+}
+@media (max-width: 992px) {
+  .pt-hero-inner { flex-direction: column; text-align: center; }
+  .pt-hero-visual { flex: none; width: 100%; max-width: 500px; }
+  .pt-hero-p { margin: 0 auto; }
+  .pt-hero-stats { justify-content: center; flex-wrap: wrap; gap: 2rem; }
+  .pt-intro-grid { grid-template-columns: 1fr; }
+  .pt-intro-visual { order: -1; }
+  .pt-disciplines-grid { grid-template-columns: repeat(2, 1fr); }
+  .pt-cta-card { padding: 3.5rem 2rem; }
+}
+@media (max-width: 576px) {
+  .pt-hero-content h1 { font-size: 2.5rem; }
+  .pt-disciplines-grid { grid-template-columns: 1fr; }
+  .pt-hero-visual img { height: 300px; }
+  .pt-hero-stats { flex-direction: column; gap: 1.5rem; }
+}
+</style>

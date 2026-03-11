@@ -1,0 +1,1890 @@
+---
+import Layout from '../../components/Layout.astro';
+
+// Icon SVG map for "What's Included" cards
+const iconSvg: Record<string, string> = {
+  domain: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>',
+  savings: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>',
+  description: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+  flight_takeoff: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>',
+  policy: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
+  support_agent: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>',
+  person: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  cycle: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>',
+  menu_book: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  trending_up: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+  groups: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  assessment: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+  plagiarism: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>',
+  edit_document: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
+  tune: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>',
+  account_tree: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 9v6c0 1.1.9 2 2 2h4"/><line x1="18" y1="9" x2="18" y2="15"/></svg>',
+  auto_stories: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  handshake: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17a4 4 0 0 0 8 0"/><path d="M5 17a4 4 0 0 1 8 0"/><path d="M5 7l3.5 3.5L12 7l3.5 3.5L19 7"/><path d="M2 12h2"/><path d="M20 12h2"/></svg>',
+  schedule: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  gavel: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2.5l5 5-7 7-5-5z"/><path d="M8.5 8.5L2 15l2 2 6.5-6.5"/><path d="M14 14l7 7"/><path d="M2 22l3-3"/></svg>',
+  psychology: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5.5 4 7.5L12 20l3-3.5c2-2 4-4.5 4-7.5a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2"/></svg>',
+  balance: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/><path d="M2 15l3-7 3 7"/><path d="M16 15l3-7 3 7"/><path d="M2 15h6"/><path d="M16 15h6"/></svg>',
+  apartment: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><line x1="8" y1="6" x2="8" y2="6.01"/><line x1="12" y1="6" x2="12" y2="6.01"/><line x1="16" y1="6" x2="16" y2="6.01"/><line x1="8" y1="10" x2="8" y2="10.01"/><line x1="12" y1="10" x2="12" y2="10.01"/><line x1="16" y1="10" x2="16" y2="10.01"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="16" y1="14" x2="16" y2="14.01"/></svg>',
+};
+
+const serviceData: Record<string, any> = {
+  'hr-settlers': {
+    name: 'HR Settlers',
+    tagline: 'Enter the Dutch market with confidence',
+    hero: 'Complete HR setup for companies establishing their first Netherlands presence. From entity registration to your first employee — we handle everything.',
+    heroImage: '/images/sections/dutch-office.png',
+    heroPhoto: '/images/hero/hero-settlers.png',
+    illustration: '/images/illus-settlers.png',
+    heroCards: {
+      tl: { icon: 'domain', label: 'Entity Setup', value: '2–4 Weeks' },
+      br: { icon: 'savings', label: '30% Ruling', value: 'Expert Filed' }
+    },
+    premiseHeading: 'The Dutch labor market is a labyrinth designed to protect, yet often confuses. We act as your guides through the fog.',
+    premiseBody: [
+      'Navigating local regulations requires more than translation; it requires cultural integration and legal foresight. Standard international contracts often crumble under the specific nuances of Dutch termination protection and Collective Labor Agreements (CAO).',
+      'Our bespoke settlement services bridge the gap between international ambition and local compliance. We don\'t just fix paperwork; we align your workforce strategy with the reality of the Dutch ecosystem.'
+    ],
+    included: [
+      { icon: 'domain', title: 'Entity & Payroll Registration', desc: 'B.V. setup, Dutch Tax Authority registration, and payroll provider onboarding.' },
+      { icon: 'savings', title: '30% Ruling Applications', desc: 'Expert filing of the 30% ruling for incoming expat employees to maximize tax benefits.' },
+      { icon: 'description', title: 'Employment Contracts', desc: 'Dutch-compliant contracts with non-compete, confidentiality, and stock option provisions.' },
+      { icon: 'flight_takeoff', title: 'Visa & Work Permits', desc: 'HSM visa applications, IND recognition, residence permits, and BSN registration.' },
+      { icon: 'policy', title: 'HR Policy Framework', desc: 'HR handbook, leave policies, expense policies, and sick leave procedures.' },
+      { icon: 'support_agent', title: 'First 90 Days Support', desc: 'Ongoing support during the critical first 90 days of your Dutch operation.' }
+    ],
+    friction: {
+      title: 'The Friction',
+      description: 'International contracts often fail to account for the nuances of Dutch termination protection and collective labor agreements, leading to costly friction.',
+      items: ['Misaligned Termination Clauses', 'Hidden CAO Requirements', 'Cultural Misunderstandings'],
+      image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80'
+    },
+    settlement: {
+      title: 'The Settlement',
+      description: 'We reconstruct your employment frameworks to be compliant by design, ensuring a seamless integration of your global talent into the local ecosystem.',
+      items: [
+        { title: 'Compliance Audit', desc: 'A full forensic review of existing contracts against current Dutch labor laws.' },
+        { title: 'Cultural Bridging', desc: 'Workshops to educate international management on Dutch employee expectations.' }
+      ],
+      image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80'
+    },
+    process: [
+      { step: '01', title: 'Deep-Dive Assessment', desc: 'We analyze your current setup, contracts, and regulatory risks.', week: 'Week 1', image: '/images/sections/illus-settlers-01.png' },
+      { step: '02', title: 'Strategic Framework', desc: 'We architect a bespoke solution, aligning HR policies with your business objectives.', week: 'Week 2–3', image: '/images/sections/illus-settlers-02.png' },
+      { step: '03', title: 'Implementation', desc: 'We build the contracts, set up tools, and onboard the team.', week: 'Week 4–6', image: '/images/sections/illus-settlers-03.png' },
+      { step: '04', title: 'Handover & Support', desc: 'Training your managers and providing ongoing advisory support.', week: 'Ongoing', image: '/images/sections/illus-settlers-04.png' }
+    ],
+    testimonial: {
+      quote: 'HRHelp.nl didn\'t just fix our contracts; they aligned our entire organizational culture with the local market.',
+      name: 'Elena V.',
+      role: 'Chief People Officer',
+      company: 'TechFirm BV'
+    },
+    pricingTiers: [
+      { name: 'Starter Setup', desc: 'Entity registration, first employee contract, basic compliance.', price: '€3,500', unit: 'one-time' },
+      { name: 'Full Settlement', desc: 'Complete setup including 30% ruling, visa, HR policies.', price: '€6,500', unit: 'one-time' },
+      { name: 'Premium Launch', desc: 'Everything plus 90-day support and quarterly reviews.', price: '€9,000', unit: 'one-time' }
+    ],
+    ideal: ['Companies opening their first Netherlands office', 'Foreign companies hiring their first Dutch employee', 'Startups relocating founders to the Netherlands', 'Companies needing 30% ruling expertise'],
+    faqs: [
+      { q: 'How quickly can you set up a Dutch entity?', a: 'Typically within 2-4 weeks. We handle the notary, KvK registration, and tax authority enrollment in parallel to save time.' },
+      { q: 'Do you handle the 30% ruling application?', a: 'Yes, it\'s one of our specialties. We handle the full application process and monitor renewals.' },
+      { q: 'Can you support employees that are already in the Netherlands?', a: 'Absolutely. We can onboard existing employees, review their contracts, and ensure full compliance retroactively.' }
+    ],
+    relatedServices: ['hr-teams', 'hr-sos'],
+    sections: {
+      included: { eyebrow: 'Full-Service Settlement', heading: 'Netherlands Company Registration & HR Setup', desc: 'Every element you need to establish a compliant Dutch operation — from entity formation to your first employee\'s onboarding day.' },
+      versus: { eyebrow: 'Challenge vs. Approach', heading: 'Why Standard International Contracts Fail in the Netherlands', desc: 'Dutch employment law has unique protections that catch international companies off guard. Here\'s where the friction lies — and how we resolve it.' },
+      process: { eyebrow: 'Your Settlement Roadmap', heading: 'From First Contact to Fully Operational in 6 Weeks', desc: 'A structured, transparent process that takes you from initial assessment to a fully compliant Dutch HR setup — with clear milestones at every stage.' },
+      pricing: { eyebrow: 'Settlement Investment', heading: 'Netherlands HR Setup Pricing', desc: 'Fixed-fee packages so you know exactly what you\'re investing. No hourly surprises, no hidden costs.' },
+      ideal: { eyebrow: 'Is This Right for You?', heading: 'Companies That Benefit Most from HR Settlers', desc: 'Our settlement service is designed for international organizations entering the Dutch market for the first time.' },
+      faq: { eyebrow: 'Common Questions', heading: 'Netherlands HR Setup FAQ', desc: 'Answers to the questions we hear most from companies entering the Dutch market.' }
+    },
+    photos: {
+      story: '/images/sections/story-settlers.png',
+      strip: '/images/sections/strip-settlers.png',
+      cta: '/images/sections/cta-settlers.png'
+    }
+  },
+  'hr-teams': {
+    name: 'HR Teams',
+    tagline: 'Your outsourced HR department',
+    hero: 'A dedicated HR manager for your Netherlands operation. Full lifecycle HR support without the overhead of an in-house department.',
+    heroImage: '/images/sections/team-meeting.png',
+    heroPhoto: '/images/hero/hero-teams.png',
+    illustration: '/images/illus-teams.png',
+    heroCards: {
+      tl: { icon: 'person', label: 'Dedicated HR', value: 'Full-Time' },
+      br: { icon: 'groups', label: 'Team Size', value: '5–50+ People' }
+    },
+    premiseHeading: 'Growing a team without HR infrastructure is like building a house without a foundation — it works until it doesn\'t.',
+    premiseBody: [
+      'Most international companies in the Netherlands grow to 10, 20, 50 employees without dedicated HR. By then, the compliance gaps have widened, employee questions go unanswered, and culture becomes accidental.',
+      'HR Teams gives you a named, senior HR manager who becomes part of your leadership team — without the €80K+ salary, benefits, and training costs of hiring in-house.'
+    ],
+    included: [
+      { icon: 'person', title: 'Dedicated HR Manager', desc: 'Your personal HR partner who knows your company, team, and culture.' },
+      { icon: 'cycle', title: 'Employee Lifecycle', desc: 'From onboarding to offboarding — contracts, reviews, promotions, terminations.' },
+      { icon: 'menu_book', title: 'Policy Development', desc: 'Remote work, leave, performance, code of conduct, anti-harassment policies.' },
+      { icon: 'trending_up', title: 'Performance Management', desc: 'Review cycles, goal-setting frameworks, and development plans.' },
+      { icon: 'groups', title: 'Strategic HR Planning', desc: 'Workforce planning, org design, compensation benchmarking.' },
+      { icon: 'assessment', title: 'Quarterly Reviews', desc: 'Regular reviews with leadership to assess metrics and align strategy.' }
+    ],
+    friction: {
+      title: 'The Friction',
+      description: 'Without dedicated HR, growing teams face mounting compliance risks and cultural drift that compound over time.',
+      items: ['Unanswered Employee Questions', 'Compliance Gaps Widening', 'Accidental Culture Formation'],
+      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80'
+    },
+    settlement: {
+      title: 'The Solution',
+      description: 'A senior HR professional embedded in your operations, building the systems and culture your growing team needs.',
+      items: [
+        { title: 'Proactive Compliance', desc: 'Stay ahead of Dutch labor law changes with continuous monitoring and updates.' },
+        { title: 'Culture Building', desc: 'Intentional culture design through policies, rituals, and feedback systems.' }
+      ],
+      image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80'
+    },
+    process: [
+      { step: '01', title: 'Discovery Call', desc: 'Understanding your team size, challenges, and HR maturity level.', week: 'Day 1', image: '/images/sections/illus-teams-01.png' },
+      { step: '02', title: 'HR Manager Match', desc: 'We assign a senior HR manager aligned with your industry and culture.', week: 'Week 1', image: '/images/sections/illus-teams-02.png' },
+      { step: '03', title: 'Quick-Win Audit', desc: 'Immediate compliance check and priority action plan.', week: 'Week 2–3', image: '/images/sections/illus-teams-03.png' },
+      { step: '04', title: 'Ongoing Partnership', desc: 'Monthly retainer with quarterly strategic reviews.', week: 'Ongoing', image: '/images/sections/illus-teams-04.png' }
+    ],
+    testimonial: {
+      quote: 'Having an HR Teams manager felt like hiring a full-time CHRO at a fraction of the cost. They truly became part of our team.',
+      name: 'Jeroen K.',
+      role: 'CEO',
+      company: 'ScaleUp Amsterdam'
+    },
+    pricingTiers: [
+      { name: 'Essential', desc: 'Part-time HR manager, compliance monitoring, email support.', price: '€1,500', unit: 'month' },
+      { name: 'Growth', desc: 'Dedicated HR manager, strategy calls, unlimited questions.', price: '€2,500', unit: 'month' },
+      { name: 'Enterprise', desc: 'Full HR department outsourcing with strategic advisory.', price: '€4,000+', unit: 'month' }
+    ],
+    ideal: ['Growing companies with 5-50+ employees', 'Companies without an in-house HR team', 'Businesses seeking strategic HR guidance', 'Teams needing Dutch-compliant HR processes'],
+    faqs: [
+      { q: 'How many hours per week does the HR manager dedicate?', a: 'It depends on your package. Essential includes ~8 hours/week, Growth includes ~16 hours/week, and Enterprise is full-time equivalent.' },
+      { q: 'Can the HR manager attend our team meetings?', a: 'Absolutely. Your HR manager integrates with your team\'s communication tools and attends key meetings as needed.' },
+      { q: 'What happens if our HR manager is on vacation?', a: 'We always have a backup HR professional briefed on your account to ensure uninterrupted support.' }
+    ],
+    relatedServices: ['hr-settlers', 'hr-reset'],
+    sections: {
+      included: { eyebrow: 'Outsourced HR Services', heading: 'Your Dedicated Dutch HR Department', desc: 'A senior HR professional embedded in your operations — handling everything from contracts to culture, compliance to compensation.' },
+      versus: { eyebrow: 'The Real Cost of No HR', heading: 'What Happens When Growing Teams Skip Dedicated HR', desc: 'Most issues don\'t surface until they\'re expensive to fix. See the risks of operating without HR infrastructure — and how we eliminate them.' },
+      process: { eyebrow: 'Getting Started', heading: 'Your HR Manager Is One Call Away', desc: 'From discovery to a fully integrated HR partner — here\'s how we match you with the right professional and get them up to speed fast.' },
+      pricing: { eyebrow: 'Monthly Investment', heading: 'Outsourced HR Manager Pricing', desc: 'Flexible monthly plans that scale with your team. Cancel anytime — no long-term lock-in.' },
+      ideal: { eyebrow: 'Best Fit', heading: 'Companies That Thrive with Outsourced HR', desc: 'HR Teams works best for international companies operating in the Netherlands without in-house HR capacity.' },
+      faq: { eyebrow: 'Common Questions', heading: 'Outsourced HR for the Netherlands FAQ', desc: 'Everything you need to know about working with a dedicated HR manager.' }
+    },
+    photos: {
+      story: '/images/sections/story-teams.png',
+      strip: '/images/sections/strip-teams.png',
+      cta: '/images/sections/cta-teams.png'
+    }
+  },
+  'hr-reset': {
+    name: 'HR Reset',
+    tagline: 'Modernize your existing HR',
+    hero: 'A thorough HR audit and transformation for companies with compliance gaps, outdated contracts, or legacy processes that need modernization.',
+    heroImage: '/images/sections/audit-review.png',
+    heroPhoto: '/images/hero/hero-reset.png',
+    illustration: '/images/illus-reset.png',
+    heroCards: {
+      tl: { icon: 'plagiarism', label: 'Compliance', value: '100% Audit' },
+      br: { icon: 'edit_document', label: 'Contracts', value: 'Modernized' }
+    },
+    premiseHeading: 'Outdated contracts and legacy processes are ticking time bombs — the cost of inaction far exceeds the investment in reform.',
+    premiseBody: [
+      'Dutch employment law has changed dramatically in recent years. The WNRA, the Transparent Terms and Conditions Directive, and evolving CAO requirements mean that contracts written even two years ago may now contain non-compliant clauses.',
+      'HR Reset provides a comprehensive audit and modernization program that brings your entire HR infrastructure up to current standards — before problems become lawsuits.'
+    ],
+    included: [
+      { icon: 'plagiarism', title: 'Full Compliance Audit', desc: 'Review of all contracts, policies, payroll, and processes against current law.' },
+      { icon: 'edit_document', title: 'Contract Modernization', desc: 'Update contracts for WNRA, transparent terms directive, and CLA compliance.' },
+      { icon: 'tune', title: 'Process Optimization', desc: 'Streamline sick leave, leave management, onboarding, and documentation.' },
+      { icon: 'account_tree', title: 'Restructuring Support', desc: 'Works council involvement, dismissal procedures, social plans.' },
+      { icon: 'auto_stories', title: 'Policy Overhaul', desc: 'Complete review and update of HR handbook and all policies.' },
+      { icon: 'handshake', title: 'Change Management', desc: 'Communication strategies and employee engagement during transitions.' }
+    ],
+    friction: {
+      title: 'The Friction',
+      description: 'Legacy HR systems accumulate risk silently. By the time problems surface, the cost of remediation has multiplied.',
+      items: ['Non-Compliant Contract Clauses', 'Outdated Leave Policies', 'Missing Documentation'],
+      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80'
+    },
+    settlement: {
+      title: 'The Transformation',
+      description: 'A systematic modernization of your HR infrastructure, bringing every element into compliance with current Dutch standards.',
+      items: [
+        { title: 'Risk Assessment', desc: 'Prioritized report of all compliance gaps with severity ratings.' },
+        { title: 'Implementation Roadmap', desc: 'Phased plan for modernization with clear milestones and timelines.' }
+      ],
+      image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80'
+    },
+    process: [
+      { step: '01', title: 'Comprehensive Audit', desc: 'Full forensic review of all HR documentation and processes.', week: 'Week 1–2', image: '/images/sections/illus-reset-01.png' },
+      { step: '02', title: 'Risk Report', desc: 'Detailed findings with prioritized recommendations.', week: 'Week 3', image: '/images/sections/illus-reset-02.png' },
+      { step: '03', title: 'Modernization Sprint', desc: 'Contract rewrites, policy updates, and process redesign.', week: 'Week 4–8', image: '/images/sections/illus-reset-03.png' },
+      { step: '04', title: 'Training & Handoff', desc: 'Manager training on new procedures and compliance monitoring.', week: 'Week 9–12', image: '/images/sections/illus-reset-04.png' }
+    ],
+    testimonial: {
+      quote: 'We had no idea how many compliance gaps we had accumulated over 5 years. HR Reset caught everything before it became a real problem.',
+      name: 'Maria S.',
+      role: 'Operations Director',
+      company: 'EuroTech Solutions'
+    },
+    pricingTiers: [
+      { name: 'Audit Only', desc: 'Full compliance audit and detailed risk report.', price: '€3,500', unit: 'one-time' },
+      { name: 'Audit + Fix', desc: 'Audit plus contract modernization and policy updates.', price: '€7,500', unit: 'one-time' },
+      { name: 'Full Transformation', desc: 'Complete HR overhaul with change management support.', price: '€12,000+', unit: 'one-time' }
+    ],
+    ideal: ['Companies with outdated employment contracts', 'Businesses facing compliance concerns', 'Organizations undergoing restructuring', 'Companies acquired or merged recently'],
+    faqs: [
+      { q: 'How long does a full HR Reset take?', a: 'Typically 4-12 weeks depending on company size and the number of contracts that need updating.' },
+      { q: 'Will employees be disrupted during the process?', a: 'We design the process to minimize disruption. Most changes are communicated once, clearly, with full employee support.' },
+      { q: 'Do you handle works council consultations?', a: 'Yes. If your company has a works council, we manage the consultation process for any changes that require their input.' }
+    ],
+    relatedServices: ['hr-teams', 'hr-sos'],
+    sections: {
+      included: { eyebrow: 'Audit & Modernization', heading: 'Complete Dutch HR Compliance Overhaul', desc: 'A systematic review and upgrade of every HR document, policy, and process — bringing your entire operation up to current Dutch labor law standards.' },
+      versus: { eyebrow: 'Risk vs. Reform', heading: 'The Hidden Cost of Outdated HR Contracts in the Netherlands', desc: 'Dutch employment law changes constantly. Contracts and policies even two years old may now contain non-compliant clauses that expose you to significant liability.' },
+      process: { eyebrow: 'Modernization Roadmap', heading: 'From Audit to Fully Compliant in 12 Weeks', desc: 'A phased approach that identifies risks first, then systematically modernizes your HR infrastructure with minimal disruption to your team.' },
+      pricing: { eyebrow: 'Modernization Investment', heading: 'HR Audit & Compliance Pricing', desc: 'Choose the depth of transformation you need — from a standalone audit to a complete HR overhaul.' },
+      ideal: { eyebrow: 'Who Needs a Reset?', heading: 'Companies That Benefit from an HR Compliance Audit', desc: 'If your contracts are older than two years or you\'ve never had a formal HR audit, it\'s time for a Reset.' },
+      faq: { eyebrow: 'Common Questions', heading: 'Dutch HR Compliance Audit FAQ', desc: 'Answers about the audit process, timeline, and what to expect during your HR Reset.' }
+    },
+    photos: {
+      story: '/images/sections/story-reset.png',
+      strip: '/images/sections/strip-reset.png',
+      cta: '/images/sections/cta-reset.png'
+    }
+  },
+  'hr-sos': {
+    name: 'HR S.O.S.',
+    tagline: 'Urgent HR crisis support',
+    hero: 'Rapid-response HR support for urgent situations. Same-day guidance for dismissals, workplace conflicts, and compliance emergencies.',
+    heroImage: '/images/sections/emergency-call.png',
+    heroPhoto: '/images/hero/hero-sos.png',
+    illustration: '/images/illus-sos.png',
+    heroCards: {
+      tl: { icon: 'schedule', label: 'Response', value: 'Same Day' },
+      br: { icon: 'gavel', label: 'Resolution', value: '98% Success' }
+    },
+    premiseHeading: 'In an HR crisis, every hour of delay increases your legal exposure and damages team morale — you need expert help now, not next week.',
+    premiseBody: [
+      'Dismissal procedures in the Netherlands are among the most complex in Europe. A single misstep — a missing warning letter, an incorrect notice period, a flawed settlement agreement — can cost tens of thousands in legal fees and damages.',
+      'HR S.O.S. gives you immediate access to senior HR professionals who have navigated hundreds of Dutch employment crises. We stabilize the situation first, then build the resolution strategy.'
+    ],
+    included: [
+      { icon: 'schedule', title: 'Same-Day Response', desc: 'Initial guidance and action plan within 24 hours of your call.' },
+      { icon: 'gavel', title: 'Dismissal Procedures', desc: 'Settlement agreements, UWV permits, or court dissolution — expertly navigated.' },
+      { icon: 'handshake', title: 'Settlement Agreements', desc: 'Drafting and negotiation of fair, legally sound vaststellingsovereenkomsten.' },
+      { icon: 'psychology', title: 'Conflict Resolution', desc: 'Mediation for workplace disputes, harassment complaints, and team conflicts.' },
+      { icon: 'balance', title: 'Legal Liaison', desc: 'Coordination with employment lawyers, managing the entire process.' },
+      { icon: 'apartment', title: 'UWV & Court Procedures', desc: 'Full support through formal dismissal applications and hearings.' }
+    ],
+    friction: {
+      title: 'The Crisis',
+      description: 'Employment crises escalate rapidly in the Netherlands. Without expert guidance, well-intentioned actions can create larger legal problems.',
+      items: ['Wrongful Dismissal Claims', 'Escalating Workplace Conflicts', 'Regulatory Investigations'],
+      image: 'https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=800&q=80'
+    },
+    settlement: {
+      title: 'The Resolution',
+      description: 'Rapid stabilization followed by a structured resolution that protects your interests while meeting Dutch legal requirements.',
+      items: [
+        { title: 'Immediate Triage', desc: 'Assess the situation, identify risks, and stop any actions that could worsen the position.' },
+        { title: 'Resolution Strategy', desc: 'Build a legally sound exit strategy with clear timelines and cost projections.' }
+      ],
+      image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80'
+    },
+    process: [
+      { step: '01', title: 'Emergency Call', desc: 'Reach us by phone or email — we respond the same business day.', week: 'Day 1', image: '/images/sections/illus-sos-01.png' },
+      { step: '02', title: 'Situation Assessment', desc: 'We review all documentation and assess your legal position.', week: 'Day 1–2', image: '/images/sections/illus-sos-02.png' },
+      { step: '03', title: 'Action Plan', desc: 'Clear step-by-step plan with timeline and cost projection.', week: 'Day 2–3', image: '/images/sections/illus-sos-03.png' },
+      { step: '04', title: 'Execution & Resolution', desc: 'We manage the entire process through to resolution.', week: '1–8 weeks', image: '/images/sections/illus-sos-04.png' }
+    ],
+    testimonial: {
+      quote: 'When we had to let someone go urgently, HRHelp.nl had an action plan ready within hours. They turned a potential lawsuit into a smooth exit.',
+      name: 'Thomas B.',
+      role: 'Managing Director',
+      company: 'Nordic Ventures NL'
+    },
+    pricingTiers: [
+      { name: 'Emergency Call', desc: 'Same-day consultation and initial action plan.', price: '€500', unit: 'one-time' },
+      { name: 'Full Procedure', desc: 'Complete dismissal or conflict resolution management.', price: '€150/hr', unit: 'hourly' },
+      { name: 'Crisis Retainer', desc: 'Priority access with pre-negotiated rates for ongoing needs.', price: '€1,000', unit: 'month' }
+    ],
+    ideal: ['Companies facing employee dismissals', 'Urgent workplace conflict situations', 'Compliance emergencies', 'Any HR crisis requiring immediate expert help'],
+    faqs: [
+      { q: 'How fast can you respond?', a: 'Same business day. For true emergencies, we can often provide initial guidance within 2 hours.' },
+      { q: 'Do you handle the legal side too?', a: 'We handle all HR aspects and coordinate with employment lawyers when legal proceedings are required. We brief the lawyers and manage the process.' },
+      { q: 'What if the employee has already filed a claim?', a: 'We can still help. We assess your position, prepare your defense, and work toward the best possible resolution.' }
+    ],
+    relatedServices: ['hr-teams', 'hr-reset'],
+    sections: {
+      included: { eyebrow: 'Crisis Response Services', heading: 'Immediate Dutch Employment Law Support', desc: 'From same-day guidance to full procedure management — every tool you need to navigate a Dutch HR crisis with confidence.' },
+      versus: { eyebrow: 'Crisis vs. Resolution', heading: 'Why Dutch Employment Crises Escalate So Quickly', desc: 'The Netherlands has some of Europe\'s strongest employee protections. Without expert handling, well-intentioned actions can create larger legal problems.' },
+      process: { eyebrow: 'Rapid Response', heading: 'Same-Day Expert Guidance, Resolution Within Weeks', desc: 'Our crisis protocol gets you expert guidance within hours — not days. Here\'s exactly what happens when you call.' },
+      pricing: { eyebrow: 'Crisis Support Pricing', heading: 'HR Emergency Response Costs', desc: 'Transparent pricing for urgent situations. No retainers required — pay only for what you need.' },
+      ideal: { eyebrow: 'When to Call', heading: 'Situations Where HR S.O.S. Can Help', desc: 'If you\'re facing any employment situation that needs expert guidance now — don\'t wait. Call us.' },
+      faq: { eyebrow: 'Common Questions', heading: 'Dutch HR Crisis Support FAQ', desc: 'Answers about response times, costs, and what to expect when you reach out for emergency HR support.' }
+    },
+    photos: {
+      story: '/images/sections/story-sos.png',
+      strip: '/images/sections/strip-sos.png',
+      cta: '/images/sections/cta-sos.png'
+    }
+  }
+};
+
+const { slug } = Astro.params;
+if (!slug || !serviceData[slug]) {
+  return Astro.redirect('/solutions');
+}
+const service = serviceData[slug];
+const related = service.relatedServices.map((s: string) => ({ slug: s, ...serviceData[s] }));
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'hr-settlers' } },
+    { params: { slug: 'hr-teams' } },
+    { params: { slug: 'hr-reset' } },
+    { params: { slug: 'hr-sos' } },
+  ];
+}
+
+const solutionSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": service.name,
+  "description": service.hero,
+  "provider": {
+    "@type": "Organization",
+    "name": "HRHelp.nl",
+    "url": "https://hrhelp.nl"
+  },
+  "areaServed": { "@type": "Country", "name": "Netherlands" },
+  "url": `https://hrhelp.nl/solutions/${slug}`
+};
+---
+
+<Layout title={`${service.name}`} description={service.hero} schema={solutionSchema}>
+
+<!-- HERO — Premium Split -->
+<section class="sv-hero">
+  <div class="sv-hero-mesh"></div>
+  <div class="container-wide sv-hero-inner">
+    <div class="sv-hero-text" data-animate="fade-right">
+      <div class="hero-chip-wrap">
+        <span class="eyebrow-badge">{service.name}</span>
+      </div>
+      <h1>{service.tagline}</h1>
+      <p class="sv-hero-desc">{service.hero}</p>
+      <div class="sv-hero-actions">
+        <a href="/contact" class="btn btn-primary btn-lg">Book a Consultation</a>
+        <a href="#sv-included" class="btn btn-secondary btn-lg">What's Included</a>
+      </div>
+    </div>
+    <div class="sv-hero-visual" data-animate="fade-left">
+      <div class="sv-hero-photo-wrap">
+        <div class="sv-hero-glass-frame"></div>
+        <img src={service.heroPhoto} alt={service.name} class="sv-hero-img" />
+        
+        <!-- Floating Cards — service-specific -->
+        <div class="hero-floating-card card-tl" data-float>
+          <div class="floating-icon"><span class="material-symbols-outlined">{service.heroCards.tl.icon}</span></div>
+          <div class="floating-content">
+            <span class="floating-label">{service.heroCards.tl.label}</span>
+            <span class="floating-value">{service.heroCards.tl.value}</span>
+          </div>
+        </div>
+        
+        <div class="hero-floating-card card-br" data-float-reverse>
+          <div class="floating-icon icon-orange"><span class="material-symbols-outlined">{service.heroCards.br.icon}</span></div>
+          <div class="floating-content">
+            <span class="floating-label">{service.heroCards.br.label}</span>
+            <span class="floating-value">{service.heroCards.br.value}</span>
+          </div>
+        </div>
+
+        <div class="hero-status-pill">
+          <span class="status-dot"></span>
+          <span>Expert Advisor Online</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE STORY -->
+<section class="sv-story">
+  <div class="container">
+    <div class="sv-story-split">
+      <div class="sv-story-text">
+        <div class="sv-story-insight" data-animate="fade-up">
+          <div class="sv-story-insight-accent"></div>
+          <h2>{service.premiseHeading}</h2>
+        </div>
+        {service.premiseBody.map((p: string, i: number) => <p class={i === 0 ? 'sv-story-lead' : ''} data-animate="fade-up" data-delay={i * 150}>{p}</p>)}
+        <div class="sv-story-cta-line" data-animate="fade-up" data-delay="300">
+          <a href="/contact" class="sv-story-link">Speak with an expert <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+      <div class="sv-story-illus" data-animate="fade-up" data-delay="200">
+        <div class="sv-story-photo-frame">
+          <div class="sv-story-frame-accent"></div>
+          <img src={service.photos.story} alt={`${service.name} — our team`} class="sv-story-photo" />
+          <div class="sv-story-overlay-card">
+            <div class="sv-overlay-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <span class="sv-overlay-label">Trusted by</span>
+              <span class="sv-overlay-value">75+ Companies</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="sv-included section-cream" id="sv-included">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">{service.sections.included.eyebrow}</span>
+      <h2>{service.sections.included.heading}</h2>
+      <p class="section-desc">{service.sections.included.desc}</p>
+    </div>
+    <div class="sv-feature-grid">
+      {service.included.map((item: any, i: number) => (
+        <div class="sv-feature-card" data-animate="fade-up" data-delay={i * 100}>
+          <div class="sv-feature-icon-wrap">
+            <Fragment set:html={iconSvg[item.icon] || ''} />
+          </div>
+          <div class="sv-feature-num">{String(i + 1).padStart(2, '0')}</div>
+          <h4>{item.title}</h4>
+          <p>{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGE & SOLUTION -->
+<section class="sv-versus section-white">
+  <div class="container">
+    <div class="sv-versus-grid">
+      <div class="sv-versus-card sv-card-challenge" data-animate="fade-up">
+        <div class="sv-label-box label-red">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>The Challenge</span>
+        </div>
+        <h3>{service.friction.title}</h3>
+        <p>{service.friction.description}</p>
+        <ul class="sv-list sv-list-red">
+          {service.friction.items.map((item: string) => (
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="sv-versus-card sv-card-solution" data-animate="fade-up" data-delay="200">
+        <div class="sv-label-box label-green">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>{service.settlement.title}</span>
+        </div>
+        <h3>Our Approach</h3>
+        <p>{service.settlement.description}</p>
+        <div class="sv-solution-items">
+          {service.settlement.items.map((item: any) => (
+            <div class="sv-sol-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <div>
+                <strong>{item.title}</strong>
+                <span>{item.desc}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="sv-testimonial section-cream">
+  <div class="container">
+    <div class="sv-testimonial-card">
+      <div class="sv-testimonial-avatar">
+        <span>{service.testimonial.name.split(' ').map((w: string) => w[0]).join('')}</span>
+      </div>
+      <div class="sv-testimonial-content">
+        <svg class="sv-quote-icon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z"/>
+        </svg>
+        <blockquote>{service.testimonial.quote}</blockquote>
+        <div class="sv-testimonial-author">
+          <strong>{service.testimonial.name}</strong>
+          <span>{service.testimonial.role}, {service.testimonial.company}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sv-process section-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">{service.sections.process.eyebrow}</span>
+      <h2>{service.sections.process.heading}</h2>
+      <p class="section-desc">{service.sections.process.desc}</p>
+    </div>
+    <div class="sv-vtimeline" data-vtimeline>
+      <div class="sv-vtimeline-track">
+        <div class="sv-vtimeline-track-fill"></div>
+      </div>
+      {service.process.map((step: any, i: number) => (
+        <div class="sv-vtimeline-step" data-vstep={i}>
+          <div class="sv-vtimeline-marker">
+            <span>{step.step}</span>
+            <div class="sv-vmarker-ring"></div>
+          </div>
+          <div class="sv-vtimeline-content">
+            <div class="sv-vstep-body">
+              <div class="sv-vstep-text">
+                <span class="sv-vstep-badge">{step.week}</span>
+                <h3>{step.title}</h3>
+                <p>{step.desc}</p>
+              </div>
+              {step.image && (
+                <img src={step.image} alt={step.title} class="sv-vstep-thumb" />
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sv-pricing section-navy">
+  <div class="container">
+    <div class="sv-pricing-header">
+      <div>
+        <span class="eyebrow" style="color: var(--orange-light);">{service.sections.pricing.eyebrow}</span>
+        <h2>{service.sections.pricing.heading}</h2>
+      </div>
+      <p>{service.sections.pricing.desc}</p>
+    </div>
+    <div class="sv-pricing-cards">
+      {service.pricingTiers.map((tier: any, i: number) => (
+        <div class={`sv-pricing-card ${i === 1 ? 'sv-pricing-featured' : ''}`} data-animate="fade-up" data-delay={i * 150}>
+          {i === 1 && <div class="sv-pricing-badge">Most Popular</div>}
+          <h3>{tier.name}</h3>
+          <div class="sv-pricing-price-wrap">
+            <span class="sv-price">{tier.price}</span>
+            <span class="sv-unit">/ {tier.unit}</span>
+          </div>
+          <p class="sv-pricing-desc">{tier.desc}</p>
+          <a href="/contact" class="btn btn-primary sv-pricing-btn">Get a Quote →</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- IDEAL FOR -->
+<section class="sv-ideal section-cream">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">{service.sections.ideal.eyebrow}</span>
+      <h2>{service.sections.ideal.heading}</h2>
+      <p class="section-desc">{service.sections.ideal.desc}</p>
+    </div>
+    <div class="sv-ideal-grid">
+      {service.ideal.map((item: string, i: number) => (
+        <div class="sv-ideal-card" data-animate="fade-up" data-delay={i * 100}>
+          <div class="sv-ideal-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="sv-ideal-content">
+            <span class="sv-ideal-num">{String(i + 1).padStart(2, '0')}</span>
+            <p>{item}</p>
+          </div>
+          <svg class="sv-ideal-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sv-faq section-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">{service.sections.faq.eyebrow}</span>
+      <h2>{service.sections.faq.heading}</h2>
+      <p class="section-desc">{service.sections.faq.desc}</p>
+    </div>
+    <div class="sv-faq-list">
+      {service.faqs.map((faq: any) => (
+        <details class="sv-faq-item">
+          <summary>
+            <span>{faq.q}</span>
+            <svg class="sv-faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="sv-faq-answer">
+            <p>{faq.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sv-cta">
+  <div class="container">
+    <div class="sv-cta-inner" data-animate="fade-up">
+      <div class="sv-cta-photo">
+        <img src={service.photos.cta} alt="Our approach" />
+      </div>
+      <div class="sv-cta-content">
+        <span class="eyebrow" style="color: var(--orange-light);">Let's Talk</span>
+        <h2>Ready to get started with {service.name}?</h2>
+        <p>Book a free 30-minute consultation. We'll assess your situation and propose a clear path forward — no commitment required.</p>
+        <div class="sv-cta-buttons">
+          <a href="/contact" class="btn btn-primary btn-lg">Book a Consultation</a>
+          <a href="/solutions" class="btn btn-ghost btn-lg">View All Solutions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED -->
+<section class="sv-related section-white">
+  <div class="container">
+    <div class="section-header">
+      <h2>Related Services</h2>
+    </div>
+    <div class="sv-related-grid">
+      {related.map((r: any) => (
+        <a href={`/solutions/${r.slug}`} class="sv-related-card">
+          <div class="sv-related-illus">
+            <img src={r.illustration} alt={r.name} />
+          </div>
+          <div class="sv-related-content">
+            <h3>{r.name}</h3>
+            <p>{r.tagline}</p>
+            <span class="sv-related-link">Learn More →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ========== GLOBAL OVERRIDES (No Glow) ========== */
+.btn-primary, .btn-secondary {
+  box-shadow: none !important;
+  transform: none !important;
+}
+.btn-primary:hover, .btn-secondary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ========== HERO — PREMIUM REDESIGN ========== */
+.sv-hero {
+  position: relative;
+  background: linear-gradient(175deg, #fdf8f3 0%, #f6f2ed 40%, var(--white) 100%);
+  padding: 8.5rem 0 7.5rem;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Premium Mesh Gradient Background */
+.sv-hero-mesh {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  background: 
+    radial-gradient(at 10% 20%, rgba(244, 121, 32, 0.05) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(13, 31, 56, 0.04) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(244, 121, 32, 0.03) 0px, transparent 50%);
+  filter: blur(100px);
+  animation: mesh-drift 20s ease-infinite;
+}
+
+@keyframes mesh-drift {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.1) translate(20px, -20px); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+
+.sv-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+/* Typography Refinement */
+.sv-hero-text h1 {
+  font-size: clamp(2.8rem, 6vw, 4.2rem);
+  font-weight: 950;
+  line-height: 1.02;
+  margin: 1.5rem 0 1.5rem;
+  letter-spacing: -0.04em;
+  color: var(--navy);
+}
+
+.sv-hero-desc {
+  font-size: 1.25rem;
+  color: var(--gray-600);
+  line-height: 1.75;
+  max-width: 560px;
+  margin-bottom: 3rem;
+  font-weight: 500;
+}
+
+/* Visual & Floating Elements */
+.sv-hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sv-hero-photo-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+}
+
+.sv-hero-glass-frame {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: -20px;
+  bottom: -20px;
+  border-radius: var(--radius-xl);
+  border: 2px solid rgba(244, 121, 32, 0.15);
+  background: transparent;
+  z-index: 0;
+}
+
+.sv-hero-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-radius: var(--radius-xl);
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+}
+
+.sv-hero-actions {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+/* Glass Floating Cards */
+.hero-floating-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.card-tl { top: 10%; left: -60px; }
+.card-br { bottom: 10%; right: -30px; }
+
+.floating-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(13, 31, 56, 0.08);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.floating-icon.icon-orange { background: rgba(244, 121, 32, 0.1); color: var(--orange); }
+
+.floating-label { display: block; font-size: 0.75rem; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+.floating-value { display: block; font-size: 1rem; font-weight: 800; color: var(--navy); }
+
+/* Status Pill */
+.hero-status-pill {
+  position: absolute;
+  top: -25px;
+  right: 20px;
+  background: white;
+  padding: 0.6rem 1.25rem;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  z-index: 11;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+/* Animations */
+[data-float] { animation: float 6s ease-in-out infinite; }
+[data-float-reverse] { animation: float-reverse 7s ease-in-out infinite; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes float-reverse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(15px); }
+}
+
+/* Base Styles Polish */
+.btn-lg {
+  padding: 1.15rem 2.25rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+}
+
+
+/* ========== STORY ========== */
+/* ========== STORY — EDITORIAL ========== */
+.sv-story {
+  padding: 6rem 0 5rem;
+  background: var(--white);
+}
+
+/* Insight card — the quote (now inside left column) */
+.sv-story-insight {
+  position: relative;
+  background: linear-gradient(135deg, var(--cream) 0%, #f9f5ef 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  padding-left: 3rem;
+  margin-bottom: 1.5rem;
+}
+.sv-story-insight-accent {
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 5px;
+  background: var(--orange);
+  border-radius: 3px;
+}
+.sv-story-insight h2 {
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--navy);
+  font-style: italic;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* Split layout — text + photo */
+.sv-story-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.sv-story-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.sv-story-text p {
+  font-size: 1.08rem;
+  color: var(--gray-600);
+  line-height: 1.85;
+}
+.sv-story-lead {
+  font-size: 1.18rem !important;
+  color: var(--navy) !important;
+  font-weight: 500;
+  line-height: 1.75 !important;
+}
+
+/* CTA link */
+.sv-story-cta-line {
+  padding-top: 0.5rem;
+}
+.sv-story-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--orange);
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+.sv-story-link:hover {
+  gap: 0.85rem;
+  color: var(--navy);
+}
+
+/* Photo frame with accent */
+.sv-story-illus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sv-story-photo-frame {
+  position: relative;
+  width: 100%;
+}
+.sv-story-frame-accent {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: -16px;
+  bottom: -16px;
+  border-radius: var(--radius-xl);
+  border: 2.5px solid rgba(244, 121, 32, 0.2);
+  z-index: 0;
+}
+.sv-story-photo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-radius: var(--radius-xl);
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+/* Overlay card */
+.sv-story-overlay-card {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+.sv-overlay-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sv-overlay-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-500);
+  margin-bottom: 1px;
+}
+.sv-overlay-value {
+  display: block;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+/* ========== PHOTO STRIP ========== */
+.sv-photostrip {
+  padding: 1rem 0 4rem;
+}
+.sv-photostrip-wrap {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+.sv-photostrip-wrap img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  display: block;
+}
+.sv-photostrip-overlay {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: rgba(10, 36, 99, 0.8);
+  backdrop-filter: blur(8px);
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-lg);
+}
+.sv-photostrip-overlay span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ========== SCROLL ANIMATIONS ========== */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-animate="grow-bar"] {
+  transform: none;
+}
+
+/* Section descriptions */
+.section-desc {
+  max-width: 640px;
+  margin: 0.75rem auto 0;
+  color: var(--gray-600);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Floating illustration */
+@keyframes sv-gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.sv-float {
+  animation: sv-gentle-float 4s ease-in-out infinite;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .sv-float {
+    animation: none;
+  }
+}
+
+/* ========== FEATURES GRID ========== */
+.sv-included { padding: 5rem 0; }
+.sv-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.sv-feature-card {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  transition: all 0.3s ease;
+}
+.sv-feature-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+.sv-feature-card:hover .sv-feature-icon-wrap {
+  background: var(--orange);
+  color: white;
+  transform: scale(1.08);
+}
+.sv-feature-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(244, 121, 32, 0.1);
+  color: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+.sv-feature-num {
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--orange);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-heading);
+  opacity: 0.6;
+}
+.sv-feature-card h4 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ========== CHALLENGE VS SOLUTION ========== */
+.sv-versus { padding: 5rem 0; }
+.sv-versus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+.sv-versus-card {
+  padding: 3.5rem 3rem;
+  border-radius: var(--radius-xl);
+}
+.sv-card-challenge {
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+}
+.sv-card-solution {
+  background: #f0fff4;
+  border: 1px solid #c6f6d5;
+}
+.sv-label-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 2rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.label-red {
+  background: #fff;
+  color: #c53030;
+  border: 1px solid #feb2b2;
+}
+.label-green {
+  background: #fff;
+  color: #22543d;
+  border: 1px solid #9ae6b4;
+}
+.sv-versus-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.sv-versus-card > p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: var(--gray-700);
+}
+.sv-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.sv-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 1rem;
+}
+.sv-list-red li svg { color: #e53e3e; }
+.sv-solution-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.sv-sol-item {
+  display: flex;
+  gap: 1rem;
+}
+.sv-sol-item svg {
+  color: #38a169;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.sv-sol-item strong {
+  display: block;
+  font-size: 1rem;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+}
+.sv-sol-item span {
+  font-size: 0.9rem;
+  color: var(--gray-600);
+  line-height: 1.5;
+}
+
+/* ========== TESTIMONIAL ========== */
+.sv-testimonial { padding: 5rem 0; }
+.sv-testimonial-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 960px;
+  margin: 0 auto;
+  background: white;
+  padding: 4rem;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+.sv-testimonial-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sv-testimonial-avatar span {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.sv-quote-icon {
+  color: var(--orange);
+  margin-bottom: 1.5rem;
+  opacity: 0.2;
+}
+.sv-testimonial-card blockquote {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--navy);
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+.sv-testimonial-author strong {
+  display: block;
+  font-size: 1rem;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+}
+.sv-testimonial-author span {
+  font-size: 0.85rem;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+/* ========== VERTICAL TIMELINE ========== */
+.sv-process { padding: 5rem 0; }
+.sv-vtimeline {
+  position: relative;
+  max-width: 700px;
+  margin: 3rem auto 0;
+  padding-left: 40px;
+}
+
+/* Vertical track */
+.sv-vtimeline-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 24px;
+  width: 3px;
+  background: var(--gray-200);
+  border-radius: 2px;
+  z-index: 1;
+}
+.sv-vtimeline-track-fill {
+  width: 100%;
+  height: 0;
+  background: var(--orange);
+  border-radius: 2px;
+  transition: height 0.4s ease-out;
+}
+
+/* Each step */
+.sv-vtimeline-step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  padding-bottom: 3.5rem;
+  opacity: 0.35;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.sv-vtimeline-step:last-child { padding-bottom: 0; }
+.sv-vtimeline-step.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Marker */
+.sv-vtimeline-marker {
+  position: relative;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.85rem;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(26,58,110,0.2);
+  transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+.sv-vtimeline-step.is-active .sv-vtimeline-marker {
+  background: var(--orange);
+  transform: scale(1.15);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+.sv-vmarker-ring {
+  position: absolute;
+  inset: -8px;
+  border: 2px solid var(--orange);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+.sv-vtimeline-step.is-active .sv-vmarker-ring {
+  opacity: 1;
+  transform: scale(1);
+  animation: sv-ring-pulse 2s ease-out infinite;
+}
+@keyframes sv-ring-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  70% { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Content card */
+.sv-vtimeline-content {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  flex: 1;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.sv-vtimeline-step.is-active .sv-vtimeline-content {
+  border-color: var(--orange);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+/* Step thumbnail layout */
+.sv-vstep-body {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.sv-vstep-text {
+  flex: 1;
+  min-width: 0;
+}
+.sv-vstep-thumb {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2.5px solid rgba(244, 121, 32, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fdf8f3;
+}
+.sv-vtimeline-step:hover .sv-vstep-thumb {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.sv-vstep-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--orange);
+  background: #fff7ed;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+.sv-vtimeline-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+.sv-vtimeline-step.is-active .sv-vtimeline-content h3 {
+  color: var(--orange);
+}
+.sv-vtimeline-content p {
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+/* ========== PRICING CARDS ========== */
+.sv-pricing { padding: 5rem 0; }
+.sv-pricing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3.5rem;
+}
+.sv-pricing-header p {
+  color: rgba(255,255,255,0.5);
+  max-width: 300px;
+  text-align: right;
+}
+.sv-pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.sv-pricing-card {
+  position: relative;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.sv-pricing-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+.sv-pricing-featured {
+  background: rgba(244, 121, 32, 0.08);
+  border-color: var(--orange);
+  transform: scale(1.04);
+}
+.sv-pricing-featured:hover {
+  transform: scale(1.04) translateY(-6px);
+}
+.sv-pricing-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--orange);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+.sv-pricing-card h3 {
+  color: white;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.sv-pricing-price-wrap {
+  margin-bottom: 1.5rem;
+}
+.sv-price {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: white;
+}
+.sv-unit {
+  color: rgba(255,255,255,0.35);
+  font-size: 0.85rem;
+}
+.sv-pricing-desc {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  flex: 1;
+}
+.sv-pricing-btn {
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+}
+
+/* ========== IDEAL FOR ========== */
+.sv-ideal { padding: 5rem 0; }
+.sv-ideal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.sv-ideal-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+.sv-ideal-card:hover {
+  border-left-color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+.sv-ideal-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sv-ideal-content {
+  flex: 1;
+  min-width: 0;
+}
+.sv-ideal-num {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--orange);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.15rem;
+}
+.sv-ideal-content p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.4;
+}
+.sv-ideal-arrow {
+  flex-shrink: 0;
+  color: var(--gray-400);
+  transition: color 0.3s, transform 0.3s;
+}
+.sv-ideal-card:hover .sv-ideal-arrow {
+  color: var(--orange);
+  transform: translateX(3px);
+}
+
+/* ========== FAQ ========== */
+.sv-faq { padding: 5rem 0; }
+.sv-faq-list {
+  max-width: 850px;
+  margin: 0 auto;
+}
+.sv-faq-item {
+  background: var(--cream);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+.sv-faq-item[open] {
+  background: white;
+  border-color: var(--orange);
+}
+.sv-faq-item summary {
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.sv-faq-item summary::-webkit-details-marker { display: none; }
+.sv-faq-chevron {
+  color: var(--orange);
+  transition: transform 0.3s ease;
+}
+.sv-faq-item[open] .sv-faq-chevron {
+  transform: rotate(180deg);
+}
+.sv-faq-answer {
+  padding: 0 2rem 1.5rem;
+}
+
+/* ========== CTA ========== */
+.sv-cta {
+  padding: 6rem 0;
+  text-align: center;
+  background: linear-gradient(135deg, var(--navy) 0%, #1a3a6e 100%);
+  position: relative;
+  overflow: hidden;
+}
+.sv-cta::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(244, 121, 32, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.sv-cta-inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.sv-cta-photo {
+  flex-shrink: 0;
+}
+.sv-cta-photo img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255,255,255,0.2);
+}
+.sv-cta-content {
+  text-align: left;
+}
+.sv-cta-inner h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  margin-bottom: 1rem;
+  color: white;
+}
+.sv-cta-inner p {
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  color: rgba(255,255,255,0.7);
+}
+.sv-cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+}
+.sv-cta .btn-ghost {
+  color: white;
+  border-color: rgba(255,255,255,0.3);
+}
+.sv-cta .btn-ghost:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.5);
+}
+
+/* ========== RELATED ========== */
+.sv-related { padding: 5rem 0; }
+.sv-related-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.sv-related-card {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2.5rem;
+  background: var(--cream);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--gray-200);
+  transition: all 0.3s ease;
+}
+.sv-related-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-5px);
+  background: white;
+  box-shadow: var(--shadow-lg);
+}
+.sv-related-illus {
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sv-related-illus img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+.sv-related-content h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.sv-related-link {
+  display: block;
+  margin-top: 0.75rem;
+  color: var(--orange);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .sv-hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .sv-hero-desc { margin-left: auto; margin-right: auto; }
+  .sv-hero-actions { justify-content: center; }
+  .sv-hero-visual { justify-content: center; }
+  .sv-hero-photo-wrap { max-width: 480px; margin: 0 auto; }
+  .hero-floating-card { display: none; }
+  .hero-status-pill { display: none; }
+  .sv-hero-glass-frame { display: none; }
+  .sv-feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .sv-pricing-cards { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+  .sv-pricing-featured { transform: none; }
+  .sv-pricing-featured:hover { transform: translateY(-6px); }
+}
+
+@media (max-width: 768px) {
+  .sv-story-split { grid-template-columns: 1fr; gap: 2rem; }
+  .sv-story-frame-accent { display: none; }
+  .sv-story-overlay-card { bottom: -12px; left: 10px; padding: 0.75rem 1rem; }
+  .sv-overlay-icon { width: 32px; height: 32px; }
+  .sv-overlay-value { font-size: 0.85rem; }
+  .sv-story-illus { order: -1; }
+  .sv-story-insight { padding: 2rem 2rem 2rem 3rem; }
+  .sv-versus-grid { grid-template-columns: 1fr; }
+  .sv-testimonial-card { grid-template-columns: 1fr; text-align: center; padding: 2.5rem; }
+  .sv-testimonial-avatar { margin: 0 auto; }
+  .sv-pricing-cards { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+  .sv-pricing-featured { transform: none; }
+  .sv-pricing-featured:hover { transform: translateY(-6px); }
+  .sv-pricing-header { flex-direction: column; align-items: flex-start; }
+  .sv-pricing-header p { text-align: left; }
+  .sv-vtimeline { padding-left: 30px; }
+  .sv-vtimeline-track { left: 18px; }
+  .sv-vtimeline-marker { width: 38px; height: 38px; font-size: 0.75rem; }
+  .sv-vtimeline-content { padding: 1.25rem 1.5rem; }
+  .sv-vstep-thumb { display: none; }
+  .sv-ideal-grid { grid-template-columns: 1fr; }
+  .sv-related-grid { grid-template-columns: 1fr; }
+  .sv-cta-inner { grid-template-columns: 1fr; text-align: center; }
+  .sv-cta-photo { display: flex; justify-content: center; }
+  .sv-cta-photo img { width: 120px; height: 120px; }
+  .sv-cta-content { text-align: center; }
+  .sv-cta-buttons { flex-direction: column; align-items: center; }
+  .sv-photostrip-wrap img { aspect-ratio: 16 / 9; }
+  .sv-story-photo { max-width: 100%; aspect-ratio: 4/3; }
+}
+</style>
+
+<script>
+  // Scroll-triggered reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = parseInt((entry.target as HTMLElement).dataset.delay || '0', 10);
+        setTimeout(() => {
+          entry.target.classList.add('is-visible');
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+  // Vertical timeline — scroll-driven step activation
+  const vtimeline = document.querySelector('[data-vtimeline]') as HTMLElement | null;
+  if (vtimeline) {
+    const steps = vtimeline.querySelectorAll('.sv-vtimeline-step') as NodeListOf<HTMLElement>;
+    const trackFill = vtimeline.querySelector('.sv-vtimeline-track-fill') as HTMLElement;
+    const track = vtimeline.querySelector('.sv-vtimeline-track') as HTMLElement;
+
+    function updateTimeline() {
+      const timelineRect = vtimeline!.getBoundingClientRect();
+      const timelineTop = timelineRect.top;
+      const timelineHeight = timelineRect.height;
+      const viewportTrigger = window.innerHeight * 0.75;
+
+      // Calculate how far through the timeline we've scrolled
+      const scrollProgress = Math.max(0, Math.min(1, (viewportTrigger - timelineTop) / timelineHeight));
+      trackFill.style.height = `${scrollProgress * 100}%`;
+
+      // Activate steps as they pass the trigger point
+      steps.forEach((step) => {
+        const stepRect = step.getBoundingClientRect();
+        const stepMiddle = stepRect.top + stepRect.height * 0.3;
+        if (stepMiddle < viewportTrigger) {
+          step.classList.add('is-active');
+        } else {
+          step.classList.remove('is-active');
+        }
+      });
+    }
+
+    // Run on scroll with requestAnimationFrame for smoothness
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateTimeline();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Initial check
+    updateTimeline();
+  }
+</script>

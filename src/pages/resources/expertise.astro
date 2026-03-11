@@ -1,0 +1,160 @@
+---
+import Layout from '../../components/Layout.astro';
+import { getExpertiseItems } from '../../lib/wordpress';
+
+const expertiseItems = await getExpertiseItems();
+const services = expertiseItems.map(e => ({
+  slug: e.slug,
+  title: e.title,
+  subtitle: e.subtitle,
+  desc: e.tagline,
+  illustration: e.illustration,
+  icon: e.icon,
+  stat: e.stats.length > 0 ? e.stats[0].value : '',
+}));
+---
+
+<Layout title="Our Expertise" description="Three areas where we deliver measurable impact: Leadership Training, Restructuring, and Sickness Management.">
+
+<!-- ===== HERO ===== -->
+<section class="exp-hero">
+  <div class="exp-hero-mesh"></div>
+  <div class="container-wide exp-hero-inner">
+    <div class="exp-hero-text" data-animate="fade-up">
+      <span class="eyebrow-badge" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);">
+        What Sets Us Apart
+      </span>
+      <h1>Our <span style="color: var(--orange);">Expertise</span></h1>
+      <p class="exp-hero-sub">Three high-impact areas where we consistently deliver measurable outcomes for our clients.</p>
+    </div>
+    <div class="exp-hero-visual" data-animate="fade-left">
+      <img src="/images/highlight-leadership.png" alt="HRHelp expertise" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES GRID ===== -->
+<section class="exp-section">
+  <div class="container">
+    <div class="exp-grid">
+      {services.map((svc, i) => (
+        <a href={`/resources/expertise/${svc.slug}`} class="exp-card" data-animate="fade-up" data-delay={i * 100}>
+          <div class="exp-card-illus">
+            <img src={svc.illustration} alt={svc.title} />
+            <span class="exp-card-stat">{svc.stat}</span>
+          </div>
+          <div class="exp-card-body">
+            <div class="exp-card-icon">
+              <span class="material-symbols-outlined">{svc.icon}</span>
+            </div>
+            <span class="exp-card-sub">{svc.subtitle}</span>
+            <h2>{svc.title}</h2>
+            <p>{svc.desc}</p>
+            <span class="exp-card-link">Learn More →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="exp-cta">
+  <div class="container" style="text-align: center;">
+    <h2>See Our Work in Action</h2>
+    <p>Explore our case studies with detailed outcomes and client results.</p>
+    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
+      <a href="/resources/case-studies" class="btn btn-primary btn-lg">View Case Studies →</a>
+      <a href="/contact" class="btn btn-ghost btn-lg" style="border-color: rgba(255,255,255,0.3); color: white;">Book Consultation</a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+.exp-hero {
+  padding: 10rem 0 5rem;
+  background: var(--navy); color: white;
+  position: relative; overflow: hidden;
+}
+.exp-hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(244,121,32,0.12), transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04), transparent 40%);
+  z-index: 1;
+}
+.exp-hero-inner {
+  display: flex; gap: 4rem; align-items: center;
+  position: relative; z-index: 2;
+}
+.exp-hero-text { flex: 1; }
+.exp-hero-text h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; margin: 1rem 0; color: white; }
+.exp-hero-sub { font-size: 1.15rem; color: rgba(255,255,255,0.7); max-width: 500px; line-height: 1.7; }
+.exp-hero-visual { flex: 0 0 380px; }
+.exp-hero-visual img {
+  width: 100%; border-radius: var(--radius-xl);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+}
+
+.exp-section { padding: var(--section-padding); background: var(--cream); }
+.exp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+.exp-card {
+  text-decoration: none;
+  background: white; border-radius: var(--radius-xl);
+  overflow: hidden; border: 1px solid var(--gray-200);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.exp-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+.exp-card-illus {
+  position: relative;
+  background: white; padding: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 240px; border-bottom: 1px solid var(--gray-100);
+}
+.exp-card-illus img { max-width: 80%; max-height: 200px; object-fit: contain; }
+.exp-card-stat {
+  position: absolute; top: 0.75rem; right: 0.75rem;
+  background: rgba(244,121,32,0.9); color: white;
+  font-size: 0.7rem; font-weight: 700;
+  padding: 0.3rem 0.8rem; border-radius: var(--radius-full);
+}
+.exp-card-body { padding: 1.5rem; }
+.exp-card-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  background: rgba(244,121,32,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.exp-card-icon .material-symbols-outlined { font-size: 22px; color: var(--orange); }
+.exp-card-sub {
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--orange); display: block; margin-bottom: 0.25rem;
+}
+.exp-card-body h2 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+.exp-card-body p { font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; }
+.exp-card-link { font-size: 0.85rem; font-weight: 700; color: var(--orange); }
+
+.exp-cta { padding: 5rem 0; background: var(--navy); color: white; }
+.exp-cta h2 { margin-bottom: 0.75rem; color: white; }
+.exp-cta p { color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto; }
+
+@media (max-width: 992px) {
+  .exp-hero-inner { flex-direction: column; text-align: center; }
+  .exp-hero-visual { flex: none; width: 100%; max-width: 400px; }
+  .exp-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+}
+
+@media (max-width: 768px) {
+  .exp-hero { padding: 7.5rem 0 3.5rem; }
+  .exp-hero-sub { margin: 0 auto; }
+  .exp-card-illus { min-height: 180px; padding: 1.5rem; }
+  .exp-card-illus img { max-height: 150px; }
+  .exp-cta { padding: 3.5rem 0; }
+}
+</style>

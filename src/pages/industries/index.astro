@@ -1,0 +1,514 @@
+---
+import Layout from '../../components/Layout.astro';
+
+const industries = [
+  { name: 'Technology & Startups', icon: 'terminal', slug: 'technology',
+    image: '/images/sections/showcase-technology.png',
+    desc: 'Seed to scale-up HR. Stock options, tech talent acquisition, 30% ruling applications, equity-based compensation, and global mobility.' },
+  { name: 'Life Sciences & Pharma', icon: 'biotech', slug: 'life-sciences',
+    image: '/images/sections/showcase-life-sciences.png',
+    desc: 'Compliance-focused for regulated industries. R&D tax benefits, clinical workforce management, and BIG registration guidance.' },
+  { name: 'Finance & Fintech', icon: 'account_balance', slug: 'finance',
+    image: '/images/sections/showcase-finance.png',
+    desc: 'AFM/DNB compliance, executive compensation, banking-grade HR governance, bonus claw-back structuring, and MiFID staffing.' },
+  { name: 'Professional Services', icon: 'work', slug: 'professional-services',
+    image: '/images/sections/showcase-professional-services.png',
+    desc: 'Consulting, legal, and advisory firms. Partnership structures, billable workforce management, and knowledge-worker retention.' },
+  { name: 'Logistics & Supply Chain', icon: 'local_shipping', slug: 'logistics',
+    image: '/images/sections/showcase-logistics.png',
+    desc: 'Distribution centers, shift workers, temporary labor, port operations HR. Cross-border driver compliance and CAO overleg.' },
+  { name: 'NGO & Non-Profit', icon: 'public', slug: 'ngo',
+    image: '/images/sections/showcase-ngo.png',
+    desc: 'Non-profit employment rules, volunteer management, grant-funded positions, and mission-driven talent acquisition strategies.' },
+  { name: 'Greenfield & Manufacturing', icon: 'precision_manufacturing', slug: 'manufacturing',
+    image: '/images/sections/showcase-manufacturing.png',
+    desc: 'New facility HR setup, production workforce, CLA negotiations, works councils, and CAO compliance for manufacturing environments.' },
+  { name: 'Production & Industrial', icon: 'engineering', slug: 'industrial',
+    image: '/images/sections/showcase-industrial.png',
+    desc: 'Health & safety compliance, union relations, blue-collar recruitment, shift-planning, and workplace safety audits.' },
+];
+
+const stats = [
+  { value: '25+', label: 'Years Experience', icon: 'calendar_month' },
+  { value: '75+', label: 'Clients Served', icon: 'groups' },
+  { value: '€2M', label: 'Avg Cost Savings', icon: 'savings' },
+  { value: '98%', label: 'Retention Rate', icon: 'trending_up' },
+];
+
+const steps = [
+  { num: '01', title: 'Assessment', icon: 'analytics',
+    desc: 'Deep-dive analysis into your current organizational structure, talent gaps, and cultural blockers.' },
+  { num: '02', title: 'Strategy', icon: 'strategy',
+    desc: 'Customized roadmap development focusing on high-impact, low-friction interventions aligned with Dutch labor law.' },
+  { num: '03', title: 'Implementation', icon: 'rocket_launch',
+    desc: 'Hands-on execution support to ensure changes stick, deliver measurable ROI, and embed sustainable practices.' },
+];
+---
+
+<Layout title="Industries" description="Specialized HR consulting across key sectors of the Dutch economy — technology, healthcare, finance, manufacturing, and more.">
+
+<!-- ===== HERO ===== -->
+<section class="ia-hero">
+  <div class="ia-hero-mesh"></div>
+  <div class="container-wide ia-hero-inner">
+    <div class="ia-hero-text" data-animate="fade-up">
+      <span class="eyebrow-badge" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);">
+        <span class="ia-dot"></span> Industry Expertise
+      </span>
+      <h1>Strategic HR for<br/><span class="ia-gradient-text">Dutch Industry Leaders</span></h1>
+      <p>Executive consulting power for the modern workforce. Data-driven authority and proven methodologies to define the future of human resources in the Netherlands.</p>
+      <div class="ia-hero-btns">
+        <a href="/contact" class="btn btn-primary btn-lg">Schedule Consultation →</a>
+        <a href="/solutions" class="btn btn-ghost btn-lg">Explore Services</a>
+      </div>
+    </div>
+    <div class="ia-hero-image" data-animate="fade-left">
+      <img src="/images/sections/hero-technology.png" alt="Modern corporate office in Amsterdam" />
+      <div class="ia-hero-image-overlay"></div>
+      <div class="ia-hero-card">
+        <p class="ia-hero-card-label">Market Analysis 2026</p>
+        <p class="ia-hero-card-desc">Labor trends indicating a 14% shift in executive retention strategies across the Netherlands.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VISUAL INDUSTRY GRID ===== -->
+<section class="ia-grid-section section-white" id="industries">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow">Industries Served</span>
+      <h2>Specialized Expertise Across Sectors</h2>
+      <p>Deep domain knowledge for every corner of the Dutch economy.</p>
+    </div>
+    <div class="ia-grid">
+      {industries.map((ind, i) => (
+        <a href={`/industries/${ind.slug}`} class="ia-card" data-animate="fade-up" data-delay={i * 80}>
+          <div class="ia-card-bg">
+            <img src={ind.image} alt={ind.name} />
+          </div>
+          <div class="ia-card-overlay"></div>
+          <div class="ia-card-content">
+            <div class="ia-card-icon">
+              <span class="material-symbols-outlined">{ind.icon}</span>
+            </div>
+            <h3>{ind.name}</h3>
+            <p>{ind.desc}</p>
+            <span class="ia-card-link">Explore <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS BAR ===== -->
+<section class="ia-stats section-navy">
+  <div class="container">
+    <div class="ia-stats-grid">
+      {stats.map((stat) => (
+        <div class="ia-stat" data-animate="fade-up">
+          <div class="ia-stat-icon">
+            <span class="material-symbols-outlined">{stat.icon}</span>
+          </div>
+          <span class="ia-stat-value">{stat.value}</span>
+          <span class="ia-stat-label">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== METHODOLOGY ===== -->
+<section class="ia-method section-cream">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow">Our Approach</span>
+      <h2>Our Methodology</h2>
+      <p>A systematic approach to organizational excellence.</p>
+    </div>
+    <div class="ia-method-grid">
+      {steps.map((step, i) => (
+        <div class="ia-method-step" data-animate="fade-up" data-delay={i * 150}>
+          <div class="ia-method-num">{step.num}</div>
+          <div class="ia-method-circle">
+            <span class="material-symbols-outlined">{step.icon}</span>
+          </div>
+          <h3>{step.title}</h3>
+          <p>{step.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== CASE STUDY ===== -->
+<section class="ia-case section-white">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow">Case Study</span>
+      <h2>Real Results, Real Impact</h2>
+    </div>
+    <div class="ia-case-card" data-animate="fade-up">
+      <div class="ia-case-image">
+        <img src="/images/highlight-restructuring.png" alt="Corporate restructuring case study" />
+      </div>
+      <div class="ia-case-body">
+        <h3>Delivering a Complex Site Closure — On Time and Under Budget</h3>
+        <p>When a multinational client decided to consolidate operations and close its Dutch site, we led the execution from start to finish — ensuring full compliance, clear communication, and a process managed with respect.</p>
+        <div class="ia-case-badges">
+          <div class="ia-case-badge">
+            <strong>50%</strong>
+            <span>Cost Reduction</span>
+          </div>
+          <div class="ia-case-badge">
+            <strong>100%</strong>
+            <span>Compliance</span>
+          </div>
+          <div class="ia-case-badge">
+            <strong>On-Time</strong>
+            <span>Delivery</span>
+          </div>
+        </div>
+        <a href="/resources/case-studies" class="ia-case-link">Read Full Case Study <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARTNERS ===== -->
+<section class="ia-partners section-cream">
+  <div class="container" style="text-align:center;">
+    <p class="ia-partners-label">Trusted By Industry Leaders</p>
+    <div class="ia-partners-row">
+      <span class="ia-logo"><span class="material-symbols-outlined">diamond</span> LUXCORP</span>
+      <span class="ia-logo"><span class="material-symbols-outlined">change_history</span> VELOCITY</span>
+      <span class="ia-logo"><span class="material-symbols-outlined">water_drop</span> NorthSea</span>
+      <span class="ia-logo"><span class="material-symbols-outlined">qr_code_2</span> DATAFLOW</span>
+      <span class="ia-logo"><span class="material-symbols-outlined">forest</span> GreenEnergy</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="ia-cta">
+  <div class="ia-cta-bg">
+    <img src="/images/sections/showcase-finance.png" alt="" />
+  </div>
+  <div class="ia-cta-overlay"></div>
+  <div class="container" style="position:relative; z-index:2; text-align:center;">
+    <h2 data-animate="fade-up">Ready to Transform Your Industry?</h2>
+    <p data-animate="fade-up">Let our specialists build a tailored HR strategy for your sector.</p>
+    <div class="ia-cta-btns" data-animate="fade-up">
+      <a href="/contact" class="btn btn-primary btn-lg">Schedule a Call →</a>
+      <a href="/solutions" class="btn btn-ghost btn-lg">View Solutions</a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.ia-hero {
+  position: relative; overflow: hidden;
+  padding: 8.5rem 0 5rem;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+}
+.ia-hero-mesh {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 50%, rgba(244,121,32,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 80% 20%, rgba(42,82,152,0.15) 0%, transparent 70%);
+}
+.ia-hero-inner {
+  display: flex; align-items: center; gap: 4rem;
+  position: relative; z-index: 1;
+}
+.ia-hero-text { flex: 1; }
+.ia-hero-text h1 { color: white; margin-bottom: 1.25rem; }
+.ia-hero-text p { color: rgba(255,255,255,0.7); font-size: 1.15rem; max-width: 540px; }
+.ia-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--orange); display: inline-block; margin-right: 2px;
+}
+.ia-gradient-text {
+  background: linear-gradient(135deg, var(--orange), #ff9a4d);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.ia-hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+.ia-hero-image {
+  flex: 0 0 420px; position: relative;
+  border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.ia-hero-image img {
+  width: 100%; height: 340px; object-fit: cover; display: block;
+  transition: transform 0.7s ease;
+}
+.ia-hero-image:hover img { transform: scale(1.05); }
+.ia-hero-image-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(26,58,110,0.7), transparent 60%);
+}
+.ia-hero-card {
+  position: absolute; bottom: 1rem; left: 1rem; right: 1rem;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+  padding: 0.75rem 1rem; border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg); border-left: 4px solid var(--orange);
+}
+.ia-hero-card-label { font-weight: 700; color: var(--navy); font-size: 0.9rem; margin-bottom: 0.15rem; }
+.ia-hero-card-desc { font-size: 0.8rem; color: var(--gray-600); line-height: 1.5; }
+
+/* ===== VISUAL INDUSTRY GRID ===== */
+.ia-grid-section { padding: var(--section-padding); }
+.ia-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+.ia-card {
+  position: relative; display: flex; flex-direction: column;
+  justify-content: flex-end;
+  min-height: 340px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.ia-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(15,43,70,0.15);
+}
+.ia-card-bg {
+  position: absolute; inset: 0;
+}
+.ia-card-bg img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.ia-card:hover .ia-card-bg img { transform: scale(1.08); }
+.ia-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(15,37,72,0.92) 0%,
+    rgba(15,37,72,0.6) 40%,
+    rgba(15,37,72,0.2) 70%,
+    transparent 100%
+  );
+  transition: opacity 0.4s ease;
+}
+.ia-card:hover .ia-card-overlay { opacity: 0.95; }
+.ia-card-content {
+  position: relative; z-index: 2;
+  padding: 1.5rem;
+  color: white;
+}
+.ia-card-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(244,121,32,0.9);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.ia-card-icon .material-symbols-outlined { font-size: 22px; color: white; }
+.ia-card-content h3 {
+  font-size: 1.1rem; font-weight: 700; color: white;
+  margin-bottom: 0.5rem; line-height: 1.3;
+}
+.ia-card-content p {
+  font-size: 0.8rem; color: rgba(255,255,255,0.7);
+  line-height: 1.5; margin-bottom: 0.75rem;
+  display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+  transition: all 0.4s ease;
+}
+.ia-card:hover .ia-card-content p {
+  -webkit-line-clamp: 6;
+  color: rgba(255,255,255,0.85);
+}
+.ia-card-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.82rem; font-weight: 700; color: var(--orange);
+  opacity: 0; transform: translateY(8px);
+  transition: all 0.3s ease;
+}
+.ia-card:hover .ia-card-link {
+  opacity: 1; transform: translateY(0);
+}
+
+/* ===== STATS ===== */
+.ia-stats { padding: 4.5rem 0; }
+.ia-stats-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 2rem; text-align: center;
+}
+.ia-stat { display: flex; flex-direction: column; align-items: center; }
+.ia-stat-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(244,121,32,0.15);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.ia-stat-icon .material-symbols-outlined { font-size: 22px; color: var(--orange); }
+.ia-stat-value { font-size: 2.75rem; font-weight: 900; color: white; margin-bottom: 0.3rem; line-height: 1; }
+.ia-stat-label {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2px; color: rgba(255,255,255,0.5);
+}
+
+/* ===== METHODOLOGY ===== */
+.ia-method { padding: var(--section-padding); }
+.ia-method-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem; text-align: center;
+}
+.ia-method-step { position: relative; }
+.ia-method-num {
+  font-size: 3rem; font-weight: 900; color: rgba(244,121,32,0.1);
+  line-height: 1; margin-bottom: -1rem;
+}
+.ia-method-circle {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: white; border: 3px solid var(--orange);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  margin: 0 auto 1.25rem;
+}
+.ia-method-circle .material-symbols-outlined { font-size: 32px; color: var(--navy); }
+.ia-method-step h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
+.ia-method-step p { font-size: 0.92rem; max-width: 320px; margin: 0 auto; }
+
+/* ===== CASE STUDY ===== */
+.ia-case { padding: var(--section-padding); }
+.ia-case-card {
+  display: flex; border-radius: var(--radius-xl);
+  overflow: hidden; box-shadow: var(--shadow-lg);
+  border: 1px solid var(--gray-200); background: var(--cream);
+}
+.ia-case-image { flex: 1; min-height: 340px; position: relative; }
+.ia-case-image img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.ia-case-card:hover .ia-case-image img { transform: scale(1.05); }
+.ia-case-body {
+  flex: 1; padding: 3rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.ia-case-body h3 { font-size: 1.6rem; margin-bottom: 1rem; }
+.ia-case-body p { margin-bottom: 1.5rem; line-height: 1.7; }
+.ia-case-badges { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+.ia-case-badge {
+  background: white; padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+.ia-case-badge strong { display: block; font-size: 1.5rem; color: var(--orange); }
+.ia-case-badge span { font-size: 0.7rem; text-transform: uppercase; color: var(--gray-500); letter-spacing: 1px; }
+.ia-case-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: var(--navy); font-weight: 700; border-bottom: 2px solid var(--orange);
+  padding-bottom: 4px; transition: color var(--transition-base);
+  align-self: flex-start;
+}
+.ia-case-link:hover { color: var(--orange); }
+
+/* ===== PARTNERS ===== */
+.ia-partners { padding: 4rem 0; }
+.ia-partners-label {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 3px; color: var(--gray-400); margin-bottom: 2rem;
+}
+.ia-partners-row {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 2.5rem; opacity: 0.4; filter: grayscale(100%);
+  transition: all 0.5s ease;
+}
+.ia-partners-row:hover { opacity: 1; filter: grayscale(0%); }
+.ia-logo {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 1.25rem; font-weight: 800; color: var(--navy);
+}
+
+/* ===== CTA ===== */
+.ia-cta {
+  position: relative; overflow: hidden;
+  padding: 6rem 2rem;
+}
+.ia-cta-bg { position: absolute; inset: 0; }
+.ia-cta-bg img { width: 100%; height: 100%; object-fit: cover; }
+.ia-cta-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(135deg, rgba(15,37,72,0.92) 0%, rgba(26,58,110,0.88) 100%);
+}
+.ia-cta h2 { color: white; margin-bottom: 0.75rem; }
+.ia-cta p { color: rgba(255,255,255,0.7); margin-bottom: 2rem; font-size: 1.1rem; }
+.ia-cta-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+/* ===== SCROLL ANIMATIONS ===== */
+[data-animate] {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+[data-animate="fade-left"] { transform: translateX(30px); }
+[data-animate].is-visible {
+  opacity: 1; transform: translate(0, 0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .ia-grid { grid-template-columns: repeat(2, 1fr); }
+  .ia-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  .ia-hero-image { flex: 0 0 360px; }
+}
+
+@media (max-width: 768px) {
+  .ia-hero { padding: 8.5rem 0 4rem; }
+  .ia-hero-inner { flex-direction: column; gap: 2.5rem; }
+  .ia-hero-text { text-align: center; }
+  .ia-hero-text p { margin: 0 auto; }
+  .ia-hero-btns { justify-content: center; flex-direction: column; align-items: stretch; }
+  .ia-hero-btns .btn { text-align: center; }
+  .ia-hero-image { flex: none; width: 100%; }
+  .ia-hero-image img { height: 240px; }
+  .ia-hero-card { display: none; }
+
+  .ia-grid { grid-template-columns: 1fr; }
+  .ia-card { min-height: 280px; }
+  .ia-card-link { opacity: 1; transform: none; }
+
+  .ia-method-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+  .ia-case-card { flex-direction: column; }
+  .ia-case-image { min-height: 180px; }
+  .ia-case-body { padding: 1.25rem; }
+  .ia-case-body h3 { font-size: 1.1rem !important; }
+  .ia-case-body p { font-size: 0.85rem; margin-bottom: 1rem; }
+  .ia-case-badges { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .ia-case-badge { padding: 0.5rem 0.75rem; flex: 1; text-align: center; }
+  .ia-case-badge strong { font-size: 1rem; }
+  .ia-case-badge span { font-size: 0.6rem; letter-spacing: 0.5px; }
+
+  .ia-stats-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<script>
+  const animatedEls = document.querySelectorAll('[data-animate]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.getAttribute('data-delay');
+        if (delay) {
+          setTimeout(() => entry.target.classList.add('is-visible'), parseInt(delay));
+        } else {
+          entry.target.classList.add('is-visible');
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  animatedEls.forEach(el => observer.observe(el));
+</script>

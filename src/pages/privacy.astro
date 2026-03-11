@@ -1,0 +1,129 @@
+---
+import Layout from '../components/Layout.astro';
+
+const sections = [
+  { title: '1. Introduction', content: 'HRHelp.nl B.V. ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your personal information when you visit our website or engage our services.' },
+  { title: '2. Information We Collect', content: 'We may collect personal information such as your name, email address, phone number, and company details when you fill out our contact form, subscribe to our newsletter, or engage our consulting services.' },
+  { title: '3. How We Use Your Information', list: ['Respond to your inquiries and provide HR consultancy services.', 'Send you relevant updates and newsletters (with your consent).', 'Improve our website and service offerings.', 'Comply with legal obligations in the Netherlands.'] },
+  { title: '4. Data Sharing & Security', content: 'We do not sell your personal data. We may share information with our trusted network partners only as necessary to fulfill your service requests. We implement robust security measures including encryption, access controls, and regular audits to protect your data from unauthorized access.' },
+  { title: '5. Cookies', content: 'Our website uses cookies to enhance your browsing experience. You can manage your cookie preferences through your browser settings. We use only essential cookies and analytics tracking to improve site performance.' },
+  { title: '6. Your Rights (GDPR)', list: ['Access your personal data held by us.', 'Request rectification of inaccurate data.', 'Request erasure of your data ("right to be forgotten").', 'Object to or restrict processing of your data.', 'Request data portability in a machine-readable format.'] },
+  { title: '7. Data Retention', content: 'We retain personal data only as long as necessary for the purposes set out in this policy, or as required by Dutch law. Client project data is retained for 7 years in accordance with Dutch fiscal regulations.' },
+];
+---
+
+<Layout title="Privacy Policy" description="Privacy Policy and GDPR compliance information for HRHelp.nl — your trusted Dutch HR partner.">
+
+<!-- ===== HERO ===== -->
+<section class="lg-hero">
+  <div class="lg-hero-mesh"></div>
+  <div class="container lg-hero-inner">
+    <span class="eyebrow-badge">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="lg-hero-p">Your privacy is important to us. This policy explains how we handle your personal data in compliance with Dutch law and the GDPR.</p>
+    <p class="lg-meta">Last updated: March 1, 2026</p>
+  </div>
+</section>
+
+<!-- ===== CONTENT ===== -->
+<section class="lg-content">
+  <div class="container lg-narrow">
+    {sections.map((s) => (
+      <div class="lg-block">
+        <h2>{s.title}</h2>
+        {s.content && <p>{s.content}</p>}
+        {s.list && (
+          <ul>
+            {s.list.map((item) => (
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    ))}
+
+    <div class="lg-block lg-contact-block">
+      <h2>8. Contact Us</h2>
+      <p>If you have any questions about this Privacy Policy or wish to exercise your data rights, please contact us:</p>
+      <div class="lg-address-card">
+        <div class="lg-addr-item">
+          <span class="material-symbols-outlined">location_on</span>
+          <div>
+            <strong>HRHelp.nl B.V.</strong>
+            <p>Oeverwalweg 3, 1332 CG Almere, Netherlands</p>
+          </div>
+        </div>
+        <div class="lg-addr-item">
+          <span class="material-symbols-outlined">mail</span>
+          <div>
+            <strong>info@hrhelp.nl</strong>
+            <p>Data protection inquiries</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.lg-hero {
+  padding: 10rem 0 5rem;
+  background: var(--navy);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.lg-hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 60% 20%, rgba(244,121,32,0.12), transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04), transparent 40%);
+  z-index: 1;
+}
+.lg-hero-inner { position: relative; z-index: 2; }
+.lg-hero h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
+.lg-hero-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto; }
+.lg-meta { font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-top: 1.5rem; }
+
+/* ===== CONTENT ===== */
+.lg-content { padding: 6rem 0 8rem; }
+.lg-narrow { max-width: 800px; }
+
+.lg-block { margin-bottom: 3rem; }
+.lg-block h2 {
+  font-size: 1.4rem; font-weight: 800; color: var(--navy);
+  margin-bottom: 1rem; padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--cream);
+}
+.lg-block p { font-size: 1.05rem; line-height: 1.8; color: var(--gray-600); }
+.lg-block ul {
+  list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.lg-block li {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  font-size: 1.05rem; line-height: 1.7; color: var(--gray-600);
+}
+.lg-block li svg { flex-shrink: 0; margin-top: 4px; }
+
+/* Address Card */
+.lg-address-card {
+  background: var(--cream); padding: 2rem; border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200); margin-top: 1.5rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.lg-addr-item { display: flex; gap: 1rem; align-items: flex-start; }
+.lg-addr-item > span { color: var(--orange); margin-top: 2px; }
+.lg-addr-item strong { display: block; font-size: 1rem; color: var(--navy); }
+.lg-addr-item p { font-size: 0.9rem; color: var(--gray-500); margin: 0; }
+
+@media (max-width: 576px) {
+  .lg-hero h1 { font-size: 2.5rem; }
+}
+</style>

@@ -1,0 +1,111 @@
+---
+import Layout from '../components/Layout.astro';
+
+const sections = [
+  { title: '1. Acceptance of Terms', content: 'By accessing this website or engaging the services of HRHelp.nl B.V., you agree to comply with and be bound by these Terms of Service. If you do not agree, please do not use our website or services.' },
+  { title: '2. Services Provided', content: 'HRHelp.nl provides HR consultancy, recruitment, compliance advisory, and strategic HR services. These services are provided on a retainer or project-basis as agreed upon in a separate Service Level Agreement (SLA) or engagement letter.' },
+  { title: '3. Professional Advice', content: 'While we provide expert HR and employment law guidance, our advice does not constitute formal legal counsel. For specific legal disputes or litigation, we recommend consulting a qualified attorney, which we can facilitate through our network of legal partners.' },
+  { title: '4. Intellectual Property', content: 'All content on this website — including text, graphics, logos, design elements, and documentation — is the property of HRHelp.nl B.V. and is protected by international copyright laws. Unauthorized reproduction or distribution is prohibited.' },
+  { title: '5. Confidentiality', content: 'All client information shared during the course of our engagement is treated as strictly confidential. We maintain robust data protection measures in compliance with the GDPR and Dutch privacy regulations.' },
+  { title: '6. Limitation of Liability', content: 'HRHelp.nl B.V. shall not be liable for any indirect, incidental, or consequential damages arising out of the use of our services, except as required by mandatory Dutch law. Our total liability is limited to the fees paid for the specific engagement in question.' },
+  { title: '7. Governing Law', content: 'These terms are governed by and construed in accordance with the laws of the Netherlands. Any disputes shall be subject to the exclusive jurisdiction of the courts of Amsterdam.' },
+  { title: '8. Changes to Terms', content: 'We reserve the right to modify these terms at any time. Material changes will be communicated via our website or email. Your continued use of the website or services following any changes constitutes acceptance of the updated terms.' },
+];
+---
+
+<Layout title="Terms of Service" description="Terms of Service for HRHelp.nl — Dutch HR consultancy services for international companies.">
+
+<!-- ===== HERO ===== -->
+<section class="lg-hero">
+  <div class="lg-hero-mesh"></div>
+  <div class="container lg-hero-inner">
+    <span class="eyebrow-badge">Legal</span>
+    <h1>Terms of Service</h1>
+    <p class="lg-hero-p">These terms govern the use of our website and services. Please read them carefully before engaging with HRHelp.nl.</p>
+    <p class="lg-meta">Last updated: March 1, 2026</p>
+  </div>
+</section>
+
+<!-- ===== CONTENT ===== -->
+<section class="lg-content">
+  <div class="container lg-narrow">
+    {sections.map((s) => (
+      <div class="lg-block">
+        <h2>{s.title}</h2>
+        <p>{s.content}</p>
+      </div>
+    ))}
+
+    <div class="lg-block">
+      <h2>9. Contact</h2>
+      <p>For questions regarding these terms, please reach out to us.</p>
+      <div class="lg-address-card">
+        <div class="lg-addr-item">
+          <span class="material-symbols-outlined">mail</span>
+          <div>
+            <strong>info@hrhelp.nl</strong>
+            <p>Legal and service inquiries</p>
+          </div>
+        </div>
+        <div class="lg-addr-item">
+          <span class="material-symbols-outlined">phone_in_talk</span>
+          <div>
+            <strong>+31 85 760 8188</strong>
+            <p>Mon – Fri, 08:30 – 18:00 CET</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.lg-hero {
+  padding: 10rem 0 5rem;
+  background: var(--navy);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.lg-hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 60% 20%, rgba(244,121,32,0.12), transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04), transparent 40%);
+  z-index: 1;
+}
+.lg-hero-inner { position: relative; z-index: 2; }
+.lg-hero h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
+.lg-hero-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto; }
+.lg-meta { font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-top: 1.5rem; }
+
+/* ===== CONTENT ===== */
+.lg-content { padding: 6rem 0 8rem; }
+.lg-narrow { max-width: 800px; }
+
+.lg-block { margin-bottom: 3rem; }
+.lg-block h2 {
+  font-size: 1.4rem; font-weight: 800; color: var(--navy);
+  margin-bottom: 1rem; padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--cream);
+}
+.lg-block p { font-size: 1.05rem; line-height: 1.8; color: var(--gray-600); }
+
+/* Address Card */
+.lg-address-card {
+  background: var(--cream); padding: 2rem; border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200); margin-top: 1.5rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.lg-addr-item { display: flex; gap: 1rem; align-items: flex-start; }
+.lg-addr-item > span { color: var(--orange); margin-top: 2px; }
+.lg-addr-item strong { display: block; font-size: 1rem; color: var(--navy); }
+.lg-addr-item p { font-size: 0.9rem; color: var(--gray-500); margin: 0; }
+
+@media (max-width: 576px) {
+  .lg-hero h1 { font-size: 2.5rem; }
+}
+</style>

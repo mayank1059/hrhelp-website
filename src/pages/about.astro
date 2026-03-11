@@ -1,0 +1,488 @@
+---
+import Layout from '../components/Layout.astro';
+
+const timeline = [
+  { 
+    year: '2019', 
+    title: 'The Spark', 
+    desc: 'Founded by two HR veterans who recognized a critical gap: international companies in the Netherlands lacked the specialized, high-touch support needed to navigate local complexity.' 
+  },
+  { 
+    year: '2021', 
+    title: 'The Network Evolution', 
+    desc: 'Transitioned to a boutique network organization. By collaborating with top-tier specialists across employment law, payroll, and talent strategy, we delivery elite expertise without the overhead of big-box firms.' 
+  },
+  { 
+    year: '2025', 
+    title: 'Strategic Partnership', 
+    desc: 'Today, we serve as the trusted HR partner for modern enterprises, bridging the gap between global strategy and local Dutch compliance.' 
+  }
+];
+
+const partners = [
+  { icon: 'gavel', title: 'Legal & Compliance', desc: 'Expert Dutch employment law counsel for complex contracts and restructuring.' },
+  { icon: 'payments', title: 'Payroll & Benefits', desc: 'Seamless integration with specialized Dutch payroll providers.' },
+  { icon: 'psychology', title: 'Talent Strategy', desc: 'Behavioral psychologists and niche headhunters for critical hires.' },
+  { icon: 'shield', title: 'Risk Management', desc: 'Insurance and health safety specialists ensuring workplace compliance.' }
+];
+
+const stats = [
+  { value: '25+', label: 'Years Experience' },
+  { value: '75+', label: 'Clients Served' },
+  { value: '100%', label: 'Dutch Compliance' },
+  { value: '24h', label: 'Response Time' }
+];
+---
+
+<Layout title="About Us" description="Founded in 2019 to humanize Dutch HR for international companies. Learn about our founder Cornelis Leerlooijer and our network of specialists.">
+
+<!-- ===== HERO SECTON ===== -->
+<section class="ab2-hero">
+  <div class="ab2-hero-mesh"></div>
+  <div class="container-wide ab2-hero-inner">
+    <div class="ab2-hero-content" data-animate="fade-up">
+      <span class="eyebrow-badge">Our Story</span>
+      <h1>Human Expertise. <br/><span class="text-orange">Strategic Network.</span></h1>
+      <p class="ab2-hero-p">Founded in 2019 on the principle that international businesses deserve more than just "standard" HR. We built a model that combines veteran wisdom with modern agility.</p>
+      
+      <div class="ab2-hero-stats">
+        {stats.map(stat => (
+          <div class="ab2-hero-stat">
+            <span class="ab2-stat-val">{stat.value}</span>
+            <span class="ab2-stat-lbl">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <div class="ab2-hero-visual" data-animate="fade-left">
+      <div class="ab2-hero-img-card">
+        <img src="/images/founder/team-collaboration.jpg" alt="Strategic HR planning in Amsterdam" />
+        <div class="ab2-img-label">
+          <span class="material-symbols-outlined">location_on</span>
+          <span>Amsterdam Head Office</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THE HRHELP APPROACH ===== -->
+<section class="ab2-approach">
+  <div class="container">
+    <div class="ab2-approach-header" data-animate="fade-up">
+      <h2>The HRHelp Approach</h2>
+      <p>Our core values aren't just words on a wall. They are the operating system of our business.</p>
+    </div>
+    <div class="ab2-values-grid">
+      <div class="ab2-value-card" data-animate="fade-up">
+        <div class="ab2-value-icon">
+          <span class="material-symbols-outlined">visibility</span>
+        </div>
+        <h3>Transparency</h3>
+        <p>No hidden fees, no ghosting. We keep communication channels open and honest at every step of the journey.</p>
+      </div>
+      <div class="ab2-value-card" data-animate="fade-up">
+        <div class="ab2-value-icon">
+          <span class="material-symbols-outlined">favorite</span>
+        </div>
+        <h3>Empathy</h3>
+        <p>We look beyond the resume. Understanding the human behind the candidate and the culture behind the company.</p>
+      </div>
+      <div class="ab2-value-card" data-animate="fade-up">
+        <div class="ab2-value-icon">
+          <span class="material-symbols-outlined">bolt</span>
+        </div>
+        <h3>Speed</h3>
+        <p>The business world moves fast, and so do we. Our agile processes are designed to keep pace with rapid growth.</p>
+      </div>
+      <div class="ab2-value-card" data-animate="fade-up">
+        <div class="ab2-value-icon">
+          <span class="material-symbols-outlined">psychology</span>
+        </div>
+        <h3>Strategic Insight</h3>
+        <p>Data-driven decisions that put people first. We combine analytics with intuition for the perfect match.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THE JOURNEY (Timeline) ===== -->
+<section class="ab2-journey section-navy">
+  <div class="container">
+    <div class="ab2-section-header" style="text-align: center; margin-bottom: 4rem;">
+      <h2 class="text-white">Our Evolution</h2>
+      <p class="text-muted">From a vision to a specialized network of experts.</p>
+    </div>
+    
+    <div class="ab2-timeline">
+      <div class="ab2-timeline-line"></div>
+      {timeline.map((step, index) => (
+        <div class="ab2-timeline-item" data-animate={index % 2 === 0 ? "fade-right" : "fade-left"}>
+          <div class="ab2-time-box">
+            <span class="ab2-year">{step.year}</span>
+          </div>
+          <div class="ab2-time-content">
+            <h3>{step.title}</h3>
+            <p>{step.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOUNDER SPOTLIGHT ===== -->
+<section class="ab2-founder">
+  <div class="container">
+    <div class="ab2-founder-inner">
+      <div class="ab2-founder-image" data-animate="fade-right">
+        <img src="/images/founder/cornelis-portrait.jpg" alt="Cornelis Leerlooijer - Founder" />
+        <div class="ab2-founder-badge">
+          <span class="material-symbols-outlined">verified</span>
+          <span>Founder & Managing Director</span>
+        </div>
+      </div>
+      
+      <div class="ab2-founder-text" data-animate="fade-left">
+        <span class="eyebrow-badge">Meet the Founder</span>
+        <h2>Cornelis Leerlooijer</h2>
+        <p class="ab2-founder-quote">"I saw first-hand how international companies struggled with the rigid nature of Dutch HR. We founded HRHelp.nl to provide a bridge—clear, strategic, and deeply localized support."</p>
+        
+        <div class="ab2-founder-bio">
+          <p>With over two decades of experience across global HR landscapes, Cornelis built HRHelp.nl as a rejection of the traditional corporate consultancy model. He believes in direct access to senior expertise, radical transparency, and results that move the needle for your business.</p>
+        </div>
+        
+        <div class="ab2-founder-social">
+          <a href="https://linkedin.com" target="_blank" class="ab2-social-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            <span>Connect on LinkedIn</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NETWORK ORGANIZATION SECTION ===== -->
+<section class="ab2-network section-cream">
+  <div class="container">
+    <div class="ab2-grid-layout">
+      <div class="ab2-network-text" data-animate="fade-up">
+        <h2>The Best of <span class="text-orange">Both Worlds</span></h2>
+        <p>We are a <strong>Network Organization</strong>. This means you get the intimacy and dedication of a boutique firm, backed by the comprehensive expertise of a large enterprise.</p>
+        <p>By collaborating with a curated ecosystem of partners, we ensure that every challenge—from complex litigation to hyper-growth hiring—is handled by the absolute best specialist in that specific field.</p>
+      </div>
+      
+      <div class="ab2-partners-grid">
+        {partners.map(p => (
+          <div class="ab2-partner-card" data-animate="fade-up">
+            <div class="ab2-partner-icon">
+              <span class="material-symbols-outlined">{p.icon}</span>
+            </div>
+            <h3>{p.title}</h3>
+            <p>{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT / ADDRESS ===== -->
+<section class="ab2-cta-address">
+  <div class="container">
+    <div class="ab2-cta-card">
+      <div class="ab2-cta-info">
+        <h2>Visit Us</h2>
+        <p>Strategic HR guidance at the heart of the Netherlands.</p>
+        <div class="ab2-address-item">
+          <span class="material-symbols-outlined">location_on</span>
+          <div>
+            <strong>Oeverwalweg 3</strong>
+            <p>1332 CG, Almere, Netherlands</p>
+          </div>
+        </div>
+        <div class="ab2-address-item">
+          <span class="material-symbols-outlined">mail</span>
+          <p>info@hrhelp.nl</p>
+        </div>
+        <div class="ab2-cta-btns">
+          <a href="/contact" class="btn btn-primary btn-lg" style="box-shadow: none;">Book a Consultation</a>
+        </div>
+      </div>
+      <div class="ab2-cta-photo">
+        <img src="/images/founder/culture-montage.jpg" alt="Collaborative HR culture at our Almere office" />
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.ab2-hero {
+  padding: 10rem 0 6rem;
+  background: var(--navy);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.ab2-hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(244,121,32,0.15), transparent 40%),
+              radial-gradient(circle at 10% 80%, rgba(255,255,255,0.05), transparent 40%);
+  z-index: 1;
+}
+.ab2-hero-inner {
+  display: flex; gap: 5rem; align-items: center; position: relative; z-index: 2;
+}
+.ab2-hero-content { flex: 1; }
+.ab2-hero-content h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
+.text-orange { color: #FF8A3D; }
+.ab2-hero-p { font-size: 1.2rem; line-height: 1.7; color: rgba(255,255,255,0.85); max-width: 540px; }
+
+.ab2-hero-stats {
+  display: flex; gap: 3rem; margin-top: 3.5rem; padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.ab2-stat-val { display: block; font-size: 2rem; font-weight: 800; color: var(--orange); line-height: 1; }
+.ab2-stat-lbl { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-top: 0.5rem; display: block; }
+
+.ab2-hero-visual { flex: 0 0 500px; }
+.ab2-hero-img-card {
+  position: relative; border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+}
+.ab2-hero-img-card img { width: 100%; height: 500px; object-fit: cover; display: block; }
+.ab2-img-label {
+  position: absolute; bottom: 1.5rem; left: 1.5rem;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+  padding: 0.75rem 1.25rem; border-radius: var(--radius-md);
+  display: flex; align-items: center; gap: 0.75rem; color: var(--navy); font-weight: 700; font-size: 0.9rem;
+}
+.ab2-img-label span:first-child { color: var(--orange); }
+
+/* ===== APPROACH / VALUES ===== */
+.ab2-approach {
+  padding: 6rem 0;
+  background: var(--gray-50);
+}
+.ab2-approach-header {
+  margin-bottom: 3.5rem;
+}
+.ab2-approach-header h2 {
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+}
+.ab2-approach-header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 560px;
+}
+.ab2-values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.ab2-value-card {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  transition: all 0.3s ease;
+}
+.ab2-value-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  border-color: var(--orange);
+}
+.ab2-value-icon {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-md);
+  background: rgba(244,121,32,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.25rem;
+  transition: all 0.3s ease;
+}
+.ab2-value-card:hover .ab2-value-icon {
+  background: var(--orange);
+}
+.ab2-value-icon .material-symbols-outlined {
+  font-size: 26px;
+  color: var(--orange);
+  transition: color 0.3s ease;
+}
+.ab2-value-card:hover .ab2-value-icon .material-symbols-outlined {
+  color: white;
+}
+.ab2-value-card h3 {
+  color: var(--navy);
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+.ab2-value-card p {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+/* ===== TIMELINE ===== */
+.ab2-journey { padding: 8rem 0; }
+.ab2-timeline { position: relative; max-width: 900px; margin: 0 auto; }
+.ab2-timeline-line {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+  background: rgba(255,255,255,0.1); transform: translateX(-50%);
+}
+.ab2-timeline-item {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; position: relative;
+}
+.ab2-timeline-item:nth-child(even) { flex-direction: row-reverse; }
+
+.ab2-time-box {
+  width: 45%; display: flex; justify-content: flex-end;
+}
+.ab2-timeline-item:nth-child(even) .ab2-time-box { justify-content: flex-start; }
+
+.ab2-year {
+  background: var(--orange); color: white; padding: 0.5rem 1.5rem; border-radius: 20px;
+  font-weight: 800; font-size: 1.1rem;
+}
+
+.ab2-time-content {
+  width: 45%; background: rgba(255,255,255,0.05); padding: 2rem; border-radius: var(--radius-lg);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.ab2-time-content h3 { color: white; margin-bottom: 0.75rem; font-size: 1.4rem; }
+.ab2-time-content p { color: rgba(255,255,255,0.6); line-height: 1.6; font-size: 1rem; }
+
+/* ===== FOUNDER ===== */
+.ab2-founder { padding: 8rem 0; background: var(--cream); }
+.ab2-founder-inner { display: flex; gap: 5rem; align-items: center; }
+.ab2-founder-image { flex: 0 0 450px; position: relative; }
+.ab2-founder-image img {
+  width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: var(--radius-xl);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+}
+.ab2-founder-badge {
+  position: absolute; top: 2rem; right: -2rem;
+  background: var(--navy); color: white; padding: 0.8rem 1.5rem; border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 0.75rem;
+  font-weight: 700; font-size: 0.9rem;
+}
+.ab2-founder-badge span:first-child { color: var(--orange); font-size: 1.2rem; }
+
+.ab2-founder-text { flex: 1; }
+.ab2-founder-text h2 { font-size: 2.8rem; margin: 1rem 0; }
+.ab2-founder-quote {
+  font-size: 1.5rem; font-weight: 600; color: var(--navy); font-style: italic;
+  line-height: 1.4; margin-bottom: 2rem; position: relative; padding-left: 2rem;
+}
+.ab2-founder-quote::before {
+  content: '\"'; position: absolute; left: 0; top: 0; color: var(--orange); font-size: 4rem;
+  font-family: serif; line-height: 1; opacity: 0.3;
+}
+.ab2-founder-bio p { font-size: 1.12rem; line-height: 1.8; color: var(--gray-600); margin-bottom: 2rem; }
+
+.ab2-social-btn {
+  display: inline-flex; align-items: center; gap: 0.75rem; 
+  padding: 0.75rem 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-full);
+  color: var(--navy); font-weight: 700; text-decoration: none; transition: all 0.3s ease;
+}
+.ab2-social-btn:hover { background: var(--navy); color: white; border-color: var(--navy); transform: translateY(-3px); }
+.ab2-social-btn img { width: 22px; height: 22px; }
+
+/* ===== NETWORK ===== */
+.ab2-network { padding: 8rem 0; }
+.ab2-grid-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: center; }
+.ab2-network-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+.ab2-network-text p { font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem; color: var(--gray-600); }
+
+.ab2-partners-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.ab2-partner-card {
+  background: white; padding: 2rem; border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s ease;
+}
+.ab2-partner-card:hover { transform: translateY(-5px); }
+.ab2-partner-icon {
+  width: 50px; height: 50px; background: rgba(244,121,32,0.1); color: var(--orange);
+  border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+}
+.ab2-partner-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.ab2-partner-card p { font-size: 0.9rem; line-height: 1.5; color: var(--gray-500); }
+
+/* ===== CTA ADDRESS ===== */
+.ab2-cta-address { padding: 8rem 0; }
+.ab2-cta-card {
+  background: var(--navy); color: white; border-radius: var(--radius-xl);
+  display: flex; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+}
+.ab2-cta-info { flex: 1.2; padding: 5rem; }
+.ab2-cta-info h2 { font-size: 2.5rem; margin-bottom: 1rem; color: white; }
+.ab2-cta-info p { color: rgba(255,255,255,0.7); margin-bottom: 3rem; }
+
+.ab2-address-item { display: flex; gap: 1.25rem; margin-bottom: 2rem; align-items: flex-start; }
+.ab2-address-item span { color: var(--orange); font-size: 24px; }
+.ab2-address-item strong { display: block; font-size: 1.2rem; }
+.ab2-address-item p { margin: 0; font-size: 1rem; }
+
+.ab2-cta-btns { margin-top: 3rem; }
+
+.ab2-cta-photo { flex: 1; }
+.ab2-cta-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .ab2-hero-inner { gap: 3rem; }
+  .ab2-hero-visual { flex: 0 0 400px; }
+  .ab2-hero-content h1 { font-size: 3rem; }
+}
+
+@media (max-width: 992px) {
+  .ab2-hero-inner { flex-direction: column; text-align: center; }
+  .ab2-hero-visual { flex: none; width: 100%; max-width: 500px; }
+  .ab2-hero-p { margin: 0 auto; }
+  .ab2-hero-stats { justify-content: center; }
+
+  .ab2-values-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .ab2-timeline-line { left: 40px; transform: none; }
+  .ab2-timeline-item { flex-direction: column !important; align-items: flex-start; padding-left: 80px; }
+  .ab2-time-box, .ab2-time-content { width: 100%; justify-content: flex-start !important; }
+  .ab2-time-box { margin-bottom: 1.5rem; }
+
+  .ab2-founder-inner { flex-direction: column; gap: 3rem; }
+  .ab2-founder-image { flex: none; width: 100%; max-width: 450px; }
+  .ab2-founder-badge { right: 0; }
+
+  .ab2-grid-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .ab2-cta-card { flex-direction: column; }
+  .ab2-cta-info { padding: 3rem 2rem; }
+  .ab2-cta-photo { height: 300px; }
+}
+
+@media (max-width: 576px) {
+  .ab2-hero-content h1 { font-size: 2rem; }
+  .ab2-hero-stats { flex-direction: column; gap: 1rem; }
+  .ab2-partners-grid { grid-template-columns: 1fr; }
+  .ab2-values-grid { grid-template-columns: 1fr; }
+
+  /* Timeline compact */
+  .ab2-timeline-line { left: 20px; }
+  .ab2-timeline-item { padding-left: 50px !important; margin-bottom: 2rem; }
+  .ab2-time-box { margin-bottom: 0.75rem; }
+  .ab2-year { padding: 0.35rem 1rem; font-size: 0.9rem; }
+  .ab2-time-content { padding: 1.25rem; }
+  .ab2-time-content h3 { font-size: 1.1rem !important; margin-bottom: 0.5rem; }
+  .ab2-time-content p { font-size: 0.85rem; }
+
+  /* Founder compact */
+  .ab2-founder-image { max-width: 100%; }
+  .ab2-founder-badge { display: none; }
+  .ab2-cta-info { padding: 2rem 1.25rem; }
+  .ab2-cta-photo { height: 220px; }
+}
+</style>

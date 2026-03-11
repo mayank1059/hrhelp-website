@@ -1,0 +1,225 @@
+---
+import Layout from '../components/Layout.astro';
+import { getResourceHighlights, getResourceCaseStudies } from '../lib/wordpress';
+
+const highlights = await getResourceHighlights();
+const caseStudies = await getResourceCaseStudies();
+---
+
+<Layout title="Resources & Insights" description="Case studies, key services, and HR insights from HRHelp.nl — practical resources for international employers in the Netherlands.">
+
+<!-- ===== HERO ===== -->
+<section class="res-hero">
+  <div class="res-hero-mesh"></div>
+  <div class="container" style="position: relative; z-index: 2; text-align: center;">
+    <span class="eyebrow-badge" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);">
+      Resources & Insights
+    </span>
+    <h1>Learn From Our <span style="color: var(--orange);">Experience</span></h1>
+    <p class="res-hero-sub">Case studies, expertise areas, and practical HR insights from our work across the Netherlands.</p>
+  </div>
+</section>
+
+<!-- ===== KEY SERVICE HIGHLIGHTS ===== -->
+<section class="res-highlights">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow">What Sets Us Apart</span>
+      <h2>Key Service Highlights</h2>
+      <p>Three areas where we consistently deliver measurable outcomes for our clients.</p>
+    </div>
+    <div class="res-hl-grid">
+      {highlights.map((hl, i) => (
+        <a href={hl.href} class="res-hl-card" data-animate="fade-up" data-delay={i * 100}>
+          <div class="res-hl-img">
+            <img src={hl.image} alt={hl.title} />
+            <span class="res-hl-stat">{hl.stat}</span>
+          </div>
+          <div class="res-hl-body">
+            <div class="res-hl-icon">
+              <span class="material-symbols-outlined">{hl.icon}</span>
+            </div>
+            <h3>{hl.title}</h3>
+            <p>{hl.desc}</p>
+            <span class="res-hl-link">Learn More →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== CASE STUDIES ===== -->
+<section class="res-cases">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow">Real Results</span>
+      <h2>Client Case Studies</h2>
+      <p>Authentic engagements with measurable outcomes — see how we work.</p>
+    </div>
+    <div class="res-cs-grid">
+      {caseStudies.map((cs, i) => (
+        <a href="/resources/case-studies" class="res-cs-card" data-animate="fade-up" data-delay={i * 100}>
+          <span class="res-cs-tag">{cs.tag}</span>
+          <div class="res-cs-icon">
+            <span class="material-symbols-outlined">{cs.icon}</span>
+          </div>
+          <h3>{cs.title}</h3>
+          <p>{cs.desc}</p>
+          <span class="res-cs-link">Read Case Study →</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ & MORE ===== -->
+<section class="res-more">
+  <div class="container">
+    <div class="res-more-grid">
+      <a href="/resources/faq" class="res-more-card" data-animate="fade-up">
+        <span class="material-symbols-outlined" style="font-size: 40px; color: var(--orange);">help</span>
+        <h3>FAQ</h3>
+        <p>Answers to common questions about Dutch HR, employment law, and working with HRHelp.</p>
+        <span class="res-more-link">View FAQ →</span>
+      </a>
+      <a href="/contact" class="res-more-card" data-animate="fade-up" data-delay="100">
+        <span class="material-symbols-outlined" style="font-size: 40px; color: var(--orange);">calendar_month</span>
+        <h3>Free Consultation</h3>
+        <p>Book a no-obligation consultation to discuss your HR challenges with our experts.</p>
+        <span class="res-more-link">Book Now →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.res-hero {
+  padding: 10rem 0 5rem;
+  background: var(--navy);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.res-hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(244,121,32,0.12), transparent 40%);
+  z-index: 1;
+}
+.res-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800; margin-top: 1rem;
+  color: white;
+}
+.res-hero-sub {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.7);
+  max-width: 540px;
+  margin: 1rem auto 0;
+  line-height: 1.7;
+}
+
+/* ===== HIGHLIGHTS ===== */
+.res-highlights { padding: var(--section-padding); background: white; }
+.res-hl-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+}
+.res-hl-card {
+  text-decoration: none;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  background: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.res-hl-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+.res-hl-img { position: relative; height: 200px; overflow: hidden; }
+.res-hl-img img { width: 100%; height: 100%; object-fit: cover; }
+.res-hl-stat {
+  position: absolute; top: 0.75rem; right: 0.75rem;
+  background: rgba(244,121,32,0.9); color: white;
+  font-size: 0.7rem; font-weight: 700;
+  padding: 0.3rem 0.8rem; border-radius: var(--radius-full);
+}
+.res-hl-body { padding: 1.5rem; }
+.res-hl-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-md);
+  background: rgba(244,121,32,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+}
+.res-hl-icon .material-symbols-outlined { font-size: 22px; color: var(--orange); }
+.res-hl-body h3 { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+.res-hl-body p { font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; }
+.res-hl-link { font-size: 0.85rem; font-weight: 700; color: var(--orange); }
+
+/* ===== CASE STUDIES ===== */
+.res-cases { padding: var(--section-padding); background: var(--cream); }
+.res-cs-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+}
+.res-cs-card {
+  text-decoration: none;
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  border: 1px solid var(--gray-200);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex; flex-direction: column;
+}
+.res-cs-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+.res-cs-tag {
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--orange); margin-bottom: 1rem;
+}
+.res-cs-icon {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(244,121,32,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+}
+.res-cs-icon .material-symbols-outlined { font-size: 24px; color: var(--orange); }
+.res-cs-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+.res-cs-card p { font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; flex: 1; }
+.res-cs-link { font-size: 0.85rem; font-weight: 700; color: var(--orange); }
+
+/* ===== MORE ===== */
+.res-more { padding: 4rem 0 5rem; background: var(--cream); }
+.res-more-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+.res-more-card {
+  text-decoration: none;
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  border: 1px solid var(--gray-200);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.res-more-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+.res-more-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin: 1rem 0 0.5rem; }
+.res-more-card p { font-size: 0.9rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; }
+.res-more-link { font-size: 0.85rem; font-weight: 700; color: var(--orange); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+  .res-hl-grid, .res-cs-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+}
+@media (max-width: 576px) {
+  .res-more-grid { grid-template-columns: 1fr; }
+}
+</style>

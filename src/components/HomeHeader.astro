@@ -1,0 +1,960 @@
+---
+// HomeHeader.astro — Homepage-specific header with dark navy styling + mega menus
+const currentPath = Astro.url.pathname;
+
+const solutions = [
+  {
+    slug: 'hr-settlers', name: 'HR Settlers',
+    tagline: 'Enter the Dutch market with confidence',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
+  },
+  {
+    slug: 'hr-teams', name: 'HR Teams',
+    tagline: 'Your outsourced HR department',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
+  },
+  {
+    slug: 'hr-reset', name: 'HR Reset',
+    tagline: 'Modernize your existing HR',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>'
+  },
+  {
+    slug: 'hr-sos', name: 'HR S.O.S.',
+    tagline: 'Urgent HR crisis support',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>'
+  }
+];
+
+const industries = [
+  { slug: 'technology', name: 'Technology & Startups', icon: 'terminal' },
+  { slug: 'life-sciences', name: 'Life Sciences & Pharma', icon: 'biotech' },
+  { slug: 'finance', name: 'Finance & Fintech', icon: 'account_balance' },
+  { slug: 'professional-services', name: 'Professional Services', icon: 'work' },
+  { slug: 'logistics', name: 'Logistics & Supply Chain', icon: 'local_shipping' },
+  { slug: 'ngo', name: 'NGO & Non-Profit', icon: 'public' },
+  { slug: 'manufacturing', name: 'Greenfield & Manufacturing', icon: 'precision_manufacturing' },
+  { slug: 'industrial', name: 'Production & Industrial', icon: 'engineering' },
+];
+
+import { getFeaturedArticles } from '../lib/wordpress';
+
+const featuredArticles = await getFeaturedArticles();
+
+const resourceLinks = [
+  { label: 'Our Expertise', icon: 'star', href: '/resources/expertise' },
+  { label: 'Case Studies', icon: 'trending_up', href: '/resources/case-studies' },
+  { label: 'Blog', icon: 'article', href: '/resources/blog' },
+  { label: 'FAQ', icon: 'help', href: '/resources/faq' },
+];
+
+const navLinks = [
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<header class="home-header" id="site-header">
+  <div class="home-header-inner">
+    <!-- Logo (white version for dark bg) -->
+    <a href="/" class="home-header-logo">
+      <img src="/images/logo-white.png" alt="HRHelp" class="logo-img" />
+    </a>
+
+    <!-- Navigation with Mega Menus -->
+    <nav class="home-header-nav">
+      <!-- Solutions (mega menu) -->
+      <div class="hh-nav-item hh-has-mega">
+        <a href="/solutions" class:list={['home-nav-link', { active: currentPath.startsWith('/solutions') }]}>
+          Solutions
+          <svg class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="hh-mega-panel hh-mega-solutions">
+          <div class="hh-mega-inner">
+            <div class="hh-mega-label">Our Solutions</div>
+            <div class="hh-mega-sol-grid">
+              {solutions.map(s => (
+                <a href={`/solutions/${s.slug}`} class="hh-mega-sol-card">
+                  <div class="hh-mega-sol-icon" set:html={s.icon} />
+                  <div class="hh-mega-sol-text">
+                    <span class="hh-mega-sol-name">{s.name}</span>
+                    <span class="hh-mega-sol-tagline">{s.tagline}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <div class="hh-mega-footer">
+              <a href="/solutions" class="hh-mega-footer-link">
+                View All Solutions
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <a href="/contact" class="hh-mega-footer-cta">
+                Free Consultation
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Industries (mega menu) -->
+      <div class="hh-nav-item hh-has-mega">
+        <a href="/industries" class:list={['home-nav-link', { active: currentPath.startsWith('/industries') }]}>
+          Industries
+          <svg class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="hh-mega-panel hh-mega-industries">
+          <div class="hh-mega-inner">
+            <div class="hh-mega-label">Industry Expertise</div>
+            <div class="hh-mega-ind-grid">
+              {industries.map(ind => (
+                <a href={`/industries/${ind.slug}`} class="hh-mega-ind-item">
+                  <span class="hh-mega-ind-icon material-symbols-outlined">{ind.icon}</span>
+                  <span class="hh-mega-ind-name">{ind.name}</span>
+                </a>
+              ))}
+            </div>
+            <div class="hh-mega-footer">
+              <a href="/industries" class="hh-mega-footer-link">
+                Explore All Industries
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resources (mega menu) -->
+      <div class="hh-nav-item hh-has-mega">
+        <a href="/resources" class:list={['home-nav-link', { active: currentPath.startsWith('/resources') }]}>
+          Resources
+          <svg class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="hh-mega-panel hh-mega-resources">
+          <div class="hh-mega-inner">
+            <div class="hh-mega-res-layout">
+              <!-- Featured articles -->
+              <div class="hh-mega-res-featured">
+                <div class="hh-mega-label">Featured Articles</div>
+                <div class="hh-mega-res-articles">
+                  {featuredArticles.map(article => (
+                    <a href={article.href} class="hh-mega-res-card">
+                      <div class="hh-mega-res-img">
+                        <img src={article.image} alt={article.title} />
+                        <span class="hh-mega-res-cat">{article.category}</span>
+                      </div>
+                      <span class="hh-mega-res-title">{article.title}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <!-- Quick Links -->
+              <div class="hh-mega-res-links">
+                <div class="hh-mega-label">Quick Links</div>
+                {resourceLinks.map(link => (
+                  <a href={link.href} class="hh-mega-res-link-item">
+                    <span class="material-symbols-outlined hh-mega-res-link-icon">{link.icon}</span>
+                    <span>{link.label}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div class="hh-mega-footer">
+              <a href="/resources" class="hh-mega-footer-link">
+                Visit Resource Center
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simple links -->
+      {navLinks.map(link => (
+        <div class="hh-nav-item">
+          <a
+            href={link.href}
+            class:list={['home-nav-link', { active: currentPath.startsWith(link.href) }]}
+          >
+            {link.label}
+          </a>
+        </div>
+      ))}
+    </nav>
+
+    <!-- Right side -->
+    <div class="home-header-actions">
+      <a href="/contact" class="home-cta-btn">Book Consultation</a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button class="home-mobile-toggle" id="home-mobile-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div class="home-mobile-menu" id="home-mobile-menu">
+  <nav class="home-mobile-nav">
+    <!-- Solutions accordion -->
+    <div class="hh-mob-accordion">
+      <button class="hh-mob-acc-trigger" aria-expanded="false">
+        Solutions
+        <svg class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="hh-mob-acc-content">
+        {solutions.map(s => (
+          <a href={`/solutions/${s.slug}`} class="hh-mob-sub-link">
+            <span class="hh-mob-sub-icon" set:html={s.icon} />
+            {s.name}
+          </a>
+        ))}
+        <a href="/solutions" class="hh-mob-sub-all">View All Solutions →</a>
+      </div>
+    </div>
+
+    <!-- Industries accordion -->
+    <div class="hh-mob-accordion">
+      <button class="hh-mob-acc-trigger" aria-expanded="false">
+        Industries
+        <svg class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="hh-mob-acc-content">
+        {industries.map(ind => (
+          <a href={`/industries/${ind.slug}`} class="hh-mob-sub-link">
+            <span class="material-symbols-outlined hh-mob-sub-mat-icon">{ind.icon}</span>
+            {ind.name}
+          </a>
+        ))}
+        <a href="/industries" class="hh-mob-sub-all">Explore All Industries →</a>
+      </div>
+    </div>
+
+    <!-- Resources accordion -->
+    <div class="hh-mob-accordion">
+      <button class="hh-mob-acc-trigger" aria-expanded="false">
+        Resources
+        <svg class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="hh-mob-acc-content">
+        {resourceLinks.map(link => (
+          <a href={link.href} class="hh-mob-sub-link">
+            <span class="material-symbols-outlined hh-mob-sub-mat-icon">{link.icon}</span>
+            {link.label}
+          </a>
+        ))}
+        <a href="/resources" class="hh-mob-sub-all">Visit Resource Center →</a>
+      </div>
+    </div>
+
+    <a href="/about" class:list={['home-mobile-link', { active: currentPath.startsWith('/about') }]}>About</a>
+    <a href="/contact" class:list={['home-mobile-link', { active: currentPath.startsWith('/contact') }]}>Contact</a>
+
+    <a href="/contact" class="home-cta-btn" style="margin-top: 1rem; width: 100%; text-align: center;">
+      Book Consultation
+    </a>
+  </nav>
+</div>
+
+<style>
+  /* ═══════════════════════════════════════
+     HOME HEADER — Dark navy style
+     ═══════════════════════════════════════ */
+  .home-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: all 0.4s ease;
+  }
+
+  .home-header.scrolled {
+    background: rgba(26, 58, 110, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .home-header-inner {
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* ── Logo ── */
+  .home-header-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .home-header-logo .logo-img {
+    height: 38px;
+    width: auto;
+    display: block;
+  }
+
+  /* ═══════════════════════════════════════
+     NAVIGATION
+     ═══════════════════════════════════════ */
+  .home-header-nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .hh-nav-item {
+    position: relative;
+  }
+
+  .home-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 0.5rem 0.9rem;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    letter-spacing: 0.2px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .home-nav-link:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .home-nav-link.active {
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .hh-chevron {
+    transition: transform 0.25s ease;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .hh-nav-item.hh-has-mega:hover .hh-chevron {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+
+  /* ═══════════════════════════════════════
+     MEGA PANEL — Dark theme shared styles
+     ═══════════════════════════════════════ */
+  .hh-mega-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    z-index: 999;
+    padding-top: 12px;
+  }
+
+  .hh-nav-item.hh-has-mega:hover .hh-mega-panel,
+  .hh-nav-item.hh-has-mega:focus-within .hh-mega-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .hh-mega-inner {
+    background: rgba(10, 25, 50, 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+
+  .hh-mega-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: rgba(255, 255, 255, 0.35);
+    padding: 1.25rem 1.5rem 0.75rem;
+  }
+
+  .hh-mega-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .hh-mega-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .hh-mega-footer-link:hover {
+    color: var(--orange);
+  }
+
+  .hh-mega-footer-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--orange);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .hh-mega-footer-cta:hover {
+    background: #ff9a4d;
+  }
+
+  /* ═══════════════════════════════════════
+     SOLUTIONS MEGA MENU
+     ═══════════════════════════════════════ */
+  .hh-mega-solutions {
+    width: 520px;
+  }
+
+  .hh-mega-sol-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    padding: 0 0.75rem 0.75rem;
+  }
+
+  .hh-mega-sol-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.9rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .hh-mega-sol-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .hh-mega-sol-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--orange), #ff9a4d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+  }
+
+  .hh-mega-sol-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hh-mega-sol-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hh-mega-sol-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .hh-mega-sol-tagline {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.4;
+  }
+
+  .hh-mega-sol-card:hover .hh-mega-sol-name {
+    color: var(--orange);
+  }
+
+  /* ═══════════════════════════════════════
+     INDUSTRIES MEGA MENU
+     ═══════════════════════════════════════ */
+  .hh-mega-industries {
+    width: 520px;
+  }
+
+  .hh-mega-ind-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0 0.5rem 0.5rem;
+  }
+
+  .hh-mega-ind-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .hh-mega-ind-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .hh-mega-ind-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px !important;
+    color: var(--orange);
+    transition: all 0.2s ease;
+  }
+
+  .hh-mega-ind-item:hover .hh-mega-ind-icon {
+    background: var(--orange);
+    color: var(--white);
+  }
+
+  .hh-mega-ind-name {
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.3;
+  }
+
+  .hh-mega-ind-item:hover .hh-mega-ind-name {
+    color: var(--orange);
+  }
+
+  /* ═══════════════════════════════════════
+     RESOURCES MEGA MENU
+     ═══════════════════════════════════════ */
+  .hh-mega-resources {
+    width: 660px;
+  }
+
+  .hh-mega-res-layout {
+    display: flex;
+    gap: 0;
+  }
+
+  .hh-mega-res-featured {
+    flex: 1;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .hh-mega-res-articles {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 1rem 1rem;
+  }
+
+  .hh-mega-res-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all 0.2s ease;
+    flex: 1;
+    padding: 0.4rem;
+  }
+
+  .hh-mega-res-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .hh-mega-res-img {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .hh-mega-res-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .hh-mega-res-card:hover .hh-mega-res-img img {
+    transform: scale(1.05);
+  }
+
+  .hh-mega-res-cat {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--white);
+    background: var(--orange);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+  }
+
+  .hh-mega-res-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .hh-mega-res-card:hover .hh-mega-res-title {
+    color: var(--orange);
+  }
+
+  .hh-mega-res-links {
+    min-width: 190px;
+    padding-right: 0.5rem;
+  }
+
+  .hh-mega-res-link-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1rem;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    margin: 0 0.5rem;
+  }
+
+  .hh-mega-res-link-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .hh-mega-res-link-icon {
+    font-size: 20px !important;
+    color: var(--orange);
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(244, 121, 32, 0.15);
+    border-radius: 6px;
+  }
+
+  .hh-mega-res-link-item span:not(.material-symbols-outlined) {
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .hh-mega-res-link-item:hover span:not(.material-symbols-outlined) {
+    color: var(--orange);
+  }
+
+  /* ═══════════════════════════════════════
+     ACTIONS
+     ═══════════════════════════════════════ */
+  .home-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .home-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--white);
+    background: var(--orange);
+    border: 2px solid var(--orange);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+  }
+
+  .home-cta-btn:hover {
+    background: transparent;
+    color: var(--orange);
+    border-color: var(--orange);
+  }
+
+  /* ═══════════════════════════════════════
+     MOBILE TOGGLE
+     ═══════════════════════════════════════ */
+  .home-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1001;
+  }
+
+  .home-mobile-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .home-mobile-toggle.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .home-mobile-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .home-mobile-toggle.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* ═══════════════════════════════════════
+     MOBILE MENU
+     ═══════════════════════════════════════ */
+  .home-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 25, 47, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 999;
+    padding: 1rem 1.5rem 2rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .home-mobile-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .home-mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Mobile accordion — dark */
+  .hh-mob-accordion {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .hh-mob-acc-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1rem 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .hh-mob-acc-chevron {
+    transition: transform 0.3s ease;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .hh-mob-acc-trigger[aria-expanded="true"] .hh-mob-acc-chevron {
+    transform: rotate(180deg);
+    color: var(--orange);
+  }
+
+  .hh-mob-acc-content {
+    display: none;
+    padding: 0 0 0.75rem 0.5rem;
+  }
+
+  .hh-mob-acc-content.open {
+    display: block;
+  }
+
+  .hh-mob-sub-link {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.6rem 0.5rem;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.92rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+  }
+
+  .hh-mob-sub-link:hover {
+    color: var(--orange);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .hh-mob-sub-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    color: var(--orange);
+  }
+
+  .hh-mob-sub-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hh-mob-sub-mat-icon {
+    font-size: 20px !important;
+    color: var(--orange);
+    width: 28px;
+    text-align: center;
+  }
+
+  .hh-mob-sub-all {
+    display: block;
+    padding: 0.6rem 0.5rem;
+    color: var(--orange);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-top: 0.25rem;
+  }
+
+  .home-mobile-link {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: color 0.2s ease;
+    text-decoration: none;
+  }
+
+  .home-mobile-link:hover,
+  .home-mobile-link.active {
+    color: var(--orange);
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE
+     ═══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .home-header-nav,
+    .home-header-actions {
+      display: none;
+    }
+
+    .home-mobile-toggle {
+      display: flex;
+    }
+
+    .home-mobile-menu {
+      display: block;
+      pointer-events: none;
+    }
+
+    .home-mobile-menu.open {
+      pointer-events: all;
+    }
+  }
+</style>
+
+<script>
+  // Scroll effect
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+  });
+
+  // Mobile toggle
+  const toggle = document.getElementById('home-mobile-toggle');
+  const menu = document.getElementById('home-mobile-menu');
+  toggle?.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    menu?.classList.toggle('open');
+    document.body.style.overflow = menu?.classList.contains('open') ? 'hidden' : '';
+  });
+
+  // Mobile accordions
+  document.querySelectorAll('.hh-mob-acc-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.hh-mob-acc-trigger').forEach(other => {
+        if (other !== btn) {
+          other.setAttribute('aria-expanded', 'false');
+          other.nextElementSibling?.classList.remove('open');
+        }
+      });
+      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      btn.nextElementSibling?.classList.toggle('open');
+    });
+  });
+</script>

@@ -1,0 +1,199 @@
+---
+import Layout from '../../components/Layout.astro';
+
+const benefits = [
+  { icon: 'hub', title: 'Network Model', desc: 'Work as a specialist in our agile network organization, not a cog in a machine. Your expertise drives impact.' },
+  { icon: 'rocket_launch', title: 'High Impact', desc: 'Directly shape the success of international companies scaling their operations in the Netherlands.' },
+  { icon: 'psychology', title: 'Continuous Growth', desc: 'Learn from senior consultants with decades of international HR and employment law experience.' },
+  { icon: 'balance', title: 'True Flexibility', desc: 'Outcome-focused work environment with professional autonomy and flexible scheduling.' },
+];
+
+const openings = [
+  { title: 'Senior Employment Law Specialist', type: 'Network Partner', location: 'Freelance/Remote · Amsterdam/Almere' },
+  { title: 'Interim HR Manager (International)', type: 'Project Based', location: 'High Intensity · On-site/Hybrid' },
+];
+---
+
+<Layout title="Careers | Join the Network" description="Join HRHelp.nl as a specialized HR consultant or network partner. Shape the future of Dutch HR for international companies.">
+
+<!-- ===== HERO ===== -->
+<section class="cr-hero">
+  <div class="cr-hero-mesh"></div>
+  <div class="container-wide cr-hero-inner">
+    <div class="cr-hero-content">
+      <span class="eyebrow-badge">Join Our Team</span>
+      <h1>Shape the Future of <br/><span class="cr-orange">HR in the Netherlands</span></h1>
+      <p class="cr-hero-p">We are a network organization of senior experts. Whether you're a specialist consultant or a growing HR talent, there's a place for you in our ecosystem.</p>
+      <div class="cr-hero-btns">
+        <a href="#openings" class="btn btn-primary btn-lg" style="box-shadow: none;">View Open Roles</a>
+        <a href="/about" class="btn btn-ghost btn-lg">About HRHelp</a>
+      </div>
+    </div>
+    <div class="cr-hero-visual">
+      <img src="/images/founder/team-collaboration.jpg" alt="HR team collaboration at HRHelp.nl" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY JOIN ===== -->
+<section class="cr-benefits">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Why HRHelp.nl?</span>
+      <h2>The Advantages of Our Network</h2>
+      <p>Boutique intimacy with enterprise-grade reach — the best of both worlds.</p>
+    </div>
+    <div class="cr-benefits-grid">
+      {benefits.map(b => (
+        <div class="cr-benefit-card">
+          <div class="cr-benefit-icon">
+            <span class="material-symbols-outlined">{b.icon}</span>
+          </div>
+          <h3>{b.title}</h3>
+          <p>{b.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== OPENINGS ===== -->
+<section class="cr-openings section-cream" id="openings">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Open Positions</span>
+      <h2>Currently Looking For...</h2>
+      <p>We hire for both internal roles and our network of project-based specialists.</p>
+    </div>
+    <div class="cr-openings-list">
+      {openings.map(o => (
+        <div class="cr-opening-card">
+          <div class="cr-opening-info">
+            <h3>{o.title}</h3>
+            <div class="cr-opening-meta">
+              <span class="cr-tag">{o.type}</span>
+              <span class="cr-location">
+                <span class="material-symbols-outlined" style="font-size: 16px;">location_on</span>
+                {o.location}
+              </span>
+            </div>
+          </div>
+          <a href="/contact" class="btn btn-secondary btn-sm">Inquire</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== TALENT POOL CTA ===== -->
+<section class="cr-talent">
+  <div class="container">
+    <div class="cr-talent-card">
+      <div class="cr-talent-inner">
+        <h2>Don't See Your Role?</h2>
+        <p>We're always building our network of specialized partners — legal, payroll, coaching, talent strategy, and more. Introduce yourself.</p>
+        <a href="/contact" class="btn btn-primary btn-lg" style="box-shadow: none;">Join the Network</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.cr-hero {
+  padding: 10rem 0 6rem;
+  background: var(--navy);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.cr-hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(244,121,32,0.15), transparent 40%),
+              radial-gradient(circle at 10% 80%, rgba(255,255,255,0.05), transparent 40%);
+  z-index: 1;
+}
+.cr-hero-inner {
+  display: flex; gap: 5rem; align-items: center; position: relative; z-index: 2;
+}
+.cr-hero-content { flex: 1; }
+.cr-hero-content h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
+.cr-orange { color: var(--orange); }
+.cr-hero-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.8); max-width: 540px; }
+.cr-hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+.cr-hero-visual {
+  flex: 0 0 480px; border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+}
+.cr-hero-visual img { width: 100%; height: 440px; object-fit: cover; display: block; }
+
+/* ===== BENEFITS ===== */
+.cr-benefits { padding: 8rem 0; }
+.cr-benefits-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+}
+.cr-benefit-card {
+  padding: 2.5rem; background: var(--cream); border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200); transition: all 0.3s ease;
+}
+.cr-benefit-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+.cr-benefit-icon {
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  background: rgba(244,121,32,0.1); color: var(--orange);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+}
+.cr-benefit-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+.cr-benefit-card p { font-size: 0.95rem; line-height: 1.6; color: var(--gray-500); }
+
+/* ===== OPENINGS ===== */
+.cr-openings { padding: 8rem 0; }
+.cr-openings-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.cr-opening-card {
+  background: white; padding: 2rem 2.5rem; border-radius: var(--radius-lg);
+  display: flex; justify-content: space-between; align-items: center;
+  border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+.cr-opening-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.cr-opening-info h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
+.cr-opening-meta { display: flex; align-items: center; gap: 1.25rem; }
+.cr-tag {
+  display: inline-block; background: rgba(244,121,32,0.1); color: var(--orange);
+  padding: 0.3rem 0.75rem; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 700;
+}
+.cr-location { display: flex; align-items: center; gap: 0.35rem; font-size: 0.9rem; color: var(--gray-500); }
+
+/* ===== TALENT CTA ===== */
+.cr-talent { padding: 0 0 8rem; }
+.cr-talent-card {
+  background: var(--navy); padding: 5rem; border-radius: var(--radius-xl);
+  text-align: center; color: white;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+}
+.cr-talent-inner { max-width: 600px; margin: 0 auto; }
+.cr-talent-card h2 { font-size: 2.5rem; color: white; margin-bottom: 1rem; }
+.cr-talent-card p { color: rgba(255,255,255,0.7); font-size: 1.15rem; line-height: 1.7; margin-bottom: 2.5rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .cr-hero-inner { gap: 3rem; }
+  .cr-hero-visual { flex: 0 0 380px; }
+}
+@media (max-width: 992px) {
+  .cr-hero-inner { flex-direction: column; text-align: center; }
+  .cr-hero-visual { flex: none; width: 100%; max-width: 500px; }
+  .cr-hero-p { margin: 0 auto; }
+  .cr-hero-btns { justify-content: center; }
+  .cr-benefits-grid { grid-template-columns: repeat(2, 1fr); }
+  .cr-opening-card { flex-direction: column; text-align: center; gap: 1.5rem; }
+  .cr-opening-meta { justify-content: center; }
+  .cr-talent-card { padding: 3.5rem 2rem; }
+}
+@media (max-width: 576px) {
+  .cr-hero-content h1 { font-size: 2.5rem; }
+  .cr-benefits-grid { grid-template-columns: 1fr; }
+  .cr-hero-visual img { height: 300px; }
+}
+</style>

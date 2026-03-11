@@ -1,0 +1,289 @@
+---
+// Footer.astro — Global footer (same on every page)
+---
+
+<footer class="site-footer">
+  <!-- Pre-footer CTA -->
+  <div class="footer-cta">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-content">
+          <h3>Your HR Needs, Our Support</h3>
+          <p>Book a free 30-minute discovery call and let's discuss your needs.</p>
+        </div>
+        <a href="/contact" class="btn btn-secondary btn-lg">
+          Book Free Consultation
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main footer -->
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand column -->
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            <img src="/images/logo-white.png" alt="HRHelp" class="logo-img" />
+          </a>
+          <p class="footer-tagline">Your Dutch HR partner for international success</p>
+          <div class="footer-social">
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="X/Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Solutions column -->
+        <div class="footer-col">
+          <h4>Solutions</h4>
+          <ul>
+            <li><a href="/solutions/hr-settlers">HR Settlers</a></li>
+            <li><a href="/solutions/hr-teams">HR Teams</a></li>
+            <li><a href="/solutions/hr-reset">HR Reset</a></li>
+            <li><a href="/solutions/hr-sos">HR S.O.S.</a></li>
+            <li><a href="/solutions">All Solutions</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources column -->
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="/resources">Blog</a></li>
+            <li><a href="/resources/guides">Guides & Downloads</a></li>
+            <li><a href="/resources/dutch-hr-laws">Dutch HR Laws</a></li>
+            <li><a href="/resources/faq">FAQ</a></li>
+            <li><a href="/resources/case-studies">Case Studies</a></li>
+          </ul>
+        </div>
+
+        <!-- Company column -->
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about/careers">Careers</a></li>
+            <li><a href="/about/partners">Partners</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-inner">
+        <span>© 2026 HRHelp.nl B.V. — All rights reserved</span>
+        <span class="kvk">KVK: 12345678</span>
+        <span class="footer-legal">
+          <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms of Service</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Pre-footer CTA */
+  .footer-cta {
+    background: var(--orange);
+    padding: 3rem 2rem;
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .cta-content h3 {
+    font-family: var(--font-heading);
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .cta-content p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1rem;
+  }
+
+  .footer-cta .btn-secondary {
+    background: var(--white);
+    color: var(--orange);
+    border-color: var(--white);
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  .footer-cta .btn-secondary:hover {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+  }
+
+  /* Main footer */
+  .footer-main {
+    background: var(--navy);
+    padding: 4rem 2rem 3rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  /* Brand */
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .footer-logo .logo-img {
+    height: 36px;
+    width: auto;
+    display: block;
+  }
+
+  .footer-tagline {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.6);
+    transition: all var(--transition-fast);
+  }
+
+  .social-link:hover {
+    background: var(--orange);
+    color: var(--white);
+  }
+
+  .footer-amsterdam {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.85rem;
+  }
+
+  /* Columns */
+  .footer-col h4 {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .footer-col li {
+    margin-bottom: 0.6rem;
+  }
+
+  .footer-col a {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.9rem;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-col a:hover {
+    color: var(--orange);
+  }
+
+  /* Bottom bar */
+  .footer-bottom {
+    background: var(--navy-dark);
+    padding: 1.25rem 2rem;
+  }
+
+  .footer-bottom-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .kvk {
+    color: rgba(255,255,255,0.25);
+  }
+
+  .footer-legal a {
+    color: rgba(255,255,255,0.35);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-legal a:hover {
+    color: var(--orange);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .cta-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 550px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-bottom-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

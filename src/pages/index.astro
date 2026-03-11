@@ -1,0 +1,1717 @@
+---
+import Layout from '../components/Layout.astro';
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "HRHelp.nl",
+  "image": "https://hrhelp.nl/images/og-default.png",
+  "url": "https://hrhelp.nl",
+  "telephone": "+31-85-760-8188",
+  "email": "info@hrhelp.nl",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Televisieweg 2",
+    "addressLocality": "Almere",
+    "postalCode": "1322 AC",
+    "addressCountry": "NL"
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "08:30",
+    "closes": "18:00"
+  },
+  "priceRange": "$$",
+  "description": "Expert HR consulting for international companies in the Netherlands. Employment law, payroll, compliance, talent acquisition.",
+  "knowsAbout": ["Dutch Employment Law", "30% Ruling", "HR Consulting", "Payroll", "Restructuring", "Sickness Management"]
+};
+---
+
+<Layout title="Your HR Partner in the Netherlands" description="Expert HR consulting for international companies in the Netherlands. Employment law, payroll, compliance, talent acquisition — all handled by Dutch HR experts." homeHeader={true} schema={localBusinessSchema}>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-panel glass-panel animate-fade-in-up">
+      <span class="eyebrow-badge animate-fade-in-up">Premium HR Consulting</span>
+      <h1 class="animate-fade-in-up animate-delay-1">Your HR Partner in the <span class="text-orange">Netherlands</span></h1>
+      <p class="hero-desc animate-fade-in-up animate-delay-2">From hiring your first employee to managing a full Dutch workforce — we handle the HR so you can focus on growth.</p>
+      <div class="hero-buttons animate-fade-in-up animate-delay-3">
+        <a href="/contact" class="btn btn-primary btn-lg">
+          Get Expert Support
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/solutions" class="btn btn-secondary btn-lg">See How We Work</a>
+      </div>
+      <div class="hero-trust animate-fade-in-up animate-delay-4">
+        <div class="trust-logos">
+          <div class="trust-logo-circle">
+            <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="white" font-weight="800" font-size="10" font-family="Inter, Arial, sans-serif">LG</text></svg>
+          </div>
+          <div class="trust-logo-circle">
+            <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="white" font-weight="700" font-size="7" font-family="Inter, Arial, sans-serif">LIME</text></svg>
+          </div>
+          <div class="trust-logo-circle">
+            <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="white" font-weight="800" font-size="5.5" font-family="Inter, Arial, sans-serif">SANDVIK</text></svg>
+          </div>
+          <div class="trust-logo-circle trust-logo-more">+5</div>
+        </div>
+        <div>
+          <strong>Trusted by 75+</strong>
+          <span>International Companies</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-badges">
+      <a href="/resources/expertise/leadership-training" class="hero-badge" style="text-decoration:none;">
+        <div class="badge-icon badge-green">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
+        </div>
+        <div>
+          <span class="badge-label">TRAINING</span>
+          <strong>Leadership Development</strong>
+        </div>
+      </a>
+      <a href="/resources/expertise/restructuring" class="hero-badge hero-badge-bottom" style="text-decoration:none;">
+        <div class="badge-icon badge-blue">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="11" x2="19" y2="17"/></svg>
+        </div>
+        <div>
+          <span class="badge-label">RESULT</span>
+          <strong>50% Restructuring Savings</strong>
+        </div>
+      </a>
+      <a href="/resources/expertise/sickness-management" class="hero-badge hero-badge-third" style="text-decoration:none;">
+        <div class="badge-icon" style="background: rgba(34,197,94,0.15); color: #22c55e;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div>
+          <span class="badge-label">IMPACT</span>
+          <strong>€500K Saved on Absence</strong>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Client Logos Section -->
+<section class="client-logos">
+  <div class="container">
+    <p class="logos-label">Trusted by teams at leading organizations worldwide</p>
+    <div class="logos-track">
+      <div class="logos-slide">
+        <!-- Viacom -->
+        <div class="logo-item">
+          <svg viewBox="0 0 140 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="3">VIACOM</text></svg>
+        </div>
+        <!-- Lime -->
+        <div class="logo-item">
+          <svg viewBox="0 0 90 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="24">Lime</text></svg>
+        </div>
+        <!-- LG -->
+        <div class="logo-item">
+          <svg viewBox="0 0 50 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="24" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="26">LG</text></svg>
+        </div>
+        <!-- Gate Gourmet -->
+        <div class="logo-item">
+          <svg viewBox="0 0 180 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="22" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="18" letter-spacing="1">GateGourmet</text></svg>
+        </div>
+        <!-- Harman -->
+        <div class="logo-item">
+          <svg viewBox="0 0 140 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="2">HARMAN</text></svg>
+        </div>
+        <!-- C.H. Robinson -->
+        <div class="logo-item">
+          <svg viewBox="0 0 200 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="20" letter-spacing="1">C.H. ROBINSON</text></svg>
+        </div>
+        <!-- Sandvik -->
+        <div class="logo-item">
+          <svg viewBox="0 0 140 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="2">SANDVIK</text></svg>
+        </div>
+        <!-- China Eastern -->
+        <div class="logo-item">
+          <svg viewBox="0 0 200 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="22" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="17" letter-spacing="1">CHINA EASTERN</text></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What We Handle Section -->
+<section class="what-we-handle section-navy">
+  <div class="container">
+    <div class="handle-header">
+      <div>
+        <span class="eyebrow" style="color: var(--orange);">What We Handle</span>
+        <h2>Every Aspect of Dutch HR, Covered</h2>
+      </div>
+      <p>From day-to-day compliance to complex employment law — we take it all off your plate.</p>
+    </div>
+    <div class="handle-carousel">
+      <div class="handle-track">
+
+        <div class="handle-card">
+          <div class="handle-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h4>Sickness Management</h4>
+          <p>Navigate the Dutch 2-year sick leave obligation, Wet Poortwachter compliance, and reintegration processes.</p>
+        </div>
+
+        <div class="handle-card">
+          <div class="handle-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v4M12 19v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M1 12h4M19 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <h4>30% Ruling</h4>
+          <p>Maximize tax benefits for expat employees with specialized application processing and eligibility assessment.</p>
+        </div>
+
+        <div class="handle-card">
+          <div class="handle-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h4>Employment Contracts</h4>
+          <p>Ironclad agreements fully compliant with Dutch law and Collective Labour Agreements (CAO).</p>
+        </div>
+
+        <div class="handle-card">
+          <div class="handle-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <h4>HR Policies</h4>
+          <p>Employee handbooks, leave policies, remote work agreements, and workplace regulations tailored to NL law.</p>
+        </div>
+
+        <div class="handle-card">
+          <div class="handle-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h4>Training & Development</h4>
+          <p>Compliance training, cultural integration workshops, and management development programs.</p>
+        </div>
+
+        <div class="handle-card">
+          <div class="handle-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h4>Payroll Management</h4>
+          <p>End-to-end Dutch payroll, tax withholding, holiday allowance, pension contributions, and year-end reporting.</p>
+        </div>
+
+        <div class="handle-card">
+          <div class="handle-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          </div>
+          <h4>Dismissal Procedures</h4>
+          <p>UWV and court-based dismissals, settlement agreements (vaststellingsovereenkomst), and transition payments.</p>
+        </div>
+
+        <div class="handle-card">
+          <div class="handle-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
+          </div>
+          <h4>Compliance Audits</h4>
+          <p>Full HR compliance review against Dutch employment law, GDPR, and industry-specific regulations.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="services section-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Our Solutions</span>
+      <h2>Tailored HR Support for<br/>Every Stage of Your Journey</h2>
+      <p>From market entry to full HR outsourcing, we have you covered.</p>
+    </div>
+    <div class="services-grid">
+      <a href="/solutions/hr-settlers" class="service-card-v2">
+        <div class="sv2-illus-wrap sv2-illus-navy">
+          <img src="/images/illus-settlers.png" alt="HR Settlers" class="sv2-illus" />
+        </div>
+        <div class="sv2-content">
+          <h3>HR Settlers</h3>
+          <span class="sv2-badge">Market Entry</span>
+          <p>Complete HR setup for companies opening their first Netherlands office — from entity registration to your first hire.</p>
+          <span class="sv2-link">Learn More →</span>
+        </div>
+      </a>
+
+      <a href="/solutions/hr-teams" class="service-card-v2">
+        <div class="sv2-illus-wrap sv2-illus-blue">
+          <img src="/images/illus-teams.png" alt="HR Teams" class="sv2-illus" />
+        </div>
+        <div class="sv2-content">
+          <h3>HR Teams</h3>
+          <span class="sv2-badge">Outsourced HR</span>
+          <p>Your dedicated HR department. From employee relations and policy development to strategic HR planning.</p>
+          <span class="sv2-link">Learn More →</span>
+        </div>
+      </a>
+
+      <a href="/solutions/hr-reset" class="service-card-v2">
+        <div class="sv2-illus-wrap sv2-illus-orange">
+          <img src="/images/illus-reset.png" alt="HR Reset" class="sv2-illus" />
+        </div>
+        <div class="sv2-content">
+          <h3>HR Reset</h3>
+          <span class="sv2-badge">Transformation</span>
+          <p>Audit and modernize your existing HR. Fix compliance gaps, update contracts, and optimize your processes.</p>
+          <span class="sv2-link">Learn More →</span>
+        </div>
+      </a>
+
+      <a href="/solutions/hr-sos" class="service-card-v2">
+        <div class="sv2-illus-wrap sv2-illus-red">
+          <img src="/images/illus-sos.png" alt="HR S.O.S." class="sv2-illus" />
+        </div>
+        <div class="sv2-content">
+          <h3>HR S.O.S.</h3>
+          <span class="sv2-badge sv2-badge-red">Urgent Support</span>
+          <p>Same-day response for HR emergencies — dismissal procedures, workplace conflicts, and legal disputes.</p>
+          <span class="sv2-link">Learn More →</span>
+        </div>
+      </a>
+    </div>
+    <p class="services-cta-text">Not sure which solution fits? <a href="/contact" class="link-arrow">Book a free discovery call →</a></p>
+  </div>
+</section>
+
+<!-- Industries Section -->
+<section class="industries section-navy">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow" style="color: var(--orange);">Industry Expertise</span>
+      <h2>Specialized HR for Your Sector</h2>
+      <p>Deep vertical expertise for the industries that call the Netherlands home.</p>
+    </div>
+    <div class="industries-grid">
+      <a href="/industries/technology" class="industry-card">
+        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <h4>Technology & Startups</h4>
+        <p>Seed to scale-up HR. Stock options, tech talent acquisition, rapid growth support.</p>
+      </a>
+      <a href="/industries/life-sciences" class="industry-card">
+        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg></div>
+        <h4>Life Sciences & Pharma</h4>
+        <p>Compliance-focused for regulated industries. R&D tax benefits, clinical workforce.</p>
+      </a>
+      <a href="/industries/finance" class="industry-card">
+        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <h4>Finance & Fintech</h4>
+        <p>AFM/DNB compliance, executive compensation, banking-grade HR governance.</p>
+      </a>
+      <a href="/industries/professional-services" class="industry-card">
+        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <h4>Professional Services</h4>
+        <p>Consulting, legal, and advisory firms. Partnership structures, billable workforce.</p>
+      </a>
+      <a href="/industries/logistics" class="industry-card">
+        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <h4>Logistics & Supply Chain</h4>
+        <p>Distribution centers, shift workers, temporary labor, port operations HR.</p>
+      </a>
+      <a href="/industries/ngo" class="industry-card">
+        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg></div>
+        <h4>NGO & Non-Profit</h4>
+        <p>Non-profit employment rules, volunteer management, grant-funded positions.</p>
+      </a>
+      <a href="/industries/manufacturing" class="industry-card">
+        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M5 20V8l5 4V8l5 4V4l5 4v12"/></svg></div>
+        <h4>Greenfield & Manufacturing</h4>
+        <p>New facility HR setup, production workforce, CLA negotiations, works councils.</p>
+      </a>
+      <a href="/industries/industrial" class="industry-card">
+        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+        <h4>Production & Industrial</h4>
+        <p>Health & safety compliance, union relations, blue-collar recruitment.</p>
+      </a>
+    </div>
+    <div class="industries-cta">
+      <a href="/industries" class="btn btn-ghost">See how we've helped companies in your industry →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="process section-cream">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Our Process</span>
+      <h2>Seamless Integration Roadmap</h2>
+      <p>From first conversation to ongoing partnership, here's how we work.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-number">01</div>
+        <div class="icon-box icon-box-lg">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h4>Discovery Call</h4>
+        <p>Free 30-minute call to understand your business, timeline, and specific HR needs.</p>
+        <span class="step-time">Day 1</span>
+      </div>
+      <div class="process-connector"></div>
+      <div class="process-step">
+        <div class="step-number">02</div>
+        <div class="icon-box icon-box-lg">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h4>Custom Proposal</h4>
+        <p>Detailed proposal with scope, timeline, and fixed pricing. No surprises, no hidden fees.</p>
+        <span class="step-time">Within 48 hours</span>
+      </div>
+      <div class="process-connector"></div>
+      <div class="process-step">
+        <div class="step-number">03</div>
+        <div class="icon-box icon-box-lg">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+        <h4>Implementation</h4>
+        <p>Dedicated consultant executes your HR solution. Regular updates, full transparency.</p>
+        <span class="step-time">Starts immediately</span>
+      </div>
+      <div class="process-connector"></div>
+      <div class="process-step">
+        <div class="step-number">04</div>
+        <div class="icon-box icon-box-lg">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        </div>
+        <h4>Ongoing Support</h4>
+        <p>Continuous partnership with quarterly reviews, policy updates, and priority access.</p>
+        <span class="step-time">Ongoing</span>
+      </div>
+    </div>
+    <div class="process-cta">
+      <a href="/contact" class="btn btn-primary btn-lg">Start Your Journey →</a>
+      <span class="process-phone">Or call us directly: <strong>+31 85 760 8188</strong></span>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials section-navy">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow" style="color: var(--orange);">Client Voices</span>
+      <h2>Trusted by International Companies</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card glass-panel">
+        <div class="quote-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #0F2B46, #2c6fa0);">SM</div>
+          <div>
+            <strong>Sarah Mitchell</strong>
+            <span>CEO, TechStart GH</span>
+          </div>
+        </div>
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text">"HRHelp made our move to Amsterdam seamless. Their knowledge of local laws saved us months of potential delays."</p>
+      </div>
+      <div class="testimonial-card glass-panel">
+        <div class="quote-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #0d7377, #14a3a8);">MW</div>
+          <div>
+            <strong>Marcus Weber</strong>
+            <span>HR Director, Global ISR</span>
+          </div>
+        </div>
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text">"The cultural onboarding workshops were a game changer for our US team relocating to the Netherlands."</p>
+      </div>
+      <div class="testimonial-card glass-panel">
+        <div class="quote-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #6c3483, #a569bd);">LS</div>
+          <div>
+            <strong>Lisa Schmidt</strong>
+            <span>Founder, DataSystems</span>
+          </div>
+        </div>
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text">"Professional, efficient, and deeply knowledgeable about the 30% ruling application process."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Preview Section -->
+<section class="about-preview section-cream">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image-area">
+        <div class="about-img-placeholder">
+          <img src="/images/founder/team-mentorship.jpg" alt="Cornelis Leerlooijer mentoring a team member" class="about-founder-img" />
+        </div>
+      </div>
+      <div class="about-content">
+        <span class="eyebrow">About HRHelp</span>
+        <h2>Your Dedicated Dutch HR Partner</h2>
+        <p>Founded by experienced HR professionals, HRHelp was built on a simple premise: international companies entering the Netherlands deserve expert HR support without the complexity.</p>
+        <ul class="about-features">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 15+ years Dutch employment law expertise</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Worked with 75+ international companies</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Native Dutch, fluent English & German</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Personalized approach, not a call center</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Fixed pricing, no surprises</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Based in Amsterdam, serving globally</li>
+        </ul>
+        <a href="/about" class="btn btn-primary">Meet Our Team →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog / Insights Section -->
+<section class="blog-section section-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Insights & Resources</span>
+      <h2>Latest from Our Blog</h2>
+      <p>Stay informed on Dutch employment law, HR best practices, and market insights.</p>
+    </div>
+    <div class="blog-grid">
+
+      <a href="/resources" class="blog-card">
+        <div class="blog-card-img" style="background-image: url('/images/sections/team-meeting.png');">
+          <span class="blog-tag">Recruitment</span>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-date">January 2026</span>
+          <h3>Recruitment in the Netherlands: A Guide for International Companies</h3>
+          <p>Everything you need to know about hiring in the Dutch market — from sourcing to onboarding your first local team members.</p>
+        </div>
+      </a>
+
+      <a href="/resources" class="blog-card">
+        <div class="blog-card-img" style="background-image: url('/images/dutch-business.jpg');">
+          <span class="blog-tag">Culture</span>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-date">December 2025</span>
+          <h3>Business Culture in the Netherlands: What You Need to Know</h3>
+          <p>Dutch directness, flat hierarchies, and consensus-driven decision making — a cultural primer for international managers.</p>
+        </div>
+      </a>
+
+      <a href="/resources" class="blog-card">
+        <div class="blog-card-img" style="background-image: url('/images/sections/tech-office.png');">
+          <span class="blog-tag">Legislation</span>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-date">November 2025</span>
+          <h3>Key HR Changes in the Netherlands for 2026</h3>
+          <p>New minimum wage updates, pension reforms, and changes to the Balanced Labour Market Act that affect your workforce.</p>
+        </div>
+      </a>
+
+      <a href="/resources" class="blog-card">
+        <div class="blog-card-img" style="background-image: url('/images/remote-worker.jpg');">
+          <span class="blog-tag">Talent</span>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-date">October 2025</span>
+          <h3>Why the Netherlands Is So Attractive to International Talent</h3>
+          <p>High quality of life, the 30% ruling, and a thriving expat ecosystem — why top talent chooses Holland.</p>
+        </div>
+      </a>
+
+      <a href="/resources" class="blog-card">
+        <div class="blog-card-img" style="background-image: url('/images/sections/dutch-office.png');">
+          <span class="blog-tag">Compliance</span>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-date">September 2025</span>
+          <h3>Absenteeism and Rules in the Netherlands</h3>
+          <p>Understanding your obligations under the Wet Poortwachter, reintegration requirements, and sick leave tracking.</p>
+        </div>
+      </a>
+
+      <a href="/resources" class="blog-card">
+        <div class="blog-card-img" style="background-image: url('/images/blog-meeting.png');">
+          <span class="blog-tag">Sickness</span>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-date">August 2025</span>
+          <h3>Managing Sickness Cases in the Netherlands: A Guide for International Managers</h3>
+          <p>The Dutch 2-year sick leave obligation, Arbo service coordination, and how to manage long-term absence.</p>
+        </div>
+      </a>
+
+    </div>
+    <div class="blog-cta">
+      <a href="/resources" class="btn btn-secondary btn-lg">View All Articles →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq section-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">FAQ</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Quick answers about HR in the Netherlands.</p>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>How long does it take to hire an employee in the Netherlands?</summary>
+        <div class="faq-answer">
+          <p>Typically 2-4 weeks for the administrative setup, though this varies based on the employee's nationality and visa requirements. For EU citizens, the process is faster. For non-EU citizens requiring a Highly Skilled Migrant visa, allow 4-6 weeks.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>What is the 30% ruling and does my company qualify?</summary>
+        <div class="faq-answer">
+          <p>The 30% ruling is a Dutch tax advantage for incoming expat employees, allowing 30% of their salary to be paid tax-free. To qualify, the employee must be recruited from abroad and possess specific expertise not readily available in the Netherlands.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need a Dutch entity to hire employees?</summary>
+        <div class="faq-answer">
+          <p>Yes, to directly employ someone in the Netherlands, you generally need a Dutch legal entity (B.V.). However, alternatives exist such as using an Employer of Record (EOR) service, which allows you to hire without entity setup.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>What are the mandatory employer costs in the Netherlands?</summary>
+        <div class="faq-answer">
+          <p>Beyond gross salary, expect approximately 20-30% additional costs: social insurance contributions (~15-20%), mandatory pension contributions (varies by industry), 8% holiday allowance (vakantiegeld), and sick leave insurance.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>How does sick leave work under Dutch law?</summary>
+        <div class="faq-answer">
+          <p>Dutch employers must continue paying at least 70% of an employee's salary during illness for up to 2 years (104 weeks). You're also required to follow the Wet Poortwachter reintegration process.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Can you help with urgent dismissal situations?</summary>
+        <div class="faq-answer">
+          <p>Absolutely — that's our HR S.O.S. service. Dutch dismissal law is complex and heavily favors employees. We provide same-day guidance and complete legal support throughout the process.</p>
+        </div>
+      </details>
+    </div>
+    <div class="faq-cta">
+      <span>Still have questions?</span>
+      <a href="/contact" class="btn btn-primary">Contact Our Team →</a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+  /* =========================================
+     Shared: Icon Box System
+     ========================================= */
+  .icon-box {
+    width: 48px;
+    height: 48px;
+    background: var(--orange);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .icon-box svg { stroke: white; }
+  .icon-box-sm { width: 36px; height: 36px; border-radius: 10px; }
+  .icon-box-lg { width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 0.75rem; }
+  .icon-box-red { background: #e53e3e; }
+  .text-orange { color: var(--orange); }
+
+  /* =========================================
+     Hero Section
+     ========================================= */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 2rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: url('/images/hero-bg.png');
+    background-size: cover;
+    background-position: 30% center;
+    background-repeat: no-repeat;
+    background-color: var(--navy);
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+      rgba(15, 37, 72, 0.88) 0%,
+      rgba(15, 37, 72, 0.7) 40%,
+      rgba(15, 37, 72, 0.4) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-panel {
+    padding: 3rem;
+    border-radius: var(--radius-xl);
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .hero-panel .eyebrow-badge {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-panel h1 {
+    color: var(--white);
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1.25rem;
+    line-height: 1.1;
+  }
+
+  .hero-desc {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .trust-logos {
+    display: flex;
+  }
+
+  .trust-logo-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    margin-left: -8px;
+    overflow: hidden;
+  }
+
+  .trust-logo-circle:first-child { margin-left: 0; }
+
+  .trust-logo-circle svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .trust-logo-more {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--orange);
+    border-color: rgba(244, 121, 32, 0.4);
+  }
+
+  .hero-trust strong {
+    display: block;
+    color: var(--white);
+    font-size: 0.9rem;
+  }
+
+  .hero-trust span {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Floating badges */
+  .hero-badges {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-right: 2rem;
+  }
+
+  .hero-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.5rem;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards 0.3s, float 5s ease-in-out 1s infinite;
+  }
+
+  .hero-badge-bottom {
+    animation: fadeInUp 0.6s ease forwards 0.5s, float 5s ease-in-out 1.2s infinite;
+    margin-right: 3rem;
+  }
+
+  .hero-badge-third {
+    animation: fadeInUp 0.6s ease forwards 0.7s, float 5s ease-in-out 1.5s infinite;
+    margin-left: 2rem;
+  }
+
+  .badge-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .badge-green { background: rgba(72, 187, 120, 0.2); color: #48bb78; }
+  .badge-green svg { stroke: #48bb78; }
+  .badge-blue { background: rgba(66, 153, 225, 0.2); color: #4299e1; }
+  .badge-blue svg { stroke: #4299e1; }
+
+  .badge-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .hero-badge strong {
+    display: block;
+    color: var(--white);
+    font-size: 0.95rem;
+  }
+
+  /* =========================================
+     Client Logos Strip
+     ========================================= */
+  .client-logos {
+    background: linear-gradient(180deg, #e8edf2 0%, #fff 30%, #fff 70%, #e8edf2 100%);
+    padding: 2.5rem 0;
+    border-top: 1px solid rgba(15, 43, 70, 0.06);
+    border-bottom: 1px solid rgba(15, 43, 70, 0.06);
+  }
+
+  .logos-label {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(15, 43, 70, 0.4);
+    margin-bottom: 1.75rem;
+  }
+
+  .logos-track {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .logos-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: nowrap;
+    animation: none;
+  }
+
+  .logo-item {
+    flex-shrink: 0;
+    height: 22px;
+    color: rgba(15, 43, 70, 0.3);
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: default;
+  }
+
+  .logo-item:hover {
+    color: rgba(15, 43, 70, 0.7);
+    transform: scale(1.05);
+  }
+
+  .logo-item svg {
+    height: 100%;
+    width: auto;
+  }
+
+  @media (max-width: 768px) {
+    .logos-slide {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 3rem;
+      animation: scrollLogos 25s linear infinite;
+    }
+
+    .logo-item {
+      height: 22px;
+    }
+  }
+
+  @keyframes scrollLogos {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* =========================================
+     What We Handle (was Why Choose Us)
+     ========================================= */
+  .what-we-handle {
+    padding: var(--section-padding);
+  }
+
+  .handle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    gap: 2rem;
+  }
+
+  .handle-header h2 {
+    color: var(--white);
+    margin-top: 0.5rem;
+  }
+
+  .handle-header p {
+    color: rgba(255,255,255,0.65);
+    max-width: 400px;
+    text-align: right;
+  }
+
+  .handle-carousel {
+    overflow: visible;
+  }
+
+  .handle-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .handle-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    cursor: default;
+  }
+
+  .handle-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(244, 121, 32, 0.3);
+  }
+
+  .handle-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(244, 121, 32, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .handle-card h4 {
+    color: var(--white);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .handle-card p {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .handle-track {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .handle-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .handle-header p {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .handle-track {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .handle-card {
+      min-width: unset;
+    }
+  }
+
+  /* =========================================
+     Services
+     ========================================= */
+  .services {
+    padding: var(--section-padding);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .service-card-v2 {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.75rem;
+    background: var(--white);
+    border-radius: 20px;
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(15, 43, 70, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(15, 43, 70, 0.05);
+  }
+
+  .service-card-v2:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 36px rgba(15, 43, 70, 0.1);
+  }
+
+  .sv2-illus-wrap {
+    flex-shrink: 0;
+    width: 130px;
+    height: 130px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sv2-illus-navy { background: rgba(15, 43, 70, 0.08); }
+  .sv2-illus-blue { background: rgba(44, 111, 160, 0.08); }
+  .sv2-illus-orange { background: rgba(244, 121, 32, 0.08); }
+  .sv2-illus-red { background: rgba(220, 53, 69, 0.08); }
+
+  .sv2-illus {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 12px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .service-card-v2:hover .sv2-illus {
+    transform: scale(1.12);
+  }
+
+  .sv2-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sv2-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .sv2-badge {
+    display: inline-block;
+    background: rgba(244, 121, 32, 0.1);
+    color: var(--orange);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+  }
+
+  .sv2-badge-red {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+  }
+
+  .sv2-content p {
+    font-size: 0.88rem;
+    color: var(--gray-600);
+    line-height: 1.55;
+    margin-bottom: 0.75rem;
+  }
+
+  .sv2-link {
+    color: var(--orange);
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: color 0.2s ease;
+  }
+
+  .service-card-v2:hover .sv2-link {
+    color: var(--orange-dark);
+  }
+
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .service-card-v2 {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .sv2-illus-wrap {
+      width: 90px;
+      height: 90px;
+    }
+    .sv2-illus {
+      width: 65px;
+      height: 65px;
+    }
+  }
+
+  .services-cta-text {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--gray-500);
+  }
+
+  .link-arrow {
+    color: var(--orange);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color var(--transition-fast);
+  }
+  .link-arrow:hover { color: var(--orange-dark); }
+
+  /* =========================================
+     Industries
+     ========================================= */
+  .industries {
+    padding: var(--section-padding);
+    position: relative;
+    background-image: url('/images/founder/team-collaboration.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .industries::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(15, 37, 72, 0.92) 0%,
+      rgba(15, 37, 72, 0.88) 50%,
+      rgba(15, 37, 72, 0.94) 100%);
+    z-index: 0;
+  }
+
+  .industries > .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .industries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .industry-card {
+    background: rgba(15, 37, 72, 0.85);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    transition: all var(--transition-base);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .industry-card:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--orange);
+    transform: translateY(-3px);
+  }
+
+  .industry-card h4 {
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .industry-card p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+
+  .industries-cta {
+    text-align: center;
+  }
+
+  /* =========================================
+     Process Steps
+     ========================================= */
+  .process {
+    padding: var(--section-padding);
+  }
+
+  .process-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .process-step {
+    flex: 1;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    position: relative;
+  }
+
+  .step-number {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--orange);
+    margin-bottom: 0.75rem;
+  }
+
+  .process-step h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .process-step p {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .step-time {
+    display: inline-block;
+    background: rgba(244, 121, 32, 0.1);
+    color: var(--orange);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+  }
+
+  .process-connector {
+    width: 60px;
+    height: 3px;
+    background: rgba(244, 121, 32, 0.15);
+    margin-top: 4.5rem;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+  }
+
+  .process-connector::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -120%;
+    width: 60%;
+    height: 7px;
+    background: linear-gradient(90deg, transparent 0%, rgba(244, 121, 32, 0.3) 15%, var(--orange) 50%, #ffb347 75%, transparent 100%);
+    border-radius: 1px 4px 4px 1px;
+    clip-path: polygon(0% 40%, 100% 0%, 100% 100%, 0% 60%);
+    animation: glowFlow 2.5s ease-in-out infinite;
+  }
+
+  .process-connector:nth-child(2)::after { animation-delay: 0s; }
+  .process-connector:nth-child(4)::after { animation-delay: 0.8s; }
+  .process-connector:nth-child(6)::after { animation-delay: 1.6s; }
+
+  @keyframes glowFlow {
+    0% { left: -120%; opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { left: 120%; opacity: 0; }
+  }
+
+  .process-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .process-phone {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+  }
+
+  /* =========================================
+     Testimonials (dark navy)
+     ========================================= */
+  .testimonials {
+    padding: var(--section-padding);
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+  }
+
+  .quote-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .quote-author strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--white);
+  }
+
+  .quote-author span {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .quote-stars {
+    color: var(--orange);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .quote-text {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* =========================================
+     About Preview
+     ========================================= */
+  .about-preview {
+    padding: var(--section-padding);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-img-placeholder {
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+    border-radius: var(--radius-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-founder-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .about-content h2 {
+    margin-bottom: 1rem;
+  }
+
+  .about-content > p {
+    margin-bottom: 1.5rem;
+  }
+
+  .about-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  .about-features li {
+    padding: 0.4rem 0;
+    font-size: 0.95rem;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .about-features li svg {
+    flex-shrink: 0;
+  }
+
+  /* =========================================
+     Blog / Insights
+     ========================================= */
+  .blog-section {
+    padding: var(--section-padding);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .blog-card {
+    display: block;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid rgba(15, 43, 70, 0.08);
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(15, 43, 70, 0.12);
+  }
+
+  .blog-card-img {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--navy);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease;
+  }
+
+  .blog-card:hover .blog-card-img {
+    transform: scale(1.03);
+  }
+
+  .blog-tag {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--orange);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+  }
+
+  .blog-card-body {
+    padding: 1.5rem;
+  }
+
+  .blog-date {
+    font-size: 0.78rem;
+    color: rgba(15, 43, 70, 0.45);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-card-body h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+  }
+
+  .blog-card:hover .blog-card-body h3 {
+    color: var(--orange);
+  }
+
+  .blog-card-body p {
+    font-size: 0.88rem;
+    color: rgba(15, 43, 70, 0.6);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .blog-cta {
+    text-align: center;
+  }
+
+  @media (max-width: 1024px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* =========================================
+     FAQ
+     ========================================= */
+  .faq {
+    padding: var(--section-padding);
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .faq-item {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+
+  .faq-item[open] {
+    border-color: var(--orange);
+    box-shadow: 0 2px 12px rgba(244, 121, 32, 0.08);
+  }
+
+  .faq-item summary {
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--navy);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-item summary::-webkit-details-marker { display: none; }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--orange);
+    font-weight: 300;
+    transition: transform var(--transition-base);
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .faq-answer p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .faq-cta {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .faq-cta span {
+    color: var(--gray-500);
+    font-size: 0.95rem;
+  }
+
+  /* =========================================
+     Responsive
+     ========================================= */
+  @media (max-width: 1024px) {
+    .why-us-grid {
+      grid-template-columns: 1fr;
+    }
+    .why-us-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .why-us-header p {
+      text-align: left;
+    }
+    .testimonial-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 0;
+    }
+
+    .hero-badges {
+      display: none;
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .about-image-area {
+      display: none;
+    }
+
+    .process-steps {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .process-connector {
+      width: 2px;
+      height: 30px;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      padding: 7rem 1rem 2.5rem;
+      min-height: auto;
+    }
+
+    .hero-panel {
+      padding: 0;
+      background: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      border-radius: 0;
+    }
+
+    .hero-panel h1 {
+      font-size: 2rem !important;
+      margin-bottom: 1rem;
+      line-height: 1.15 !important;
+    }
+
+    .hero-panel .eyebrow-badge {
+      margin-bottom: 1rem;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .hero-trust {
+      justify-content: flex-start;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+

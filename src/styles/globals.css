@@ -1,0 +1,601 @@
+/* =========================================
+   HRHelp.nl — Global Design System
+   ========================================= */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Brand Colors */
+  --navy: #1a3a6e;
+  --navy-dark: #0f2548;
+  --navy-light: #2a5298;
+  --orange: #f47920;
+  --orange-dark: #d66516;
+  --orange-light: #ff9a4d;
+  --cream: #f8f7f5;
+  --white: #ffffff;
+
+  /* Neutrals */
+  --gray-50: #fafaf9;
+  --gray-100: #f5f5f4;
+  --gray-200: #e7e5e4;
+  --gray-300: #d6d3d1;
+  --gray-400: #a8a29e;
+  --gray-500: #78716c;
+  --gray-600: #57534e;
+  --gray-700: #44403c;
+  --gray-800: #292524;
+  --gray-900: #1c1917;
+
+  /* Typography */
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing */
+  --section-padding: 6rem 2rem;
+  --section-padding-sm: 4rem 1.5rem;
+  --container-max: 1200px;
+  --container-wide: 1400px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 50px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.15);
+  --shadow-glass: 0 8px 32px rgba(26, 58, 110, 0.1);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-blur: blur(12px);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+/* =========================================
+   Reset & Base
+   ========================================= */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--gray-800);
+  background: var(--white);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================
+   Typography
+   ========================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--navy);
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+h3 {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+}
+
+h4 {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+}
+
+p {
+  font-size: 1.05rem;
+  color: var(--gray-600);
+  line-height: 1.8;
+}
+
+/* =========================================
+   Utility Classes
+   ========================================= */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.container-wide {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Section Backgrounds */
+.section-white {
+  background: var(--white);
+}
+
+.section-cream {
+  background: var(--cream);
+}
+
+.section-navy {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.section-navy h1,
+.section-navy h2,
+.section-navy h3 {
+  color: var(--white);
+}
+
+.section-navy p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Eyebrow/Badge */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1rem;
+}
+
+.eyebrow-badge {
+  display: inline-block;
+  background: rgba(244, 121, 32, 0.1);
+  color: var(--orange);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(244, 121, 32, 0.2);
+  margin-bottom: 1.25rem;
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3.5rem;
+}
+
+.section-header h2 {
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-header p {
+  font-size: 1.1rem;
+}
+
+/* =========================================
+   Buttons
+   ========================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.btn-primary {
+  background: var(--orange);
+  color: var(--white);
+  border-color: var(--orange);
+  box-shadow: none;
+}
+
+.btn-primary:hover {
+  background: var(--orange-dark);
+  border-color: var(--orange-dark);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--navy);
+  border-color: var(--gray-200);
+}
+
+.btn-secondary:hover {
+  border-color: var(--navy);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-sm {
+  padding: 0.6rem 1.4rem;
+  font-size: 0.85rem;
+}
+
+.btn-lg {
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+}
+
+/* =========================================
+   Cards
+   ========================================= */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  border: 1px solid var(--gray-200);
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gray-300);
+}
+
+.card-glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: all var(--transition-base);
+}
+
+.card-glass:hover {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-glass);
+}
+
+/* =========================================
+   Glassmorphism Effects
+   ========================================= */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+}
+
+/* =========================================
+   Animations
+   ========================================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Staggered animations */
+.animate-delay-1 {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.animate-delay-3 {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.animate-delay-4 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.animate-delay-5 {
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 3.5rem 1.25rem;
+  }
+
+  .container,
+  .container-wide {
+    padding: 0 1.25rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  /* Scale down headings across the board */
+  h1 {
+    font-size: 2rem !important;
+    line-height: 1.15 !important;
+  }
+
+  h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+  }
+
+  h3 {
+    font-size: 1.15rem !important;
+  }
+
+  /* Section headers */
+  .section-header h2 {
+    font-size: 1.5rem !important;
+  }
+
+  .eyebrow-badge {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.8rem;
+  }
+
+  /* Hero chips / eyebrow wraps */
+  .hero-chip-wrap {
+    margin-bottom: 0rem;
+  }
+
+  /* Stack CTA buttons vertically on mobile */
+  .sv-hero-actions,
+  .csd-hero-actions,
+  .expd-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sv-hero-actions .btn,
+  .csd-hero-actions .btn,
+  .expd-hero-actions .btn {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Floating glassmorphism cards — smaller, tighter */
+  .hero-floating-card,
+  .csd-floating-card {
+    padding: 0.6rem 0.8rem;
+    gap: 0.5rem;
+  }
+
+  .hero-floating-card .floating-value,
+  .csd-floating-value {
+    font-size: 0.9rem;
+  }
+
+  .hero-floating-card .floating-icon,
+  .csd-floating-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .hero-floating-card .floating-icon .material-symbols-outlined,
+  .csd-floating-icon .material-symbols-outlined {
+    font-size: 16px;
+  }
+
+  .card-tl {
+    left: -10px !important;
+    top: -5px !important;
+  }
+
+  .card-br {
+    right: -10px !important;
+    bottom: 10px !important;
+  }
+
+  /* Glass frame */
+  .sv-hero-glass-frame,
+  .csd-hero-glass-frame,
+  .expd-hero-glass-frame {
+    top: 10px;
+    left: 10px;
+    right: -10px;
+    bottom: -10px;
+  }
+
+  /* Stats should wrap properly */
+  .csd-outcome-stats,
+  .expd-result-stats {
+    gap: 1.5rem;
+  }
+
+  .csd-stat-val,
+  .expd-stat-val {
+    font-size: 1.6rem !important;
+  }
+
+  /* Stack FAQ CTA and similar rows vertically */
+  .faq-cta {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Footer CTA button full-width */
+  .cta-inner .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* All page-bottom CTA buttons full-width */
+  .csd-cta .btn,
+  .expd-cta .btn,
+  .exp-cta .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Elfsight floating widget — move up so it doesn't overlap CTAs */
+  .elfsight-app-b5ddbfcb-a7b8-49e3-aa9d-88aea10f86df {
+    z-index: 999;
+  }
+}
+
+/* Small phone — extra tight */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem !important;
+  }
+
+  h2 {
+    font-size: 1.35rem !important;
+  }
+
+  .container,
+  .container-wide {
+    padding: 0 1rem;
+  }
+}
+
+/* Force all card grids to single column on mobile */
+@media (max-width: 640px) {
+
+  .sv-feature-grid,
+  .idp-solutions-grid,
+  .idp-challenges-grid,
+  .ia-grid,
+  .ia-stats-grid,
+  .ab2-values-grid,
+  .ab2-partners-grid,
+  .cr-benefits-grid,
+  .pt-disciplines-grid,
+  .res-more-grid,
+  .expd-inc-grid,
+  .handle-track,
+  .sol2-cards {
+    grid-template-columns: 1fr !important;
+  }
+}

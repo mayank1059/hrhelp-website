@@ -1,0 +1,298 @@
+---
+import Layout from '../../../components/Layout.astro';
+import { getCaseStudies, getCaseStudy } from '../../../lib/wordpress';
+import type { CaseStudy } from '../../../lib/wordpress';
+
+export async function getStaticPaths() {
+  const caseStudies = await getCaseStudies();
+  return caseStudies.map(cs => ({
+    params: { slug: cs.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const cs = await getCaseStudy(slug as string);
+if (!cs) return Astro.redirect('/resources/case-studies');
+
+const caseStudySchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": cs.title,
+  "description": cs.intro.slice(0, 160),
+  "image": cs.image?.startsWith('http') ? cs.image : `https://hrhelp.nl${cs.image}`,
+  "author": { "@type": "Organization", "name": "HRHelp.nl" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "HRHelp.nl",
+    "logo": { "@type": "ImageObject", "url": "https://hrhelp.nl/favicon.svg" }
+  },
+  "mainEntityOfPage": `https://hrhelp.nl/resources/case-studies/${slug}`
+};
+---
+
+<Layout title={`${cs.title} | Case Study`} description={cs.intro.slice(0, 160)} schema={caseStudySchema}>
+
+<!-- ===== HERO — Premium Split ===== -->
+<section class="csd-hero">
+  <div class="csd-hero-mesh"></div>
+  <div class="container-wide csd-hero-inner">
+    <div class="csd-hero-text" data-animate="fade-right">
+      <div class="hero-chip-wrap">
+        <span class="eyebrow-badge">
+          <span class="material-symbols-outlined" style="font-size:16px;">{cs.icon}</span>
+          {cs.tag}
+        </span>
+      </div>
+      <h1>{cs.title}</h1>
+      <p class="csd-hero-desc">{cs.intro}</p>
+      <div class="csd-hero-actions">
+        <a href="/contact" class="btn btn-primary btn-lg">Book a Consultation</a>
+        <a href="#csd-approach" class="btn btn-secondary btn-lg">Our Approach</a>
+      </div>
+    </div>
+    <div class="csd-hero-visual" data-animate="fade-left">
+      <div class="csd-hero-photo-wrap">
+        <div class="csd-hero-glass-frame"></div>
+        <img src={cs.image} alt={cs.title} class="csd-hero-img" />
+        <div class="hero-floating-card card-tl" data-float>
+          <div class="floating-icon"><span class="material-symbols-outlined">{cs.floatCards.tl.icon}</span></div>
+          <div class="floating-content">
+            <span class="floating-label">{cs.floatCards.tl.label}</span>
+            <span class="floating-value">{cs.floatCards.tl.value}</span>
+          </div>
+        </div>
+        <div class="hero-floating-card card-br" data-float-reverse>
+          <div class="floating-icon icon-orange"><span class="material-symbols-outlined">{cs.floatCards.br.icon}</span></div>
+          <div class="floating-content">
+            <span class="floating-label">{cs.floatCards.br.label}</span>
+            <span class="floating-value">{cs.floatCards.br.value}</span>
+          </div>
+        </div>
+        <div class="hero-status-pill">
+          <span class="status-dot"></span>
+          <span>Client Engagement</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHAT WE DID ===== -->
+<section class="csd-what section-white" id="csd-approach">
+  <div class="container">
+    <div class="csd-what-inner">
+      <div class="csd-what-content" data-animate="fade-up">
+        <span class="eyebrow">What We Did</span>
+        <h2>Our Approach</h2>
+        <p class="csd-what-intro">{cs.context}</p>
+        <ul class="csd-checklist">
+          {cs.items.map((item: string) => (
+            <li>
+              <span class="material-symbols-outlined" style="font-size:18px; color: var(--orange); flex-shrink:0;">check_circle</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="csd-what-illus" data-animate="fade-left">
+        <img src={cs.illustration} alt={`${cs.title} illustration`} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OUTCOME ===== -->
+<section class="csd-outcome section-cream">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow">Results</span>
+      <h2>The Outcome</h2>
+    </div>
+    <div class="csd-outcome-card" data-animate="fade-up">
+      <p>{cs.outcome}</p>
+      {cs.stats.length > 0 && (
+        <div class="csd-outcome-stats">
+          {cs.stats.map((stat: any) => (
+            <div class="csd-stat">
+              <span class="csd-stat-val">{stat.value}</span>
+              <span class="csd-stat-lbl">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="csd-cta">
+  <div class="container" style="text-align: center;">
+    <h2>Ready to See Similar Results?</h2>
+    <p>Every engagement starts with understanding your unique challenge.</p>
+    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
+      <a href="/contact" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
+      <a href="/resources/case-studies" class="btn btn-ghost btn-lg" style="border-color: rgba(255,255,255,0.3); color: white;">View All Case Studies</a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO — Premium Split ===== */
+.csd-hero {
+  padding: 10rem 0 6rem;
+  background: var(--cream);
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.csd-hero-mesh {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(at 10% 20%, rgba(244,121,32,0.05) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(13,31,56,0.04) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(244,121,32,0.03) 0px, transparent 50%);
+  filter: blur(100px);
+}
+.csd-hero-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  gap: 5rem; align-items: center;
+}
+.csd-hero-text h1 {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 950; line-height: 1.05;
+  margin: 1.5rem 0; letter-spacing: -0.04em;
+  color: var(--navy);
+}
+.csd-hero-desc {
+  font-size: 1.15rem; color: var(--gray-600);
+  line-height: 1.75; max-width: 540px;
+  margin-bottom: 2.5rem; font-weight: 500;
+}
+.csd-hero-actions { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.csd-hero-visual { position: relative; display: flex; justify-content: flex-end; }
+.csd-hero-photo-wrap { position: relative; width: 100%; max-width: 540px; }
+.csd-hero-glass-frame {
+  position: absolute; top: 20px; left: 20px; right: -20px; bottom: -20px;
+  border-radius: var(--radius-xl);
+  border: 2px solid rgba(244,121,32,0.15);
+  z-index: 0;
+}
+.csd-hero-img {
+  position: relative; z-index: 1; width: 100%;
+  border-radius: var(--radius-xl);
+  aspect-ratio: 4/3; object-fit: cover;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+}
+
+/* Floating Cards */
+.hero-floating-card {
+  position: absolute; display: flex; align-items: center; gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+.card-tl { top: -10px; left: -30px; animation: csd-float 5s ease-in-out infinite; }
+.card-br { bottom: 20px; right: -30px; animation: csd-float 5s ease-in-out 1.2s infinite; }
+.floating-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(13,31,56,0.08);
+  display: flex; align-items: center; justify-content: center;
+}
+.floating-icon .material-symbols-outlined { font-size: 20px; color: var(--navy); }
+.icon-orange { background: rgba(244,121,32,0.12); }
+.icon-orange .material-symbols-outlined { color: var(--orange); }
+.floating-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-500); display: block; }
+.floating-value { font-size: 1.1rem; font-weight: 800; color: var(--navy); display: block; line-height: 1.2; }
+
+.hero-status-pill {
+  position: absolute; bottom: -15px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1rem; border-radius: 999px;
+  background: white; border: 1px solid var(--gray-200);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  font-size: 0.75rem; font-weight: 600; color: var(--navy);
+  z-index: 10; white-space: nowrap;
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22c55e; animation: csd-pulse 2s infinite;
+}
+
+@keyframes csd-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes csd-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ===== WHAT WE DID ===== */
+.csd-what { padding: var(--section-padding); }
+.csd-what-inner { display: flex; gap: 4rem; align-items: center; }
+.csd-what-content { flex: 1; }
+.csd-what-content h2 { margin: 0.5rem 0 1rem; }
+.csd-what-intro { color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; }
+.csd-checklist { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+.csd-checklist li {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  font-size: 0.95rem; line-height: 1.6; color: var(--navy);
+  background: var(--cream); padding: 1rem 1.25rem; border-radius: var(--radius-md);
+}
+.csd-what-illus { flex: 0 0 380px; }
+.csd-what-illus img { width: 100%; object-fit: contain; }
+
+.csd-outcome { padding: var(--section-padding); }
+.csd-outcome-card {
+  max-width: 800px; margin: 0 auto;
+  background: white; padding: 2.5rem; border-radius: var(--radius-xl);
+  border: 1px solid var(--gray-200); border-left: 4px solid var(--orange);
+}
+.csd-outcome-card p { font-size: 1rem; line-height: 1.8; color: var(--navy); }
+.csd-outcome-stats { display: flex; gap: 2.5rem; margin-top: 2rem; flex-wrap: wrap; }
+.csd-stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.csd-stat-val { font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1; }
+.csd-stat-lbl { font-size: 0.8rem; color: var(--gray-500); }
+
+.csd-cta { padding: 5rem 0; background: var(--navy); color: white; }
+.csd-cta h2 { margin-bottom: 0.75rem; color: white; }
+.csd-cta p { color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto; }
+
+@media (max-width: 1024px) {
+  .csd-hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .csd-hero-visual { justify-content: center; }
+  .csd-hero-photo-wrap { max-width: 400px; margin: 0 auto; }
+  .csd-hero-desc { margin: 0 auto 2.5rem; }
+  .csd-hero-actions { justify-content: center; }
+  .hero-floating-card { display: none; }
+  .hero-status-pill { display: none; }
+  .csd-hero-glass-frame { display: none; }
+}
+
+@media (max-width: 768px) {
+  .csd-hero { padding: 7.5rem 0 3.5rem; }
+  .csd-hero-inner { gap: 2rem; }
+  .csd-hero-img { aspect-ratio: 16/9; }
+  .csd-hero-actions { flex-direction: column; align-items: stretch; }
+  .csd-hero-actions .btn { text-align: center; }
+
+  .csd-what-inner { flex-direction: column; gap: 2rem; }
+  .csd-what-illus { flex: none; width: 100%; max-width: 320px; margin: 0 auto; }
+
+  .csd-outcome-card { padding: 1.5rem; }
+  .csd-outcome-stats { flex-direction: column; gap: 1.25rem; }
+
+  .csd-cta { padding: 3.5rem 0; }
+}
+
+@media (max-width: 480px) {
+  .csd-hero { padding: 7rem 0 2.5rem; }
+  .csd-hero-photo-wrap { max-width: 100%; }
+}

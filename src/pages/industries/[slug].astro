@@ -1,0 +1,996 @@
+---
+import Layout from '../../components/Layout.astro';
+
+const industryData: Record<string, any> = {
+  technology: {
+    name: 'Technology & Startups',
+    tagline: 'Architecting High-Performance Tech Teams',
+    description: 'Precision HR solutions for Dutch Tech & Startups. We build the organizational frameworks that scale with your code base. Eliminate system friction before it compounds.',
+    icon: 'terminal',
+    heroImage: '/images/sections/hero-technology.png',
+    complianceScore: '100%',
+    complianceLabel: 'Dutch Labor Law Fit',
+    stats: [
+      { value: '48 Days', label: 'Avg Recruitment Velocity', highlight: true },
+      { value: '+65', label: 'Employee NPS' },
+      { value: '94.2%', label: 'Retention Rate' },
+      { value: '20+', label: 'Tech Clients Served' },
+    ],
+    challenges: [
+      { title: 'Retention Leak', desc: 'High turnover rates destabilizing project velocity. Loss of institutional knowledge creates dependency loops on senior engineers.', severity: 'High', icon: 'trending_down' },
+      { title: 'Culture Debt', desc: 'Undefined core values leading to misalignment during rapid scaling phases. Patching culture post-scale is resource intensive.', severity: 'Critical', icon: 'group_off' },
+      { title: 'Dutch Law Compliance', desc: 'Falling behind on Dutch labor law requirements exposes the firm to legal exploits and fines. 30% ruling missteps can cost thousands.', severity: 'Medium', icon: 'gavel' },
+    ],
+    solutions: [
+      { title: 'Talent Pipelines', desc: 'Recruitment strategies optimized for tech stacks and cultural fit. Sourcing from Dutch and international talent pools.', icon: 'person_search' },
+      { title: 'Culture Architecture', desc: 'Defining organizational DNA and core values for distributed teams. Building rituals that scale.', icon: 'psychology' },
+      { title: '30% Ruling & Compliance', desc: 'Automated adherence to Dutch labor laws, tax regulations, and 30% ruling applications for international talent.', icon: 'verified' },
+      { title: 'L&D Programs', desc: 'Continuous learning pathways for engineering leadership. Technical skills development and management training.', icon: 'school' },
+    ],
+    process: [
+      { num: '01', title: 'Discovery Audit', desc: 'Deep dive into current HR tech stack and organizational friction points.' },
+      { num: '02', title: 'Framework Design', desc: 'Architecting bespoke HR processes tailored to your growth velocity.' },
+      { num: '03', title: 'Implementation', desc: 'Rollout of new modules with full team onboarding and documentation.' },
+      { num: '04', title: 'Iteration Loop', desc: 'Continuous monitoring and optimization based on performance data.' },
+    ],
+    testimonial: {
+      quote: 'Before HRHelp, our scaling was breaking our culture. They refactored our hiring pipeline like a clean codebase. Time-to-hire dropped by 40% in Q1.',
+      author: 'Jeroen D.',
+      role: 'CTO',
+      company: 'Amsterdam Fintech Scale-up',
+    },
+    showcaseImage: '/images/sections/showcase-technology.png',
+    showcaseText: 'From sprint standups to org design — we embed HR frameworks that keep pace with your deploy cycles. Our approach starts where your backlog ends.',
+  },
+  'life-sciences': {
+    name: 'Life Sciences & Pharma',
+    tagline: 'Compliance-First HR for Regulated Industries',
+    description: 'Navigate the complex intersection of Dutch employment law and pharmaceutical regulations. From WBMV compliance to clinical trial staffing, we build HR frameworks that protect your research and your people.',
+    icon: 'biotech',
+    heroImage: '/images/sections/hero-life-sciences.png',
+    complianceScore: '100%',
+    complianceLabel: 'Pharma Regulatory Fit',
+    stats: [
+      { value: '10+', label: 'Pharma Clients', highlight: true },
+      { value: '€3.2M', label: 'R&D Tax Reclaimed' },
+      { value: '99%', label: 'Audit Pass Rate' },
+      { value: '35', label: 'Avg Days to Fill' },
+    ],
+    challenges: [
+      { title: 'Regulatory Burden', desc: 'Constant shifts in GMP, GCP, and Dutch healthcare regulations create compliance overhead that drains HR resources and slows hiring.', severity: 'Critical', icon: 'policy' },
+      { title: 'Specialist Scarcity', desc: 'Clinical researchers, QA specialists, and regulatory affairs professionals are in extreme short supply across the Netherlands.', severity: 'High', icon: 'person_off' },
+      { title: 'Contract Complexity', desc: 'Fixed-term research contracts, visiting scientist agreements, and grant-funded positions require bespoke employment structures.', severity: 'Medium', icon: 'description' },
+    ],
+    solutions: [
+      { title: 'BIG Registration', desc: 'End-to-end support for healthcare professional registration, credential verification, and ongoing compliance monitoring.', icon: 'medical_information' },
+      { title: 'Clinical Staffing', desc: 'Specialized recruitment pipelines for clinical trial teams, from principal investigators to CRAs and data managers.', icon: 'clinical_notes' },
+      { title: 'R&D Tax Benefits', desc: 'WBSO and RDA applications, innovation box structuring, and expat tax optimization for research talent.', icon: 'savings' },
+      { title: 'Safety & Ethics', desc: 'Workplace safety protocols, ethics committee liaison, and whistleblower protection frameworks.', icon: 'health_and_safety' },
+    ],
+    process: [
+      { num: '01', title: 'Regulatory Scan', desc: 'Comprehensive audit of current compliance status against Dutch and EU pharmaceutical regulations.' },
+      { num: '02', title: 'Workforce Blueprint', desc: 'Mapping talent needs against research pipeline timelines and funding cycles.' },
+      { num: '03', title: 'Compliant Hiring', desc: 'Deploying recruitment and onboarding processes that meet all regulatory requirements from day one.' },
+      { num: '04', title: 'Ongoing Monitoring', desc: 'Continuous compliance tracking with quarterly audits and regulatory update briefings.' },
+    ],
+    testimonial: {
+      quote: 'HRHelp navigated our WBSO applications and BIG registrations with precision we didn\'t think possible. Our compliance audit pass rate went from 82% to 99%.',
+      author: 'Dr. Sarah M.',
+      role: 'VP of Human Resources',
+      company: 'Dutch Biotech Company',
+    },
+    showcaseImage: '/images/sections/showcase-life-sciences.png',
+    showcaseText: 'Compliance is in our DNA. We work alongside your R&D teams to build HR processes that satisfy WBMV, GMP, and Dutch employment law — simultaneously.',
+  },
+  finance: {
+    name: 'Finance & Fintech',
+    tagline: 'Banking-Grade HR Governance',
+    description: 'Executive search, AFM/DNB compliance, and compensation structuring for the Netherlands\' most demanding financial institutions. We speak the language of risk, regulation, and returns.',
+    icon: 'account_balance',
+    heroImage: '/images/sections/hero-finance.png',
+    complianceScore: '100%',
+    complianceLabel: 'AFM/DNB Compliant',
+    stats: [
+      { value: '15+', label: 'Financial Clients', highlight: true },
+      { value: '€5M+', label: 'Compensation Structured' },
+      { value: '97%', label: 'Compliance Score' },
+      { value: '22', label: 'Avg Days to Fill' },
+    ],
+    challenges: [
+      { title: 'Regulatory Complexity', desc: 'AFM, DNB, and MiFID II requirements create a labyrinth of compliance obligations that directly impact hiring, compensation, and termination processes.', severity: 'Critical', icon: 'shield' },
+      { title: 'Bonus Claw-back Rules', desc: 'Dutch financial sector bonus regulations require careful structuring to remain competitive while meeting legal variable remuneration caps.', severity: 'High', icon: 'money_off' },
+      { title: 'Executive Talent Wars', desc: 'C-suite and senior risk professionals are in extreme demand. Traditional recruitment channels fail to reach passive candidates.', severity: 'High', icon: 'groups' },
+    ],
+    solutions: [
+      { title: 'Executive Search', desc: 'Discreet, high-touch recruitment for C-suite, board members, and senior risk professionals in Dutch financial institutions.', icon: 'person_pin' },
+      { title: 'Comp & Benefits', desc: 'Variable remuneration structuring, bonus claw-back compliance, and benchmarking against Dutch financial sector standards.', icon: 'payments' },
+      { title: 'DNB Fit & Proper', desc: 'Preparation and support for DNB suitability assessments, including background screening and competency documentation.', icon: 'fact_check' },
+      { title: 'Risk Culture', desc: 'Building risk-aware organizational cultures that satisfy regulatory expectations while maintaining innovation capacity.', icon: 'security' },
+    ],
+    process: [
+      { num: '01', title: 'Compliance Audit', desc: 'Full review of HR policies against AFM/DNB requirements and MiFID II staffing obligations.' },
+      { num: '02', title: 'Gap Analysis', desc: 'Identifying areas where current practices expose the institution to regulatory risk or talent loss.' },
+      { num: '03', title: 'Policy Redesign', desc: 'Implementing compliant compensation structures, governance frameworks, and hiring protocols.' },
+      { num: '04', title: 'Board Reporting', desc: 'Establishing HR metrics dashboards and reporting cadences for supervisory board oversight.' },
+    ],
+    testimonial: {
+      quote: 'Their understanding of DNB fit & proper requirements saved us months of back-and-forth with the regulator. The compensation restructuring alone paid for the engagement tenfold.',
+      author: 'Marc V.',
+      role: 'CHRO',
+      company: 'Dutch Banking Group',
+    },
+    showcaseImage: '/images/sections/showcase-finance.png',
+    showcaseText: 'From AFM compliance reviews to executive compensation modeling — our team operates at the intersection of finance and human capital, where precision matters most.',
+  },
+  'professional-services': {
+    name: 'Professional Services',
+    tagline: 'HR for Knowledge-Driven Firms',
+    description: 'From partnership structures to billable workforce optimization, we design HR systems that fit the unique dynamics of consulting, legal, and advisory firms operating in the Netherlands.',
+    icon: 'work',
+    heroImage: '/images/sections/hero-professional-services.png',
+    complianceScore: '100%',
+    complianceLabel: 'Partnership Compliant',
+    stats: [
+      { value: '10+', label: 'Firms Served', highlight: true },
+      { value: '92%', label: 'Partner Satisfaction' },
+      { value: '€1.8M', label: 'Cost Optimization' },
+      { value: '30%', label: 'Turnover Reduction' },
+    ],
+    challenges: [
+      { title: 'Partnership Dynamics', desc: 'Complex equity structures, profit-sharing arrangements, and partner track systems require HR approaches that traditional frameworks don\'t accommodate.', severity: 'High', icon: 'handshake' },
+      { title: 'Utilization Pressure', desc: 'Balancing billable hours with professional development, well-being, and retention creates chronic tension in consulting environments.', severity: 'Critical', icon: 'timer' },
+      { title: 'Knowledge Retention', desc: 'When senior consultants leave, they take client relationships and institutional expertise, creating costly knowledge gaps.', severity: 'High', icon: 'psychology_alt' },
+    ],
+    solutions: [
+      { title: 'Partner Track Design', desc: 'Structured career pathways from associate to partner with clear competency milestones and equity transition planning.', icon: 'trending_up' },
+      { title: 'Utilization Balance', desc: 'Data-driven models that optimize billable hours while protecting team wellness and reducing burnout risk.', icon: 'balance' },
+      { title: 'Alumni Networks', desc: 'Building structured alumni programs that maintain firm relationships and create referral pipelines after departure.', icon: 'hub' },
+      { title: 'Expat Integration', desc: 'International consultant onboarding, 30% ruling applications, and cross-border employment structuring.', icon: 'flight_takeoff' },
+    ],
+    process: [
+      { num: '01', title: 'Firm Assessment', desc: 'Deep analysis of partnership structure, utilization patterns, and employee engagement metrics.' },
+      { num: '02', title: 'Pathway Architecture', desc: 'Designing career tracks, compensation models, and governance frameworks for professional service environments.' },
+      { num: '03', title: 'Implementation', desc: 'Rolling out new HR systems with partner buy-in sessions and firm-wide change management.' },
+      { num: '04', title: 'Performance Tracking', desc: 'Monitoring utilization, retention, and satisfaction KPIs with quarterly partner briefings.' },
+    ],
+    testimonial: {
+      quote: 'HRHelp understood our partnership dynamics from day one. The career track redesign reduced associate attrition by 30% and improved our employer brand significantly.',
+      author: 'Liesbeth K.',
+      role: 'Managing Partner',
+      company: 'Amsterdam Law Firm',
+    },
+    showcaseImage: '/images/sections/showcase-professional-services.png',
+    showcaseText: 'We design HR systems that respect partnership dynamics while scaling associate development. Our frameworks adapt to the unique hierarchy of knowledge-driven firms.',
+  },
+  logistics: {
+    name: 'Logistics & Supply Chain',
+    tagline: 'Workforce Excellence for Supply Chain Operations',
+    description: 'From port operations to distribution centers, we optimize workforce management across the Netherlands\' critical logistics infrastructure. CAO compliance, shift planning, and cross-border driver solutions.',
+    icon: 'local_shipping',
+    heroImage: '/images/sections/hero-logistics.png',
+    complianceScore: '100%',
+    complianceLabel: 'CAO Compliant',
+    stats: [
+      { value: '10+', label: 'Logistics Clients', highlight: true },
+      { value: '1K+', label: 'Workers Managed' },
+      { value: '98%', label: 'Safety Compliance' },
+      { value: '40%', label: 'Cost Reduction' },
+    ],
+    challenges: [
+      { title: 'Shift Complexity', desc: 'Managing rotating schedules, overtime regulations, and part-time contracts across multiple distribution sites creates administrative overload.', severity: 'Critical', icon: 'schedule' },
+      { title: 'Cross-Border Drivers', desc: 'International truck drivers operating across EU borders face complex employment law intersections that create compliance risk.', severity: 'High', icon: 'public' },
+      { title: 'Temp Labor Dependency', desc: 'Heavy reliance on temporary agencies for peak seasons inflates costs and creates quality inconsistencies across warehouse operations.', severity: 'Medium', icon: 'group_add' },
+    ],
+    solutions: [
+      { title: 'Shift Optimization', desc: 'Data-driven schedule planning that balances legal compliance, worker preferences, and operational efficiency.', icon: 'event_available' },
+      { title: 'CAO Compliance', desc: 'Full collective labor agreement management including wage calculations, leave entitlements, and union liaison.', icon: 'description' },
+      { title: 'Safety Programs', desc: 'Warehouse safety audits, incident reporting systems, and ARBO-wet compliance programs.', icon: 'health_and_safety' },
+      { title: 'Flex Pool Design', desc: 'Building internal flex worker pools to reduce agency dependency while maintaining seasonal scalability.', icon: 'groups' },
+    ],
+    process: [
+      { num: '01', title: 'Operations Scan', desc: 'Site-by-site analysis of workforce composition, shift patterns, and compliance gaps.' },
+      { num: '02', title: 'Workforce Model', desc: 'Designing optimal staffing models that balance permanent, flex, and temporary workers.' },
+      { num: '03', title: 'System Rollout', desc: 'Implementing scheduling, compliance tracking, and onboarding systems across all sites.' },
+      { num: '04', title: 'Continuous Audit', desc: 'Quarterly safety audits, CAO compliance reviews, and cost optimization reporting.' },
+    ],
+    testimonial: {
+      quote: 'Our distribution network was drowning in CAO compliance issues. HRHelp streamlined our entire shift management system and cut temporary labor costs by 40%.',
+      author: 'Pieter H.',
+      role: 'Operations Director',
+      company: 'Rotterdam Logistics Group',
+    },
+    showcaseImage: '/images/sections/showcase-logistics.png',
+    showcaseText: 'Real-time workforce visibility across your entire supply chain. We build the shift-planning and compliance systems that keep your operations moving — 24/7, cross-border.',
+  },
+  ngo: {
+    name: 'NGO & Non-Profit',
+    tagline: 'Mission-Driven People Strategies',
+    description: 'Specialized HR solutions for non-profit organizations, foundations, and NGOs operating in the Netherlands. We help you attract and retain purpose-driven talent while navigating grant-funded employment complexities.',
+    icon: 'public',
+    heroImage: '/images/sections/hero-ngo.png',
+    complianceScore: '100%',
+    complianceLabel: 'ANBI Compliant',
+    stats: [
+      { value: '5+', label: 'NGOs Supported', highlight: true },
+      { value: '50+', label: 'Volunteers Managed' },
+      { value: '€2M+', label: 'Grant Optimization' },
+      { value: '95%', label: 'Staff Retention' },
+    ],
+    challenges: [
+      { title: 'Grant-Tied Contracts', desc: 'Project-based funding creates employment uncertainty and complex fixed-term contract obligations under Dutch labor law.', severity: 'Critical', icon: 'request_quote' },
+      { title: 'Volunteer Governance', desc: 'Balancing volunteer engagement with employment law boundaries, insurance obligations, and duty of care requirements.', severity: 'High', icon: 'volunteer_activism' },
+      { title: 'Salary Competitiveness', desc: 'Limited budgets make it difficult to attract specialized talent, especially in areas like fundraising, advocacy, and program management.', severity: 'Medium', icon: 'savings' },
+    ],
+    solutions: [
+      { title: 'Grant HR Planning', desc: 'Aligning staffing plans with grant cycles, including contract structuring and end-of-project transition support.', icon: 'calendar_month' },
+      { title: 'Volunteer Programs', desc: 'Compliant volunteer management frameworks including insurance, agreements, and engagement tracking.', icon: 'diversity_3' },
+      { title: 'Total Rewards', desc: 'Creative compensation packages that maximize impact within budget constraints — including pension, development, and purpose-driven benefits.', icon: 'redeem' },
+      { title: 'Board Governance', desc: 'HR governance frameworks for supervisory boards, including ANBI compliance and good governance code adherence.', icon: 'admin_panel_settings' },
+    ],
+    process: [
+      { num: '01', title: 'Mission Alignment', desc: 'Understanding your organization\'s purpose, funding structure, and people challenges.' },
+      { num: '02', title: 'Workforce Design', desc: 'Creating staffing models that flex with grant cycles while maintaining continuity of operations.' },
+      { num: '03', title: 'Implementation', desc: 'Deploying HR processes, volunteer frameworks, and governance structures with minimal disruption.' },
+      { num: '04', title: 'Impact Reporting', desc: 'HR metrics aligned with donor expectations and organizational impact measurement.' },
+    ],
+    testimonial: {
+      quote: 'HRHelp transformed how we manage our grant-funded teams. Our staff retention improved dramatically and we finally have a volunteer governance framework that works.',
+      author: 'Anna B.',
+      role: 'Executive Director',
+      company: 'Dutch International NGO',
+    },
+    showcaseImage: '/images/sections/showcase-ngo.png',
+    showcaseText: 'Mission-driven talent deserves purpose-built HR. We balance grant compliance with employee engagement, helping your team focus on what matters most — impact.',
+  },
+  manufacturing: {
+    name: 'Greenfield & Manufacturing',
+    tagline: 'Building HR from the Ground Up',
+    description: 'Whether you\'re opening a new facility or optimizing an existing production environment, we build complete HR infrastructures for manufacturing operations in the Netherlands — from CLA negotiations to works councils.',
+    icon: 'precision_manufacturing',
+    heroImage: '/images/sections/hero-manufacturing.png',
+    complianceScore: '100%',
+    complianceLabel: 'CLA Compliant',
+    stats: [
+      { value: '5+', label: 'Greenfield Projects', highlight: true },
+      { value: '500+', label: 'Workers Onboarded' },
+      { value: '100%', label: 'Works Council Setup' },
+      { value: '€4M', label: 'Setup Cost Savings' },
+    ],
+    challenges: [
+      { title: 'Greenfield Complexity', desc: 'Opening a new facility in the Netherlands requires navigating permits, local labor markets, CLA selection, and works council establishment simultaneously.', severity: 'Critical', icon: 'domain_add' },
+      { title: 'CLA Negotiations', desc: 'Collective labor agreement selection and negotiation directly impacts cost structure, shift flexibility, and workforce relations for years to come.', severity: 'High', icon: 'handshake' },
+      { title: 'Blue-Collar Recruitment', desc: 'Sourcing skilled production workers in a tight Dutch labor market while managing quality standards and training requirements.', severity: 'High', icon: 'engineering' },
+    ],
+    solutions: [
+      { title: 'Greenfield Setup', desc: 'Complete HR infrastructure from day zero: entity registration, payroll, policies, contracts, and organizational design.', icon: 'domain_add' },
+      { title: 'CLA Management', desc: 'Strategic CLA selection, negotiation support, and ongoing compliance management for manufacturing environments.', icon: 'gavel' },
+      { title: 'Works Councils', desc: 'Establishing and supporting works councils (OR) including elections, training, and productive management-council relations.', icon: 'groups_3' },
+      { title: 'Production Staffing', desc: 'Recruitment pipelines for production operators, quality inspectors, maintenance engineers, and shift supervisors.', icon: 'badge' },
+    ],
+    process: [
+      { num: '01', title: 'Site Assessment', desc: 'Evaluating local labor market, applicable CLAs, and regulatory requirements for your facility location.' },
+      { num: '02', title: 'HR Architecture', desc: 'Designing the complete HR operating model: policies, systems, organizational structure, and staffing plans.' },
+      { num: '03', title: 'Build & Staff', desc: 'Recruiting the initial workforce, establishing works council, and launching all HR operations.' },
+      { num: '04', title: 'Stabilize & Scale', desc: 'Optimizing operations based on production ramp-up data and evolving workforce needs.' },
+    ],
+    testimonial: {
+      quote: 'We needed to hire 200 people and set up a works council in 6 months for our new Eindhoven facility. HRHelp made it happen ahead of schedule and under budget.',
+      author: 'Klaus W.',
+      role: 'Plant Director',
+      company: 'German Manufacturing Group NL',
+    },
+    showcaseImage: '/images/sections/showcase-manufacturing.png',
+    showcaseText: 'From greenfield setup to full production readiness — we build complete HR infrastructures. CLA negotiations, works councils, and shift scheduling designed for your production floor.',
+  },
+  industrial: {
+    name: 'Production & Industrial',
+    tagline: 'Safety-First Workforce Management',
+    description: 'Health & safety compliance, union relations, and blue-collar recruitment for industrial operations across the Netherlands. We protect your workforce and your bottom line.',
+    icon: 'engineering',
+    heroImage: '/images/sections/hero-industrial.png',
+    complianceScore: '100%',
+    complianceLabel: 'ARBO Compliant',
+    stats: [
+      { value: '10+', label: 'Industrial Clients', highlight: true },
+      { value: '0.3%', label: 'Incident Rate' },
+      { value: '99%', label: 'Safety Compliance' },
+      { value: '25%', label: 'Absenteeism Reduction' },
+    ],
+    challenges: [
+      { title: 'Safety Compliance', desc: 'ARBO-wet requirements, machinery directives, and chemical handling regulations create a complex safety compliance landscape.', severity: 'Critical', icon: 'warning' },
+      { title: 'Union Relations', desc: 'Managing productive relationships with FNV, CNV, and sector-specific unions while maintaining operational flexibility.', severity: 'High', icon: 'forum' },
+      { title: 'Workforce Aging', desc: 'An aging blue-collar workforce creates succession planning urgency, knowledge transfer challenges, and increasing absenteeism costs.', severity: 'High', icon: 'elderly' },
+    ],
+    solutions: [
+      { title: 'Safety Systems', desc: 'Complete ARBO compliance programs: risk assessments, incident reporting, safety training, and BRZO compliance for Seveso sites.', icon: 'health_and_safety' },
+      { title: 'Union Strategy', desc: 'Proactive union engagement, CLA negotiation support, and conflict resolution to maintain productive labor relations.', icon: 'handshake' },
+      { title: 'Shift Planning', desc: 'Optimized rotating schedule design that balances legal requirements, worker health, and production demands.', icon: 'calendar_month' },
+      { title: 'Succession Planning', desc: 'Knowledge transfer programs, apprenticeship schemes, and phased retirement planning for aging workforces.', icon: 'swap_horiz' },
+    ],
+    process: [
+      { num: '01', title: 'Safety Audit', desc: 'Comprehensive ARBO assessment of all sites, processes, and current safety management systems.' },
+      { num: '02', title: 'Risk Mitigation', desc: 'Prioritized action plan addressing highest-risk areas with measurable compliance targets.' },
+      { num: '03', title: 'System Deploy', desc: 'Implementing safety management systems, training programs, and incident reporting tools.' },
+      { num: '04', title: 'Continuous Monitor', desc: 'Ongoing safety audits, union liaison, and workforce health monitoring with quarterly reporting.' },
+    ],
+    testimonial: {
+      quote: 'Our incident rate dropped from 2.1% to 0.3% within the first year. The union relationship transformation was even more impressive — from adversarial to genuinely collaborative.',
+      author: 'Frans de V.',
+      role: 'HSE Director',
+      company: 'Dutch Chemical Plant',
+    },
+    showcaseImage: '/images/sections/showcase-industrial.png',
+    showcaseText: 'Safety is not just compliance — it is culture. We build ARBO-compliant workforce systems that protect your people and your bottom line, from shop floor to boardroom.',
+  },
+};
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'technology' } },
+    { params: { slug: 'life-sciences' } },
+    { params: { slug: 'finance' } },
+    { params: { slug: 'professional-services' } },
+    { params: { slug: 'logistics' } },
+    { params: { slug: 'ngo' } },
+    { params: { slug: 'manufacturing' } },
+    { params: { slug: 'industrial' } },
+  ];
+}
+
+const { slug } = Astro.params;
+const ind = industryData[slug];
+if (!ind) return Astro.redirect('/industries');
+
+// Find related industries (exclude current)
+const allSlugs = Object.keys(industryData);
+const relatedSlugs = allSlugs.filter(s => s !== slug).slice(0, 3);
+const related = relatedSlugs.map(s => ({ slug: s, ...industryData[s] }));
+
+const industrySchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": `${ind.name} HR Consulting`,
+  "description": ind.description,
+  "provider": {
+    "@type": "Organization",
+    "name": "HRHelp.nl",
+    "url": "https://hrhelp.nl"
+  },
+  "areaServed": { "@type": "Country", "name": "Netherlands" },
+  "serviceType": "HR Consulting",
+  "url": `https://hrhelp.nl/industries/${slug}`
+};
+---
+
+<Layout title={`${ind.name} — HR Consulting`} description={ind.description} schema={industrySchema}>
+
+<!-- ===== HERO ===== -->
+<section class="idp-hero section-navy">
+  <div class="idp-hero-pattern"></div>
+  <div class="idp-hero-mesh"></div>
+  <div class="container-wide idp-hero-inner">
+    <div class="idp-hero-text" data-animate="fade-right">
+      <span class="eyebrow-badge" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);">
+        <span class="idp-dot"></span> <span class="material-symbols-outlined" style="font-size:16px; vertical-align: middle;">{ind.icon}</span> {ind.name}
+      </span>
+      <h1>{ind.tagline}</h1>
+      <p>{ind.description}</p>
+      <div class="idp-hero-btns">
+        <a href="/contact" class="btn btn-primary btn-lg">Schedule Consultation <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
+        <a href="/solutions" class="btn btn-ghost btn-lg">View Solutions</a>
+      </div>
+    </div>
+    <div class="idp-hero-image" data-animate="fade-left">
+      <img src={ind.heroImage} alt={`${ind.name} industry`} />
+      <div class="idp-hero-image-overlay"></div>
+      <div class="idp-hero-card">
+        <div class="idp-hero-card-icon">
+          <span class="material-symbols-outlined" style="color: var(--orange); font-size:20px">trending_up</span>
+        </div>
+        <div>
+          <p class="idp-hero-card-value">{ind.complianceScore}</p>
+          <p class="idp-hero-card-label">{ind.complianceLabel}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS BAR ===== -->
+<section class="idp-stats">
+  <div class="container">
+    <div class="idp-stats-grid">
+      {ind.stats.map((stat: any, i: number) => (
+        <div class="idp-stat-item">
+          <span class={`idp-stat-value ${stat.highlight ? 'highlight' : ''}`}>{stat.value}</span>
+          <span class="idp-stat-label">{stat.label}</span>
+          {i < ind.stats.length - 1 && <div class="idp-stat-divider"></div>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHALLENGES ===== -->
+<section class="idp-challenges section-cream">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow" style="color: var(--orange);">Industry Challenges</span>
+      <h2>Key HR Pain Points in {ind.name}</h2>
+      <p>Identifying critical friction points in your organizational structure before they cause systemic failure.</p>
+    </div>
+    <div class="idp-challenges-grid">
+      {ind.challenges.map((ch: any, i: number) => (
+        <div class="idp-challenge-card" data-animate="fade-up" data-delay={i * 120}>
+          <div class="idp-challenge-icon">
+            <span class="material-symbols-outlined">{ch.icon}</span>
+          </div>
+          <h3>{ch.title}</h3>
+          <p>{ch.desc}</p>
+          <div class="idp-challenge-severity">
+            <span class={`idp-severity idp-severity-${ch.severity.toLowerCase()}`}>{ch.severity}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOLUTIONS ===== -->
+<section class="idp-solutions section-white">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow" style="color: var(--orange);">Our Solutions</span>
+      <h2>How We Help {ind.name}</h2>
+      <p>Specialized modules designed for your industry's unique HR requirements.</p>
+    </div>
+    <div class="idp-solutions-grid">
+      {ind.solutions.map((sol: any, i: number) => (
+        <div class="idp-solution-card" data-animate="fade-up" data-delay={i * 100}>
+          <div class="idp-solution-icon">
+            <span class="material-symbols-outlined">{sol.icon}</span>
+          </div>
+          <h3>{sol.title}</h3>
+          <p>{sol.desc}</p>
+          <a href="/contact" class="idp-solution-link">
+            Learn More <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== INDUSTRY SPOTLIGHT ===== -->
+<section class="idp-spotlight">
+  <div class="container">
+    <div class="idp-spotlight-inner" data-animate="fade-up">
+      <div class="idp-spotlight-image" data-animate="fade-right">
+        <img src={ind.showcaseImage} alt={`${ind.name} in action`} />
+        <div class="idp-spotlight-badge">
+          <span class="material-symbols-outlined">{ind.icon}</span>
+          {ind.name}
+        </div>
+      </div>
+      <div class="idp-spotlight-content" data-animate="fade-left">
+        <span class="eyebrow" style="color: var(--orange);">Industry Spotlight</span>
+        <h2>Why {ind.name} Trusts HRHelp</h2>
+        <p class="idp-spotlight-text">{ind.showcaseText}</p>
+        <div class="idp-spotlight-features">
+          <div class="idp-spotlight-feature">
+            <span class="material-symbols-outlined">verified</span>
+            <span>{ind.complianceLabel}</span>
+          </div>
+          <div class="idp-spotlight-feature">
+            <span class="material-symbols-outlined">trending_up</span>
+            <span>{ind.stats[0]?.label}</span>
+          </div>
+        </div>
+        <a href="/contact" class="btn btn-orange">Schedule a Consultation →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS TIMELINE ===== -->
+<section class="idp-process section-cream">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="eyebrow" style="color: var(--orange);">Our Approach</span>
+      <h2>Integration Sequence</h2>
+      <p>A proven 4-step framework tailored for {ind.name.toLowerCase()}.</p>
+    </div>
+    <div class="idp-timeline">
+      <div class="idp-timeline-line"></div>
+      {ind.process.map((step: any, i: number) => (
+        <div class={`idp-timeline-item ${i % 2 === 0 ? 'left' : 'right'}`} data-animate="fade-up" data-delay={i * 150}>
+          <div class="idp-timeline-dot">
+            <span>{step.num}</span>
+          </div>
+          <div class="idp-timeline-content">
+            <h3>{step.title}</h3>
+            <p>{step.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIAL ===== -->
+<section class="idp-testimonial section-navy">
+  <div class="container">
+    <div class="idp-quote-card" data-animate="fade-up">
+      <div class="idp-quote-icon">
+        <span class="material-symbols-outlined">format_quote</span>
+      </div>
+      <blockquote>"{ind.testimonial.quote}"</blockquote>
+      <div class="idp-quote-author">
+        <div class="idp-quote-avatar">
+          <span class="material-symbols-outlined">person</span>
+        </div>
+        <div>
+          <strong>{ind.testimonial.author}</strong>
+          <span>{ind.testimonial.role}, {ind.testimonial.company}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RELATED INDUSTRIES ===== -->
+<section class="idp-related section-white">
+  <div class="container">
+    <div class="section-header">
+      <h2>Explore Other Industries</h2>
+    </div>
+    <div class="idp-related-grid">
+      {related.map((r: any, i: number) => (
+        <a href={`/industries/${r.slug}`} class="idp-related-card" data-animate="fade-up" data-delay={i * 100}>
+          <div class="idp-related-icon">
+            <span class="material-symbols-outlined">{r.icon}</span>
+          </div>
+          <h3>{r.name}</h3>
+          <p>{r.tagline}</p>
+          <span class="idp-related-link">Learn More <span class="material-symbols-outlined" style="font-size:14px">chevron_right</span></span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.idp-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 8.5rem 0 6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.idp-hero-pattern {
+  position: absolute; inset: 0;
+  opacity: 0.08;
+  background-image: radial-gradient(var(--orange) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.idp-hero-mesh {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(at 10% 20%, rgba(244, 121, 32, 0.08) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(13, 31, 56, 0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(244, 121, 32, 0.05) 0px, transparent 50%);
+  filter: blur(80px);
+  animation: idp-mesh-drift 20s ease infinite;
+}
+@keyframes idp-mesh-drift {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.1) translate(20px, -20px); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+.idp-hero-inner {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  position: relative; z-index: 2;
+}
+.idp-hero-text { flex: 1; }
+.idp-hero-text h1 { margin: 1.25rem 0 1rem; }
+.idp-hero-text p { color: rgba(255,255,255,0.7); font-size: 1.15rem; max-width: 540px; line-height: 1.8; }
+.idp-dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange); margin-right: 4px; vertical-align: middle;
+}
+.idp-hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+.idp-hero-image {
+  flex: 1; position: relative; border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  aspect-ratio: 4/3;
+}
+.idp-hero-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+.idp-hero-image:hover img { transform: scale(1.05); }
+.idp-hero-image-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(26,58,110,0.8), transparent);
+}
+.idp-hero-card {
+  position: absolute; bottom: 1.5rem; right: 1.5rem;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+  padding: 1rem 1.5rem; border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; gap: 1rem;
+}
+.idp-hero-card-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(244,121,32,0.1);
+  display: flex; align-items: center; justify-content: center;
+}
+.idp-hero-card-value { font-size: 1.5rem; font-weight: 800; color: var(--navy); line-height: 1; }
+.idp-hero-card-label { font-size: 0.75rem; color: var(--gray-500); margin-top: 2px; }
+
+/* ===== STATS BAR ===== */
+.idp-stats {
+  background: var(--navy);
+  padding: 1.5rem 0;
+  border-top: 3px solid var(--orange);
+}
+.idp-stats-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.idp-stat-item {
+  display: flex; flex-direction: column; align-items: center;
+  flex: 1; position: relative;
+}
+.idp-stat-value {
+  font-size: 1.5rem; font-weight: 800; color: white;
+}
+.idp-stat-value.highlight { color: var(--orange); }
+.idp-stat-label {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: rgba(255,255,255,0.5); margin-top: 0.2rem;
+}
+.idp-stat-divider {
+  display: none;
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  width: 1px; height: 32px; background: rgba(255,255,255,0.15);
+}
+
+/* ===== CHALLENGES ===== */
+.idp-challenges { padding: var(--section-padding); }
+.idp-challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.idp-challenge-card {
+  background: white; border-radius: var(--radius-md);
+  padding: 2rem; box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  transition: all var(--transition-base);
+}
+.idp-challenge-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--orange);
+}
+.idp-challenge-icon {
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  background: rgba(244,121,32,0.08);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+}
+.idp-challenge-icon .material-symbols-outlined { font-size: 28px; color: var(--orange); }
+.idp-challenge-card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+.idp-challenge-card p { font-size: 0.9rem; line-height: 1.7; color: var(--gray-600); margin-bottom: 1.25rem; }
+.idp-challenge-severity { margin-top: auto; }
+.idp-severity {
+  display: inline-block; font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  padding: 0.3rem 0.8rem; border-radius: 20px;
+}
+.idp-severity-critical { background: rgba(220,38,38,0.08); color: #dc2626; }
+.idp-severity-high { background: rgba(234,179,8,0.08); color: #b45309; }
+.idp-severity-medium { background: rgba(34,197,94,0.08); color: #16a34a; }
+
+/* ===== SOLUTIONS ===== */
+.idp-solutions { padding: var(--section-padding); border-top: 1px solid var(--gray-200); }
+.idp-solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+.idp-solution-card {
+  background: var(--cream); border-radius: var(--radius-md);
+  padding: 2rem; border-top: 4px solid var(--orange);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  display: flex; flex-direction: column;
+}
+.idp-solution-card:hover {
+  transform: translateY(-6px); box-shadow: var(--shadow-xl);
+}
+.idp-solution-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(26,58,110,0.06);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--orange); margin-bottom: 1.25rem;
+  transition: all var(--transition-base);
+}
+.idp-solution-icon .material-symbols-outlined { font-size: 28px; }
+.idp-solution-card:hover .idp-solution-icon { background: var(--navy); color: white; }
+.idp-solution-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.idp-solution-card p { font-size: 0.88rem; line-height: 1.6; color: var(--gray-600); margin-bottom: 1.25rem; flex: 1; }
+.idp-solution-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: var(--orange); font-weight: 700; font-size: 0.85rem;
+  transition: gap var(--transition-base);
+}
+.idp-solution-card:hover .idp-solution-link { gap: 8px; }
+
+/* ===== INDUSTRY SPOTLIGHT ===== */
+.idp-spotlight { padding: var(--section-padding); background: white; }
+.idp-spotlight-inner {
+  display: flex; align-items: center; gap: 4rem;
+  max-width: 1100px; margin: 0 auto;
+}
+.idp-spotlight-image {
+  flex: 1; position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(26, 58, 110, 0.12);
+}
+.idp-spotlight-image img {
+  width: 100%; height: 400px;
+  object-fit: cover; display: block;
+  transition: transform 0.6s ease;
+}
+.idp-spotlight-image:hover img {
+  transform: scale(1.04);
+}
+.idp-spotlight-badge {
+  position: absolute; bottom: 1rem; left: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-weight: 700; font-size: 0.8rem;
+  color: var(--navy);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.idp-spotlight-badge .material-symbols-outlined {
+  font-size: 1rem; color: var(--orange);
+}
+.idp-spotlight-content { flex: 1; }
+.idp-spotlight-content h2 {
+  font-size: 2rem; font-weight: 800;
+  color: var(--navy); margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.idp-spotlight-text {
+  font-size: 1.05rem; line-height: 1.8;
+  color: var(--gray-600); margin-bottom: 1.75rem;
+}
+.idp-spotlight-features {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  margin-bottom: 2rem;
+}
+.idp-spotlight-feature {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: rgba(244, 121, 32, 0.06);
+  border: 1px solid rgba(244, 121, 32, 0.12);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--navy);
+}
+.idp-spotlight-feature .material-symbols-outlined {
+  font-size: 1rem; color: var(--orange);
+}
+
+/* ===== PROCESS TIMELINE ===== */
+.idp-process { padding: var(--section-padding); }
+.idp-timeline {
+  max-width: 800px; margin: 0 auto;
+  position: relative; padding: 2rem 0;
+}
+.idp-timeline-line {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+  background: var(--gray-300); transform: translateX(-50%);
+}
+.idp-timeline-item {
+  display: flex; align-items: flex-start;
+  margin-bottom: 3rem; position: relative;
+}
+.idp-timeline-item.left { justify-content: flex-start; padding-right: calc(50% + 2rem); }
+.idp-timeline-item.right { justify-content: flex-end; padding-left: calc(50% + 2rem); }
+.idp-timeline-item.left .idp-timeline-content { text-align: right; }
+.idp-timeline-dot {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--orange); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.8rem;
+  box-shadow: 0 0 0 6px var(--cream), var(--shadow-md);
+  z-index: 2;
+}
+.idp-timeline-content {
+  background: white; padding: 1.5rem 2rem;
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  width: 100%;
+  transition: all var(--transition-base);
+}
+.idp-timeline-content:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(244, 121, 32, 0.25);
+}
+.idp-timeline-content h3 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--navy); }
+.idp-timeline-content p { font-size: 0.9rem; line-height: 1.6; color: var(--gray-600); }
+
+/* ===== TESTIMONIAL ===== */
+.idp-testimonial { padding: 5rem 0; }
+.idp-quote-card {
+  max-width: 800px; margin: 0 auto;
+  text-align: center; padding: 3rem;
+}
+.idp-quote-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(244,121,32,0.15);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 2rem;
+}
+.idp-quote-icon .material-symbols-outlined { font-size: 32px; color: var(--orange); }
+.idp-quote-card blockquote {
+  font-size: 1.3rem; line-height: 1.8; color: rgba(255,255,255,0.9);
+  font-style: italic; margin-bottom: 2rem;
+}
+.idp-quote-author {
+  display: flex; align-items: center; gap: 1rem;
+  justify-content: center;
+}
+.idp-quote-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(244,121,32,0.15);
+  display: flex; align-items: center; justify-content: center;
+}
+.idp-quote-avatar .material-symbols-outlined { font-size: 24px; color: var(--orange); }
+.idp-quote-author strong { display: block; color: white; font-size: 1rem; }
+.idp-quote-author span { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
+
+/* ===== RELATED ===== */
+.idp-related { padding: var(--section-padding); border-top: 1px solid var(--gray-200); }
+.idp-related-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+}
+.idp-related-card {
+  background: var(--cream); border-radius: var(--radius-md);
+  padding: 2rem; border-left: 4px solid var(--orange);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  text-decoration: none; color: inherit;
+  display: block;
+}
+.idp-related-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.idp-related-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(26,58,110,0.06);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--orange); margin-bottom: 1rem;
+}
+.idp-related-icon .material-symbols-outlined { font-size: 24px; }
+.idp-related-card h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+.idp-related-card p { font-size: 0.85rem; color: var(--gray-500); margin-bottom: 1rem; }
+.idp-related-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: var(--orange); font-weight: 700; font-size: 0.8rem;
+}
+
+/* ===== CTA ===== */
+.idp-cta {
+  position: relative; overflow: hidden;
+  background: var(--orange); padding: 5rem 2rem;
+  border-radius: var(--radius-xl);
+  max-width: 1200px; margin: 0 auto 4rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+.idp-cta h2 { color: white; margin-bottom: 0.75rem; }
+.idp-cta p { color: rgba(255,255,255,0.85); font-size: 1.15rem; }
+.idp-cta-circle {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+.idp-cta-circle-1 { width: 250px; height: 250px; top: -60px; left: -60px; }
+.idp-cta-circle-2 { width: 380px; height: 380px; bottom: -100px; right: -80px; }
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 769px) {
+  .idp-stat-divider { display: block; }
+}
+
+@media (max-width: 1024px) {
+  .idp-solutions-grid { grid-template-columns: repeat(2, 1fr); }
+  .idp-challenges-grid { grid-template-columns: repeat(2, 1fr); }
+  .idp-challenges-grid > :last-child { grid-column: span 2; }
+  .idp-spotlight-inner { gap: 2.5rem; }
+}
+
+@media (max-width: 768px) {
+  .idp-hero { padding: 7.5rem 0 3rem; }
+  .idp-hero-inner { flex-direction: column; gap: 2rem; }
+  .idp-hero-text { text-align: center; }
+  .idp-hero-text p { margin: 0 auto; }
+  .idp-hero-btns { justify-content: center; flex-direction: column; align-items: stretch; }
+  .idp-hero-btns .btn { text-align: center; }
+  .idp-hero-image { aspect-ratio: 16/10; max-width: 100%; }
+  .idp-hero-float-card { display: none; }
+
+  .idp-spotlight-inner { flex-direction: column; gap: 2rem; }
+  .idp-spotlight-image img { height: 250px; }
+  .idp-spotlight-content h2 { font-size: 1.5rem; }
+  .idp-spotlight-content { text-align: center; }
+  .idp-spotlight-features { justify-content: center; }
+
+  .idp-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .idp-stat-item { flex: none; text-align: center; }
+  .idp-stat-divider { display: none; }
+
+  .idp-challenges-grid { grid-template-columns: 1fr; }
+  .idp-challenges-grid > :last-child { grid-column: auto; }
+  .idp-solutions-grid { grid-template-columns: 1fr; }
+
+  .idp-timeline-line { left: 22px; }
+  .idp-timeline-item.left,
+  .idp-timeline-item.right {
+    padding-left: 72px; padding-right: 0;
+    justify-content: flex-start;
+  }
+  .idp-timeline-item.left .idp-timeline-content { text-align: left; }
+  .idp-timeline-dot {
+    left: 22px; transform: translateX(-50%);
+    width: 36px; height: 36px; font-size: 0.7rem;
+  }
+
+  .idp-related-grid { grid-template-columns: 1fr; }
+
+  .idp-cta { margin: 0 1rem 3rem; padding: 3rem 1.5rem; border-radius: var(--radius-lg); }
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+[data-animate] {
+  opacity: 0;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+[data-animate="fade-up"] { transform: translateY(30px); }
+[data-animate="fade-left"] { transform: translateX(30px); }
+[data-animate="fade-right"] { transform: translateX(-30px); }
+[data-animate].animate-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+</style>
+
+<script>
+// Scroll-triggered animation observer
+document.addEventListener('DOMContentLoaded', () => {
+  const animatedEls = document.querySelectorAll('[data-animate]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = parseInt(el.getAttribute('data-delay') || '0', 10);
+        setTimeout(() => el.classList.add('animate-visible'), delay);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.15 });
+  animatedEls.forEach(el => observer.observe(el));
+});
+</script>

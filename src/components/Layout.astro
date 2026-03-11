@@ -1,0 +1,120 @@
+---
+// Layout.astro — Wraps every page with consistent header + footer
+import Header from './Header.astro';
+import HomeHeader from './HomeHeader.astro';
+import Footer from './Footer.astro';
+import CookieConsent from './CookieConsent.astro';
+import '../styles/globals.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  homeHeader?: boolean;
+  ogImage?: string;
+  schema?: object | object[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Expert HR consulting for international companies in the Netherlands. Employment law, payroll, compliance, talent acquisition — all handled by Dutch HR experts.',
+  homeHeader = false,
+  ogImage = '/images/og-default.png',
+  schema,
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = 'https://hrhelp.nl';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const fullTitle = title.includes('HRHelp') ? title : `${title} | HRHelp.nl`;
+
+// Base Organization schema (included on every page)
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "HRHelp.nl",
+  "url": siteUrl,
+  "logo": `${siteUrl}/favicon.svg`,
+  "description": "Expert HR consulting for international companies in the Netherlands",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Televisieweg 2",
+    "addressLocality": "Almere",
+    "postalCode": "1322 AC",
+    "addressCountry": "NL"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+31-85-760-8188",
+    "contactType": "customer service",
+    "email": "info@hrhelp.nl",
+    "availableLanguage": ["English", "Dutch"]
+  },
+  "sameAs": [
+    "https://www.linkedin.com/company/hrhelp-nl"
+  ]
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "HRHelp.nl",
+  "url": siteUrl,
+  "description": "Expert HR consulting for international companies in the Netherlands",
+  "publisher": { "@type": "Organization", "name": "HRHelp.nl" }
+};
+
+// Combine all schemas
+const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema : schema ? [schema] : [])];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+  <title>{fullTitle}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_NL" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={fullOgImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="HRHelp.nl" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={fullOgImage} />
+
+  <!-- Structured Data -->
+  {allSchemas.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+</head>
+<body>
+  {homeHeader ? <HomeHeader /> : <Header />}
+  <main>
+    <slot />
+  </main>
+  <Footer />
+  <!-- Elfsight chatbot container — script loaded only after cookie consent -->
+  <div class="elfsight-app-b5ddbfcb-a7b8-49e3-aa9d-88aea10f86df" data-elfsight-app-lazy></div>
+  <CookieConsent />
+</body>
+</html>

@@ -1,0 +1,314 @@
+---
+// CookieConsent.astro — GDPR cookie consent banner for Dutch/EU compliance
+// Blocks non-essential scripts (Elfsight chatbot) until user gives consent
+---
+
+<!-- Cookie Consent Banner -->
+<div id="cookie-consent" class="cc-banner" role="dialog" aria-label="Cookie consent" aria-modal="false">
+  <div class="cc-inner">
+    <div class="cc-text">
+      <h3>🍪 We value your privacy</h3>
+      <p>We use cookies to enhance your experience and provide our chatbot support. Essential cookies are always active. You can choose to accept or decline optional cookies.</p>
+      <a href="/privacy" class="cc-link">Privacy Policy</a>
+    </div>
+    <div class="cc-actions">
+      <button id="cc-accept" class="cc-btn cc-btn-accept">Accept All</button>
+      <button id="cc-essential" class="cc-btn cc-btn-essential">Essential Only</button>
+      <button id="cc-manage" class="cc-btn cc-btn-manage">Manage</button>
+    </div>
+  </div>
+
+  <!-- Preferences Panel (hidden by default) -->
+  <div id="cc-prefs" class="cc-prefs" hidden>
+    <div class="cc-pref-row">
+      <div>
+        <strong>Essential Cookies</strong>
+        <span class="cc-pref-desc">Required for the website to function. Cannot be disabled.</span>
+      </div>
+      <label class="cc-toggle cc-toggle-locked">
+        <input type="checkbox" checked disabled />
+        <span class="cc-slider"></span>
+      </label>
+    </div>
+    <div class="cc-pref-row">
+      <div>
+        <strong>Functional Cookies</strong>
+        <span class="cc-pref-desc">Enable chatbot support and enhanced functionality.</span>
+      </div>
+      <label class="cc-toggle">
+        <input type="checkbox" id="cc-func-toggle" />
+        <span class="cc-slider"></span>
+      </label>
+    </div>
+    <div class="cc-pref-actions">
+      <button id="cc-save" class="cc-btn cc-btn-accept">Save Preferences</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const COOKIE_KEY = 'hrhelp_cookie_consent';
+    const banner = document.getElementById('cookie-consent');
+    const prefs = document.getElementById('cc-prefs');
+    const funcToggle = document.getElementById('cc-func-toggle');
+
+    // Check if consent was already given
+    const saved = localStorage.getItem(COOKIE_KEY);
+    if (saved) {
+      banner.style.display = 'none';
+      const consent = JSON.parse(saved);
+      if (consent.functional) loadFunctionalScripts();
+      return;
+    }
+
+    // Show banner
+    banner.style.display = 'block';
+
+    // Accept All
+    document.getElementById('cc-accept').addEventListener('click', function() {
+      saveConsent({ essential: true, functional: true });
+      loadFunctionalScripts();
+      hideBanner();
+    });
+
+    // Essential Only
+    document.getElementById('cc-essential').addEventListener('click', function() {
+      saveConsent({ essential: true, functional: false });
+      hideBanner();
+    });
+
+    // Manage
+    document.getElementById('cc-manage').addEventListener('click', function() {
+      prefs.hidden = !prefs.hidden;
+    });
+
+    // Save
+    document.getElementById('cc-save').addEventListener('click', function() {
+      const functional = funcToggle.checked;
+      saveConsent({ essential: true, functional: functional });
+      if (functional) loadFunctionalScripts();
+      hideBanner();
+    });
+
+    function saveConsent(consent) {
+      consent.timestamp = new Date().toISOString();
+      localStorage.setItem(COOKIE_KEY, JSON.stringify(consent));
+    }
+
+    function hideBanner() {
+      banner.style.opacity = '0';
+      banner.style.transform = 'translateY(100%)';
+      setTimeout(function() { banner.style.display = 'none'; }, 400);
+    }
+
+    function loadFunctionalScripts() {
+      // Load Elfsight chatbot only after consent
+      if (!document.querySelector('script[src*="elfsightcdn"]')) {
+        var s = document.createElement('script');
+        s.src = 'https://elfsightcdn.com/platform.js';
+        s.async = true;
+        document.body.appendChild(s);
+      }
+    }
+  })();
+</script>
+
+<style>
+  .cc-banner {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    background: rgba(10, 26, 50, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(244, 121, 32, 0.3);
+    padding: 1.5rem;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .cc-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .cc-text {
+    flex: 1;
+  }
+
+  .cc-text h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 0.5rem;
+  }
+
+  .cc-text p {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+    margin: 0 0 0.5rem;
+  }
+
+  .cc-link {
+    font-size: 0.8rem;
+    color: #F47920;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .cc-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .cc-btn {
+    border: none;
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .cc-btn-accept {
+    background: #F47920;
+    color: white;
+  }
+
+  .cc-btn-accept:hover {
+    background: #d96a18;
+    transform: translateY(-1px);
+  }
+
+  .cc-btn-essential {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .cc-btn-essential:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .cc-btn-manage {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .cc-btn-manage:hover {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Preferences Panel */
+  .cc-prefs {
+    max-width: 1200px;
+    margin: 1rem auto 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .cc-pref-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .cc-pref-row strong {
+    display: block;
+    color: white;
+    font-size: 0.88rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .cc-pref-desc {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .cc-pref-actions {
+    padding-top: 0.75rem;
+    text-align: right;
+  }
+
+  /* Toggle Switch */
+  .cc-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  .cc-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .cc-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    transition: 0.3s;
+  }
+
+  .cc-slider::before {
+    content: '';
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+
+  .cc-toggle input:checked + .cc-slider {
+    background: #F47920;
+  }
+
+  .cc-toggle input:checked + .cc-slider::before {
+    transform: translateX(20px);
+  }
+
+  .cc-toggle-locked {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .cc-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
+    .cc-actions {
+      flex-direction: column;
+    }
+
+    .cc-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

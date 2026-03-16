@@ -439,7 +439,128 @@ const localBusinessSchema = {
   </div>
 </section>
 
-<!-- About Preview Section -->
+<!-- Whitepaper Download CTA -->
+<section class="wp-cta section-cream">
+  <div class="container">
+    <div class="wp-cta-grid">
+      <!-- Left: Book Cover -->
+      <div class="wp-cta-visual">
+        <div class="wp-cta-glow"></div>
+        <img src="/images/whitepaper-cover.png" alt="HR Rules & Regulations 2026 Whitepaper" class="wp-cta-book" />
+      </div>
+
+      <!-- Right: Content + Form -->
+      <div class="wp-cta-content">
+        <span class="wp-cta-badge">FREE DOWNLOAD</span>
+        <h2>The Most Important <span class="text-orange">HR Rules &amp; Regulations</span> in 2026</h2>
+        <p>Stay compliant with the latest Dutch employment laws. This comprehensive guide covers everything you need to know — from contract requirements to sickness protocols.</p>
+        
+        <div class="wp-cta-features">
+          <div class="wp-cta-feature">
+            <span class="material-symbols-outlined">gavel</span>
+            <span>2026 Employment Law Updates</span>
+          </div>
+          <div class="wp-cta-feature">
+            <span class="material-symbols-outlined">description</span>
+            <span>Contract & Termination Rules</span>
+          </div>
+          <div class="wp-cta-feature">
+            <span class="material-symbols-outlined">medical_services</span>
+            <span>Sickness & Leave Protocols</span>
+          </div>
+          <div class="wp-cta-feature">
+            <span class="material-symbols-outlined">euro</span>
+            <span>Salary & Benefits Regulations</span>
+          </div>
+        </div>
+
+        <form id="whitepaper-form" class="wp-cta-form">
+          <div class="wp-cta-form-row">
+            <input type="text" name="name" placeholder="Your full name" required />
+            <input type="email" name="email" placeholder="Work email" required />
+            <button type="submit" class="btn btn-primary" id="wp-download-btn">
+              <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+              Download Free Guide
+            </button>
+          </div>
+          <div id="wp-form-status" style="display:none; padding: 0.6rem; border-radius: 8px; margin-top: 0.75rem; font-size: 0.85rem;"></div>
+          <p class="wp-cta-disclaimer">No spam. We respect your privacy. Unsubscribe anytime.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+(function() {
+  var form = document.getElementById('whitepaper-form');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('wp-download-btn');
+    var status = document.getElementById('wp-form-status');
+    var originalHTML = btn.innerHTML;
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px;">hourglass_top</span> Sending...';
+    btn.style.opacity = '0.7';
+    status.style.display = 'none';
+
+    var data = {
+      name: form.querySelector('[name="name"]').value.trim(),
+      email: form.querySelector('[name="email"]').value.trim(),
+      source: 'Whitepaper Download'
+    };
+
+    fetch('https://admin.hrhelp.nl/wp-json/hrhelp/v1/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(result) {
+      if (result.success) {
+        status.style.display = 'block';
+        status.style.background = '#e8f5e9';
+        status.style.color = '#2e7d32';
+        status.textContent = '✓ Downloading your guide now!';
+        
+        // Trigger download
+        var link = document.createElement('a');
+        link.href = '/downloads/hrhelp-hr-rules-regulations-2026-nl.pdf';
+        link.download = 'HRHelp-HR-Rules-Regulations-2026-NL.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Change button to success state
+        btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px;">check_circle</span> Downloaded!';
+        btn.style.background = '#2e7d32';
+      } else {
+        status.style.display = 'block';
+        status.style.background = '#fce4ec';
+        status.style.color = '#c62828';
+        status.textContent = '✗ ' + (result.message || 'Please check your details.');
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+        btn.style.opacity = '1';
+      }
+    })
+    .catch(function() {
+      status.style.display = 'block';
+      status.style.background = '#fce4ec';
+      status.style.color = '#c62828';
+      status.textContent = '✗ Network error. Please try again.';
+      btn.disabled = false;
+      btn.innerHTML = originalHTML;
+      btn.style.opacity = '1';
+    });
+  });
+})();
+</script>
+
+
 <section class="about-preview section-cream">
   <div class="container">
     <div class="about-grid">
@@ -1713,5 +1834,90 @@ const localBusinessSchema = {
       grid-template-columns: 1fr;
     }
   }
+
+/* ===== WHITEPAPER CTA ===== */
+.wp-cta { padding: 5rem 0; background: var(--navy); position: relative; overflow: hidden; }
+.wp-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(244,121,32,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(59,130,246,0.08) 0%, transparent 50%);
+}
+.wp-cta-grid {
+  display: grid; grid-template-columns: 380px 1fr; gap: 4rem;
+  align-items: center; position: relative; z-index: 1;
+}
+.wp-cta-visual { position: relative; display: flex; justify-content: center; }
+.wp-cta-glow {
+  position: absolute; width: 300px; height: 300px; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(244,121,32,0.25), transparent 70%);
+  filter: blur(40px); z-index: 0;
+}
+.wp-cta-book {
+  position: relative; z-index: 1; max-width: 320px; width: 100%;
+  border-radius: 12px; box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+  transition: transform 0.4s ease;
+}
+.wp-cta-book:hover { transform: translateY(-8px) rotate(-1deg); }
+
+.wp-cta-content { color: white; }
+.wp-cta-badge {
+  display: inline-block; background: var(--orange); color: white;
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em;
+  padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 1.25rem;
+}
+.wp-cta-content h2 {
+  font-size: 2.2rem; line-height: 1.2; margin-bottom: 1rem; color: white;
+}
+.wp-cta-content > p {
+  font-size: 1.05rem; color: rgba(255,255,255,0.7); line-height: 1.7;
+  margin-bottom: 1.5rem; max-width: 520px;
+}
+.wp-cta-features {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem;
+  margin-bottom: 2rem;
+}
+.wp-cta-feature {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.88rem; color: rgba(255,255,255,0.85);
+}
+.wp-cta-feature .material-symbols-outlined {
+  font-size: 20px; color: var(--orange);
+}
+
+.wp-cta-form-row {
+  display: flex; gap: 0.75rem; align-items: stretch;
+}
+.wp-cta-form-row input {
+  flex: 1; padding: 0.85rem 1rem; border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px; background: rgba(255,255,255,0.08); color: white;
+  font-size: 0.9rem; font-family: inherit; backdrop-filter: blur(4px);
+  transition: border-color 0.2s, background 0.2s;
+}
+.wp-cta-form-row input::placeholder { color: rgba(255,255,255,0.4); }
+.wp-cta-form-row input:focus {
+  outline: none; border-color: var(--orange);
+  background: rgba(255,255,255,0.12);
+}
+.wp-cta-form-row .btn {
+  white-space: nowrap; display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.85rem 1.5rem; font-size: 0.9rem; font-weight: 700;
+  border-radius: 10px;
+}
+.wp-cta-disclaimer {
+  font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 0.75rem;
+}
+
+@media (max-width: 992px) {
+  .wp-cta-grid { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
+  .wp-cta-content > p { margin: 0 auto 1.5rem; }
+  .wp-cta-features { justify-content: center; }
+  .wp-cta-form-row { flex-direction: column; }
+  .wp-cta-book { max-width: 260px; }
+}
+@media (max-width: 576px) {
+  .wp-cta-features { grid-template-columns: 1fr; }
+  .wp-cta-content h2 { font-size: 1.6rem; }
+}
 </style>
 

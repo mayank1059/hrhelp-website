@@ -516,7 +516,7 @@ const localBusinessSchema = {
       source: 'Whitepaper Download'
     };
 
-    fetch('https://admin.hrhelp.nl/wp-json/hrhelp/v1/contact', {
+    fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -802,7 +802,7 @@ const localBusinessSchema = {
       source: 'Whitepaper Download (Hero)'
     };
 
-    fetch('https://admin.hrhelp.nl/wp-json/hrhelp/v1/contact', {
+    fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)

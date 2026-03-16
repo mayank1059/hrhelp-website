@@ -152,31 +152,31 @@ const contactSchema = {
 
       <!-- Right: Form -->
       <div class="ct2-form-card">
-        <form>
+        <form id="hrhelp-contact-form">
           <div class="ct2-form-row">
             <div class="ct2-form-group">
               <label>Full Name *</label>
-              <input type="text" placeholder="Your name" required />
+              <input type="text" name="name" placeholder="Your name" required />
             </div>
             <div class="ct2-form-group">
               <label>Company</label>
-              <input type="text" placeholder="Your company" />
+              <input type="text" name="company" placeholder="Your company" />
             </div>
           </div>
           <div class="ct2-form-row">
             <div class="ct2-form-group">
               <label>Email *</label>
-              <input type="email" placeholder="your@email.com" required />
+              <input type="email" name="email" placeholder="your@email.com" required />
             </div>
             <div class="ct2-form-group">
               <label>Phone</label>
-              <input type="tel" placeholder="+31 ..." />
+              <input type="tel" name="phone" placeholder="+31 ..." />
             </div>
           </div>
           <div class="ct2-form-group">
             <label>What can we help you with?</label>
             <div class="ct2-select-wrap">
-              <select>
+              <select name="topic">
                 <option>Select a topic...</option>
                 <option>HR Compliance & Employment Law</option>
                 <option>Recruitment & Talent Strategy</option>
@@ -190,17 +190,81 @@ const contactSchema = {
           </div>
           <div class="ct2-form-group">
             <label>Your Message</label>
-            <textarea placeholder="Tell us about your situation..." rows="5"></textarea>
+            <textarea name="message" placeholder="Tell us about your situation..." rows="5"></textarea>
           </div>
           <div class="ct2-form-footer">
             <div class="ct2-form-check">
-              <input type="checkbox" id="privacy" />
-              <label for="privacy">I agree to the <a href="#">Privacy Policy</a></label>
+              <input type="checkbox" id="privacy" name="privacy" required />
+              <label for="privacy">I agree to the <a href="/privacy">Privacy Policy</a></label>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg" style="box-shadow: none; width: 100%;">Send Message</button>
+            <div id="form-status" style="display:none; padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem;"></div>
+            <button type="submit" id="form-submit-btn" class="btn btn-primary btn-lg" style="box-shadow: none; width: 100%;">Send Message</button>
           </div>
         </form>
       </div>
+
+<script is:inline>
+(function() {
+  var form = document.getElementById('hrhelp-contact-form');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var btn = document.getElementById('form-submit-btn');
+    var status = document.getElementById('form-status');
+    var originalText = btn.textContent;
+
+    // Disable button and show loading
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    btn.style.opacity = '0.7';
+    status.style.display = 'none';
+
+    var data = {
+      name: form.querySelector('[name="name"]').value.trim(),
+      email: form.querySelector('[name="email"]').value.trim(),
+      company: form.querySelector('[name="company"]').value.trim(),
+      phone: form.querySelector('[name="phone"]').value.trim(),
+      topic: form.querySelector('[name="topic"]').value,
+      message: form.querySelector('[name="message"]').value.trim(),
+      source: 'Contact Form'
+    };
+
+    fetch('https://admin.hrhelp.nl/wp-json/hrhelp/v1/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(result) {
+      if (result.success) {
+        status.style.display = 'block';
+        status.style.background = '#e8f5e9';
+        status.style.color = '#2e7d32';
+        status.textContent = '✓ ' + result.message;
+        form.reset();
+      } else {
+        status.style.display = 'block';
+        status.style.background = '#fce4ec';
+        status.style.color = '#c62828';
+        status.textContent = '✗ ' + (result.message || 'Something went wrong. Please try again.');
+      }
+    })
+    .catch(function() {
+      status.style.display = 'block';
+      status.style.background = '#fce4ec';
+      status.style.color = '#c62828';
+      status.textContent = '✗ Network error. Please try again or email us directly.';
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = originalText;
+      btn.style.opacity = '1';
+    });
+  });
+})();
+</script>
     </div>
   </div>
 </section>

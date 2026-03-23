@@ -201,13 +201,21 @@ function mapWPBlogPost(post: any): BlogPost {
     // Strip HTML tags from excerpt
     const rawExcerpt = post.excerpt?.rendered || acf.excerpt || '';
     const cleanExcerpt = rawExcerpt.replace(/<[^>]*>/g, '').trim();
+
+    // Get featured image from _embedded media (standard WP) or fall back to ACF
+    let imageUrl = acf.featured_image || '/images/dutch-business.jpg';
+    const embedded = post._embedded?.['wp:featuredmedia'];
+    if (embedded && embedded.length > 0 && embedded[0]?.source_url) {
+        imageUrl = embedded[0].source_url;
+    }
+
     return {
         slug: post.slug,
         title: post.title?.rendered || '',
         excerpt: cleanExcerpt,
         content: post.content?.rendered || acf.content || '',
         category: acf.blog_category || 'Article',
-        image: acf.featured_image || '/images/dutch-business.jpg',
+        image: imageUrl,
         date: post.date ? new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '',
         readTime: acf.read_time || '5 min read',
         author: acf.author_name || 'HRHelp Team',
@@ -309,7 +317,7 @@ export async function getResourceCaseStudies(): Promise<ResourceCaseStudy[]> {
  * Get all blog posts. Uses WP native 'posts' endpoint.
  */
 export async function getBlogPosts(): Promise<BlogPost[]> {
-    const posts = await wpFetch<any[]>('posts?per_page=100&_fields=id,slug,title,excerpt,content,date,acf');
+    const posts = await wpFetch<any[]>('posts?per_page=100&_embed&_fields=id,slug,title,excerpt,content,date,acf,_links,_embedded');
     if (posts && posts.length > 0) {
         return posts.map(mapWPBlogPost);
     }
@@ -320,7 +328,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
  * Get a single blog post by slug.
  */
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-    const posts = await wpFetch<any[]>(`posts?slug=${slug}&_fields=id,slug,title,excerpt,content,date,acf`);
+    const posts = await wpFetch<any[]>(`posts?slug=${slug}&_embed&_fields=id,slug,title,excerpt,content,date,acf,_links,_embedded`);
     if (posts && posts.length > 0) {
         return mapWPBlogPost(posts[0]);
     }

@@ -113,6 +113,24 @@ export interface BlogPost {
 // ---------- HELPER ----------
 
 /**
+ * Decode HTML entities from WordPress (e.g. &#8217; → ', &amp; → &)
+ */
+function decodeHTMLEntities(text: string): string {
+    return text
+        .replace(/&#8217;/g, "'")
+        .replace(/&#8216;/g, "'")
+        .replace(/&#8220;/g, '"')
+        .replace(/&#8221;/g, '"')
+        .replace(/&#8211;/g, '–')
+        .replace(/&#8212;/g, '—')
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#039;/g, "'");
+}
+
+/**
  * Fetch from WP REST API.
  * Tries pretty permalinks first (/wp-json/wp/v2/), falls back to ?rest_route= format.
  */
@@ -211,8 +229,8 @@ function mapWPBlogPost(post: any): BlogPost {
 
     return {
         slug: post.slug,
-        title: post.title?.rendered || '',
-        excerpt: cleanExcerpt,
+        title: decodeHTMLEntities(post.title?.rendered || ''),
+        excerpt: decodeHTMLEntities(cleanExcerpt),
         content: post.content?.rendered || acf.content || '',
         category: acf.blog_category || 'Article',
         image: imageUrl,

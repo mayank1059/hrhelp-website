@@ -335,10 +335,12 @@ export async function getResourceCaseStudies(): Promise<ResourceCaseStudy[]> {
  * Get all blog posts. Uses WP native 'posts' endpoint.
  */
 export async function getBlogPosts(): Promise<BlogPost[]> {
-    const posts = await wpFetch<any[]>('posts?per_page=100&_embed&_fields=id,slug,title,excerpt,content,date,acf,_links,_embedded');
+    const posts = await wpFetch<any[]>('posts?per_page=100&_embed');
     if (posts && posts.length > 0) {
+        console.log(`[WP Blog] Fetched ${posts.length} posts: ${posts.map((p: any) => p.slug).join(', ')}`);
         return posts.map(mapWPBlogPost);
     }
+    console.warn('[WP Blog] No posts returned from API, using fallback');
     return fallbackBlogPosts;
 }
 
@@ -346,7 +348,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
  * Get a single blog post by slug.
  */
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-    const posts = await wpFetch<any[]>(`posts?slug=${slug}&_embed&_fields=id,slug,title,excerpt,content,date,acf,_links,_embedded`);
+    const posts = await wpFetch<any[]>(`posts?slug=${slug}&_embed`);
     if (posts && posts.length > 0) {
         return mapWPBlogPost(posts[0]);
     }

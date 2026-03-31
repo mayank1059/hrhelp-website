@@ -251,4 +251,29 @@ const articleSchema = {
   .bp-sidebar { position: static; }
   .bp-related-grid { grid-template-columns: 1fr; max-width: 400px; }
 }
+
+@media (max-width: 768px) {
+  .bp-hero { min-height: 320px; }
+  .bp-hero-inner { padding-top: 6rem; padding-bottom: 2rem; }
+  .bp-hero h1 { font-size: 1.6rem; }
+  .bp-content-section { padding: 2rem 0; }
+  .bp-article {
+    padding: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.75;
+    border-radius: var(--radius-lg);
+  }
+  .bp-article :global(h2) {
+    font-size: 1.25rem;
+    margin: 1.5rem 0 0.75rem;
+  }
+  .bp-article :global(ul), .bp-article :global(ol) {
+    padding-left: 1.25rem;
+  }
+  .bp-sidebar-card { padding: 1.25rem; }
+  .bp-related { padding: 2.5rem 0; }
+  .bp-related-body { padding: 1rem; }
+  .bp-related-body h3 { font-size: 0.92rem; }
+  .bp-back { padding: 2rem 0; }
+}
 </style>

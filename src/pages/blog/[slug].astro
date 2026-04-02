@@ -1,6 +1,6 @@
 ---
-import Layout from '../../../components/Layout.astro';
-import { getBlogPosts, getBlogPost } from '../../../lib/wordpress';
+import Layout from '../../components/Layout.astro';
+import { getBlogPosts, getBlogPost } from '../../lib/wordpress';
 
 export async function getStaticPaths() {
   const posts = await getBlogPosts();
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const post = await getBlogPost(slug as string);
-if (!post) return Astro.redirect('/resources/blog');
+if (!post) return Astro.redirect('/blog');
 
 // Get other posts for "Related Articles"
 const allPosts = await getBlogPosts();
@@ -33,7 +33,7 @@ const articleSchema = {
     "logo": { "@type": "ImageObject", "url": "https://hrhelp.nl/favicon.svg" }
   },
   "datePublished": post.date,
-  "mainEntityOfPage": `https://hrhelp.nl/resources/blog/${slug}`
+  "mainEntityOfPage": `https://hrhelp.nl/blog/${slug}`
 };
 ---
 
@@ -97,7 +97,7 @@ const articleSchema = {
     <h2>Related Articles</h2>
     <div class="bp-related-grid">
       {relatedPosts.map(rp => (
-        <a href={`/resources/blog/${rp.slug}`} class="bp-related-card">
+        <a href={`/blog/${rp.slug}`} class="bp-related-card">
           <div class="bp-related-img">
             <img src={rp.image} alt={rp.title} />
             <span class="bp-related-cat">{rp.category}</span>
@@ -117,7 +117,7 @@ const articleSchema = {
 <!-- ===== BACK LINK ===== -->
 <section class="bp-back">
   <div class="container" style="text-align: center;">
-    <a href="/resources/blog" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white;">
+    <a href="/blog" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white;">
       ← Back to All Articles
     </a>
   </div>

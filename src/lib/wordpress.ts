@@ -364,6 +364,6 @@ export async function getFeaturedArticles(): Promise<{ title: string; category: 
         title: p.title,
         category: p.category,
         image: p.image,
-        href: `/resources/blog/${p.slug}`,
+        href: `/blog/${p.slug}`,
     }));
 }

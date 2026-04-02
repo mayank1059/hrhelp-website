@@ -137,13 +137,22 @@ function decodeHTMLEntities(text: string): string {
 async function wpFetch<T>(endpoint: string): Promise<T | null> {
     if (!WP_URL) return null;
 
-    const prettyUrl = `${WP_URL}/wp-json/wp/v2/${endpoint}`;
-    const queryUrl = `${WP_URL}/?rest_route=/wp/v2/${endpoint}`;
+    // Cache-buster: the WP hosting aggressively caches REST API responses.
+    // A unique timestamp on each build ensures we always get fresh content.
+    const cacheBuster = `_nocache=${Date.now()}`;
+    const separator = endpoint.includes('?') ? '&' : '?';
+    const bustEndpoint = `${endpoint}${separator}${cacheBuster}`;
+
+    const prettyUrl = `${WP_URL}/wp-json/wp/v2/${bustEndpoint}`;
+    const queryUrl = `${WP_URL}/?rest_route=/wp/v2/${bustEndpoint}`;
 
     for (const url of [prettyUrl, queryUrl]) {
         try {
             const res = await fetch(url, {
-                headers: { 'Accept': 'application/json' },
+                headers: {
+                    'Accept': 'application/json',
+                    'Cache-Control': 'no-cache, no-store',
+                },
             });
             if (res.ok) {
                 return await res.json();

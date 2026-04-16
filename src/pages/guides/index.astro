@@ -1,0 +1,342 @@
+---
+import Layout from '../../components/Layout.astro';
+
+import settlersData from '../../data/pseo/hr-settlers.json';
+import teamsData from '../../data/pseo/hr-teams.json';
+import sosData from '../../data/pseo/hr-sos.json';
+// import lawData from '../../data/pseo/dutch-law.json';
+
+const allPages = [
+  ...settlersData,
+  ...teamsData,
+  ...sosData,
+  // ...lawData,
+];
+
+// Group by vertical
+const verticals = [
+  { id: 'all', label: 'All Guides', count: allPages.length },
+  { id: 'hr-settlers', label: 'HR Settlers', count: allPages.filter(p => p.vertical === 'hr-settlers').length },
+  { id: 'hr-teams', label: 'HR Teams', count: allPages.filter(p => p.vertical === 'hr-teams').length },
+  { id: 'hr-sos', label: 'HR S.O.S.', count: allPages.filter(p => p.vertical === 'hr-sos').length },
+  { id: 'dutch-law', label: 'Dutch Law', count: allPages.filter(p => p.vertical === 'dutch-law').length },
+].filter(v => v.count > 0 || v.id === 'all');
+
+const verticalColors: Record<string, { bg: string; text: string }> = {
+  'hr-settlers': { bg: 'rgba(244,121,32,0.08)', text: '#f47920' },
+  'hr-teams':    { bg: 'rgba(59,130,246,0.08)', text: '#3b82f6' },
+  'hr-sos':      { bg: 'rgba(220,38,38,0.08)', text: '#dc2626' },
+  'dutch-law':   { bg: 'rgba(16,185,129,0.08)', text: '#10b981' },
+};
+---
+
+<Layout title="HR Guides & Resources | HRHelp.nl" description="Comprehensive guides for international companies navigating Dutch employment law, HR compliance, and business setup in the Netherlands.">
+
+<!-- ===== HERO ===== -->
+<section class="gl-hero">
+  <div class="gl-hero-mesh"></div>
+  <div class="gl-hero-bg">
+    <img src="/images/guides/guides-hero-cover.png" alt="" loading="eager" />
+  </div>
+  <div class="container gl-hero-inner">
+    <span class="eyebrow-badge" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);">
+      Guides & Resources
+    </span>
+    <h1>Expert HR Guides for the <span style="color: var(--orange);">Netherlands</span></h1>
+    <p class="gl-hero-sub">Comprehensive, actionable guides on Dutch employment law, company setup, HR compliance, and workforce management — written by our team of HR specialists.</p>
+    <div class="gl-hero-stats">
+      <div class="gl-stat">
+        <span class="gl-stat-value">{allPages.length}</span>
+        <span class="gl-stat-label">Expert Guides</span>
+      </div>
+      <div class="gl-stat-sep"></div>
+      <div class="gl-stat">
+        <span class="gl-stat-value">{verticals.filter(v => v.id !== 'all' && v.count > 0).length}</span>
+        <span class="gl-stat-label">Topic Areas</span>
+      </div>
+      <div class="gl-stat-sep"></div>
+      <div class="gl-stat">
+        <span class="gl-stat-value">Free</span>
+        <span class="gl-stat-label">Always</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FILTER & GRID ===== -->
+<section class="gl-content">
+  <div class="container">
+    <!-- Filter Tabs -->
+    <div class="gl-filters" id="gl-filters">
+      {verticals.map(v => (
+        <button class={`gl-filter-btn ${v.id === 'all' ? 'active' : ''}`} data-filter={v.id}>
+          {v.label}
+          <span class="gl-filter-count">{v.count}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Guide Cards Grid -->
+    <div class="gl-grid" id="gl-grid">
+      {allPages.map((page) => {
+        const vc = verticalColors[page.vertical] || verticalColors['hr-settlers'];
+        return (
+          <a href={`/guides/${page.slug}`} class="gl-card" data-vertical={page.vertical}>
+            <div class="gl-card-top">
+              <span class="gl-card-badge" style={`background: ${vc.bg}; color: ${vc.text};`}>
+                {page.verticalLabel}
+              </span>
+              <span class="gl-card-time">
+                <span class="material-symbols-outlined" style="font-size:14px;">schedule</span>
+                {page.readTime}
+              </span>
+            </div>
+            <h3>{page.title}</h3>
+            <p>{page.subtitle}</p>
+            <div class="gl-card-footer">
+              <span class="gl-card-link" style={`color: ${vc.text};`}>Read Guide →</span>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- Empty State -->
+    <div class="gl-empty" id="gl-empty" style="display:none;">
+      <span class="material-symbols-outlined" style="font-size:48px; color: var(--gray-400);">search_off</span>
+      <h3>No guides in this category yet</h3>
+      <p>We're working on adding more guides. Check back soon!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="gl-cta">
+  <div class="container" style="text-align:center;">
+    <h2>Can't Find What You're Looking For?</h2>
+    <p>Our HR specialists are ready to answer any question about Dutch employment law and HR management.</p>
+    <div style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem; flex-wrap:wrap;">
+      <a href="/contact" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
+      <a href="/solutions" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,0.3); color:white;">View Our Solutions</a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<!-- FILTER SCRIPT -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.gl-filter-btn');
+    const cards = document.querySelectorAll('.gl-card');
+    const empty = document.getElementById('gl-empty');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+        
+        // Update active state
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filter cards
+        let visible = 0;
+        cards.forEach(card => {
+          const vertical = card.getAttribute('data-vertical');
+          const show = filter === 'all' || vertical === filter;
+          (card as HTMLElement).style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        // Show/hide empty state
+        if (empty) {
+          empty.style.display = visible === 0 ? '' : 'none';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+/* ===== HERO ===== */
+.gl-hero {
+  padding: 10rem 0 5rem;
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.gl-hero-mesh {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(244,121,32,0.1), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04), transparent 40%);
+  z-index: 1;
+}
+.gl-hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.gl-hero-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+  filter: blur(1px);
+}
+.gl-hero-inner { position: relative; z-index: 2; }
+.gl-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800; margin: 1rem 0 1.25rem;
+  color: white;
+}
+.gl-hero-sub {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.7);
+  max-width: 620px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+.gl-hero-stats {
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem;
+}
+.gl-stat { text-align: center; }
+.gl-stat-value {
+  display: block; font-size: 1.8rem; font-weight: 800;
+  color: var(--orange);
+}
+.gl-stat-label {
+  display: block; font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.5); margin-top: 0.2rem;
+}
+.gl-stat-sep {
+  width: 1px; height: 40px;
+  background: rgba(255,255,255,0.15);
+}
+
+/* ===== FILTERS ===== */
+.gl-content {
+  padding: var(--section-padding);
+  background: var(--cream);
+}
+.gl-filters {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+.gl-filter-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.6rem 1.25rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-full);
+  background: white;
+  font-size: 0.88rem; font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.gl-filter-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.gl-filter-btn.active {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+.gl-filter-count {
+  font-size: 0.7rem;
+  background: rgba(0,0,0,0.06);
+  padding: 0.1rem 0.5rem;
+  border-radius: 20px;
+  font-weight: 700;
+}
+.gl-filter-btn.active .gl-filter-count {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+/* ===== GRID ===== */
+.gl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.gl-card {
+  text-decoration: none;
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  border: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.gl-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+.gl-card-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1rem;
+}
+.gl-card-badge {
+  font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+}
+.gl-card-time {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  font-size: 0.75rem; color: var(--text-secondary);
+}
+.gl-card h3 {
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.gl-card p {
+  font-size: 0.85rem; line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  flex: 1;
+}
+.gl-card-footer { margin-top: auto; }
+.gl-card-link {
+  font-size: 0.85rem; font-weight: 700;
+}
+
+/* Empty */
+.gl-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+.gl-empty h3 { color: var(--navy); margin: 1rem 0 0.5rem; }
+.gl-empty p { color: var(--text-secondary); }
+
+/* ===== CTA ===== */
+.gl-cta {
+  padding: 5rem 0;
+  background: var(--navy);
+  color: white;
+}
+.gl-cta h2 { color: white; margin-bottom: 0.75rem; }
+.gl-cta p {
+  color: rgba(255,255,255,0.7);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+  .gl-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .gl-hero { padding: 7.5rem 0 3.5rem; }
+  .gl-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+  .gl-hero-stats { gap: 1rem; }
+  .gl-stat-value { font-size: 1.4rem; }
+}
+</style>

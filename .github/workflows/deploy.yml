@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
 
-  # WordPress webhook trigger
+  # WordPress webhook trigger (fires on publish/update/delete)
   repository_dispatch:
     types: [wordpress_publish]
 
@@ -35,9 +35,27 @@ jobs:
         env:
           PUBLIC_WP_URL: https://admin.hrhelp.nl
 
+      # Strip guide pages from production build (staging only)
+      - name: Strip guides from production
+        run: |
+          rm -rf dist/guides dist/images/guides
+          if [ -f dist/sitemap-0.xml ]; then
+            sed -i '/guides/d' dist/sitemap-0.xml
+          fi
+          echo "✅ Guides stripped from production build"
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=hrhelp-website --branch=production
+
+      # Purge Cloudflare CDN cache so changes appear immediately
+      - name: Purge Cloudflare Cache
+        if: success()
+        run: |
+          curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"purge_everything":true}' || echo "Cache purge skipped (zone ID not set)"

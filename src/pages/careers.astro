@@ -1,5 +1,6 @@
 ---
-import Layout from '../../components/Layout.astro';
+import Layout from '../components/Layout.astro';
+import { getJobOpenings } from '../lib/wordpress';
 
 const benefits = [
   { icon: 'hub', title: 'Network Model', desc: 'Work as a specialist in our agile network organization, not a cog in a machine. Your expertise drives impact.' },
@@ -8,10 +9,7 @@ const benefits = [
   { icon: 'balance', title: 'True Flexibility', desc: 'Outcome-focused work environment with professional autonomy and flexible scheduling.' },
 ];
 
-const openings = [
-  { title: 'Senior Employment Law Specialist', type: 'Network Partner', location: 'Freelance/Remote · Amsterdam/Almere' },
-  { title: 'Interim HR Manager (International)', type: 'Project Based', location: 'High Intensity · On-site/Hybrid' },
-];
+const openings = await getJobOpenings();
 ---
 
 <Layout title="Careers | Join the Network" description="Join HRHelp.nl as a specialized HR consultant or network partner. Shape the future of Dutch HR for international companies.">
@@ -65,23 +63,30 @@ const openings = [
       <h2>Currently Looking For...</h2>
       <p>We hire for both internal roles and our network of project-based specialists.</p>
     </div>
-    <div class="cr-openings-list">
-      {openings.map(o => (
-        <div class="cr-opening-card">
-          <div class="cr-opening-info">
-            <h3>{o.title}</h3>
-            <div class="cr-opening-meta">
-              <span class="cr-tag">{o.type}</span>
-              <span class="cr-location">
-                <span class="material-symbols-outlined" style="font-size: 16px;">location_on</span>
-                {o.location}
-              </span>
+    {openings.length > 0 ? (
+      <div class="cr-openings-list">
+        {openings.map(o => (
+          <div class="cr-opening-card">
+            <div class="cr-opening-info">
+              <h3>{o.title}</h3>
+              <div class="cr-opening-meta">
+                <span class="cr-tag">{o.type}</span>
+                <span class="cr-location">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">location_on</span>
+                  {o.location}
+                </span>
+              </div>
             </div>
+            <a href="/contact" class="btn btn-secondary btn-sm">Inquire</a>
           </div>
-          <a href="/contact" class="btn btn-secondary btn-sm">Inquire</a>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    ) : (
+      <div class="cr-no-openings">
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--gray-300);">work_off</span>
+        <p>No open positions at the moment. Check back soon or join our talent pool below.</p>
+      </div>
+    )}
   </div>
 </section>
 
@@ -164,6 +169,11 @@ const openings = [
   padding: 0.3rem 0.75rem; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 700;
 }
 .cr-location { display: flex; align-items: center; gap: 0.35rem; font-size: 0.9rem; color: var(--gray-500); }
+.cr-no-openings {
+  text-align: center; padding: 3rem 2rem;
+  background: white; border-radius: var(--radius-lg); border: 1px dashed var(--gray-300);
+}
+.cr-no-openings p { color: var(--gray-500); font-size: 1.05rem; margin-top: 1rem; }
 
 /* ===== TALENT CTA ===== */
 .cr-talent { padding: 0 0 8rem; }

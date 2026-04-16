@@ -11,6 +11,7 @@ import type {
     ResourceHighlight,
     ResourceCaseStudy,
     BlogPost,
+    JobOpening,
 } from './wordpress';
 
 // ---------- CASE STUDIES ----------
@@ -283,3 +284,8 @@ export const fallbackBlogPosts: BlogPost[] = [
         author: 'HRHelp Team',
     },
 ];
+
+// ---------- JOB OPENINGS ----------
+
+export const fallbackJobOpenings: JobOpening[] = [];
+

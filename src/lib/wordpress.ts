@@ -11,6 +11,7 @@ import {
     fallbackResourceHighlights,
     fallbackResourceCaseStudies,
     fallbackBlogPosts,
+    fallbackJobOpenings,
 } from './fallback-data';
 
 // ---------- CONFIG ----------
@@ -108,6 +109,12 @@ export interface BlogPost {
     date: string;
     readTime: string;
     author: string;
+}
+
+export interface JobOpening {
+    title: string;
+    type: string;
+    location: string;
 }
 
 // ---------- HELPER ----------
@@ -375,4 +382,32 @@ export async function getFeaturedArticles(): Promise<{ title: string; category: 
         image: p.image,
         href: `/blog/${p.slug}`,
     }));
+}
+
+// ---------- JOB OPENINGS ----------
+
+function mapWPJobOpening(post: any): JobOpening {
+    const acf = post.acf || {};
+    return {
+        title: decodeHTMLEntities(post.title?.rendered || ''),
+        type: acf.job_type || 'Full-Time',
+        location: acf.location || 'Amsterdam, Netherlands',
+    };
+}
+
+/**
+ * Get all active job openings. Falls back to hardcoded data if WP is unavailable.
+ */
+export async function getJobOpenings(): Promise<JobOpening[]> {
+    const posts = await wpFetch<any[]>('job_opening?per_page=100&_fields=id,slug,title,acf,status');
+    if (posts && posts.length > 0) {
+        // Filter to only active openings (is_active !== 'false'/'no'/'0')
+        return posts
+            .filter(p => {
+                const active = p.acf?.is_active;
+                return active !== 'false' && active !== 'no' && active !== '0' && active !== false;
+            })
+            .map(mapWPJobOpening);
+    }
+    return fallbackJobOpenings;
 }

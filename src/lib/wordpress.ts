@@ -243,11 +243,26 @@ function mapWPBlogPost(post: any): BlogPost {
         imageUrl = embedded[0].source_url;
     }
 
+    // Fix broken internal links in WP content at build time
+    let content = post.content?.rendered || acf.content || '';
+    const linkFixes: Record<string, string> = {
+        '/resources/blog/': '/blog/',
+        '/solutions/compliance-advisory': '/solutions/hr-reset',
+        '/solutions/hr-outsourcing': '/solutions/hr-teams',
+        '/solutions/market-entry': '/solutions/hr-settlers',
+        '/solutions/payroll-administration': '/solutions/hr-teams',
+        '/solutions/recruitment-support': '/solutions/hr-settlers',
+        '/industries/technology-saas': '/industries/technology',
+    };
+    for (const [wrong, correct] of Object.entries(linkFixes)) {
+        content = content.replaceAll(wrong, correct);
+    }
+
     return {
         slug: post.slug,
         title: decodeHTMLEntities(post.title?.rendered || ''),
         excerpt: decodeHTMLEntities(cleanExcerpt),
-        content: post.content?.rendered || acf.content || '',
+        content,
         category: acf.blog_category || 'Article',
         image: imageUrl,
         date: post.date ? new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '',

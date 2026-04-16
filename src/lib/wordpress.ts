@@ -258,6 +258,10 @@ function mapWPBlogPost(post: any): BlogPost {
         content = content.replaceAll(wrong, correct);
     }
 
+    // Fix empty alt attributes in WP content images at build time
+    const postTitle = decodeHTMLEntities(post.title?.rendered || 'HRHelp article image');
+    content = content.replace(/alt=""/g, `alt="${postTitle}"`);
+
     return {
         slug: post.slug,
         title: decodeHTMLEntities(post.title?.rendered || ''),

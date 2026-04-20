@@ -67,17 +67,27 @@ const openings = await getJobOpenings();
       <div class="cr-openings-list">
         {openings.map(o => (
           <div class="cr-opening-card">
-            <div class="cr-opening-info">
-              <h3>{o.title}</h3>
-              <div class="cr-opening-meta">
-                <span class="cr-tag">{o.type}</span>
-                <span class="cr-location">
-                  <span class="material-symbols-outlined" style="font-size: 16px;">location_on</span>
-                  {o.location}
-                </span>
+            <div class="cr-opening-top">
+              <div class="cr-opening-info">
+                <h3>{o.title}</h3>
+                <div class="cr-opening-meta">
+                  <span class="cr-tag">{o.type}</span>
+                  <span class="cr-location">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">location_on</span>
+                    {o.location}
+                  </span>
+                </div>
               </div>
+              <a href={`/careers/apply/${o.slug}`} class="btn btn-primary btn-sm cr-apply-btn">
+                Apply Now
+                <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              </a>
             </div>
-            <a href="/contact" class="btn btn-secondary btn-sm">Inquire</a>
+            {o.description && (
+              <div class="cr-opening-desc">
+                <div class="cr-desc-content" set:html={o.description} />
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -154,14 +164,19 @@ const openings = await getJobOpenings();
 
 /* ===== OPENINGS ===== */
 .cr-openings { padding: 8rem 0; }
-.cr-openings-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.cr-openings-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
 .cr-opening-card {
-  background: white; padding: 2rem 2.5rem; border-radius: var(--radius-lg);
-  display: flex; justify-content: space-between; align-items: center;
+  background: white; border-radius: var(--radius-lg);
   border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; overflow: hidden;
 }
 .cr-opening-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.cr-opening-top {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 2rem 2.5rem;
+}
 .cr-opening-info h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
 .cr-opening-meta { display: flex; align-items: center; gap: 1.25rem; }
 .cr-tag {
@@ -169,6 +184,41 @@ const openings = await getJobOpenings();
   padding: 0.3rem 0.75rem; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 700;
 }
 .cr-location { display: flex; align-items: center; gap: 0.35rem; font-size: 0.9rem; color: var(--gray-500); }
+
+.cr-apply-btn {
+  display: inline-flex !important; align-items: center; gap: 0.4rem;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+.cr-opening-desc {
+  border-top: 1px solid var(--gray-100);
+  padding: 1.5rem 2.5rem 2rem;
+}
+
+.cr-opening-desc :global(h2),
+.cr-opening-desc :global(h3),
+.cr-opening-desc :global(h4) {
+  font-size: 1.05rem; font-weight: 700; color: var(--navy);
+  margin: 1.25rem 0 0.5rem;
+}
+.cr-opening-desc :global(h2:first-child),
+.cr-opening-desc :global(h3:first-child),
+.cr-opening-desc :global(h4:first-child) {
+  margin-top: 0;
+}
+.cr-opening-desc :global(p) {
+  font-size: 0.93rem; line-height: 1.7; color: var(--gray-600); margin-bottom: 0.75rem;
+}
+.cr-opening-desc :global(ul),
+.cr-opening-desc :global(ol) {
+  padding-left: 1.5rem; margin-bottom: 1rem;
+}
+.cr-opening-desc :global(li) {
+  font-size: 0.93rem; line-height: 1.7; color: var(--gray-600);
+  margin-bottom: 0.25rem;
+}
+.cr-opening-desc :global(strong) { color: var(--navy); }
+
 .cr-no-openings {
   text-align: center; padding: 3rem 2rem;
   background: white; border-radius: var(--radius-lg); border: 1px dashed var(--gray-300);
@@ -197,7 +247,7 @@ const openings = await getJobOpenings();
   .cr-hero-p { margin: 0 auto; }
   .cr-hero-btns { justify-content: center; }
   .cr-benefits-grid { grid-template-columns: repeat(2, 1fr); }
-  .cr-opening-card { flex-direction: column; text-align: center; gap: 1.5rem; }
+  .cr-opening-top { flex-direction: column; text-align: center; gap: 1.5rem; }
   .cr-opening-meta { justify-content: center; }
   .cr-talent-card { padding: 3.5rem 2rem; }
 }
@@ -205,5 +255,7 @@ const openings = await getJobOpenings();
   .cr-hero-content h1 { font-size: 2.5rem; }
   .cr-benefits-grid { grid-template-columns: 1fr; }
   .cr-hero-visual img { height: 300px; }
+  .cr-opening-desc { padding: 1.25rem 1.5rem 1.5rem; }
+  .cr-opening-top { padding: 1.5rem; }
 }
 </style>

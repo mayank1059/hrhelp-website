@@ -112,9 +112,11 @@ export interface BlogPost {
 }
 
 export interface JobOpening {
+    slug: string;
     title: string;
     type: string;
     location: string;
+    description: string;
 }
 
 // ---------- HELPER ----------
@@ -408,9 +410,11 @@ export async function getFeaturedArticles(): Promise<{ title: string; category: 
 function mapWPJobOpening(post: any): JobOpening {
     const acf = post.acf || {};
     return {
+        slug: post.slug || '',
         title: decodeHTMLEntities(post.title?.rendered || ''),
         type: acf.job_type || 'Full-Time',
         location: acf.location || 'Amsterdam, Netherlands',
+        description: acf.job_description || '',
     };
 }
 
@@ -420,7 +424,6 @@ function mapWPJobOpening(post: any): JobOpening {
 export async function getJobOpenings(): Promise<JobOpening[]> {
     const posts = await wpFetch<any[]>('job_opening?per_page=100&_fields=id,slug,title,acf,status');
     if (posts && posts.length > 0) {
-        // Filter to only active openings (is_active !== 'false'/'no'/'0')
         return posts
             .filter(p => {
                 const active = p.acf?.is_active;
@@ -429,4 +432,15 @@ export async function getJobOpenings(): Promise<JobOpening[]> {
             .map(mapWPJobOpening);
     }
     return fallbackJobOpenings;
+}
+
+/**
+ * Get a single job opening by slug.
+ */
+export async function getJobOpening(slug: string): Promise<JobOpening | null> {
+    const posts = await wpFetch<any[]>(`job_opening?slug=${slug}&_fields=id,slug,title,acf`);
+    if (posts && posts.length > 0) {
+        return mapWPJobOpening(posts[0]);
+    }
+    return fallbackJobOpenings.find(j => j.slug === slug) || null;
 }

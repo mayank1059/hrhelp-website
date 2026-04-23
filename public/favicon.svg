@@ -1,34 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <!-- HRHelp.nl Favicon — Icon mark with rounded border -->
+  <!-- HRHelp.nl Favicon — Soft rounded background, no internal border -->
   <defs>
     <clipPath id="rounded">
-      <rect width="128" height="128" rx="24" ry="24"/>
+      <rect width="128" height="128" rx="22" ry="22"/>
     </clipPath>
   </defs>
   
   <g clip-path="url(#rounded)">
-    <!-- White rounded background -->
-    <rect width="128" height="128" rx="24" ry="24" fill="white"/>
+    <!-- Soft rounded white background -->
+    <rect width="128" height="128" rx="22" ry="22" fill="white"/>
     
     <!-- Outer circle arc -->
     <path d="M64 8C33.1 8 8 33.1 8 64s25.1 56 56 56 56-25.1 56-56S94.9 8 64 8zm0 104C37.5 112 16 90.5 16 64S37.5 16 64 16s48 21.5 48 48-21.5 48-48 48z" fill="#1a3a6e"/>
     
-    <!-- Top person (navy) - head -->
+    <!-- Top person (navy) -->
     <circle cx="64" cy="28" r="9" fill="#1a3a6e"/>
-    <!-- Top person (navy) - body -->
     <path d="M54 42c0-2.2 1.8-4 4-4h12c2.2 0 4 1.8 4 4v12c0 1.1-.4 2.1-1.2 2.8L68 62v4c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4l-4.8-5.2c-.8-.7-1.2-1.7-1.2-2.8V42z" fill="#1a3a6e"/>
     
-    <!-- Bottom-left person (navy) - head -->
+    <!-- Bottom-left person (navy) -->
     <circle cx="36" cy="72" r="8" fill="#1a3a6e"/>
-    <!-- Bottom-left person (navy) - body -->
     <path d="M27 84c0-1.7 1.3-3 3-3h12c1.7 0 3 1.3 3 3v10c0 .8-.3 1.6-.9 2.2L41 100v3.5c0 .8-.7 1.5-1.5 1.5h-3c-.8 0-1.5-.7-1.5-1.5V100l-4.1-3.8c-.6-.6-.9-1.4-.9-2.2V84z" fill="#1a3a6e"/>
     
-    <!-- Bottom-right person (orange accent) - head -->
+    <!-- Bottom-right person (orange) -->
     <circle cx="92" cy="72" r="8" fill="#f47920"/>
-    <!-- Bottom-right person (orange accent) - body -->
     <path d="M83 84c0-1.7 1.3-3 3-3h12c1.7 0 3 1.3 3 3v10c0 .8-.3 1.6-.9 2.2L97 100v3.5c0 .8-.7 1.5-1.5 1.5h-3c-.8 0-1.5-.7-1.5-1.5V100l-4.1-3.8c-.6-.6-.9-1.4-.9-2.2V84z" fill="#f47920"/>
-    
-    <!-- Rounded border stroke -->
-    <rect width="128" height="128" rx="24" ry="24" fill="none" stroke="#1a3a6e" stroke-width="3"/>
   </g>
 </svg>

@@ -269,7 +269,17 @@ function mapWPBlogPost(post: any): BlogPost {
         title: decodeHTMLEntities(post.title?.rendered || ''),
         excerpt: decodeHTMLEntities(cleanExcerpt),
         content,
-        category: acf.blog_category || 'Article',
+        category: (() => {
+            // Use WordPress native categories from _embedded (the ones set in the editor sidebar)
+            const terms = post._embedded?.['wp:term'];
+            if (terms && terms[0] && terms[0].length > 0) {
+                // terms[0] is categories, filter out "Uncategorized"
+                const cats = terms[0].filter((t: any) => t.name !== 'Uncategorized');
+                if (cats.length > 0) return decodeHTMLEntities(cats[0].name);
+            }
+            // Fallback to ACF field
+            return acf.blog_category || 'Article';
+        })(),
         image: imageUrl,
         date: post.date ? new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '',
         readTime: acf.read_time || '5 min read',

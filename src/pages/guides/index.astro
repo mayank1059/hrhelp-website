@@ -4,29 +4,50 @@ import Layout from '../../components/Layout.astro';
 import settlersData from '../../data/pseo/hr-settlers.json';
 import teamsData from '../../data/pseo/hr-teams.json';
 import sosData from '../../data/pseo/hr-sos.json';
-// import lawData from '../../data/pseo/dutch-law.json';
 
 const allPages = [
   ...settlersData,
   ...teamsData,
   ...sosData,
-  // ...lawData,
 ];
 
-// Group by vertical
 const verticals = [
-  { id: 'all', label: 'All Guides', count: allPages.length },
-  { id: 'hr-settlers', label: 'HR Settlers', count: allPages.filter(p => p.vertical === 'hr-settlers').length },
-  { id: 'hr-teams', label: 'HR Teams', count: allPages.filter(p => p.vertical === 'hr-teams').length },
-  { id: 'hr-sos', label: 'HR S.O.S.', count: allPages.filter(p => p.vertical === 'hr-sos').length },
-  { id: 'dutch-law', label: 'Dutch Law', count: allPages.filter(p => p.vertical === 'dutch-law').length },
-].filter(v => v.count > 0 || v.id === 'all');
+  {
+    id: 'hr-settlers',
+    label: 'HR Settlers',
+    tagline: 'Market Entry & Company Setup',
+    description: 'Everything you need to establish your business in the Netherlands — from entity formation and employer registration to hiring your first Dutch employee.',
+    count: settlersData.length,
+    image: '/images/guides/category-hr-settlers.png',
+    color: '#f47920',
+    colorBg: 'rgba(244,121,32,0.06)',
+  },
+  {
+    id: 'hr-teams',
+    label: 'HR Teams',
+    tagline: 'Payroll, Compliance & Workforce',
+    description: 'In-depth guides on Dutch employment contracts, payroll setup, pension systems, leave policies, and day-to-day HR compliance for established teams.',
+    count: teamsData.length,
+    image: '/images/guides/category-hr-teams.png',
+    color: '#3b82f6',
+    colorBg: 'rgba(59,130,246,0.06)',
+  },
+  {
+    id: 'hr-sos',
+    label: 'HR S.O.S.',
+    tagline: 'Crisis & Employment Law',
+    description: 'Urgent guidance for dismissals, workplace conflicts, restructuring, sick leave disputes, and emergency HR situations under Dutch law.',
+    count: sosData.length,
+    image: '/images/guides/category-hr-sos.png',
+    color: '#dc2626',
+    colorBg: 'rgba(220,38,38,0.06)',
+  },
+].filter(v => v.count > 0);
 
 const verticalColors: Record<string, { bg: string; text: string }> = {
   'hr-settlers': { bg: 'rgba(244,121,32,0.08)', text: '#f47920' },
   'hr-teams':    { bg: 'rgba(59,130,246,0.08)', text: '#3b82f6' },
   'hr-sos':      { bg: 'rgba(220,38,38,0.08)', text: '#dc2626' },
-  'dutch-law':   { bg: 'rgba(16,185,129,0.08)', text: '#10b981' },
 };
 ---
 
@@ -51,7 +72,7 @@ const verticalColors: Record<string, { bg: string; text: string }> = {
       </div>
       <div class="gl-stat-sep"></div>
       <div class="gl-stat">
-        <span class="gl-stat-value">{verticals.filter(v => v.id !== 'all' && v.count > 0).length}</span>
+        <span class="gl-stat-value">{verticals.length}</span>
         <span class="gl-stat-label">Topic Areas</span>
       </div>
       <div class="gl-stat-sep"></div>
@@ -63,49 +84,62 @@ const verticalColors: Record<string, { bg: string; text: string }> = {
   </div>
 </section>
 
-<!-- ===== FILTER & GRID ===== -->
-<section class="gl-content">
+<!-- ===== CATEGORY BOXES ===== -->
+<section class="gl-categories">
   <div class="container">
-    <!-- Filter Tabs -->
-    <div class="gl-filters" id="gl-filters">
+    <h2 class="gl-section-title">Browse by <span style="color: var(--orange);">Topic</span></h2>
+    <p class="gl-section-sub">Select a topic area to explore our in-depth guides</p>
+
+    <div class="gl-cat-grid">
       {verticals.map(v => (
-        <button class={`gl-filter-btn ${v.id === 'all' ? 'active' : ''}`} data-filter={v.id}>
-          {v.label}
-          <span class="gl-filter-count">{v.count}</span>
-        </button>
+        <a href={`/guides/${v.id}`} class="gl-cat-card" style={`--card-accent: ${v.color};`}>
+          <div class="gl-cat-img">
+            <img src={v.image} alt={v.label} loading="lazy" />
+          </div>
+          <div class="gl-cat-body">
+            <span class="gl-cat-badge" style={`background: ${v.colorBg}; color: ${v.color};`}>
+              {v.count} {v.count === 1 ? 'Guide' : 'Guides'}
+            </span>
+            <h3>{v.label}</h3>
+            <span class="gl-cat-tagline">{v.tagline}</span>
+            <p>{v.description}</p>
+            <span class="gl-cat-link" style={`color: ${v.color};`}>
+              Explore Guides
+              <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+            </span>
+          </div>
+        </a>
       ))}
     </div>
+  </div>
+</section>
 
-    <!-- Guide Cards Grid -->
-    <div class="gl-grid" id="gl-grid">
-      {allPages.map((page) => {
+<!-- ===== FEATURED / POPULAR GUIDES ===== -->
+<section class="gl-featured">
+  <div class="container">
+    <h2 class="gl-section-title">Most Popular <span style="color: var(--orange);">Guides</span></h2>
+    <p class="gl-section-sub">The guides our readers find most helpful</p>
+
+    <div class="gl-feat-grid">
+      {allPages.slice(0, 6).map(page => {
         const vc = verticalColors[page.vertical] || verticalColors['hr-settlers'];
         return (
-          <a href={`/guides/${page.slug}`} class="gl-card" data-vertical={page.vertical}>
-            <div class="gl-card-top">
-              <span class="gl-card-badge" style={`background: ${vc.bg}; color: ${vc.text};`}>
+          <a href={`/guides/${page.slug}`} class="gl-feat-card">
+            <div class="gl-feat-top">
+              <span class="gl-feat-badge" style={`background: ${vc.bg}; color: ${vc.text};`}>
                 {page.verticalLabel}
               </span>
-              <span class="gl-card-time">
+              <span class="gl-feat-time">
                 <span class="material-symbols-outlined" style="font-size:14px;">schedule</span>
                 {page.readTime}
               </span>
             </div>
             <h3>{page.title}</h3>
             <p>{page.subtitle}</p>
-            <div class="gl-card-footer">
-              <span class="gl-card-link" style={`color: ${vc.text};`}>Read Guide →</span>
-            </div>
+            <span class="gl-feat-link" style={`color: ${vc.text};`}>Read Guide →</span>
           </a>
         );
       })}
-    </div>
-
-    <!-- Empty State -->
-    <div class="gl-empty" id="gl-empty" style="display:none;">
-      <span class="material-symbols-outlined" style="font-size:48px; color: var(--gray-400);">search_off</span>
-      <h3>No guides in this category yet</h3>
-      <p>We're working on adding more guides. Check back soon!</p>
     </div>
   </div>
 </section>
@@ -123,39 +157,6 @@ const verticalColors: Record<string, { bg: string; text: string }> = {
 </section>
 
 </Layout>
-
-<!-- FILTER SCRIPT -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.gl-filter-btn');
-    const cards = document.querySelectorAll('.gl-card');
-    const empty = document.getElementById('gl-empty');
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const filter = btn.getAttribute('data-filter');
-        
-        // Update active state
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Filter cards
-        let visible = 0;
-        cards.forEach(card => {
-          const vertical = card.getAttribute('data-vertical');
-          const show = filter === 'all' || vertical === filter;
-          (card as HTMLElement).style.display = show ? '' : 'none';
-          if (show) visible++;
-        });
-
-        // Show/hide empty state
-        if (empty) {
-          empty.style.display = visible === 0 ? '' : 'none';
-        }
-      });
-    });
-  });
-</script>
 
 <style>
 /* ===== HERO ===== */
@@ -215,57 +216,125 @@ const verticalColors: Record<string, { bg: string; text: string }> = {
   background: rgba(255,255,255,0.15);
 }
 
-/* ===== FILTERS ===== */
-.gl-content {
+/* ===== SECTION TITLES ===== */
+.gl-section-title {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.gl-section-sub {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  margin-bottom: 3rem;
+}
+
+/* ===== CATEGORY BOXES ===== */
+.gl-categories {
   padding: var(--section-padding);
   background: var(--cream);
 }
-.gl-filters {
-  display: flex; gap: 0.5rem; flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 3rem;
-}
-.gl-filter-btn {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.6rem 1.25rem;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-full);
-  background: white;
-  font-size: 0.88rem; font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.gl-filter-btn:hover {
-  border-color: var(--orange);
-  color: var(--orange);
-}
-.gl-filter-btn.active {
-  background: var(--navy);
-  color: white;
-  border-color: var(--navy);
-}
-.gl-filter-count {
-  font-size: 0.7rem;
-  background: rgba(0,0,0,0.06);
-  padding: 0.1rem 0.5rem;
-  border-radius: 20px;
-  font-weight: 700;
-}
-.gl-filter-btn.active .gl-filter-count {
-  background: rgba(255,255,255,0.2);
-  color: white;
-}
-
-/* ===== GRID ===== */
-.gl-grid {
+.gl-cat-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
-.gl-card {
+.gl-cat-card {
   text-decoration: none;
   background: white;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.gl-cat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+  border-color: var(--card-accent, var(--orange));
+}
+.gl-cat-img {
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8f9fb 0%, #eef1f5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.gl-cat-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+.gl-cat-card:hover .gl-cat-img img {
+  transform: scale(1.05);
+}
+.gl-cat-body {
+  padding: 1.75rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.gl-cat-badge {
+  display: inline-block;
+  width: fit-content;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.75rem;
+}
+.gl-cat-body h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+}
+.gl-cat-tagline {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--card-accent, var(--orange));
+  margin-bottom: 0.75rem;
+}
+.gl-cat-body p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+.gl-cat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: gap 0.2s ease;
+}
+.gl-cat-card:hover .gl-cat-link {
+  gap: 0.6rem;
+}
+
+/* ===== FEATURED GUIDES ===== */
+.gl-featured {
+  padding: var(--section-padding);
+  background: white;
+}
+.gl-feat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.gl-feat-card {
+  text-decoration: none;
+  background: var(--cream);
   border-radius: var(--radius-xl);
   padding: 1.75rem;
   border: 1px solid var(--gray-200);
@@ -273,48 +342,39 @@ const verticalColors: Record<string, { bg: string; text: string }> = {
   flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.gl-card:hover {
+.gl-feat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 30px rgba(0,0,0,0.06);
 }
-.gl-card-top {
+.gl-feat-top {
   display: flex; justify-content: space-between; align-items: center;
   margin-bottom: 1rem;
 }
-.gl-card-badge {
+.gl-feat-badge {
   font-size: 0.65rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.1em;
   padding: 0.25rem 0.7rem;
   border-radius: var(--radius-full);
 }
-.gl-card-time {
+.gl-feat-time {
   display: inline-flex; align-items: center; gap: 0.25rem;
   font-size: 0.75rem; color: var(--text-secondary);
 }
-.gl-card h3 {
-  font-size: 1.1rem; font-weight: 700;
+.gl-feat-card h3 {
+  font-size: 1.05rem; font-weight: 700;
   color: var(--navy);
   margin-bottom: 0.5rem;
   line-height: 1.3;
 }
-.gl-card p {
+.gl-feat-card p {
   font-size: 0.85rem; line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: 1rem;
   flex: 1;
 }
-.gl-card-footer { margin-top: auto; }
-.gl-card-link {
+.gl-feat-link {
   font-size: 0.85rem; font-weight: 700;
 }
-
-/* Empty */
-.gl-empty {
-  text-align: center;
-  padding: 4rem 2rem;
-}
-.gl-empty h3 { color: var(--navy); margin: 1rem 0 0.5rem; }
-.gl-empty p { color: var(--text-secondary); }
 
 /* ===== CTA ===== */
 .gl-cta {
@@ -331,12 +391,14 @@ const verticalColors: Record<string, { bg: string; text: string }> = {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 992px) {
-  .gl-grid { grid-template-columns: repeat(2, 1fr); }
+  .gl-cat-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+  .gl-feat-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
   .gl-hero { padding: 7.5rem 0 3.5rem; }
-  .gl-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
   .gl-hero-stats { gap: 1rem; }
   .gl-stat-value { font-size: 1.4rem; }
+  .gl-feat-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+  .gl-cat-img { height: 180px; }
 }
 </style>

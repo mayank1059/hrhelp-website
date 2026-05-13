@@ -1,0 +1,392 @@
+---
+import Layout from '../../components/Layout.astro';
+
+import settlersData from '../../data/pseo/hr-settlers.json';
+import teamsData from '../../data/pseo/hr-teams.json';
+import sosData from '../../data/pseo/hr-sos.json';
+
+type PageData = {
+  slug: string;
+  title: string;
+  subtitle: string;
+  vertical: string;
+  verticalLabel: string;
+  readTime: string;
+  topic: string;
+  [key: string]: any;
+};
+
+const dataMap: Record<string, PageData[]> = {
+  'hr-settlers': settlersData as PageData[],
+  'hr-teams': teamsData as PageData[],
+  'hr-sos': sosData as PageData[],
+};
+
+const verticalMeta: Record<string, {
+  label: string;
+  tagline: string;
+  description: string;
+  image: string;
+  color: string;
+  colorBg: string;
+}> = {
+  'hr-settlers': {
+    label: 'HR Settlers',
+    tagline: 'Market Entry & Company Setup',
+    description: 'Everything you need to establish your business in the Netherlands',
+    image: '/images/guides/category-hr-settlers.png',
+    color: '#f47920',
+    colorBg: 'rgba(244,121,32,0.08)',
+  },
+  'hr-teams': {
+    label: 'HR Teams',
+    tagline: 'Payroll, Compliance & Workforce',
+    description: 'In-depth guides on managing your Dutch workforce and HR compliance',
+    image: '/images/guides/category-hr-teams.png',
+    color: '#3b82f6',
+    colorBg: 'rgba(59,130,246,0.08)',
+  },
+  'hr-sos': {
+    label: 'HR S.O.S.',
+    tagline: 'Crisis & Employment Law',
+    description: 'Urgent guidance for dismissals, disputes, and emergency HR situations',
+    image: '/images/guides/category-hr-sos.png',
+    color: '#dc2626',
+    colorBg: 'rgba(220,38,38,0.08)',
+  },
+};
+
+export function getStaticPaths() {
+  return [
+    { params: { vertical: 'hr-settlers' } },
+    { params: { vertical: 'hr-teams' } },
+    { params: { vertical: 'hr-sos' } },
+  ];
+}
+
+const { vertical } = Astro.params;
+const pages = dataMap[vertical as string] || [];
+const meta = verticalMeta[vertical as string];
+
+if (!meta || pages.length === 0) {
+  return Astro.redirect('/guides');
+}
+
+// Get unique topics for sub-filters
+const topicCounts = new Map<string, number>();
+for (const page of pages) {
+  const t = page.topic || 'General';
+  topicCounts.set(t, (topicCounts.get(t) || 0) + 1);
+}
+const topics = Array.from(topicCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .map(([name, count]) => ({ name, count }));
+---
+
+<Layout
+  title={`${meta.label} Guides | HRHelp.nl`}
+  description={meta.description}
+>
+
+<!-- ===== HERO ===== -->
+<section class="vg-hero" style={`--accent: ${meta.color};`}>
+  <div class="vg-hero-mesh"></div>
+  <div class="container vg-hero-inner">
+    <a href="/guides" class="vg-back-link">
+      <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+      All Guides
+    </a>
+    <div class="vg-hero-flex">
+      <div class="vg-hero-text">
+        <span class="vg-hero-badge" style={`background: ${meta.colorBg}; color: ${meta.color};`}>
+          {pages.length} {pages.length === 1 ? 'Guide' : 'Guides'}
+        </span>
+        <h1>{meta.label}</h1>
+        <p class="vg-hero-tagline">{meta.tagline}</p>
+        <p class="vg-hero-desc">{meta.description}</p>
+      </div>
+      <div class="vg-hero-img">
+        <img src={meta.image} alt={meta.label} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SUB-FILTERS + GRID ===== -->
+<section class="vg-content">
+  <div class="container">
+    <!-- Sub-Filters -->
+    <div class="vg-filters" id="vg-filters">
+      <button class="vg-filter-btn active" data-topic="all">
+        All
+        <span class="vg-filter-count">{pages.length}</span>
+      </button>
+      {topics.map(t => (
+        <button class="vg-filter-btn" data-topic={t.name}>
+          {t.name}
+          <span class="vg-filter-count">{t.count}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Grid -->
+    <div class="vg-grid" id="vg-grid">
+      {pages.map(page => (
+        <a href={`/guides/${page.slug}`} class="vg-card" data-topic={page.topic}>
+          <div class="vg-card-top">
+            <span class="vg-card-topic" style={`background: ${meta.colorBg}; color: ${meta.color};`}>
+              {page.topic}
+            </span>
+            <span class="vg-card-time">
+              <span class="material-symbols-outlined" style="font-size:14px;">schedule</span>
+              {page.readTime}
+            </span>
+          </div>
+          <h3>{page.title}</h3>
+          <p>{page.subtitle}</p>
+          <div class="vg-card-footer">
+            <span class="vg-card-link" style={`color: ${meta.color};`}>Read Guide →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Empty State -->
+    <div class="vg-empty" id="vg-empty" style="display:none;">
+      <span class="material-symbols-outlined" style="font-size:48px; color: var(--gray-400);">search_off</span>
+      <h3>No guides match this filter</h3>
+      <p>Try selecting a different topic filter above.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="vg-cta">
+  <div class="container" style="text-align:center;">
+    <h2>Need Personalised Guidance?</h2>
+    <p>Our HR specialists can provide tailored advice for your specific situation.</p>
+    <div style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem; flex-wrap:wrap;">
+      <a href="/contact" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
+      <a href="/guides" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,0.3); color:white;">← Back to All Topics</a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<!-- FILTER SCRIPT -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.vg-filter-btn');
+    const cards = document.querySelectorAll('.vg-card');
+    const empty = document.getElementById('vg-empty');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const topic = btn.getAttribute('data-topic');
+        
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        let visible = 0;
+        cards.forEach(card => {
+          const cardTopic = card.getAttribute('data-topic');
+          const show = topic === 'all' || cardTopic === topic;
+          (card as HTMLElement).style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        if (empty) {
+          empty.style.display = visible === 0 ? '' : 'none';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+/* ===== HERO ===== */
+.vg-hero {
+  padding: 9rem 0 4rem;
+  background: var(--navy);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.vg-hero-mesh {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(244,121,32,0.08), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.04), transparent 40%);
+  z-index: 1;
+}
+.vg-hero-inner { position: relative; z-index: 2; }
+.vg-back-link {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  color: rgba(255,255,255,0.6); text-decoration: none;
+  font-size: 0.85rem; font-weight: 600;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s;
+}
+.vg-back-link:hover { color: white; }
+.vg-hero-flex {
+  display: flex; align-items: center; gap: 3rem;
+}
+.vg-hero-text { flex: 1; }
+.vg-hero-badge {
+  display: inline-block;
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 1rem;
+}
+.vg-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+.vg-hero-tagline {
+  font-size: 1.1rem;
+  color: var(--accent, var(--orange));
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+.vg-hero-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  max-width: 480px;
+}
+.vg-hero-img {
+  width: 260px; height: 260px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.05);
+  border-radius: var(--radius-xl);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.vg-hero-img img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+}
+
+/* ===== FILTERS ===== */
+.vg-content {
+  padding: var(--section-padding);
+  background: var(--cream);
+}
+.vg-filters {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+.vg-filter-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.6rem 1.25rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-full);
+  background: white;
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.vg-filter-btn:hover {
+  border-color: var(--accent, var(--orange));
+  color: var(--accent, var(--orange));
+}
+.vg-filter-btn.active {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+.vg-filter-count {
+  font-size: 0.7rem;
+  background: rgba(0,0,0,0.06);
+  padding: 0.1rem 0.5rem;
+  border-radius: 20px;
+  font-weight: 700;
+}
+.vg-filter-btn.active .vg-filter-count {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+/* ===== GRID ===== */
+.vg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.vg-card {
+  text-decoration: none;
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  border: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.vg-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+.vg-card-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1rem;
+}
+.vg-card-topic {
+  font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+}
+.vg-card-time {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  font-size: 0.75rem; color: var(--text-secondary);
+}
+.vg-card h3 {
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.vg-card p {
+  font-size: 0.85rem; line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  flex: 1;
+}
+.vg-card-footer { margin-top: auto; }
+.vg-card-link { font-size: 0.85rem; font-weight: 700; }
+
+/* Empty */
+.vg-empty { text-align: center; padding: 4rem 2rem; }
+.vg-empty h3 { color: var(--navy); margin: 1rem 0 0.5rem; }
+.vg-empty p { color: var(--text-secondary); }
+
+/* CTA */
+.vg-cta {
+  padding: 5rem 0;
+  background: var(--navy);
+  color: white;
+}
+.vg-cta h2 { color: white; margin-bottom: 0.75rem; }
+.vg-cta p { color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto; }
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .vg-grid { grid-template-columns: repeat(2, 1fr); }
+  .vg-hero-img { width: 200px; height: 200px; }
+}
+@media (max-width: 768px) {
+  .vg-hero { padding: 7.5rem 0 3rem; }
+  .vg-hero-flex { flex-direction: column; text-align: center; }
+  .vg-hero-desc { margin: 0 auto; }
+  .vg-hero-img { width: 180px; height: 180px; }
+  .vg-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+}
+</style>

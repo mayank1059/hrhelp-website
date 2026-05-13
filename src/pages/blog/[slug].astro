@@ -48,7 +48,11 @@ const articleSchema = {
   </div>
   <div class="container bp-hero-inner">
     <div class="bp-hero-content">
-      <span class="bp-cat">{post.category}</span>
+      <div class="bp-cats">
+        {post.category.map(cat => (
+          <span class="bp-cat">{cat}</span>
+        ))}
+      </div>
       <h1>{post.title}</h1>
       <div class="bp-meta">
         <span class="material-symbols-outlined" style="font-size:18px;">person</span>
@@ -100,7 +104,7 @@ const articleSchema = {
         <a href={`/blog/${rp.slug}`} class="bp-related-card">
           <div class="bp-related-img">
             <img src={rp.image} alt={rp.title} />
-            <span class="bp-related-cat">{rp.category}</span>
+            <span class="bp-related-cat">{rp.category[0]}</span>
           </div>
           <div class="bp-related-body">
             <div class="bp-related-meta">{rp.date} · {rp.readTime}</div>
@@ -150,13 +154,16 @@ const articleSchema = {
   padding-bottom: 3rem;
 }
 .bp-hero-content { }
+.bp-cats {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
 .bp-cat {
   display: inline-block;
   background: var(--orange); color: white;
   font-size: 0.7rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.08em;
   padding: 0.3rem 0.7rem; border-radius: 4px;
-  margin-bottom: 1rem;
 }
 .bp-hero h1 {
   font-size: clamp(2rem, 4vw, 2.8rem);

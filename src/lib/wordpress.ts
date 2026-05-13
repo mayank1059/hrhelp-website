@@ -104,7 +104,7 @@ export interface BlogPost {
     title: string;
     excerpt: string;
     content: string;
-    category: string;
+    category: string[];
     image: string;
     date: string;
     readTime: string;
@@ -273,12 +273,13 @@ function mapWPBlogPost(post: any): BlogPost {
             // Use WordPress native categories from _embedded (the ones set in the editor sidebar)
             const terms = post._embedded?.['wp:term'];
             if (terms && terms[0] && terms[0].length > 0) {
-                // terms[0] is categories, filter out "Uncategorized"
-                const cats = terms[0].filter((t: any) => t.name !== 'Uncategorized');
-                if (cats.length > 0) return decodeHTMLEntities(cats[0].name);
+                const cats = terms[0]
+                    .filter((t: any) => t.name !== 'Uncategorized')
+                    .map((t: any) => decodeHTMLEntities(t.name));
+                if (cats.length > 0) return cats;
             }
-            // Fallback to ACF field
-            return acf.blog_category || 'Article';
+            // Fallback to ACF field or default
+            return [acf.blog_category || 'Article'];
         })(),
         image: imageUrl,
         date: post.date ? new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '',
@@ -409,7 +410,7 @@ export async function getFeaturedArticles(): Promise<{ title: string; category: 
     const posts = await getBlogPosts();
     return posts.slice(0, 3).map((p: BlogPost) => ({
         title: p.title,
-        category: p.category,
+        category: p.category[0] || 'Article',
         image: p.image,
         href: `/blog/${p.slug}`,
     }));

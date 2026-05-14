@@ -28,7 +28,7 @@ const {
 const isStaging = import.meta.env.PUBLIC_STAGING === 'true';
 const shouldNoindex = noindex || isStaging;
 
-const siteUrl = 'https://hrhelp.nl';
+const siteUrl = 'https://www.hrhelp.nl';
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 const fullTitle = title.includes('HRHelp') ? title : `${title} | HRHelp.nl`;

@@ -24,3 +24,4 @@ pnpm-debug.log*
 .idea/
 dist-production/
 .wrangler/
+dist-staging/

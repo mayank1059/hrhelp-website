@@ -3,4 +3,4 @@ Allow: /
 Disallow: /wp-admin/
 Disallow: /wp-login.php
 
-Sitemap: https://hrhelp.nl/sitemap-index.xml
+Sitemap: https://www.hrhelp.nl/sitemap-index.xml

@@ -35,14 +35,10 @@ jobs:
         env:
           PUBLIC_WP_URL: https://admin.hrhelp.nl
 
-      # Strip guide pages from production build (staging only)
-      - name: Strip guides from production
-        run: |
-          rm -rf dist/guides dist/images/guides
-          if [ -f dist/sitemap-0.xml ]; then
-            sed -i '/guides/d' dist/sitemap-0.xml
-          fi
-          echo "✅ Guides stripped from production build"
+      # NOTE: Production guides are now controlled at build time via
+      # src/data/pseo/approved-guides.json (only client-approved guides are
+      # generated on production; staging shows all). The old blanket
+      # "rm -rf dist/guides" step was removed so approved guides stay live.
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

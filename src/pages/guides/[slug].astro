@@ -1,11 +1,8 @@
 ---
 import Layout from '../../components/Layout.astro';
 
-// Import all pSEO data files
-import settlersData from '../../data/pseo/hr-settlers.json';
-import teamsData from '../../data/pseo/hr-teams.json';
-import sosData from '../../data/pseo/hr-sos.json';
-// import lawData from '../../data/pseo/dutch-law.json';
+// Guide data, pre-filtered to client-approved guides (all guides on staging).
+import { settlersData, teamsData, sosData } from '../../data/pseo/guides.js';
 
 // Combine all pages into a single lookup
 const allPages = [

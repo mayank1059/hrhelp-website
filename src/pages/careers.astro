@@ -10,9 +10,45 @@ const benefits = [
 ];
 
 const openings = await getJobOpenings();
+
+// Generate JobPosting schemas for Google Jobs
+const jobSchemas = openings.map(job => ({
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: job.title,
+  description: job.description || job.title,
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: 'HRHelp.nl',
+    sameAs: 'https://www.hrhelp.nl',
+    logo: 'https://www.hrhelp.nl/favicon.svg',
+  },
+  jobLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Televisieweg 2',
+      addressLocality: 'Almere',
+      postalCode: '1322 AC',
+      addressCountry: 'NL',
+    },
+  },
+  employmentType: job.type === 'Full-Time' ? 'FULL_TIME' : job.type === 'Part-Time' ? 'PART_TIME' : 'CONTRACTOR',
+  baseSalary: {
+    '@type': 'PriceSpecification',
+    currency: 'EUR',
+    value: {
+      '@type': 'QuantitativeValue',
+      minValue: '0',
+    },
+  },
+  datePosted: new Date().toISOString().split('T')[0],
+  validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+  url: `https://www.hrhelp.nl/careers/apply/${job.slug}`,
+}));
 ---
 
-<Layout title="Careers | Join the Network" description="Join HRHelp.nl as a specialized HR consultant or network partner. Shape the future of Dutch HR for international companies.">
+<Layout title="Careers | Join the Network" description="Join HRHelp.nl as a specialized HR consultant or network partner. Shape the future of Dutch HR for international companies." schema={jobSchemas}>
 
 <!-- ===== HERO ===== -->
 <section class="cr-hero">

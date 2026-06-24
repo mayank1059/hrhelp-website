@@ -2,18 +2,126 @@
 import Layout from '../components/Layout.astro';
 
 const sections = [
-  { title: '1. Acceptance of Terms', content: 'By accessing this website or engaging the services of HRHelp.nl B.V., you agree to comply with and be bound by these Terms of Service. If you do not agree, please do not use our website or services.' },
-  { title: '2. Services Provided', content: 'HRHelp.nl provides HR consultancy, recruitment, compliance advisory, and strategic HR services. These services are provided on a retainer or project-basis as agreed upon in a separate Service Level Agreement (SLA) or engagement letter.' },
-  { title: '3. Professional Advice', content: 'While we provide expert HR and employment law guidance, our advice does not constitute formal legal counsel. For specific legal disputes or litigation, we recommend consulting a qualified attorney, which we can facilitate through our network of legal partners.' },
-  { title: '4. Intellectual Property', content: 'All content on this website — including text, graphics, logos, design elements, and documentation — is the property of HRHelp.nl B.V. and is protected by international copyright laws. Unauthorized reproduction or distribution is prohibited.' },
-  { title: '5. Confidentiality', content: 'All client information shared during the course of our engagement is treated as strictly confidential. We maintain robust data protection measures in compliance with the GDPR and Dutch privacy regulations.' },
-  { title: '6. Limitation of Liability', content: 'HRHelp.nl B.V. shall not be liable for any indirect, incidental, or consequential damages arising out of the use of our services, except as required by mandatory Dutch law. Our total liability is limited to the fees paid for the specific engagement in question.' },
-  { title: '7. Governing Law', content: 'These terms are governed by and construed in accordance with the laws of the Netherlands. Any disputes shall be subject to the exclusive jurisdiction of the courts of Amsterdam.' },
-  { title: '8. Changes to Terms', content: 'We reserve the right to modify these terms at any time. Material changes will be communicated via our website or email. Your continued use of the website or services following any changes constitutes acceptance of the updated terms.' },
+  {
+    title: '1. Definitions and Applicability',
+    content: [
+      'These General Terms and Conditions apply to all offers, quotations, agreements and legal relations by which HRHelp.nl B.V. binds itself to perform Services for the Client, as well as to all Services arising therefrom.',
+      'Definitions in this document with capital letters have the meanings specified herein. Key definitions include:',
+    ],
+    list: [
+      'Agreement: the Agreement between the Client and HRHelp.nl',
+      'Client: the natural person or legal entity engaging HRHelp.nl to perform Services',
+      'Services: all work and services performed by HRHelp.nl under or in relation to the Agreement',
+      'Worker: a natural or legal person working at, for or on behalf of HRHelp.nl (employment, freelance, or otherwise)',
+      'HRHelp.nl B.V.: a private company incorporated under Dutch law, registered at Oeverwalweg 3, 1332 CG Almere (KvK 69913919)',
+    ]
+  },
+  {
+    title: '2. Agreement Formation',
+    content: [
+      'The Agreement is formed when both HRHelp.nl and Client have signed it. If agreed orally or work has commenced without formal signing, the Agreement is deemed concluded subject to these General Terms and Conditions.',
+      'All Agreements are accepted and performed exclusively by HRHelp.nl and not by individual Workers or subcontractors. Sections 7:404, 7:407(2) and 7:409 of the Dutch Civil Code are excluded from application.',
+    ]
+  },
+  {
+    title: '3. Obligations of the Client',
+    content: [
+      'The Client must provide all information HRHelp.nl requires for correct performance of the Agreement, in the desired form, manner and time. The Client warrants that all provided information is accurate, complete and reliable.',
+      'Additional costs, hours, or losses due to the Client\'s non-compliance with information obligations are at the Client\'s expense and risk. The Client indemnifies HRHelp.nl for losses resulting from inaccurate or incomplete information.',
+      'The Client is responsible for assessing whether engaging a Worker qualifies as self-employment or employment under the Dutch Wet DBA. HRHelp.nl accepts no liability for this qualification and is indemnified against any resulting claims, taxes, fines or penalties.',
+    ]
+  },
+  {
+    title: '4. Provision of Services',
+    content: [
+      'HRHelp.nl will perform the Agreement to the best of its ability and with due observance of applicable laws. HRHelp.nl cannot warrant the achievement of any intended result.',
+      'HRHelp.nl determines how the Agreement is performed and by which Worker(s). HRHelp.nl may engage third parties to perform Services.',
+      'Time-limits are only deadlines if explicitly agreed in writing.',
+    ]
+  },
+  {
+    title: '5. Prices and Payment',
+    content: [
+      'Costs comprise HRHelp.nl\'s fee, expenses incurred, and expense claims of engaged third parties. Unless otherwise agreed, the fee is determined based on hours spent and the hourly rate of the Worker.',
+      'HRHelp.nl may adjust fees if fees or prices change after the Agreement conclusion but before Services complete, unless explicitly agreed otherwise.',
+      'All quoted prices exclude VAT, which is charged separately as required by law.',
+      'Payment is due within 14 days of the invoice date without deduction, discount, suspension or setoff. Late payment incurs statutory interest and the Client reimburses all collection costs.',
+    ]
+  },
+  {
+    title: '6. Force Majeure',
+    content: [
+      'If either Party fails to comply with obligations due to force majeure as defined in Section 75 of Book 6 of the Dutch Civil Code, those obligations are suspended.',
+      'If the force majeure situation continues for more than 90 days, the other Party may terminate the Agreement wholly or partially in writing with immediate effect, without right to compensation.',
+      'If HRHelp.nl has partially performed before force majeure, it may invoice the Services performed separately.',
+    ]
+  },
+  {
+    title: '7. Liability',
+    content: [
+      'HRHelp.nl\'s liability is limited to direct loss directly resulting from attributable failure to perform Article 4(1) obligations, excluding Book 7, Section 407(2) of the Dutch Civil Code.',
+      'HRHelp.nl is not liable for: (a) loss due to Client\'s failure to provide or incorrect information; (b) consequential, trading or indirect loss; (c) acts or omissions of engaged non-employees.',
+      'HRHelp.nl\'s total liability for direct loss is limited to amounts paid by its liability insurer plus any excess. If the insurer does not pay, liability is limited to the fee charged for the Agreement (or the fee from the six months prior if the Agreement exceeds one year).',
+      'Under no circumstances shall total compensation exceed €12,000 for one or more attributable failures. A connected series of failures counts as one failure.',
+      'These limitations do not apply for intent or wilful recklessness. The Client must take measures to limit damage. HRHelp.nl may repair or improve Services to limit damage. The Client indemnifies HRHelp.nl for third-party claims resulting from the Client\'s acts or unsafe conditions. HRHelp.nl is not liable for data or information damage.',
+    ]
+  },
+  {
+    title: '8. Termination',
+    content: [
+      'Both parties may terminate the Agreement without notice by registered post. If terminated before completion, the Client owes the fee for Services performed as indicated by HRHelp.nl.',
+      'Upon termination, HRHelp.nl may claim compensation for lost capacity utilization, additional costs incurred, and third-party cancellation costs (except for intent or wilful recklessness on HRHelp.nl\'s part).',
+      'If HRHelp.nl terminates (except for Client intent or wilful recklessness), the Client is entitled to HRHelp.nl\'s cooperation in transferring Services to third parties, provided all outstanding advances are paid.',
+    ]
+  },
+  {
+    title: '9. Intellectual Property Rights',
+    content: [
+      'Performance of the Agreement does not transfer intellectual property rights vested in HRHelp.nl. All intellectual property created during or arising from the Agreement vests in HRHelp.nl.',
+      'The Client is prohibited from reproducing, disclosing or exploiting products with HRHelp.nl\'s intellectual property rights without prior, explicit written permission. This includes computer programs, system designs, methods, advice, contracts, reports, templates and other work products.',
+      'The Client cannot make these products available to third parties without HRHelp.nl\'s written permission, except for expert opinion on Services performance, in which case the Client must impose confidentiality obligations on engaged third parties.',
+    ]
+  },
+  {
+    title: '10. Confidentiality',
+    content: [
+      'HRHelp.nl maintains confidentiality of Client data and information with respect to unrelated third parties.',
+    ]
+  },
+  {
+    title: '11. Taking over Workers',
+    content: [
+      'Without HRHelp.nl\'s prior written consent, the Client shall not directly or indirectly hire Workers involved in performing the Agreement during its term or one year after termination.',
+      'Breach of this provision results in an immediate penalty of €25,000 to HRHelp.nl, without prejudice to further compensation for actual damage exceeding the penalty.',
+      'If the prohibition is null or void and the Client hires a Worker within one year of termination, the Client owes HRHelp.nl a fee based on hours worked:',
+    ],
+    table: [
+      { hours: '< 1,500', fee: 'EUR 15,000' },
+      { hours: '1,500 – 2,250', fee: 'EUR 10,000' },
+      { hours: '> 2,250', fee: 'EUR 5,000' },
+    ]
+  },
+  {
+    title: '12. Personal Data',
+    content: [
+      'When HRHelp.nl acts as a processor of personal data for the Client as controller, the Module Processing Agreement (GDPR Data Processing Module) included herein applies unless a separate processing agreement is concluded.',
+      'The Processing Agreement provisions rank higher than other General Terms and Conditions provisions.',
+    ]
+  },
+  {
+    title: '13. Miscellaneous',
+    content: [
+      'The Client may not assign obligations under the Agreement to third parties without HRHelp.nl\'s prior written consent.',
+      'The District Court in Amsterdam, Netherlands has exclusive authority over disputes relating to these Terms and Conditions and Agreements. HRHelp.nl may submit disputes to the court in the Client\'s place of residence or establishment.',
+      'All agreements are governed exclusively by Dutch law.',
+    ]
+  },
 ];
+
+const toArray = (c) => (Array.isArray(c) ? c : c ? [c] : []);
 ---
 
-<Layout title="Terms of Service" description="Terms of Service for HRHelp.nl — Dutch HR consultancy services for international companies.">
+<Layout title="General Terms and Conditions" description="General Terms and Conditions for HRHelp.nl — Dutch HR consultancy services for international companies.">
 
 <!-- ===== HERO ===== -->
 <section class="lg-hero">
@@ -32,26 +140,54 @@ const sections = [
     {sections.map((s) => (
       <div class="lg-block">
         <h2>{s.title}</h2>
-        <p>{s.content}</p>
+        {toArray(s.content).map((p) => <p>{p}</p>)}
+        {s.list && (
+          <ul>
+            {s.list.map((item) => (
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+        {s.table && (
+          <table class="lg-table">
+            <thead>
+              <tr>
+                <th>Hours Worked</th>
+                <th>Fee (excl. VAT)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {s.table.map((row) => (
+                <tr>
+                  <td>{row.hours}</td>
+                  <td>{row.fee}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     ))}
 
     <div class="lg-block">
-      <h2>9. Contact</h2>
-      <p>For questions regarding these terms, please reach out to us.</p>
+      <h2>14. Contact</h2>
+      <p>For questions regarding these General Terms and Conditions or to exercise your data rights, please contact us:</p>
       <div class="lg-address-card">
+        <div class="lg-addr-item">
+          <span class="material-symbols-outlined">location_on</span>
+          <div>
+            <strong>HRHelp.nl B.V.</strong>
+            <p>Oeverwalweg 3, 1332 CG Almere, Netherlands</p>
+          </div>
+        </div>
         <div class="lg-addr-item">
           <span class="material-symbols-outlined">mail</span>
           <div>
             <strong>info@hrhelp.nl</strong>
             <p>Legal and service inquiries</p>
-          </div>
-        </div>
-        <div class="lg-addr-item">
-          <span class="material-symbols-outlined">phone_in_talk</span>
-          <div>
-            <strong>+31 85 760 8188</strong>
-            <p>Mon – Fri, 08:30 – 18:00 CET</p>
           </div>
         </div>
       </div>
@@ -92,7 +228,28 @@ const sections = [
   margin-bottom: 1rem; padding-bottom: 0.75rem;
   border-bottom: 2px solid var(--cream);
 }
-.lg-block p { font-size: 1.05rem; line-height: 1.8; color: var(--gray-600); }
+.lg-block p { font-size: 1.05rem; line-height: 1.8; color: var(--gray-600); margin-bottom: 1rem; }
+.lg-block ul {
+  list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem;
+  margin: 1rem 0 2rem;
+}
+.lg-block li {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  font-size: 1.05rem; line-height: 1.7; color: var(--gray-600);
+}
+.lg-block li svg { flex-shrink: 0; margin-top: 4px; }
+
+.lg-table {
+  width: 100%; border-collapse: collapse; margin: 2rem 0;
+  border: 1px solid var(--gray-200);
+}
+.lg-table th, .lg-table td {
+  padding: 1rem; text-align: left; border-bottom: 1px solid var(--gray-200);
+}
+.lg-table th {
+  background: var(--cream); font-weight: 700; color: var(--navy);
+}
+.lg-table tbody tr:hover { background: rgba(244, 121, 32, 0.03); }
 
 /* Address Card */
 .lg-address-card {

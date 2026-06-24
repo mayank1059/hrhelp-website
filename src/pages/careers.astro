@@ -33,18 +33,12 @@ const jobSchemas = openings.map(job => ({
       addressCountry: 'NL',
     },
   },
+  jobLocationType: 'TELECOMMUTE',
   employmentType: job.type === 'Full-Time' ? 'FULL_TIME' : job.type === 'Part-Time' ? 'PART_TIME' : 'CONTRACTOR',
-  baseSalary: {
-    '@type': 'PriceSpecification',
-    currency: 'EUR',
-    value: {
-      '@type': 'QuantitativeValue',
-      minValue: '0',
-    },
-  },
   datePosted: new Date().toISOString().split('T')[0],
   validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
   url: `https://www.hrhelp.nl/careers/apply/${job.slug}`,
+  directApply: true,
 }));
 ---
 

@@ -9,9 +9,38 @@ export async function getStaticPaths() {
 
 const { opening } = Astro.props;
 if (!opening) return Astro.redirect('/careers');
+
+// JobPosting schema for Google for Jobs — this is the canonical single-job page
+const jobSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: opening.title,
+  description: opening.description || opening.title,
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: 'HRHelp.nl',
+    sameAs: 'https://www.hrhelp.nl',
+    logo: 'https://www.hrhelp.nl/favicon.svg',
+  },
+  jobLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Televisieweg 2',
+      addressLocality: 'Almere',
+      postalCode: '1322 AC',
+      addressCountry: 'NL',
+    },
+  },
+  employmentType: opening.type === 'Full-Time' ? 'FULL_TIME' : opening.type === 'Part-Time' ? 'PART_TIME' : 'CONTRACTOR',
+  datePosted: new Date().toISOString().split('T')[0],
+  validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+  url: `https://www.hrhelp.nl/careers/apply/${opening.slug}`,
+  directApply: true,
+};
 ---
 
-<Layout title={`Apply — ${opening.title} | HRHelp Careers`} description={`Apply for ${opening.title} at HRHelp.nl. ${opening.type} position in ${opening.location}.`}>
+<Layout title={`Apply — ${opening.title} | HRHelp Careers`} description={`Apply for ${opening.title} at HRHelp.nl. ${opening.type} position in ${opening.location}.`} schema={jobSchema}>
 
 <section class="apply-hero">
   <div class="apply-hero-mesh"></div>

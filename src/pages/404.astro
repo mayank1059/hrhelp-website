@@ -1,0 +1,42 @@
+---
+import Layout from '../components/Layout.astro';
+---
+
+<Layout title="Page Not Found" description="This page doesn't exist. Explore HRHelp.nl's HR guides, solutions and resources for international companies in the Netherlands." noindex={true}>
+
+<section class="nf-hero">
+  <div class="nf-mesh"></div>
+  <div class="container nf-inner">
+    <span class="eyebrow-badge">404</span>
+    <h1>This page has moved on.</h1>
+    <p class="nf-p">The page you're looking for doesn't exist (anymore). But the answers you came for probably do — try one of these:</p>
+    <div class="nf-links">
+      <a href="/guides" class="btn btn-primary btn-lg" style="box-shadow:none;">Browse HR Guides</a>
+      <a href="/blog" class="btn btn-ghost btn-lg">Read the Blog</a>
+      <a href="/contact" class="btn btn-ghost btn-lg">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+.nf-hero {
+  min-height: 70vh; display: flex; align-items: center;
+  padding: 10rem 0 6rem; background: var(--navy); color: white;
+  position: relative; overflow: hidden; text-align: center;
+}
+.nf-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 60% 20%, rgba(244,121,32,0.12), transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04), transparent 40%);
+  z-index: 1;
+}
+.nf-inner { position: relative; z-index: 2; }
+.nf-hero h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
+.nf-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.75); max-width: 540px; margin: 0 auto 2.5rem; }
+.nf-links { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+@media (max-width: 576px) {
+  .nf-hero h1 { font-size: 2.25rem; }
+}
+</style>

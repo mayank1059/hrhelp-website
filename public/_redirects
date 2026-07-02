@@ -1,0 +1,18 @@
+# Legacy Wix-era /post/ URLs -> new content equivalents (301)
+# These old URLs still rank in Google (11k+ impressions) but were soft-404ing
+# to the homepage. Specific rules first, catch-all last.
+/post/absenteeism-and-rules-in-the-netherlands /guides/dutch-sick-leave-management/ 301
+/post/managing-sickness-cases-in-the-netherlands-a-guide-for-international-managers /guides/dutch-sick-leave-management/ 301
+/post/holiday-time-what-are-the-rules-in-nl /blog/holiday-time-rules-netherlands/ 301
+/post/key-hr-changes-in-the-netherlands-as-of-july-1-2025 /blog/key-hr-changes-netherlands-2026/ 301
+/post/key-hr-changes-in-the-netherlands-for-2026 /blog/key-hr-changes-netherlands-2026/ 301
+/post/hrhelp-co-founder-cornelis-leerlooijer-explains-the-importance-of-company-cultures /blog/importance-of-company-cultures/ 301
+/post/why-the-netherlands-is-so-attractive-to-international-talent /blog/netherlands-attractive-international-talent/ 301
+/post/future-proofing-your-global-growth-strategy /blog/future-proofing-global-growth-strategy/ 301
+/post/business-culture-in-the-netherlands-what-you-need-to-know /blog/business-culture-netherlands/ 301
+/post/new-pension-system-coming-to-the-netherlands /blog/new-pension-system-netherlands/ 301
+/post/hr-in-the-netherlands-sure /blog/hr-in-the-netherlands-sure/ 301
+/post/learn-how-dismissal-works-in-the-netherlands /blog/how-dismissal-works-netherlands/ 301
+/post/hr-settlers-helps-international-companies-settle-down-across-borders /solutions/hr-settlers/ 301
+/post/3-tips-to-reduce-employee-turnover /blog/ 301
+/post/* /blog/ 301

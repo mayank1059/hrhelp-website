@@ -1,100 +1,147 @@
 [
   {
     "slug": "interim-hr-solutions",
-    "title": "Interim HR Solutions in the Netherlands",
-    "subtitle": "Senior HR cover for a defined period when your Dutch HR function has a gap to bridge.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
-    "parentService": "/solutions/hr-teams",
-    "parentServiceName": "HR Teams",
-    "readTime": "9 min read",
-    "atAGlance": [
-      {
+    "name": "Interim HR Solutions",
+    "title": "Interim HR Solutions in the Netherlands | HRhelp",
+    "metaDescription": "Senior interim HR cover for your Dutch entity when a role falls vacant. One named consultant, fixed monthly fee, typically starting within five working days.",
+    "tagline": "Senior cover for a defined gap",
+    "hero": "Interim HR solutions give you a senior HR professional who runs your Dutch HR function while a gap is open. You get continuity from the day someone leaves until your permanent hire is fully up to speed.",
+    "heroCards": {
+      "tl": {
         "icon": "schedule",
-        "label": "Typical Start",
-        "value": "Within 5 days"
+        "label": "Typical start",
+        "value": "Within 5 working days"
       },
-      {
-        "icon": "event_repeat",
-        "label": "Engagement Length",
-        "value": "3 to 12 months"
-      },
-      {
+      "br": {
         "icon": "euro",
         "label": "Pricing",
         "value": "Fixed monthly fee"
+      }
+    },
+    "premiseHeading": "Your HR manager has gone, and the Dutch entity still has contracts, cases and deadlines running.",
+    "premiseBody": [
+      "The trigger is usually simple. Someone resigns, goes on parental or long term sick leave, or the Dutch operation grows faster than the person holding HR together can absorb. Meanwhile contracts expire, sickness files need updating and managers keep asking questions nobody is answering.",
+      "HRhelp places one named senior consultant into that seat for a period you can name. They take over the live work, keep the function running to Dutch standards, and hand a documented department to whoever comes next."
+    ],
+    "included": [
+      {
+        "icon": "description",
+        "title": "Contracts and lifecycle",
+        "desc": "Offers, contracts, extensions, probation decisions and exits handled end to end for your Dutch staff."
+      },
+      {
+        "icon": "support_agent",
+        "title": "Live case handover",
+        "desc": "Open sickness, performance and exit cases are picked up on day one rather than left to drift."
+      },
+      {
+        "icon": "fact_check",
+        "title": "Absence management",
+        "desc": "The full statutory reintegration timetable is tracked, with the occupational health service and UWV managed for you."
+      },
+      {
+        "icon": "euro",
+        "title": "Payroll interface",
+        "desc": "Monthly mutations prepared and checked with your existing payroll provider before each run."
+      },
+      {
+        "icon": "groups",
+        "title": "Manager support",
+        "desc": "Your line managers get one named person to call before a conversation with an employee goes wrong."
+      },
+      {
+        "icon": "handshake",
+        "title": "Structured handover",
+        "desc": "Files, policies and open cases are documented and transferred in the closing weeks of the mandate."
+      }
+    ],
+    "benefits": [
+      {
+        "icon": "schedule",
+        "title": "Cover in days, not months",
+        "desc": "A senior consultant is normally productive within a week. You are not waiting out a three month notice period with the function unattended."
+      },
+      {
+        "icon": "euro",
+        "title": "A cost you can budget",
+        "desc": "One fixed monthly fee agreed before the start. A contested exit or a difficult sickness case does not change the invoice."
+      },
+      {
+        "icon": "shield",
+        "title": "Deadlines stop being your problem",
+        "desc": "Notice dates, chain rule limits and reintegration checkpoints keep running while a role is empty. Your consultant owns them from day one."
       },
       {
         "icon": "verified",
-        "label": "Consultant Level",
-        "value": "Senior only"
+        "title": "Senior only, never a trainee",
+        "desc": "Every HRhelp consultant has 15+ years in Dutch employment practice and is a native Dutch speaker working fluently in English."
       }
     ],
-    "content": "<h2>When Interim HR Cover Becomes Necessary</h2><p>Interim HR solutions exist to bridge a defined gap. The trigger is almost always one of four events: an HR manager resigns, a key HR person goes on parental or long term sick leave, the Dutch entity grows faster than the HR function can absorb, or a restructuring creates a workload nobody can carry alongside their own job.</p><p>What separates interim from other flexible models is shape. An interim engagement is close to full time and it has an end date. You are not buying a permanent hire and you are not buying occasional advice. You are buying continuity for a period you can name.</p><h2>What an Interim HR Engagement Covers</h2><p>A properly scoped interim mandate takes over the running of the function, not a selection of tasks:</p><ul><li><strong>Employment lifecycle:</strong> contracts, probation decisions, extensions, chain rule tracking under the ketenregeling, exits and settlement agreements</li><li><strong>Absence management:</strong> the full Wet verbetering Poortwachter timetable, arbodienst liaison and UWV notification at week 42</li><li><strong>Payroll interface:</strong> monthly mutations to your payroll provider, 30% ruling administration, holiday allowance and reservation checks</li><li><strong>Employee relations:</strong> performance cases, grievances, disciplinary matters and pre dismissal files</li><li><strong>Governance:</strong> policy upkeep, CAO application checks, works council or personnel representation obligations</li></ul><h2>Dutch Specifics That Must Be Handled From Day One</h2><p>An interim who learns Dutch employment law on your budget is not interim cover, it is a training cost. The non negotiables:</p><ul><li><strong>Dismissal is not at will.</strong> Termination runs through UWV for economic or long term illness grounds, or through the kantonrechter for personal grounds, unless both parties sign a vaststellingsovereenkomst.</li><li><strong>Notice and transition payment.</strong> Statutory notice scales with length of service, and transitievergoeding accrues from the first working day.</li><li><strong>CAO coverage.</strong> A collective agreement can bind you by sector even if you never signed one, overriding your contract on pay scales, notice and working hours.</li><li><strong>Wet DBA.</strong> Enforcement on false self employment resumed in 2025, so contractor populations need reviewing rather than assuming.</li></ul><h2>How HRhelp Delivers Interim Cover</h2><p>HRhelp places one named senior consultant, not a rotating pool and not a junior with remote supervision. Every consultant is a native Dutch speaker working fluently in English, which matters when the same person briefs a US or German headquarters in the morning and handles a bedrijfsarts call in the afternoon.</p><p>Engagements run on a fixed monthly fee agreed before the start. There is no hourly meter, so a contested dismissal or an unexpected works council request does not produce a surprise invoice. Most mandates run between three and twelve months, with a handover period built into the final weeks so your permanent hire inherits a documented function rather than a mailbox.</p><h2>Interim, Fractional or Temporary: Which Model Fits</h2><p>These labels are used loosely in the market, so it is worth being precise:</p><ul><li><strong>Interim:</strong> near full time cover for a finite gap, ending on an event such as a permanent hire starting.</li><li><strong>Fractional:</strong> ongoing part time senior HR, typically one or two days a week, for a company that will not need a full time HR head for years.</li><li><strong>Temporary:</strong> project or peak driven cover, scoped to a deliverable such as a system implementation or a reorganisation.</li></ul><p>If the gap has a name and a date, interim is the right model.</p>",
+    "examples": [
+      {
+        "tag": "SaaS scale-up, 60 staff",
+        "situation": "The HR manager of a US owned software company in Amsterdam resigned with two open dismissal files and eleven fixed term contracts due to expire that quarter. HQ was four time zones away and had no view of the Dutch obligations.",
+        "result": "A consultant started within a week, issued every outstanding notice on time, closed both exits by settlement agreement, and handed a clean file set to the permanent hire four months later."
+      },
+      {
+        "tag": "Manufacturing site, 130 staff",
+        "situation": "A long serving HR lead went on sick leave with no defined return date, days before the annual pay review and a collective agreement indexation deadline.",
+        "result": "HRhelp ran the review cycle and the indexation on schedule, kept the works council relationship intact, and stepped back gradually when the HR lead returned part time."
+      },
+      {
+        "tag": "Logistics branch, 25 staff",
+        "situation": "A German group discovered that its Dutch branch had been running HR out of the finance team for two years. Nobody had tracked contract chains or reintegration duties.",
+        "result": "A six month interim mandate cleared the backlog, corrected two contracts that had already converted to permanent by law, and left the branch with a written HR calendar."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Gap Assessment",
-        "desc": "We map what the departing or absent person actually owned, plus any open cases and deadlines already running."
+        "title": "Gap assessment",
+        "desc": "We map what the departing person actually owned, plus every open case and deadline already running.",
+        "timeframe": "Days 1 to 3"
       },
       {
         "step": "02",
-        "title": "Consultant Match",
-        "desc": "One named senior consultant is assigned on sector, language and case type, with the fixed fee agreed upfront."
+        "title": "Consultant match and fee",
+        "desc": "One named senior consultant is matched on sector and case type, with the fixed monthly fee agreed in writing.",
+        "timeframe": "Week 1"
       },
       {
         "step": "03",
-        "title": "Embedded Delivery",
-        "desc": "The consultant runs the function from inside your organisation, reporting to your MD and group HR lead."
+        "title": "Embedded delivery",
+        "desc": "The consultant runs the function from inside your organisation, reporting to your managing director and group HR lead.",
+        "timeframe": "Months 1 to 12"
       },
       {
         "step": "04",
-        "title": "Structured Handover",
-        "desc": "Files, policies and open cases are documented and transferred to your permanent hire in the final weeks."
+        "title": "Handover",
+        "desc": "Documented files, policies and live cases are transferred to your permanent hire before the mandate closes.",
+        "timeframe": "Final weeks"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Deadlines Running Unnoticed",
-        "desc": "Poortwachter checkpoints and aanzegtermijn dates keep running while a role is vacant. Missing an aanzegging costs one month of gross salary per case."
-      },
-      {
-        "severity": "high",
-        "title": "Interim Without Dutch Law Depth",
-        "desc": "A generalist interim who cannot handle UWV routes or CAO checks creates liabilities that outlast the engagement."
-      },
-      {
-        "severity": "medium",
-        "title": "No Handover Built In",
-        "desc": "Engagements that stop on the last invoice leave your permanent hire reconstructing the function from scratch."
-      },
-      {
-        "severity": "medium",
-        "title": "Hourly Billing Drift",
-        "desc": "Open ended hourly models make difficult cases expensive exactly when you most need the consultant engaged."
-      }
+    "ideal": [
+      "Your Dutch HR manager has resigned or is on extended leave",
+      "You need near full time cover for a period with a foreseeable end",
+      "Headquarters sits abroad and has no Dutch employment expertise in house",
+      "You want the gap covered without adding permanent headcount"
     ],
     "faqs": [
       {
         "q": "How quickly can an interim HR consultant start?",
-        "a": "Typically within five working days for a standard mandate. If there is an urgent matter such as an unmanaged sickness case or a pending exit, we cover that immediately while the full engagement is scoped."
+        "a": "Typically within five working days for a standard mandate. If something urgent is running, such as an unmanaged sickness case or a pending exit, we cover that immediately while the full engagement is scoped."
       },
       {
         "q": "How is interim HR priced?",
-        "a": "A fixed monthly fee based on scope and headcount, agreed before the start. No hourly billing, so case complexity does not change what you pay."
+        "a": "A fixed monthly fee based on scope and headcount, agreed before the start. There is no hourly meter, so case complexity never changes what you pay."
       },
       {
-        "q": "Is this an employer of record arrangement?",
-        "a": "No. HRhelp does not employ your staff and is not an EOR or PEO. Your people stay on your Dutch entity's payroll and our consultant runs the HR function for you."
+        "q": "How does this differ from fractional HR?",
+        "a": "Interim cover is near full time and ends when the gap closes, usually when a permanent hire starts. Fractional HR is an ongoing part time arrangement with no planned end date, for companies that will not need a full time HR head for years."
       },
       {
-        "q": "What happens with existing dismissal or sickness cases?",
-        "a": "The consultant takes over the live dossier, reviews whether the UWV or kantonrechter route is correct, and closes the documentation gaps before continuing. Weak files are the most common inherited problem."
-      },
-      {
-        "q": "Can the interim period convert into ongoing support?",
-        "a": "Yes. Many clients move from an interim mandate into a fractional or outsourced arrangement once the immediate gap closes, keeping the same consultant."
+        "q": "Are you an employer of record?",
+        "a": "No. HRhelp does not employ your staff and is not an EOR or PEO. Your people stay on your Dutch entity's payroll while our consultant runs the HR function for you."
       }
     ],
     "relatedSlugs": [
@@ -102,104 +149,184 @@
       "fractional-hr-solutions",
       "temporary-hr-solutions"
     ],
-    "topic": "Flexible HR Capacity"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "Everything the vacant role was carrying",
+        "desc": "An interim mandate takes over the running of the function, not a shortlist of convenient tasks."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Speed, certainty and senior judgement",
+        "desc": "The point of interim cover is that nothing slips while the seat is empty."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three gaps we recently covered",
+        "desc": "Anonymised examples of interim mandates run for international employers in the Netherlands."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "From first call to clean handover",
+        "desc": "A simple four step sequence with no long discovery phase."
+      },
+      "ideal": {
+        "eyebrow": "Who it suits",
+        "heading": "Interim HR is the right fit when",
+        "desc": "If the gap has a name and a likely end date, this is the model to use."
+      },
+      "faq": {
+        "eyebrow": "Good to know",
+        "heading": "Questions buyers ask us first",
+        "desc": "Start speed, pricing and how interim differs from the alternatives."
+      }
+    },
+    "parentService": "/solutions/hr-teams",
+    "parentServiceName": "HR Teams"
   },
   {
     "slug": "fractional-hr-solutions",
-    "title": "Fractional HR Solutions in the Netherlands",
-    "subtitle": "Senior Dutch HR expertise on one or two fixed days a week, without carrying a full time HR head on the payroll.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
-    "parentService": "/solutions/hr-teams",
-    "parentServiceName": "HR Teams",
-    "readTime": "9 min read",
-    "atAGlance": [
-      {
+    "name": "Fractional HR Solutions",
+    "title": "Fractional HR Solutions in the Netherlands | HRhelp",
+    "metaDescription": "Ongoing part time senior HR for your Dutch entity, one or two fixed days a week. One named consultant, fixed monthly fee, no full time HR head on your payroll.",
+    "tagline": "Senior HR one or two days a week",
+    "hero": "Fractional HR gives you a senior HR professional in a permanent seat, filled on a part time basis. You get the judgement of an HR director on one or two fixed days a week, without carrying one on the payroll.",
+    "heroCards": {
+      "tl": {
         "icon": "schedule",
-        "label": "Typical Commitment",
+        "label": "Commitment",
         "value": "1 to 2 days per week"
       },
+      "br": {
+        "icon": "groups",
+        "label": "Best fit",
+        "value": "10 to 75 staff in NL"
+      }
+    },
+    "premiseHeading": "You have outgrown HR as a side task, but a full time HR hire would sit idle half the year.",
+    "premiseBody": [
+      "A few hires, one or two exits and a sickness case per quarter will never fill a full time role, yet every one of those items carries real cost if it is handled badly. Meanwhile a junior generalist can process paperwork but cannot advise your country manager on a contested exit.",
+      "Fractional HR is the standing answer. One named senior consultant works fixed, recurring days in your business and stays in that seat for years, with the days in between covered by phone and email."
+    ],
+    "included": [
       {
-        "icon": "euro",
-        "label": "Pricing Model",
-        "value": "Fixed monthly fee"
+        "icon": "description",
+        "title": "The full employment lifecycle",
+        "desc": "Contracts, addenda, probation decisions, onboarding, offboarding and exit calculations, all handled in house by your consultant."
+      },
+      {
+        "icon": "fact_check",
+        "title": "Absence and reintegration",
+        "desc": "Long term illness cases tracked continuously against the statutory calendar, not only on office days."
+      },
+      {
+        "icon": "policy",
+        "title": "A maintained policy set",
+        "desc": "Staff handbook, leave, expenses, hybrid working and whistleblowing kept current with Dutch requirements."
+      },
+      {
+        "icon": "trending_up",
+        "title": "Pay and benchmarking",
+        "desc": "Pay review cycles, collective agreement checks and salary benchmarking against the Dutch market."
       },
       {
         "icon": "groups",
-        "label": "Best Fit",
-        "value": "10 to 75 staff in NL"
+        "title": "Manager coaching",
+        "desc": "Line managers get direct guidance before difficult conversations rather than a post mortem afterwards."
+      },
+      {
+        "icon": "domain",
+        "title": "Quarterly steering",
+        "desc": "A structured review with your country lead and headquarters covering risk, cost and the coming quarter."
+      }
+    ],
+    "benefits": [
+      {
+        "icon": "savings",
+        "title": "Senior expertise at part time cost",
+        "desc": "A full time Dutch HR manager runs roughly 90,000 to 130,000 euro all in before recruitment fees. Fractional buys the senior half of that role for a fraction of the commitment."
       },
       {
         "icon": "verified",
-        "label": "Consultant Level",
-        "value": "Senior only"
+        "title": "Judgement, not just capacity",
+        "desc": "The expensive decisions in Dutch HR are legal ones. You get a consultant with 15+ years of Dutch employment practice making them."
+      },
+      {
+        "icon": "handshake",
+        "title": "Continuity that compounds",
+        "desc": "The same person stays for years, so they know your managers, your history and your open cases without being briefed each time."
+      },
+      {
+        "icon": "euro",
+        "title": "Advice free at the point of use",
+        "desc": "A fixed monthly fee means managers ask questions early instead of avoiding the meter, which is when questions are cheapest to answer."
       }
     ],
-    "content": "<h2>What Fractional HR Actually Means</h2><p>Fractional HR is a permanent seat in your business filled on a part time basis. One senior HR consultant works a fixed, recurring share of your week, typically one or two days, and stays in that seat for years rather than months. You get the judgement of an HR director without carrying an HR director on the payroll.</p><p>It is deliberately different from interim cover, which fills a defined gap for a finite period at close to full time, and from project support, which ends when the project does. Fractional HR is the standing answer for a Dutch operation that has outgrown the office manager writing contracts on the side, but cannot honestly justify a full time HR lead.</p><h2>When the Fractional Model Beats a Full Time Hire</h2><p>Most international employers reach this point somewhere between ten and seventy five employees in the Netherlands. The signals are consistent:</p><ul><li><strong>Volume without complexity spikes:</strong> a few hires, one or two exits and a sickness case per quarter will never fill a full time role, yet every one of those items carries statutory risk.</li><li><strong>Seniority mismatch:</strong> a junior generalist can process administration but cannot advise your country manager on a ketenregeling decision, a works council consultation or a contested dismissal.</li><li><strong>HQ policy that does not travel:</strong> global handbooks written for the US or the UK routinely conflict with Dutch statutory minimums on holiday accrual, notice periods and sick pay.</li><li><strong>Cost discipline:</strong> a full time Dutch HR manager costs roughly 90,000 to 130,000 euro all in, before recruitment fees. A fractional arrangement buys the senior half of that role at a fraction of the commitment.</li></ul><h2>What Sits Inside the Retainer</h2><p>A fractional engagement is scoped as a standing set of responsibilities, not an hours bank. In practice it covers:</p><ul><li>Employment contracts, addenda and fixed term chain tracking, so no contract quietly converts to permanent under the ketenregeling</li><li>Onboarding, probation decisions, offboarding and the transitievergoeding calculation on exit</li><li>Absence management under the Wet verbetering poortwachter, coordinating the arbodienst and the UWV milestone calendar</li><li>Performance management, improvement plans and dossier building to the evidential standard a kantonrechter expects</li><li>The policy set: staff handbook, leave, expenses, hybrid working and whistleblowing under the Wet bescherming klokkenluiders</li><li>Pay review cycles, CAO checks and salary benchmarking against the Dutch market</li></ul><h2>The Dutch Specifics a Fractional Lead Owns</h2><p>Part time does not mean part responsibility. Dutch obligations do not pause between office days, so they are tracked continuously:</p><ul><li><strong>CAO applicability:</strong> a collective labour agreement can be mandatory for your sector even though you never signed one. Getting this wrong produces retroactive pay and pension claims.</li><li><strong>Employee representation thresholds:</strong> a works council becomes compulsory at fifty employees, and a personeelsvertegenwoordiging can be requested at ten. Both need groundwork well before the threshold is crossed.</li><li><strong>Wet DBA:</strong> contractor classification is being actively enforced again, and misclassified freelancers create payroll tax exposure that lands on the Dutch entity, not on HQ.</li><li><strong>Dismissal routes:</strong> every Dutch exit runs through UWV, the subdistrict court or a negotiated settlement agreement. There is no at will termination.</li></ul><h2>How HRhelp Structures Fractional HR</h2><p>You are assigned one named senior consultant, not a rotating pool and not a junior with a supervisor somewhere behind them. Every HRhelp consultant is a native Dutch speaker who works fluently in English and German, so your Amsterdam team and your HQ read exactly the same advice. The engagement runs on a fixed monthly fee agreed before it starts, which means a sudden dismissal case or an unexpected CAO question never produces an unexpected invoice. Days are booked as fixed slots so managers know when their HR lead is in the building, and the time in between is covered by phone and email.</p>",
+    "examples": [
+      {
+        "tag": "Software firm, 40 staff",
+        "situation": "A UK owned company in Utrecht had grown from 12 to 40 people in two years with a global handbook that conflicted with Dutch minimums on holiday and notice.",
+        "result": "Two days a week for the first quarter, then one day a week ongoing. The policy set was localised, and the arrangement has run for three years across two country managers."
+      },
+      {
+        "tag": "Engineering, 55 staff",
+        "situation": "A sector collective agreement turned out to apply to the Dutch entity by activity, even though the company had never signed one. Pay scales and allowances were out of line.",
+        "result": "The consultant mapped every role to the correct scale, corrected pay over the affected period before it became a claim, and now runs the January and July indexation as routine."
+      },
+      {
+        "tag": "Consumer brand, 30 staff",
+        "situation": "Founders were handling HR between them, and the first long term sickness case exposed how little of the statutory process anyone understood.",
+        "result": "The case was taken over mid stream and brought back on schedule, and the founders now have one fixed day a week where all people decisions get made."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Baseline Review",
-        "desc": "We map your Dutch headcount, contracts, CAO position and open risks in a single working session."
+        "title": "Baseline review",
+        "desc": "We map your Dutch headcount, contracts, collective agreement position and open risks in a single working session.",
+        "timeframe": "Week 1"
       },
       {
         "step": "02",
-        "title": "Scope and Rhythm",
-        "desc": "Responsibilities, the fixed weekly days and the fixed monthly fee are agreed in writing before we start."
+        "title": "Scope and rhythm",
+        "desc": "Responsibilities, the fixed weekly days and the fixed monthly fee are agreed in writing before we start.",
+        "timeframe": "Week 2"
       },
       {
         "step": "03",
-        "title": "Embedded Delivery",
-        "desc": "Your named consultant works on set days, owning the HR calendar, live cases and manager support."
+        "title": "Embedded delivery",
+        "desc": "Your named consultant works set days, owning the HR calendar, live cases and manager support.",
+        "timeframe": "Ongoing"
       },
       {
         "step": "04",
-        "title": "Quarterly Steering",
-        "desc": "A structured review with your country lead and HQ covering risk, cost and the coming quarter."
+        "title": "Quarterly steering",
+        "desc": "A structured review with your country lead and headquarters on risk, cost and the quarter ahead.",
+        "timeframe": "Every quarter"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Buying Capacity Instead of Judgement",
-        "desc": "One day a week of junior support gives you processing, not counsel. The costly decisions in Dutch HR are legal ones."
-      },
-      {
-        "severity": "high",
-        "title": "No Cover Between Office Days",
-        "desc": "Poortwachter deadlines run on the calendar, not on your consultant's schedule. An unreachable adviser can cost you a loonsanctie."
-      },
-      {
-        "severity": "medium",
-        "title": "Hourly Billing Drift",
-        "desc": "Open ended hourly models quietly discourage managers from asking questions. Fixed pricing keeps advice free at the point of use."
-      },
-      {
-        "severity": "medium",
-        "title": "Knowledge That Never Lands",
-        "desc": "If the dossier lives in the consultant's head rather than your systems, you inherit nothing when the arrangement changes."
-      }
+    "ideal": [
+      "You have 10 to 75 employees in the Netherlands and no HR lead",
+      "The workload is real but will not fill a full time role for years",
+      "Headquarters policy keeps colliding with Dutch requirements",
+      "You want one senior person who stays, rather than repeat project hires"
     ],
     "faqs": [
       {
         "q": "How is fractional HR different from interim HR?",
-        "a": "Interim HR fills a defined gap for a finite period, usually at or near full time, while a vacancy is filled or someone is on leave. Fractional HR is an ongoing part time arrangement with no planned end date, sized for companies that will not need a full time HR head for several years."
+        "a": "Interim HR fills a defined gap at close to full time and ends when the gap closes. Fractional HR is ongoing part time support with no planned end date, sized for companies that will not need a full time HR head for several years."
       },
       {
         "q": "What does fractional HR cost?",
-        "a": "HRhelp works on a fixed monthly fee tied to the agreed scope and number of days, not an hourly rate. You approve the figure before the engagement begins and it does not move because a case runs longer than expected."
-      },
-      {
-        "q": "Are you acting as an EOR or payroll provider?",
-        "a": "No. HRhelp is an HR consultancy. Your people stay employed by your own Dutch entity on your own payroll. We run the HR function and work alongside your payroll provider rather than replacing either."
-      },
-      {
-        "q": "What happens when we outgrow the fractional model?",
-        "a": "That is the intended path. Your consultant writes the job profile, supports the recruitment and hands over a documented function to your first in house HR hire, so you inherit a working department rather than a vacuum."
+        "a": "A fixed monthly fee tied to the agreed scope and number of days, not an hourly rate. You approve the figure before the engagement begins and it does not move because a case runs longer than expected."
       },
       {
         "q": "Can one or two days a week really cover a long term sickness case?",
-        "a": "Yes, provided the milestones are tracked continuously rather than only on office days. The Wet verbetering poortwachter deadlines at weeks six, eight, forty two and eighty eight are calendar driven, and your consultant is reachable in between."
+        "a": "Yes, provided milestones are tracked continuously rather than only on office days. The statutory checkpoints are calendar driven and your consultant is reachable in between."
+      },
+      {
+        "q": "What happens when we outgrow the model?",
+        "a": "That is the intended path. Your consultant writes the job profile, supports the recruitment and hands over a documented function to your first in house HR hire."
       }
     ],
     "relatedSlugs": [
@@ -207,92 +334,172 @@
       "interim-hr-solutions",
       "hr-consultancy-foreign-companies"
     ],
-    "topic": "Flexible HR Capacity"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "A standing set of responsibilities",
+        "desc": "Fractional HR is scoped as ownership of the function, not as an hours bank."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Director level HR, part time price",
+        "desc": "The value is in the decisions, and the decisions are the part you cannot get cheaply elsewhere."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three long running arrangements",
+        "desc": "Anonymised examples of fractional HR for international employers in the Netherlands."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "Review, scope, deliver, steer",
+        "desc": "Fixed days and a fixed fee agreed before anyone starts."
+      },
+      "ideal": {
+        "eyebrow": "Who it suits",
+        "heading": "Fractional HR works best when",
+        "desc": "Most international employers reach this point between 10 and 75 Dutch employees."
+      },
+      "faq": {
+        "eyebrow": "Good to know",
+        "heading": "The questions we get most",
+        "desc": "Model comparison, pricing, coverage between days and what comes next."
+      }
+    },
+    "parentService": "/solutions/hr-teams",
+    "parentServiceName": "HR Teams"
   },
   {
     "slug": "temporary-hr-solutions",
-    "title": "Temporary HR Solutions for Projects and Peaks",
-    "subtitle": "Extra senior HR capacity for a defined project, reorganisation or hiring peak in the Netherlands.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
-    "parentService": "/solutions/hr-teams",
-    "parentServiceName": "HR Teams",
-    "readTime": "8 min read",
-    "atAGlance": [
-      {
+    "name": "Temporary HR Solutions",
+    "title": "Temporary HR Solutions for Projects and Peaks | HRhelp",
+    "metaDescription": "Extra senior HR capacity for a defined Dutch project, reorganisation or hiring peak. Written scope, fixed project fee and a clean handover to your team.",
+    "tagline": "Project capacity with an end date",
+    "hero": "Temporary HR solutions add senior capacity for a specific piece of work with a beginning and an end. You get a scoped deliverable, a fixed fee and your own team left with a finished file rather than a dependency.",
+    "heroCards": {
+      "tl": {
         "icon": "schedule",
-        "label": "Typical Duration",
+        "label": "Typical duration",
         "value": "4 to 26 weeks"
+      },
+      "br": {
+        "icon": "euro",
+        "label": "Pricing",
+        "value": "Fixed project fee"
+      }
+    },
+    "premiseHeading": "Something specific has landed, and it will be finished long before a new hire clears their notice period.",
+    "premiseBody": [
+      "A reorganisation, a payroll or HR system migration, thirty hires in a quarter, a compliance clean up before due diligence. Your existing team is competent but finite, and the work has a deadline attached to it.",
+      "HRhelp scopes the deliverable, the milestones and the end date in writing, then puts a senior consultant on it. They sit alongside your team rather than absorbing it, and the engagement ends when the work is delivered."
+    ],
+    "included": [
+      {
+        "icon": "alt_route",
+        "title": "Reorganisation programmes",
+        "desc": "Selection, the permission route, consultation, settlement negotiations and the statutory payment calculations."
+      },
+      {
+        "icon": "description",
+        "title": "Contract and policy remediation",
+        "desc": "Harmonising templates after an acquisition or aligning inherited contracts with Dutch law and the applicable collective agreement."
+      },
+      {
+        "icon": "domain",
+        "title": "HR system implementation",
+        "desc": "Data cleansing, mapping Dutch specifics such as holiday accrual and holiday allowance, plus the process documentation vendors never provide."
+      },
+      {
+        "icon": "fact_check",
+        "title": "Compliance clean up",
+        "desc": "A documented sweep of contracts, working time records, right to work files and contractor classification before an audit or investor review."
       },
       {
         "icon": "trending_up",
-        "label": "Common Trigger",
-        "value": "Project or peak"
-      },
-      {
-        "icon": "euro",
-        "label": "Pricing Model",
-        "value": "Fixed project fee"
+        "title": "Hiring peak absorption",
+        "desc": "Offer letters, contracts, enrolment, onboarding logistics and expat ruling applications handled at volume."
       },
       {
         "icon": "handshake",
-        "label": "Typical Start",
-        "value": "Within days"
+        "title": "Clean handback",
+        "desc": "Documentation, files and process notes transferred to your team, with a short aftercare window included."
       }
     ],
-    "content": "<h2>When Temporary HR Support Is the Right Call</h2><p>Temporary HR is capacity attached to a piece of work with a beginning and an end. Something specific has landed: a payroll migration, a reorganisation, thirty hires in a quarter, a compliance clean up before an audit or due diligence. Your existing team is competent but finite, and the work will be finished long before a permanent hire would clear their notice period.</p><p>This is a different problem from bridging a departure, which is interim cover, and from being permanently under weight in HR, which is a fractional arrangement. Temporary support is scoped to the deliverable and it ends when the deliverable does.</p><h2>The Projects We Are Most Often Called For</h2><ul><li><strong>Contract and policy remediation:</strong> harmonising templates after an acquisition, or bringing a set of inherited contracts in line with Dutch law and the applicable CAO.</li><li><strong>HR system implementation:</strong> data cleansing, mapping Dutch specifics such as holiday accrual, ADV hours and the eight per cent vakantiegeld, and writing the process documentation the vendor never provides.</li><li><strong>Reorganisation and redundancy programmes:</strong> preparing the UWV case, selection under the afspiegelingsbeginsel, settlement negotiations and the consultation trail.</li><li><strong>Compliance clean up:</strong> a documented sweep of contracts, working time records, the ketenregeling position, identity and right to work files and Wet DBA exposure ahead of an audit or investor review.</li><li><strong>Absence backlog:</strong> rebuilding poortwachter files that have drifted, before the week eighty eight assessment turns into a loonsanctie.</li></ul><h2>Reorganisations and Collective Redundancy in Dutch Practice</h2><p>Restructuring in the Netherlands is procedural, and the procedure is where foreign employers lose time and money:</p><ul><li><strong>Selection is not discretionary.</strong> The afspiegelingsbeginsel dictates who goes, by age bracket and length of service within interchangeable roles. You do not get to keep your favourites.</li><li><strong>UWV permission is required</strong> for redundancy dismissals, and the application must show the business rationale and that redeployment was genuinely explored.</li><li><strong>Twenty or more dismissals</strong> in one region within three months triggers the Wet melding collectief ontslag, with notification to UWV and the trade unions and a one month waiting period.</li><li><strong>The works council must be consulted</strong> under article 25 WOR before the decision is final, not after it has been announced.</li><li><strong>Transitievergoeding is due</strong> from day one of employment, at one third of a month's salary per year of service.</li></ul><h2>Peaks: Hiring Waves, Onboarding and Year End</h2><p>Not every temporary need is dramatic. A funding round or a new contract can double your Dutch headcount in a quarter, and the bottleneck is rarely recruitment itself. It is offer letters, contract issue, BSN and right to work checks, pension enrolment inside the scheme's deadline, onboarding logistics and the thirty per cent ruling applications for incoming staff, all landing at once. Temporary HR absorbs that wave so your permanent team keeps running the business as usual rather than dropping it.</p><h2>How a Temporary Engagement Runs at HRhelp</h2><p>Every engagement starts with a written scope: the deliverable, the milestones, the end date and a fixed fee. HRhelp does not staff these with juniors, because a reorganisation or a compliance sweep is exactly where inexperience is most expensive. Your consultant is a native Dutch speaker working fluently in English and German, which matters when UWV correspondence and CAO texts are in Dutch but your steering committee is not. Work is documented in your systems as it goes, so when the assignment ends your own team inherits a finished file rather than a dependency.</p>",
+    "benefits": [
+      {
+        "icon": "euro",
+        "title": "A budget you approve once",
+        "desc": "A fixed fee against a written scope and end date, not an open ended day rate. If scope changes materially we agree a revised fee before continuing."
+      },
+      {
+        "icon": "schedule",
+        "title": "Productive within days",
+        "desc": "Senior consultants work from your existing contracts and records rather than running a discovery phase on your budget."
+      },
+      {
+        "icon": "person",
+        "title": "Your team keeps running the business",
+        "desc": "Temporary support takes the peak load off your people instead of taking them over, so business as usual does not stop."
+      },
+      {
+        "icon": "shield",
+        "title": "Sequence handled correctly",
+        "desc": "Dutch restructuring is procedural, and the procedure is where foreign employers lose months. The steps are run in the right order the first time."
+      }
+    ],
+    "examples": [
+      {
+        "tag": "Distribution, 220 staff",
+        "situation": "A group decision to consolidate two Dutch sites meant a redundancy programme with consultation duties and a formal permission route, and the local HR team of two had never run one.",
+        "result": "A twelve week engagement prepared selection, the permission applications and the consultation trail, and all settlements were closed inside the planned window."
+      },
+      {
+        "tag": "Tech company, 80 staff",
+        "situation": "A new HR system had to go live in one quarter, but Dutch specifics such as holiday accrual and allowance reserves were not mapped and nobody owned the data cleansing.",
+        "result": "The consultant cleansed and mapped the data, wrote the process documentation, and go live happened on schedule without a payroll discrepancy."
+      },
+      {
+        "tag": "Fintech, 45 staff",
+        "situation": "An investor review was six weeks out and the company had no clear picture of contract chains, working time records or its contractor population.",
+        "result": "A documented compliance sweep closed the gaps that mattered before diligence began, and the finding list went to the investor with remediation already evidenced."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Scope the Work",
-        "desc": "We define the deliverable, the constraints and the end date, then price it as a fixed fee before starting."
+        "title": "Scope the work",
+        "desc": "We define the deliverable, the constraints and the end date, then price it as a fixed fee before starting.",
+        "timeframe": "Days 1 to 5"
       },
       {
         "step": "02",
-        "title": "Mobilise Fast",
-        "desc": "A senior consultant is assigned and productive within days, working from your data rather than a discovery phase."
+        "title": "Mobilise fast",
+        "desc": "A senior consultant is assigned and productive within days, working from your data rather than a discovery phase.",
+        "timeframe": "Week 1"
       },
       {
         "step": "03",
-        "title": "Deliver the Project",
-        "desc": "Execution against agreed milestones, with legal steps such as UWV filings and consultation handled in sequence."
+        "title": "Deliver the project",
+        "desc": "Execution against agreed milestones, with statutory steps handled in the correct sequence.",
+        "timeframe": "Weeks 2 to 26"
       },
       {
         "step": "04",
-        "title": "Hand Back Clean",
-        "desc": "Documentation, files and process notes are transferred to your team, with a short aftercare window included."
+        "title": "Hand back clean",
+        "desc": "Documentation, files and process notes are transferred to your team with a short aftercare window.",
+        "timeframe": "Final week"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Underestimating Dutch Lead Times",
-        "desc": "UWV procedures, works council consultation and the collective redundancy waiting period add months. Start the clock before you announce anything."
-      },
-      {
-        "severity": "high",
-        "title": "Announcing Before Consulting",
-        "desc": "Informing staff of a restructuring before the works council has given its advice under article 25 WOR can suspend the entire decision."
-      },
-      {
-        "severity": "medium",
-        "title": "Scope That Quietly Becomes Permanent",
-        "desc": "Temporary support without a written end date drifts into an open ended cost. Fix the deliverable and the date up front."
-      },
-      {
-        "severity": "medium",
-        "title": "No Handover Built In",
-        "desc": "If the knowledge leaves with the consultant, you buy the same project again next year. Handover belongs in the scope, not in a goodwill email."
-      }
+    "ideal": [
+      "You have a named project with a deadline, not an open ended gap",
+      "A reorganisation, migration or audit needs experience you do not have in house",
+      "A hiring wave is about to overwhelm your existing HR capacity",
+      "You want the knowledge left behind in your own systems when it ends"
     ],
     "faqs": [
       {
-        "q": "How quickly can a temporary HR consultant start?",
-        "a": "Usually within a few working days for a scoped project, and faster for genuinely urgent situations. We do not need a long discovery phase because the consultant works from your existing contracts and records from day one."
-      },
-      {
         "q": "How is this different from interim HR?",
-        "a": "Interim HR bridges a gap in your organisation, typically covering a vacant role for a finite period. Temporary HR is attached to a specific piece of work such as a reorganisation, a system implementation or a hiring peak, and it ends when that work is delivered."
+        "a": "Interim HR bridges a gap in your organisation, usually covering a vacant role for a finite period. Temporary HR is attached to a specific piece of work such as a reorganisation, a system implementation or a hiring peak, and ends when that work is delivered."
       },
       {
         "q": "How is a temporary engagement priced?",
@@ -300,11 +507,11 @@
       },
       {
         "q": "Can you run a collective redundancy on our behalf?",
-        "a": "We prepare and run the HR side: selection under the afspiegelingsbeginsel, the UWV application, works council consultation, settlement agreements and the transitievergoeding calculations. Where a case needs formal legal representation we bring in an employment lawyer and manage that relationship for you."
+        "a": "We run the HR side: selection, the permission applications, consultation, settlement agreements and payment calculations. Where a case needs formal legal representation we bring in an employment lawyer and manage that relationship for you."
       },
       {
-        "q": "Do you take over our existing HR team during the project?",
-        "a": "No. Temporary support sits alongside your team and takes the peak load off it. Your people keep running business as usual while the consultant owns the project workstream and reports progress to whoever you nominate."
+        "q": "Do you take over our existing HR team?",
+        "a": "No. Temporary support sits alongside your team and absorbs the peak. Your people keep running business as usual while the consultant owns the project workstream and reports progress to whoever you nominate."
       }
     ],
     "relatedSlugs": [
@@ -312,104 +519,186 @@
       "interim-hr-support",
       "fractional-hr-solutions"
     ],
-    "topic": "Flexible HR Capacity"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "The projects we are called in for",
+        "desc": "Scoped work with a deliverable, a milestone plan and a date it finishes."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Capacity without commitment",
+        "desc": "Extra senior weight exactly as long as the project needs it, and not a month longer."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three projects we delivered",
+        "desc": "Anonymised examples of temporary HR engagements for employers in the Netherlands."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "Scope, mobilise, deliver, hand back",
+        "desc": "The end date is agreed before the start date."
+      },
+      "ideal": {
+        "eyebrow": "Who it suits",
+        "heading": "Temporary HR is the right call when",
+        "desc": "The need is attached to a piece of work rather than to an empty chair."
+      },
+      "faq": {
+        "eyebrow": "Good to know",
+        "heading": "Scope, pricing and boundaries",
+        "desc": "How temporary differs from interim and what we do and do not take over."
+      }
+    },
+    "parentService": "/solutions/hr-teams",
+    "parentServiceName": "HR Teams"
   },
   {
     "slug": "hr-recruitment-netherlands",
-    "title": "HR Recruitment in the Netherlands",
-    "subtitle": "Finding the right HR professional for your Dutch entity, and getting the offer and contract right under Dutch law.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
+    "name": "HR Recruitment in the Netherlands",
+    "title": "HR Recruitment in the Netherlands | HRhelp",
+    "metaDescription": "We find HR professionals for your Dutch entity and set the employment up correctly. Advisory-led search, fixed fee rather than a percentage of salary.",
     "parentService": "/solutions/hr-settlers",
     "parentServiceName": "HR Settlers",
-    "readTime": "9 min read",
-    "atAGlance": [
-      {
-        "icon": "groups",
-        "label": "Roles Covered",
-        "value": "HR and people functions"
-      },
-      {
+    "tagline": "HR hires found, assessed and contracted",
+    "hero": "We find HR and people professionals for your Dutch entity, and we build the offer, contract and onboarding once you have chosen one. Advisory-led search on a fixed fee, not a percentage of the salary.",
+    "heroCards": {
+      "tl": {
         "icon": "schedule",
-        "label": "First Shortlist",
+        "label": "First shortlist",
         "value": "3 to 5 weeks"
       },
-      {
+      "br": {
         "icon": "euro",
         "label": "Pricing",
         "value": "Fixed fee, not a percentage"
-      },
-      {
-        "icon": "handshake",
-        "label": "Approach",
-        "value": "Advisory led search"
       }
+    },
+    "premiseHeading": "You need an HR professional in the Netherlands and no reliable way to judge one.",
+    "premiseBody": [
+      "Recruiters can send you Dutch HR CVs. Very few can tell you whether a candidate has genuinely run a reintegration file, sat opposite a works council, or held a line in a settlement conversation. If nobody on your side can test that, you are hiring on presentation.",
+      "Our consultants have done the job themselves. They calibrate the role against the real Dutch market, approach candidates through their own network, test them on live cases, and then build the offer, contract and onboarding so the hire starts on a compliant footing."
     ],
-    "content": "<h2>What This Service Covers</h2><p>Two related things. First, recruiting HR professionals for your Dutch entity: HR adviseur, HR business partner, HR manager, payroll and people operations roles. Second, supporting your wider hiring in the Netherlands, which means the employment law, contract structure, offer design and process work that sits around a hire rather than the sourcing of every role.</p><p>The distinction is worth being blunt about. HRhelp is not an employer of record and does not payroll your staff on its own entity. It is not a volume staffing agency placing warehouse, sales or engineering headcount. It searches for HR roles, and it makes sure that every hire your Dutch entity makes is contracted correctly.</p><h2>Why HR Hiring in the Netherlands Is Harder Than It Looks</h2><p>Foreign employers routinely misjudge this market. Common causes of a failed search:</p><ul><li><strong>Title inflation:</strong> a Dutch HR adviseur is typically an experienced generalist handling cases independently, not a junior. Advertising an adviseur role at coordinator salary produces no serious applicants.</li><li><strong>Bilingual scarcity:</strong> candidates who combine genuine Dutch employment law depth with the English fluency to work with a foreign head office are a small pool, and are rarely on job boards.</li><li><strong>Sector experience:</strong> knowing whether a candidate has run a Poortwachter case to week 104, or negotiated with a works council, matters far more than years in seat.</li><li><strong>Employer brand gap:</strong> a company with no Dutch presence and no local reputation must sell the role harder, particularly against established employers.</li></ul><p>Because HRhelp consultants do this work themselves, they can assess a candidate's actual case handling ability rather than matching keywords on a CV.</p><h2>Getting the Dutch Employment Offer Right</h2><p>An offer that reads normally elsewhere can create obligations here that are difficult to unwind:</p><ul><li><strong>Fixed-term chains:</strong> under the ketenregeling, a succession of fixed-term contracts converts to permanent employment after three contracts or three years, whichever comes first.</li><li><strong>Probation limits:</strong> no probation period is permitted in a contract of six months or less. One month applies to contracts under two years, two months to longer and indefinite contracts. An invalid clause is simply void.</li><li><strong>Non-compete clauses:</strong> in a fixed-term contract these are only valid with a written, role-specific justification of compelling business interest. Boilerplate clauses fail.</li><li><strong>Holiday and allowance:</strong> a statutory minimum of four times the weekly hours in holiday, plus 8 percent holiday allowance, is the baseline that candidates assume.</li><li><strong>Expat tax facility:</strong> the facility commonly known as the 30 percent ruling reduces to 27 percent for new cases from 2027 and is capped. Candidates relocating will ask, so the offer should state the position accurately rather than promising a benefit.</li><li><strong>CAO position:</strong> if a mandatory sector collective agreement applies, its pay scales and terms override your intended offer.</li></ul><h2>How the Search Runs</h2><p>Search is direct and targeted rather than advertising led. Consultants work their own network in the Dutch HR community, approach passive candidates, and screen on real scenarios: how would you handle this sickness case, this reorganisation, this works council consultation. You receive a shortlist with written assessments, not a stack of forwarded CVs.</p><p>Pricing is a fixed fee agreed before the search begins. It is not a percentage of salary, which means the incentive is not to push you towards the most expensive candidate, and your finance team can approve a known number.</p><h2>What Happens After the Offer</h2><p>A signed contract is not the end of the process for a foreign employer. HRhelp can prepare the Dutch employment contract, register the employee correctly, brief your payroll provider, set up the absence and Arbo arrangements, and hand over a functioning onboarding. For companies still building their Netherlands operation, this work usually sits inside the HR Settlers engagement rather than being bought separately.</p>",
-    "process": [
+    "included": [
       {
-        "step": "01",
-        "title": "Role Definition",
-        "desc": "We calibrate the role, seniority and salary band against the real Dutch market before any search begins."
+        "icon": "fact_check",
+        "title": "Role and market calibration",
+        "desc": "Seniority, scope and salary band set against the Dutch HR market before any search starts."
       },
       {
-        "step": "02",
-        "title": "Direct Search",
+        "icon": "groups",
+        "title": "Direct search",
         "desc": "Targeted approach of active and passive HR professionals through the consultant's own Dutch network."
       },
       {
+        "icon": "verified",
+        "title": "Scenario-based screening",
+        "desc": "Candidates are tested on live Dutch HR cases rather than on keywords in a CV."
+      },
+      {
+        "icon": "description",
+        "title": "Written candidate assessments",
+        "desc": "Each shortlisted candidate arrives with a written view of strengths, risks and fit."
+      },
+      {
+        "icon": "gavel",
+        "title": "Offer and contract build",
+        "desc": "A compliant Dutch offer and employment contract, including the clauses that actually hold."
+      },
+      {
+        "icon": "work",
+        "title": "Onboarding handover",
+        "desc": "Registration, payroll input and a first ninety day plan so the hire becomes productive quickly."
+      }
+    ],
+    "benefits": [
+      {
+        "icon": "euro",
+        "title": "A fee you agree, not a percentage",
+        "desc": "The fixed fee is set before the search starts. Nobody has an incentive to steer you towards a more expensive hire."
+      },
+      {
+        "icon": "verified",
+        "title": "Assessed by people who did the job",
+        "desc": "Capability is judged by a senior HR consultant, so you are not relying on a keyword match and a reference call."
+      },
+      {
+        "icon": "shield",
+        "title": "The employment is right from day one",
+        "desc": "Probation, fixed-term and non-compete wording is built correctly, so you are not repairing the contract a year later."
+      },
+      {
+        "icon": "trending_up",
+        "title": "Realistic market expectations",
+        "desc": "Salary and seniority are benchmarked against the Netherlands, not against head office assumptions from another country."
+      }
+    ],
+    "examples": [
+      {
+        "tag": "Nordic scale-up, 60 staff",
+        "situation": "The company had run a six month search for a Dutch HR manager through two agencies and rejected every shortlist. The brief had been written in the head office job architecture and matched no real Dutch role.",
+        "result": "The role was rewritten against the Dutch market and a shortlist of four followed in under four weeks. The hire signed within the same quarter."
+      },
+      {
+        "tag": "US logistics firm, 120 staff",
+        "situation": "A first HR hire was needed for a Dutch site that had grown from twelve to over a hundred people with no HR function. The real risk was putting someone junior into a role with genuine legal exposure.",
+        "result": "Three candidates were presented with written assessments of what each could carry unsupported. The company hired a senior generalist and kept an advisor on call for the first six months."
+      },
+      {
+        "tag": "Fintech, 25 staff",
+        "situation": "A Dutch HR business partner had already been selected internally, but the draft contract came from the parent company template and carried a probation clause that would not survive.",
+        "result": "We rebuilt the offer and contract to Dutch standard, briefed the candidate on the differences, and handled registration and payroll input before the start date."
+      }
+    ],
+    "process": [
+      {
+        "step": "01",
+        "title": "Role definition",
+        "desc": "We calibrate the role, seniority and salary band against the real Dutch market before any approach is made.",
+        "timeframe": "Week 1"
+      },
+      {
+        "step": "02",
+        "title": "Direct search",
+        "desc": "Targeted approach of active and passive HR professionals through our own Dutch network.",
+        "timeframe": "Week 1 to 3"
+      },
+      {
         "step": "03",
-        "title": "Scenario Screening",
-        "desc": "Candidates are tested on live Dutch cases, not keywords, and presented with written assessments."
+        "title": "Shortlist and assessment",
+        "desc": "Scenario-tested candidates are presented with written assessments and a clear recommendation.",
+        "timeframe": "Week 3 to 5"
       },
       {
         "step": "04",
-        "title": "Offer and Contracting",
-        "desc": "We build a compliant Dutch offer and contract, then set up registration, payroll input and onboarding."
+        "title": "Offer, contract, onboarding",
+        "desc": "We build the Dutch offer and contract, then set up registration, payroll input and onboarding.",
+        "timeframe": "Week 5 onwards"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Fixed-Term Chain Converting by Accident",
-        "desc": "Renewing a third fixed-term contract, or crossing three years, creates permanent employment automatically. Many foreign employers discover this at the point they wanted to exit."
-      },
-      {
-        "severity": "high",
-        "title": "Invalid Probation or Non-Compete Clauses",
-        "desc": "A probation clause in a six-month contract is void, and an unmotivated non-compete in a fixed-term contract will not hold. You end up with no protection at all."
-      },
-      {
-        "severity": "medium",
-        "title": "Benchmarking Against the Wrong Market",
-        "desc": "Salary bands imported from London, Frankfurt or New York either overpay dramatically or fail to attract anyone. Dutch HR bands are their own market."
-      },
-      {
-        "severity": "medium",
-        "title": "Assuming an EOR Solves Hiring",
-        "desc": "An employer of record can hold a contract, but it does not find your candidate, judge their capability, or manage the employment relationship afterwards."
-      }
+    "ideal": [
+      "Foreign companies making their first HR hire in the Netherlands",
+      "Dutch entities replacing an HR manager or building out a small HR team",
+      "Companies whose previous searches produced shortlists they could not assess",
+      "Employers who want the contract and onboarding handled, not just an introduction"
     ],
     "faqs": [
       {
-        "q": "Do you recruit for all roles, or only HR roles?",
-        "a": "Search is for HR and people functions, which is where our consultants can genuinely assess capability. For other functions we support the hiring process, contracts and compliance rather than sourcing the candidates."
+        "q": "Do you recruit for all roles or only HR roles?",
+        "a": "Search is for HR and people functions, which is where our consultants can genuinely assess capability. For other roles we support the hiring process, contracts and compliance rather than sourcing the candidates."
       },
       {
-        "q": "Are you an employer of record or a staffing agency?",
-        "a": "Neither. We do not employ your staff on our payroll and we do not supply temporary workers at volume. We find HR professionals who join your own Dutch entity, and we make sure the employment is set up correctly."
+        "q": "Are you a staffing agency or an employer of record?",
+        "a": "Neither. We do not put your staff on our payroll and we do not supply temporary workers at volume. The person we find joins your own Dutch entity on your own contract."
       },
       {
         "q": "How is the fee structured?",
-        "a": "A fixed fee agreed before the search starts, not a percentage of the candidate's salary. That removes the incentive to steer you towards higher paid hires and lets you approve a known cost."
+        "a": "A fixed fee agreed before the search starts, not a percentage of the candidate's salary. You approve a known cost, and we have no reason to push the package upwards."
       },
       {
-        "q": "How long does a search take?",
-        "a": "A first shortlist typically lands within three to five weeks of role definition. Total time to signature depends mostly on your interview availability and the candidate's Dutch notice period, which is commonly one calendar month ending on the last day of the month."
-      },
-      {
-        "q": "Can you help if we have not set up a Dutch entity yet?",
-        "a": "Yes, but sequence matters. Hiring before the entity, payroll registration and contract framework are in place creates avoidable problems. That groundwork is what HR Settlers covers, and recruitment usually follows it."
+        "q": "What if we have not set up a Dutch entity yet?",
+        "a": "We can still help, but sequence matters. Entity, payroll registration and a contract framework belong before the first hire, and our HR Settlers work covers that groundwork."
       }
     ],
     "relatedSlugs": [
@@ -417,104 +706,184 @@
       "interim-hr-solutions",
       "interim-hr-support"
     ],
-    "topic": "HR Hiring & Search"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "Search plus everything after the yes",
+        "desc": "From role calibration through to a signed Dutch contract and a working onboarding."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "A search you can actually judge",
+        "desc": "What changes when the person assessing candidates has done the role."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three searches we ran",
+        "desc": "Anonymised mandates that show how the process plays out."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "Brief to signature in weeks",
+        "desc": "Four stages with a first shortlist typically inside five weeks."
+      },
+      "ideal": {
+        "eyebrow": "Right fit",
+        "heading": "Who this service is built for",
+        "desc": "Best suited to HR and people hires into your own Dutch entity."
+      },
+      "faq": {
+        "eyebrow": "Before you commit",
+        "heading": "Questions buyers ask us first",
+        "desc": "Fees, scope and how we differ from an agency or an EOR."
+      }
+    }
   },
   {
     "slug": "interim-hr-advisor",
-    "title": "Interim HR Advisor for Companies in the Netherlands",
-    "subtitle": "Senior Dutch HR and employment law counsel on call, without adding a permanent role to your structure.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
+    "name": "Interim HR Advisor",
+    "title": "Interim HR Advisor in the Netherlands | HRhelp",
+    "metaDescription": "Senior Dutch HR and employment law counsel on call, without a permanent hire. One named consultant, fixed monthly fee, start within five working days.",
     "parentService": "/solutions/hr-teams",
     "parentServiceName": "HR Teams",
-    "readTime": "9 min read",
-    "atAGlance": [
-      {
-        "icon": "verified",
-        "label": "Seniority",
-        "value": "15+ years Dutch law"
-      },
-      {
+    "tagline": "Senior Dutch HR counsel on call",
+    "hero": "An interim HR advisor gives you senior Dutch HR and employment law counsel on call, without adding a permanent role to your structure. You get one named consultant who knows your entity, your contracts and your open cases, and who answers within agreed response times.",
+    "heroCards": {
+      "tl": {
         "icon": "schedule",
-        "label": "Typical Start",
+        "label": "Typical start",
         "value": "Within 5 working days"
       },
-      {
+      "br": {
         "icon": "euro",
         "label": "Pricing",
         "value": "Fixed monthly fee"
+      }
+    },
+    "premiseHeading": "You need a senior HR opinion before you act, not a permanent HR hire.",
+    "premiseBody": [
+      "Your managers are making people decisions in the Netherlands that carry real consequences: a performance case, a contract renewal, a reorganisation, a sensitive exit. There is nobody in the business with the Dutch seniority to sign those calls off, and hiring an HR director for a handful of decisions a month makes no sense.",
+      "HRhelp puts a senior consultant on call for exactly those moments. They learn your setup once, stay with you, and come back with a clear recommendation plus the risk attached, so your management team decides with confidence instead of guessing."
+    ],
+    "included": [
+      {
+        "icon": "support_agent",
+        "title": "Named senior consultant",
+        "desc": "One consultant owns your account and knows your entity, your contracts and your history."
+      },
+      {
+        "icon": "schedule",
+        "title": "Agreed response times",
+        "desc": "Same or next working day on standard matters, faster where your scope requires it."
+      },
+      {
+        "icon": "fact_check",
+        "title": "Baseline review",
+        "desc": "Your contracts, handbook, sector position and live cases are reviewed up front so advice rests on facts."
+      },
+      {
+        "icon": "description",
+        "title": "Written recommendations",
+        "desc": "Decisions of consequence come back in writing, with options, risk and a recommended route."
       },
       {
         "icon": "gavel",
-        "label": "Core Focus",
-        "value": "Policy, cases, compliance"
+        "title": "Live case counsel",
+        "desc": "Practical guidance on performance, absence, conflict, exits and reorganisation as they arise."
+      },
+      {
+        "icon": "policy",
+        "title": "Policy and template input",
+        "desc": "Review and improvement of the policies, letters and clauses your managers actually use."
       }
     ],
-    "content": "<h2>What an Interim HR Advisor Does</h2><p>An interim HR advisor is senior counsel, not a manager. The advisor does not run your HR function, sit in your org chart, or take responsibility for your team. Instead, the advisor is the person your HR generalist, office manager or country lead calls before a decision becomes expensive: a sickness case that is drifting, a performance file that will not survive a court hearing, a contract clause that quietly binds you for three years.</p><p>This model suits companies that already have HR capacity but lack Dutch depth. A capable HR coordinator can run onboarding, absence registration and payroll input perfectly well. What they usually cannot do is judge whether a dismissal file meets the redelijke grond standard, or whether a collective labour agreement applies to your operation by sector rather than by choice.</p><h2>How Advisory Differs From Interim Management</h2><p>The distinction matters commercially, because it changes cost and accountability:</p><ul><li><strong>Interim HR manager:</strong> takes ownership of the function, leads people, carries deliverables, typically 3 to 5 days per week.</li><li><strong>Interim HR advisor:</strong> carries no line responsibility, advises named decision makers, typically a set number of hours per month.</li><li><strong>Interim HR support:</strong> hands-on operational execution, administration and case handling.</li></ul><p>If your problem is that nobody is steering HR, you need a manager. If your problem is that decisions are being made without Dutch legal judgement behind them, you need an advisor. HRhelp will say plainly which one your situation calls for, including when the honest answer is neither.</p><h2>The Dutch Questions That Need Senior Judgement</h2><p>Most advisory work in the Netherlands concentrates in a small number of high consequence areas:</p><ul><li><strong>Long-term sickness:</strong> the Wet verbetering Poortwachter timeline runs 104 weeks. A weak reintegration file at week 88 can trigger a loonsanctie, a further year of salary at the employer's cost.</li><li><strong>Dismissal routing:</strong> redundancy and long-term illness go through the UWV; underperformance and broken working relationships go to the kantonrechter. Choosing the wrong route wastes months.</li><li><strong>Transition payment:</strong> due from day one of employment, including in probation, and payable in most employer-initiated exits.</li><li><strong>CAO applicability:</strong> a sector collective agreement can be mandatory (algemeen verbindend verklaard) whether or not you signed anything. It overrides your handbook on pay scales, notice and allowances.</li><li><strong>Wet DBA:</strong> since enforcement resumed, engaging contractors who work under direction and embedded in your team carries real reclassification and payroll tax exposure.</li><li><strong>Employee representation:</strong> a works council (OR) becomes obligatory at 50 employees, and a personnel representation body can be required from 10.</li></ul><h2>How the Engagement Is Structured</h2><p>You get one named senior consultant, not a rotating pool and not a junior with a template library. Advice is given in writing where it needs to be relied on, and by phone where speed matters more than formality. Everything is delivered in English or Dutch, and in German where the parent company needs it.</p><p>Pricing is a fixed monthly fee tied to an agreed scope and response time, so finance can forecast it and nobody hesitates to pick up the phone because the meter is running. Where a case escalates beyond HR counsel, HRhelp involves an employment lawyer and stays in the room to translate the legal position into a workable people decision.</p><h2>When This Is the Wrong Choice</h2><p>An interim HR advisor is not the answer when there is no one internally to act on the advice. Advisory only works if someone owns execution. If your Netherlands operation has nobody holding HR at all, an outsourced HR department or an embedded interim manager will serve you better, and will usually cost less than advice that never gets implemented.</p>",
+    "benefits": [
+      {
+        "icon": "verified",
+        "title": "Senior judgement without permanent headcount",
+        "desc": "You get 15+ years of Dutch employment practice on demand. You do not carry an HR director salary or the recruitment cycle behind it."
+      },
+      {
+        "icon": "euro",
+        "title": "A cost you can approve up front",
+        "desc": "A fixed monthly fee against an agreed scope. There is no hourly meter, so nobody hesitates before picking up the phone."
+      },
+      {
+        "icon": "shield",
+        "title": "Decisions checked before they land",
+        "desc": "Advice arrives before the conversation happens, which is while the outcome is still cheap to change."
+      },
+      {
+        "icon": "alt_route",
+        "title": "One answer, not four opinions",
+        "desc": "Your consultant coordinates with payroll, the Arbo service and, where needed, an employment lawyer, then gives you a single position."
+      }
+    ],
+    "examples": [
+      {
+        "tag": "US software firm, 30 staff",
+        "situation": "The Dutch country manager wanted to exit an underperforming sales lead within the month, using the head office performance plan. Nothing in the file matched what a Dutch process would be measured against.",
+        "result": "The advisor mapped the two realistic routes with a cost range for each, then guided the manager through a documented process. The exit closed by settlement at the number modelled at the start."
+      },
+      {
+        "tag": "German manufacturer, 90 staff",
+        "situation": "HR sat in Munich and ran the Dutch site by email. Long-term absence cases were drifting and nobody was tracking the reintegration obligations attached to them.",
+        "result": "A monthly advisory rhythm was put in place with a written status per case. The two oldest files were brought back into a defensible position within a quarter."
+      },
+      {
+        "tag": "Media group, 15 staff",
+        "situation": "A small Dutch office was renewing fixed-term contracts on instinct and had no view of where each employee sat in the renewal chain.",
+        "result": "The advisor produced a renewal calendar with a recommendation per person. Every renewal is now reviewed before the letter goes out."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Scoping Call",
-        "desc": "We map your current HR setup, open cases and risk exposure, then agree what advisory scope actually covers."
+        "title": "Scoping call",
+        "desc": "We map your entity, your open cases and where decisions currently get stuck, then agree scope and response times.",
+        "timeframe": "Week 1"
       },
       {
         "step": "02",
-        "title": "Baseline Review",
-        "desc": "Contracts, handbook, CAO position and live cases are reviewed so advice rests on facts, not assumptions."
+        "title": "Baseline review",
+        "desc": "Contracts, handbook, sector position and live files are reviewed so advice rests on your actual documents.",
+        "timeframe": "Week 1 to 2"
       },
       {
         "step": "03",
-        "title": "On-Call Counsel",
-        "desc": "Your named consultant advises on cases and policy decisions within agreed response times, in writing where needed."
+        "title": "On-call counsel",
+        "desc": "Your consultant advises on cases and policy decisions as they come up, in writing where it matters.",
+        "timeframe": "Ongoing"
       },
       {
         "step": "04",
-        "title": "Quarterly Recalibration",
-        "desc": "We review what came up, close recurring gaps in policy, and adjust scope up or down for the next period."
+        "title": "Quarterly recalibration",
+        "desc": "We review what came up, close the gaps that keep repeating, and adjust scope up or down.",
+        "timeframe": "Every quarter"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Advice Arriving After the Decision",
-        "desc": "Managers often call once a dismissal has been announced or a settlement offered. By then the file is fixed and your negotiating position is set."
-      },
-      {
-        "severity": "high",
-        "title": "Applying Head Office Practice to Dutch Staff",
-        "desc": "At-will thinking, US-style performance plans and UK notice conventions do not transfer. Dutch courts assess the file you built, not the policy you followed."
-      },
-      {
-        "severity": "medium",
-        "title": "Assuming No CAO Applies",
-        "desc": "Sector collective agreements can bind you automatically. Companies discover this during a payroll audit or a wage claim, usually with retroactive effect."
-      },
-      {
-        "severity": "medium",
-        "title": "No Owner for Implementation",
-        "desc": "Advisory engagements stall when nobody internally is accountable for acting on the recommendation. Name that person before you start."
-      }
+    "ideal": [
+      "Foreign parent companies whose Dutch team has no senior HR voice",
+      "Managing directors making people decisions with no HR function behind them",
+      "Small HR teams that need a senior sounding board rather than more hands",
+      "Companies that want counsel on call without creating a permanent HR role"
     ],
     "faqs": [
       {
-        "q": "How is this priced, and what happens if we have a heavy month?",
-        "a": "A fixed monthly fee against an agreed scope and response time. Genuinely exceptional matters, such as a collective redundancy or a litigated dismissal, are quoted separately and up front. There are no hourly surprises."
+        "q": "How quickly can an advisor start?",
+        "a": "Engagements typically start within five working days of the scoping call. The baseline review runs in parallel, so you can raise live cases from the first week."
       },
       {
-        "q": "How quickly can an advisor start, and how fast do you respond?",
-        "a": "Engagements typically start within five working days of the scoping call. Standard response is same or next working day, with faster turnaround agreed in scope where your operation needs it. Genuinely urgent, same-day matters are handled through HR S.O.S."
+        "q": "How is this priced if we have a heavy month?",
+        "a": "A fixed monthly fee against an agreed scope and response time. Genuinely exceptional matters, such as a collective redundancy, are quoted separately and up front. There are no hourly surprises."
       },
       {
-        "q": "How does this differ from using an employment lawyer?",
-        "a": "A lawyer answers what is legally defensible. An HR advisor answers what you should actually do, including the commercial, cultural and team consequences, and prepares the file so that if a lawyer is needed the position is already strong. HRhelp brings in a lawyer when litigation or formal representation is required."
+        "q": "How does this differ from an interim HR manager?",
+        "a": "An advisor gives counsel and carries no line responsibility. An interim HR manager sits inside your structure, leads the function and owns delivery. If you need someone to run HR rather than advise on it, that is the other service."
       },
       {
-        "q": "Can the advisor also handle the administration?",
-        "a": "No, and that is deliberate. Advisory scope covers counsel and documentation, not day-to-day execution. If you need hands-on operational help, interim HR support or an outsourced HR department is the right service."
-      },
-      {
-        "q": "Do you work in English with a foreign parent company?",
-        "a": "Yes. Consultants are native Dutch speakers with fluent English and German, and are used to explaining Dutch employment rules to a head office that has never encountered them."
+        "q": "Can the advisor handle the administration too?",
+        "a": "No, and that is deliberate. Advisory scope covers counsel and documentation, not day-to-day execution. For hands-on operational work, interim HR support is the right fit."
       }
     ],
     "relatedSlugs": [
@@ -522,104 +891,182 @@
       "interim-hr-solutions",
       "labor-law-advice-international-employer"
     ],
-    "topic": "Senior HR Advisory"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "Everything an advisory engagement covers",
+        "desc": "A defined scope, one senior consultant and a response time you can plan around."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Senior counsel, none of the overhead",
+        "desc": "What an on-call advisor changes for the people who have to make the decisions."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three situations we were called into",
+        "desc": "Anonymised engagements that show what advisory support actually looks like."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "From scoping call to counsel on call",
+        "desc": "Four steps, with live cases in scope from the first week."
+      },
+      "ideal": {
+        "eyebrow": "Right fit",
+        "heading": "Who this service is built for",
+        "desc": "Advisory works best where decisions are senior and the volume is not."
+      },
+      "faq": {
+        "eyebrow": "Before you commit",
+        "heading": "Questions buyers ask us first",
+        "desc": "Start speed, pricing and where this sits next to our other services."
+      }
+    }
   },
   {
     "slug": "interim-hr-manager",
-    "title": "Interim HR Manager for Your Dutch Operation",
-    "subtitle": "An embedded senior HR manager who leads your Dutch HR function while the role sits vacant.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
-    "parentService": "/solutions/hr-teams",
-    "parentServiceName": "HR Teams",
-    "readTime": "10 min read",
-    "atAGlance": [
-      {
+    "name": "Interim HR Manager",
+    "title": "Interim HR Manager for Your Dutch Operation | HRhelp",
+    "metaDescription": "An embedded senior interim HR manager who leads your Dutch HR function, holds decision rights and handles works council duties. Fixed monthly fee, senior only.",
+    "tagline": "An embedded leader, not an adviser",
+    "hero": "An interim HR manager sits inside your organisation chart, holds decision rights and is accountable for the Dutch HR function while the role is vacant. You get a leader in post, not a consultant leaving recommendations behind.",
+    "heroCards": {
+      "tl": {
         "icon": "work",
-        "label": "Role Type",
-        "value": "Embedded lead"
+        "label": "Role type",
+        "value": "Embedded HR lead"
+      },
+      "br": {
+        "icon": "groups",
+        "label": "Typical fit",
+        "value": "20 to 250 staff in NL"
+      }
+    },
+    "premiseHeading": "You need someone to hold the HR role, not just advise the people trying to cover it.",
+    "premiseBody": [
+      "This is the model when the vacant position carried authority: signing offers, approving reintegration plans, chairing works council meetings, managing HR staff and being the escalation point for every line manager with a people problem.",
+      "HRhelp embeds one named senior consultant in that role for a finite period. They report into your managing director and your group HR lead, make the local decisions nobody abroad is equipped to make, and hand the function over when your permanent manager arrives."
+    ],
+    "included": [
+      {
+        "icon": "gavel",
+        "title": "Decision rights in post",
+        "desc": "Agreed authority over offers, contracts, exits and escalations so the role can actually move things forward."
       },
       {
         "icon": "groups",
-        "label": "Typical Fit",
-        "value": "20 to 250 staff"
+        "title": "Works council duties",
+        "desc": "Your consultant represents the employer to the works council or personnel representation, including consultation procedures."
       },
       {
-        "icon": "gavel",
-        "label": "Owns",
-        "value": "Cases and OR duties"
+        "icon": "alt_route",
+        "title": "Complex casework",
+        "desc": "Dismissals, restructures, grievances and long term illness cases are owned and driven to a conclusion."
       },
       {
-        "icon": "euro",
-        "label": "Pricing",
-        "value": "Fixed monthly fee"
+        "icon": "person",
+        "title": "HR team leadership",
+        "desc": "Any existing HR staff, payroll coordinators or assistants report to the interim manager during the mandate."
+      },
+      {
+        "icon": "policy",
+        "title": "Policy localisation",
+        "desc": "Group handbooks are adapted to Dutch statutory minimums and any binding collective agreement rather than translated."
+      },
+      {
+        "icon": "trending_up",
+        "title": "Reporting to HQ",
+        "desc": "A monthly picture of headcount, absence, cost and live risk in a format your headquarters can use."
       }
     ],
-    "content": "<h2>What an Interim HR Manager Owns</h2><p>An interim HR manager is not an adviser who visits. The role sits inside your organisation chart, carries decision rights and is accountable for outcomes exactly as a permanent postholder would be. For the Dutch entity of an international group, that usually means owning the local HR function end to end while reporting into a regional or global HR lead abroad.</p><p>Typical authority includes signing off offers and contracts within an agreed band, chairing works council or personnel representation meetings, approving reintegration plans, managing any local HR staff, and acting as the escalation point for line managers on people issues.</p><h2>Why the Dutch Context Changes the Job</h2><p>A capable HR manager from a common law market can be blindsided here. Three areas cause most of the damage:</p><ul><li><strong>Termination.</strong> There is no unilateral exit route. Economic redundancy and long term illness go to UWV, personal grounds go to the kantonrechter, and both need a dossier built months before the decision. The practical alternative is a negotiated vaststellingsovereenkomst.</li><li><strong>Illness.</strong> The employer carries salary continuation and active reintegration duties for 104 weeks under Wet verbetering Poortwachter. A thin dossier at the week 88 review can trigger a loonsanctie, extending the wage obligation by a further year.</li><li><strong>Fixed term work.</strong> The ketenregeling converts a chain of temporary contracts into permanent employment, and missing the aanzegtermijn on a contract of six months or longer costs one month of pay.</li></ul><h2>Works Councils and Consultation Duties</h2><p>Employee representation obligations scale with headcount and are routinely discovered too late:</p><ul><li><strong>From 50 employees:</strong> an ondernemingsraad is mandatory, with advice rights on reorganisations, relocations and major investments, and consent rights on core HR policies including working hours, absence policy and appraisal systems.</li><li><strong>Between 10 and 49 employees:</strong> a personeelsvertegenwoordiging can be required on request, and staff meeting obligations apply.</li><li><strong>Practical effect:</strong> a reorganisation launched without a completed advice procedure can be halted by the Enterprise Chamber, so consultation belongs in the project timetable rather than bolted on at the end.</li></ul><h2>The First Thirty Days</h2><p>An interim manager who spends a month observing has burned a quarter of a short mandate. HRhelp consultants work to a fixed opening sequence: an inventory of contracts, policies and open cases in week one, a risk list with named owners by the end of week two, and an action plan agreed with the local managing director and the group HR lead before day thirty. Anything live, an unmanaged sickness case or an expiring fixed term contract, is handled immediately rather than parked in the plan.</p><h2>Interim Manager, Advisor or Fractional Manager</h2><p>Choose by the level of ownership you need rather than by hours on a calendar:</p><ul><li><strong>Interim HR manager:</strong> leads the function, holds decision rights, near full time, finite period tied to a permanent hire or a project.</li><li><strong>Interim HR advisor:</strong> senior counsel on policy, cases and compliance without managing the function or the team.</li><li><strong>Fractional HR manager:</strong> the same leadership role on an ongoing part time basis, for a company that will not justify a full time head for some years.</li></ul><p>Every HRhelp mandate is one named senior consultant working to a fixed monthly fee, so the cost of the role is known before anyone starts.</p>",
+    "benefits": [
+      {
+        "icon": "verified",
+        "title": "Leadership from week one",
+        "desc": "A senior manager who has run Dutch HR functions before does not need a settling in period. Live cases are taken over immediately."
+      },
+      {
+        "icon": "shield",
+        "title": "Employer risk properly held",
+        "desc": "Dismissal routes, consultation duties and dossier standards are handled by someone who has done each of them many times."
+      },
+      {
+        "icon": "savings",
+        "title": "Cheaper than the gap",
+        "desc": "No recruitment fee, no employer social charges, no pension accrual and no severance exposure at the end of the mandate."
+      },
+      {
+        "icon": "handshake",
+        "title": "One named person",
+        "desc": "The same consultant throughout, in your management meetings and known to your staff, not a rotating delivery pool."
+      }
+    ],
+    "examples": [
+      {
+        "tag": "Medtech subsidiary, 180 staff",
+        "situation": "The HR director left three weeks before a planned site consolidation that required works council advice and a redundancy selection exercise. The country manager had never run a Dutch consultation.",
+        "result": "The interim manager took the chair, ran the advice procedure in the correct sequence, completed selection and settlements, and the consolidation closed without a challenge to the decision."
+      },
+      {
+        "tag": "US retail brand, 90 staff",
+        "situation": "A Dutch entity was applying a global handbook that conflicted with local minimums on holiday, notice and sick pay. Two employees had already raised formal complaints.",
+        "result": "Both complaints were resolved without escalation, the handbook was localised inside two months, and the permanent HR manager inherited a compliant policy set."
+      },
+      {
+        "tag": "Fintech, 45 staff",
+        "situation": "Rapid growth pushed headcount towards the works council threshold while performance issues in one team were being managed informally by founders.",
+        "result": "The interim manager prepared the representation groundwork ahead of the threshold and built defensible performance files, closing two exits by settlement rather than litigation."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Mandate Definition",
-        "desc": "We agree decision rights, reporting lines and the end condition with your MD and group HR before day one."
+        "title": "Mandate definition",
+        "desc": "Decision rights, reporting lines and the end condition are agreed with your managing director and group HR lead.",
+        "timeframe": "Before day one"
       },
       {
         "step": "02",
-        "title": "Consultant Placement",
-        "desc": "One named senior consultant with Dutch employment law depth and the right sector background is embedded in the team."
+        "title": "Placement",
+        "desc": "One named senior consultant with the right sector background is embedded in your team and introduced in the role.",
+        "timeframe": "Week 1"
       },
       {
         "step": "03",
-        "title": "Stabilise and Lead",
-        "desc": "Live cases, works council duties and policy gaps are taken over, then the agreed 30 day action plan is executed."
+        "title": "Stabilise and lead",
+        "desc": "Live cases and representation duties are taken over, then an agreed 30 day action plan is executed.",
+        "timeframe": "Weeks 1 to 4"
       },
       {
         "step": "04",
-        "title": "Succession Handover",
-        "desc": "The function, dossiers and relationships are transferred to your permanent HR manager over the closing weeks."
+        "title": "Succession handover",
+        "desc": "The function, dossiers and relationships transfer to your permanent HR manager over the closing weeks.",
+        "timeframe": "Final weeks"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Authority Left Undefined",
-        "desc": "An interim manager without clear signing and decision rights is treated as an adviser, and dismissal and reorganisation timelines slip."
-      },
-      {
-        "severity": "high",
-        "title": "Works Council Steps Skipped",
-        "desc": "Starting a reorganisation before the ondernemingsraad advice procedure completes can see the decision suspended by the Enterprise Chamber."
-      },
-      {
-        "severity": "medium",
-        "title": "Building Dossiers Too Late",
-        "desc": "Dutch courts expect documented improvement efforts. Performance files started the month before a dismissal request rarely hold up."
-      },
-      {
-        "severity": "medium",
-        "title": "Headquarters Policies Applied Unchecked",
-        "desc": "Global handbooks often conflict with a binding CAO or Dutch statutory leave rules. They need localising, not translating."
-      }
+    "ideal": [
+      "The vacant role led the HR function and carried real authority",
+      "You have a works council or are approaching the threshold",
+      "A restructure, dismissal programme or pay cycle cannot wait for a permanent hire",
+      "You want local decisions made locally while HQ keeps oversight"
     ],
     "faqs": [
       {
-        "q": "How does an interim HR manager differ from an HR consultant?",
-        "a": "A consultant advises and leaves recommendations. An interim HR manager holds the role, makes the decisions and carries the outcome, including managing any HR staff and representing the employer to the works council."
+        "q": "How does this differ from an HR consultant?",
+        "a": "A consultant advises and leaves recommendations behind. An interim HR manager holds the role, makes the decisions and carries the outcome, including managing HR staff and representing the employer to the works council."
       },
       {
-        "q": "Can the interim manager handle a reorganisation?",
-        "a": "Yes. That includes the UWV collective dismissal route where applicable, afspiegelingsbeginsel selection, works council advice procedure, social plan negotiation and transition payment calculations."
+        "q": "How does it differ from a fractional HR manager?",
+        "a": "Same level of ownership, different shape. Interim is near full time for a finite period tied to a vacancy or project, while fractional is an ongoing part time arrangement with no planned end date."
       },
       {
         "q": "Does the consultant work on site?",
-        "a": "Normally a mix. Most mandates involve regular days on site in Amsterdam or at your Dutch location, with the rest remote. Presence matters most in the opening weeks and during any consultation process."
+        "a": "Usually a mix. Most mandates involve regular days at your Dutch location with the rest remote. Presence matters most in the opening weeks and during any consultation process."
       },
       {
-        "q": "What if we hire a permanent HR manager sooner than expected?",
-        "a": "The mandate ends on the agreed notice terms and the handover is brought forward. We build the transfer into the engagement rather than treating it as an extra."
-      },
-      {
-        "q": "What does it cost compared with a permanent hire?",
-        "a": "You pay a fixed monthly fee with no recruitment fee, no employer social charges, no pension accrual and no dismissal exposure at the end. For a gap of under a year that usually lands below the loaded cost of a permanent manager."
+        "q": "What if we hire a permanent manager sooner than expected?",
+        "a": "The mandate ends on the agreed notice terms and the handover is brought forward. Transfer is built into the engagement rather than charged as an extra."
       }
     ],
     "relatedSlugs": [
@@ -627,104 +1074,186 @@
       "fractional-hr-manager",
       "interim-hr-advisor"
     ],
-    "topic": "Interim HR Leadership"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "A role held, with authority attached",
+        "desc": "The mandate is scoped so the interim manager can decide, not just recommend."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Leadership without the hiring risk",
+        "desc": "You get a proven Dutch HR lead for exactly as long as the role is open."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three mandates we have led",
+        "desc": "Anonymised examples of interim HR managers placed with international employers."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "Mandate, placement, delivery, succession",
+        "desc": "Authority is agreed in writing before the consultant walks in."
+      },
+      "ideal": {
+        "eyebrow": "Who it suits",
+        "heading": "An interim HR manager fits when",
+        "desc": "Choose by the level of ownership you need, not by hours in a diary."
+      },
+      "faq": {
+        "eyebrow": "Good to know",
+        "heading": "What buyers ask before committing",
+        "desc": "Scope, presence, pricing and how the mandate ends."
+      }
+    },
+    "parentService": "/solutions/hr-teams",
+    "parentServiceName": "HR Teams"
   },
   {
     "slug": "hr-consultancy-foreign-companies",
-    "title": "HR Consultancy for Foreign Companies in the Netherlands",
-    "subtitle": "One senior Dutch consultant covering employment law, contracts and people operations for your Netherlands operation.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
+    "name": "HR Consultancy for Foreign Companies",
+    "title": "HR Consultancy for Foreign Companies in the Netherlands | HRhelp",
+    "metaDescription": "One senior Dutch consultant runs the people side of your Netherlands operation: contracts, policies, cases and head office reporting. Fixed fee, agreed scope.",
     "parentService": "/solutions/hr-settlers",
     "parentServiceName": "HR Settlers",
-    "readTime": "10 min read",
-    "atAGlance": [
-      {
-        "icon": "public",
-        "label": "Client Base",
+    "tagline": "Your Dutch HR function, one consultant",
+    "hero": "One senior Dutch consultant takes on the people side of your Netherlands operation, from contracts and policies to live cases and head office reporting. You get a local HR function without building one.",
+    "heroCards": {
+      "tl": {
+        "icon": "domain",
+        "label": "Client base",
         "value": "75+ international"
       },
-      {
-        "icon": "translate",
-        "label": "Languages",
-        "value": "Dutch, English, German"
-      },
-      {
+      "br": {
         "icon": "euro",
         "label": "Pricing",
         "value": "Fixed fee, agreed scope"
+      }
+    },
+    "premiseHeading": "You run a Dutch operation from abroad and nobody local owns HR.",
+    "premiseBody": [
+      "Your Netherlands entity has staff, contracts and payroll, but the people work sits with a country manager, a finance lead, or an HR team in another country working from assumptions. It holds up until something happens: a sick employee, a difficult exit, an audit, a growth spurt.",
+      "HRhelp gives you one named senior consultant who owns the Dutch people side end to end. They assess what you have, fix what is wrong, then run or support the function on a fixed fee, and keep your head office briefed in terms it can act on."
+    ],
+    "included": [
+      {
+        "icon": "fact_check",
+        "title": "Situation assessment",
+        "desc": "A written map of your entity, contracts, policies, sector position and open risks."
       },
       {
-        "icon": "work",
-        "label": "Scope",
-        "value": "Entity setup to full HR"
+        "icon": "description",
+        "title": "Contract and policy set",
+        "desc": "Dutch-standard employment contracts, handbook and core policies in English and Dutch."
+      },
+      {
+        "icon": "support_agent",
+        "title": "Named senior consultant",
+        "desc": "One consultant owns your account, backed by the wider team for continuity during leave."
+      },
+      {
+        "icon": "gavel",
+        "title": "Case handling",
+        "desc": "Performance, absence, conflict, exits and reorganisation managed with you rather than escalated to you."
+      },
+      {
+        "icon": "alt_route",
+        "title": "Provider coordination",
+        "desc": "We deal directly with your payroll bureau, Arbo service, company doctor and counsel."
+      },
+      {
+        "icon": "trending_up",
+        "title": "Head office reporting",
+        "desc": "Regular briefings that translate the Dutch position into something your parent company can decide on."
       }
     ],
-    "content": "<h2>Why Foreign Employers Need Dutch HR Counsel</h2><p>The Netherlands is easy to enter and difficult to operate in. Registering a BV takes days. Understanding that your first employee triggers a 104-week sickness liability, that dismissal requires prior permission from a state body or a court, and that a sector collective agreement may bind you without your signature, takes considerably longer.</p><p>Most foreign companies discover the gap at the worst moment: a first termination, a first long-term illness, a first payroll audit. By then the contract is already signed and the file is already thin. HRhelp works with more than 75 international companies operating in the Netherlands, including LG, Sandvik, Viacom and C.H. Robinson, precisely at this seam between a foreign head office and Dutch employment reality.</p><h2>Where We Are Usually Brought In</h2><ul><li><strong>Employment contracts:</strong> Dutch-compliant templates covering fixed-term chains, valid probation periods, motivated non-compete clauses, notice, holiday and the 8 percent holiday allowance.</li><li><strong>CAO assessment:</strong> establishing whether a mandatory sector collective agreement applies to your activities, and what it overrides in your handbook.</li><li><strong>Payroll interface:</strong> we do not run payroll, we make sure the instructions your payroll provider receives are correct, and that gross to net assumptions in the offer hold.</li><li><strong>Sickness and reintegration:</strong> running the Wet verbetering Poortwachter timeline with the company doctor and the UWV so you do not incur a loonsanctie.</li><li><strong>Exits and restructuring:</strong> choosing between the UWV route and the kantonrechter, building the file, calculating transition payment, and negotiating settlement agreements.</li><li><strong>Employee representation:</strong> works council obligations from 50 employees, personnel representation from 10, and the consultation rights that attach to reorganisation decisions.</li><li><strong>Contractor risk:</strong> assessing Wet DBA exposure where the head office is used to engaging freelancers on terms that read as employment here.</li></ul><h2>How This Differs From an EOR, a Law Firm or a Payroll Bureau</h2><p>These are different products and confusing them is expensive:</p><ul><li><strong>An employer of record</strong> holds the employment contract on its own entity. Useful before you incorporate, but it does not advise you, and once you have a Dutch BV it is usually the wrong structure.</li><li><strong>A law firm</strong> answers what is legally defensible, generally once a dispute exists, and bills by the hour.</li><li><strong>A payroll bureau</strong> processes what you instruct. It does not check whether the instruction is compliant.</li><li><strong>HRhelp</strong> is the HR function itself: the party that decides what should happen, documents it properly, and brings in a lawyer when litigation genuinely requires one.</li></ul><h2>Working With a Head Office Abroad</h2><p>The hardest part of this work is rarely the Dutch law. It is explaining to a head office why a performance improvement plan that works in Chicago will not carry a Dutch dismissal, or why a global policy update cannot be applied unilaterally to Dutch staff. Consultants are native Dutch speakers who work fluently in English and German, sit in your HQ calls, and present the Dutch position in terms a foreign leadership team can act on.</p><p>You get one named consultant throughout, not a ticketing queue. That person knows your CAO position, your contract templates and your open cases, which is what makes advice fast rather than merely correct.</p><h2>Engagement Models</h2><p>Scope is set to the stage you are at. Companies entering the market start with HR Settlers, covering entity to first hire. Established operations that need an ongoing HR function use HR Teams. Companies with an existing but drifting HR setup start with HR Reset, an audit and modernisation of what is already there. All of it is priced as a fixed fee against an agreed scope, so a head office finance team can approve a number rather than an estimate.</p>",
+    "benefits": [
+      {
+        "icon": "person",
+        "title": "A local HR function without the headcount",
+        "desc": "You get senior Dutch HR capability from the first month, with no recruitment cycle and no permanent salary attached."
+      },
+      {
+        "icon": "euro",
+        "title": "A budget your finance team can approve",
+        "desc": "Fixed fee against a written scope, monthly for ongoing work and project-based for defined pieces. No hourly billing and no surprise invoices."
+      },
+      {
+        "icon": "shield",
+        "title": "Dutch risk off your country manager's desk",
+        "desc": "Local leadership goes back to running the business instead of interpreting employment rules nobody trained them on."
+      },
+      {
+        "icon": "handshake",
+        "title": "One point of contact",
+        "desc": "Rather than coordinating four providers, your head office speaks to one consultant who already holds the full picture."
+      }
+    ],
+    "examples": [
+      {
+        "tag": "Japanese group, new NL entity",
+        "situation": "A new Dutch subsidiary hired eleven people in nine months on translated head office contracts with no local policies. Payroll ran fine, but nobody had checked what the entity was actually committed to.",
+        "result": "A four week assessment produced a prioritised findings report. Contracts and policies were rebuilt, and the consultant now runs the HR function two days a month."
+      },
+      {
+        "tag": "UK services firm, 45 staff",
+        "situation": "The country manager was spending roughly a day a week on HR questions, absence calls and payroll queries, and was still unsure whether the answers given were correct.",
+        "result": "HR moved to a fixed monthly scope with a named consultant. The country manager's HR time dropped to a single monthly review call."
+      },
+      {
+        "tag": "US hardware company, 70 staff",
+        "situation": "An acquisition brought a Dutch team into the group with three different contract generations, an unclear sector position and no handbook at all.",
+        "result": "The consultant harmonised the contract set, delivered a written sector and pension determination, and produced a single Dutch handbook the parent could stand behind."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Situation Assessment",
-        "desc": "We map your Dutch entity, headcount, contracts, CAO position and open risks against what your head office assumes is true."
+        "title": "Situation assessment",
+        "desc": "We map your entity, contracts, policies, sector position and open risks against what head office assumes is true.",
+        "timeframe": "Week 1 to 3"
       },
       {
         "step": "02",
-        "title": "Gap Report and Scope",
-        "desc": "You receive a written findings report with prioritised actions, then a fixed-fee scope covering what we will handle."
+        "title": "Findings and scope",
+        "desc": "You receive a written report with prioritised actions, then a fixed-fee scope for what we will handle.",
+        "timeframe": "Week 3 to 4"
       },
       {
         "step": "03",
         "title": "Remediation",
-        "desc": "Contracts, policies, registrations and payroll instructions are corrected and brought into line with Dutch requirements."
+        "desc": "Contracts, policies, registrations and payroll instructions are corrected to Dutch standard.",
+        "timeframe": "Month 2 to 3"
       },
       {
         "step": "04",
-        "title": "Ongoing HR Partnership",
-        "desc": "Your named consultant runs or supports the function, handles cases, and keeps the head office briefed."
+        "title": "Ongoing partnership",
+        "desc": "Your consultant runs or supports the function, handles cases and keeps head office briefed.",
+        "timeframe": "Ongoing"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Using Head Office Contract Templates",
-        "desc": "Translated foreign contracts routinely contain void clauses and miss mandatory Dutch terms. The invalid parts fall away, the obligations do not."
-      },
-      {
-        "severity": "high",
-        "title": "Underestimating the 104-Week Sickness Liability",
-        "desc": "Two years of salary continuation plus active reintegration starts on day one of employment, and a weak file can add a third year through a loonsanctie."
-      },
-      {
-        "severity": "high",
-        "title": "Treating Dismissal as an Internal Decision",
-        "desc": "In the Netherlands you need UWV permission or a court ruling unless the employee agrees to a settlement. Announcing a termination first destroys your position."
-      },
-      {
-        "severity": "medium",
-        "title": "Missing a Mandatory CAO",
-        "desc": "Sector collective agreements can apply by activity, not by choice, and typically apply retroactively when discovered. Pay scale and allowance arrears follow."
-      }
+    "ideal": [
+      "Foreign companies with a Dutch entity and no local HR function",
+      "Country managers spending more time on HR than on the business",
+      "Groups that acquired a Dutch team and inherited an unknown HR position",
+      "Companies outgrowing an employer of record and moving onto their own entity"
     ],
     "faqs": [
       {
         "q": "We already use an employer of record. Do we still need this?",
-        "a": "If you have no Dutch entity, an EOR can carry the contracts. Once you incorporate, or once you have more than a handful of staff, the EOR structure usually costs more and still leaves you without anyone advising on Dutch people decisions. That advisory layer is what we provide, and we do not act as an EOR."
+        "a": "An EOR can carry the contracts while you have no Dutch entity. Once you incorporate, or pass a handful of staff, the EOR usually costs more and still leaves nobody advising on Dutch people decisions. We provide that advisory layer and we do not act as an EOR."
       },
       {
         "q": "How is this priced?",
-        "a": "A fixed fee against a written scope, monthly for ongoing work and project-based for defined pieces such as an audit or a contract overhaul. No hourly billing and no surprise invoices, which is what makes it approvable by a head office finance team."
+        "a": "Fixed fee against a written scope: monthly for ongoing work, project-based for defined pieces such as an assessment or a contract overhaul. No hourly billing, which is what makes it approvable by a head office finance team."
       },
       {
         "q": "Do we get the same consultant every time?",
-        "a": "Yes. One named senior consultant owns your account, backed by the wider team for continuity during leave. You are not routed to whoever is free, and you are not handed to a junior."
+        "a": "Yes. One named senior consultant owns your account, with the wider team behind them for continuity. You are never routed to whoever is free, and you are never handed to a junior."
       },
       {
-        "q": "Can you deal with our lawyers and payroll provider directly?",
-        "a": "Yes, and that is usually the point. We coordinate with your Dutch or international counsel, your payroll bureau, the Arbo service and the company doctor, so your head office has one point of contact instead of four."
-      },
-      {
-        "q": "What if we need help today, not next month?",
-        "a": "Urgent single issues such as an escalating conflict, a suspected fraud case or an immediate termination are handled through HR S.O.S., which is built for same-day response. Consultancy engagements are for the structural work behind those incidents."
+        "q": "What if we need help today rather than next month?",
+        "a": "Urgent single issues such as an escalating conflict or an immediate termination run through HR S.O.S. with same working day response. Consultancy engagements cover the structural work behind those incidents."
       }
     ],
     "relatedSlugs": [
@@ -732,104 +1261,182 @@
       "labor-law-advice-international-employer",
       "fractional-hr-solutions"
     ],
-    "topic": "International HR Consultancy"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "The whole Dutch people side, covered",
+        "desc": "One scope covering documents, cases, providers and head office reporting."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Local HR capability, no local hire",
+        "desc": "What changes for your country manager and your finance team."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three Dutch operations we took on",
+        "desc": "Anonymised engagements across new entities, acquisitions and stretched country managers."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "Assessment, fix, then run it",
+        "desc": "A findings report inside a month and a fixed scope from there."
+      },
+      "ideal": {
+        "eyebrow": "Right fit",
+        "heading": "Who this service is built for",
+        "desc": "Foreign-owned Dutch entities that need HR owned rather than improvised."
+      },
+      "faq": {
+        "eyebrow": "Before you commit",
+        "heading": "Questions buyers ask us first",
+        "desc": "Pricing, continuity, EOR comparison and urgent cover."
+      }
+    }
   },
   {
     "slug": "fractional-hr-manager",
-    "title": "Fractional HR Manager for Your Dutch Operation",
-    "subtitle": "A part time HR manager who owns and leads your Dutch HR function and reports into your leadership team.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
-    "parentService": "/solutions/hr-teams",
-    "parentServiceName": "HR Teams",
-    "readTime": "9 min read",
-    "atAGlance": [
-      {
+    "name": "Fractional HR Manager",
+    "title": "Fractional HR Manager for Your Dutch Operation | HRhelp",
+    "metaDescription": "A part time HR manager who owns your Dutch HR function, sits in your management meetings and reports to your country lead. Fixed days, fixed monthly fee.",
+    "tagline": "Your HR lead, part of the week",
+    "hero": "A fractional HR manager is the person accountable for HR in your Dutch entity, working a defined part of the week. Your country lead gets one named person to hold responsible, and your managers get somewhere to go before a conversation goes wrong.",
+    "heroCards": {
+      "tl": {
         "icon": "work",
         "label": "Function",
         "value": "Part time HR lead"
       },
-      {
+      "br": {
         "icon": "schedule",
         "label": "Presence",
         "value": "1 to 3 fixed days"
+      }
+    },
+    "premiseHeading": "You need someone accountable for HR, not someone available for questions.",
+    "premiseBody": [
+      "Advisory support answers the questions you think to ask. A manager owns the function: the HR calendar, the casework, the manager coaching and the local decisions nobody at headquarters has the knowledge to make.",
+      "HRhelp places one named senior consultant in that role on fixed weekly days. They are introduced internally as your HR manager, sit in your management meetings and stay in post for as long as the arrangement suits you."
+    ],
+    "included": [
+      {
+        "icon": "work",
+        "title": "Accountability for the function",
+        "desc": "One named person answerable for Dutch employment risk, reporting to your country lead or headquarters."
       },
       {
         "icon": "groups",
-        "label": "Reports To",
-        "value": "Country lead or HQ"
+        "title": "Manager capability building",
+        "desc": "Line managers are coached through underperformance conversations, sickness reporting and probation decisions."
       },
       {
-        "icon": "euro",
-        "label": "Pricing Model",
-        "value": "Fixed monthly fee"
+        "icon": "schedule",
+        "title": "The HR calendar",
+        "desc": "Pay reviews, holiday accrual and expiry, statutory indexation dates and pension enrolment deadlines all owned."
+      },
+      {
+        "icon": "gavel",
+        "title": "Casework ownership",
+        "desc": "Illness, conflict, restructuring and disciplinary matters run end to end, with lawyers instructed only when genuinely needed."
+      },
+      {
+        "icon": "handshake",
+        "title": "Employee voice",
+        "desc": "Preparing for or running the relationship with a personnel representation body or works council."
+      },
+      {
+        "icon": "trending_up",
+        "title": "Monthly reporting",
+        "desc": "A clear picture for headquarters covering headcount, absence, cost and live risk."
       }
     ],
-    "content": "<h2>A Role, Not Just Extra Capacity</h2><p>A fractional HR manager is the person accountable for HR in your Dutch entity, working a defined part of the week. The distinction matters. Advisory support answers the questions you think to ask. A manager owns the function: the calendar, the casework, the manager coaching and the decisions that nobody at HQ has the local knowledge to make.</p><p>In practice this means your country lead has one named person to hold responsible for Dutch employment risk, and your line managers have somewhere to go before they say something to an employee that becomes evidence later.</p><h2>What the Role Actually Owns</h2><p>The mandate is deliberately broad, because a half owned HR function is worse than none:</p><ul><li><strong>The employment lifecycle:</strong> offer to contract to probation to review to exit, including the transitievergoeding and the correct termination route in each case.</li><li><strong>Manager capability:</strong> coaching line managers through underperformance conversations, sickness reporting and probation decisions so they stop improvising.</li><li><strong>The HR calendar:</strong> pay reviews, holiday accrual and expiry, annual CAO and minimum wage indexation in January and July, pension enrolment deadlines.</li><li><strong>Casework:</strong> long term illness, conflict, restructuring and disciplinary matters, with lawyers instructed only when the case genuinely needs them.</li><li><strong>Employee voice:</strong> preparing for or running the relationship with a personeelsvertegenwoordiging or ondernemingsraad, including the consultation duties under the WOR.</li><li><strong>Reporting upward:</strong> a clear monthly picture for HQ covering headcount, absence, cost and live risk.</li></ul><h2>Leading Managers You Only See Part of the Week</h2><p>Being present two days out of five is a design problem, not an excuse. A fractional HR manager solves it structurally: fixed and predictable days so managers plan around them, a published escalation route for the days in between, and decisions documented in your own systems rather than carried in a notebook. Anything time critical under Dutch law, above all a sickness report, is handled the day it happens regardless of the diary.</p><h2>The Dutch Legal Ground the Role Covers</h2><p>An HR manager in the Netherlands is expected to be fluent in obligations that have no equivalent in most home markets:</p><ul><li><strong>Two years of sick pay:</strong> the employer carries salary continuation and active reintegration for 104 weeks, and a weak dossier at the UWV assessment triggers a third year.</li><li><strong>The ketenregeling:</strong> after three fixed term contracts or three years, the next contract is permanent by operation of law. The tracking has to be systematic.</li><li><strong>Dismissal by route:</strong> redundancy and long term illness go to UWV, performance and broken relationships go to the kantonrechter, and most cases end in a vaststellingsovereenkomst. Choosing the wrong route wastes months.</li><li><strong>CAO obligations:</strong> a mandatory sector agreement can dictate pay scales, allowances and notice, overriding whatever your contract template says.</li><li><strong>Wet DBA:</strong> long standing contractors doing employee shaped work create retroactive payroll tax and pension liability for the Dutch entity.</li></ul><h2>How HRhelp Places a Fractional HR Manager</h2><p>You get one named senior consultant with meaningful Dutch employment law experience, introduced to your team as your HR manager rather than as an outside supplier. HRhelp consultants are native Dutch speakers working fluently in English and German, which matters when a works council meeting runs in Dutch and the minutes have to satisfy a board in another country. Pricing is a fixed monthly fee for an agreed scope and day pattern, so an unexpected restructuring conversation does not arrive as a surprise line on an invoice.</p>",
+    "benefits": [
+      {
+        "icon": "shield",
+        "title": "The risk sits with someone competent",
+        "desc": "Dutch employment exposure stops being distributed across founders and finance and becomes one person's job."
+      },
+      {
+        "icon": "person",
+        "title": "Your staff see an HR manager",
+        "desc": "Introduced in the role, on a company email address where you want that, and the named contact for employee questions and cases."
+      },
+      {
+        "icon": "savings",
+        "title": "A leadership role at part time cost",
+        "desc": "You buy the seniority you need without a full time salary, recruitment fee, pension accrual or severance exposure."
+      },
+      {
+        "icon": "verified",
+        "title": "Senior delivery, guaranteed",
+        "desc": "Many providers sell a director and staff the work to a generalist. HRhelp uses senior consultants only, and you meet yours before signing."
+      }
+    ],
+    "examples": [
+      {
+        "tag": "Industrial group, 65 staff",
+        "situation": "A Swedish parent wanted local accountability after two Dutch dismissal attempts stalled because no dossier had been built. Nobody in the Netherlands owned HR.",
+        "result": "Two fixed days a week. Performance management was put on a documented footing, and the next two exits closed by settlement within six weeks each."
+      },
+      {
+        "tag": "Scale-up, 35 staff",
+        "situation": "Headcount was climbing towards the works council threshold and the leadership team had no plan for employee representation or for the consultation duties that follow.",
+        "result": "The fractional manager set up a personnel representation body ahead of the threshold, then guided leadership through its first consultation without friction."
+      },
+      {
+        "tag": "Services firm, 50 staff",
+        "situation": "A long standing contractor population was doing work that looked increasingly like employment, and finance was uneasy about the exposure sitting on the Dutch entity.",
+        "result": "Each engagement was reviewed and reclassified or restructured over one quarter, removing the exposure before any inspection or audit raised it."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Mandate and Fit",
-        "desc": "We define what the role decides, what it escalates and who it reports to, then match the right senior consultant."
+        "title": "Mandate and fit",
+        "desc": "We define what the role decides, what it escalates and who it reports to, then match the right senior consultant.",
+        "timeframe": "Week 1"
       },
       {
         "step": "02",
-        "title": "Function Handover",
-        "desc": "Contracts, files, policies and live cases are reviewed and moved into a structure the role can actually run."
+        "title": "Function handover",
+        "desc": "Contracts, files, policies and live cases are reviewed and moved into a structure the role can actually run.",
+        "timeframe": "Weeks 2 to 4"
       },
       {
         "step": "03",
-        "title": "Leading in Post",
-        "desc": "Fixed weekly days on site or remote: casework, manager coaching, the HR calendar and monthly reporting to HQ."
+        "title": "Leading in post",
+        "desc": "Fixed weekly days of casework, manager coaching, the HR calendar and monthly reporting to headquarters.",
+        "timeframe": "Ongoing"
       },
       {
         "step": "04",
-        "title": "Review and Scale",
-        "desc": "Quarterly assessment of whether the day pattern still fits, and preparation for an in house hire when it does not."
+        "title": "Review and scale",
+        "desc": "Quarterly assessment of whether the day pattern still fits, and preparation for an in house hire when it does not.",
+        "timeframe": "Every quarter"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Responsibility Without Authority",
-        "desc": "A part time HR manager who cannot make a hiring or exit decision becomes an expensive note taker and the risk stays with you."
-      },
-      {
-        "severity": "high",
-        "title": "Applying HQ Policy Unchecked",
-        "desc": "US and UK handbooks conflict with Dutch statutory minimums on notice, holiday and sick pay. The Dutch minimum always wins."
-      },
-      {
-        "severity": "medium",
-        "title": "Missing the Works Council Trigger",
-        "desc": "Crossing fifty employees obliges you to establish an ondernemingsraad, and consultation duties bite before your next reorganisation."
-      },
-      {
-        "severity": "medium",
-        "title": "Junior Delivery Behind a Senior Pitch",
-        "desc": "Many providers sell a director and staff the work to a generalist. Confirm who actually sits in your office each week."
-      }
+    "ideal": [
+      "You want one person accountable for Dutch HR, not shared coverage",
+      "You have 10 to 75 employees and no full time HR role to justify",
+      "Line managers need coaching as much as the entity needs administration",
+      "Headquarters wants local leadership with a clear monthly reporting line"
     ],
     "faqs": [
       {
-        "q": "How does a fractional HR manager differ from an interim HR manager?",
-        "a": "An interim HR manager covers a real vacancy at close to full time for a finite period, then leaves when it is filled. A fractional HR manager is an ongoing part time arrangement for a company that does not need, and may never need, a full time HR manager on its own payroll."
+        "q": "How does this differ from a fractional HR solution?",
+        "a": "The broader fractional service delivers senior HR capability across your function. A fractional HR manager is a defined role with accountability, decision rights and a reporting line, and your staff know them as the HR manager."
       },
       {
-        "q": "Will our employees see them as our HR manager or as a supplier?",
-        "a": "As your HR manager. They are introduced internally in the role, use a company email address where you want that, sit in your management meetings and are the named point of contact for staff questions and cases."
-      },
-      {
-        "q": "How many employees does this model work for?",
-        "a": "It works well from roughly ten to seventy five people in the Netherlands. Below ten, advisory support is usually enough. Above that, the role typically grows into a full time in house hire that your fractional manager helps you recruit."
+        "q": "How does it differ from an interim HR manager?",
+        "a": "An interim HR manager covers a real vacancy at close to full time and leaves when it is filled. A fractional HR manager is an ongoing arrangement for a company that may never need a full time HR manager on its own payroll."
       },
       {
         "q": "Can they run a dismissal or a small reorganisation?",
-        "a": "Yes. That is core to the role: building the dossier, choosing between the UWV route and the kantonrechter, negotiating the vaststellingsovereenkomst and calculating the transitievergoeding. We involve an employment lawyer only where the case genuinely calls for one."
+        "a": "Yes, that is core to the role: building the dossier, choosing the correct termination route, negotiating settlement and calculating the statutory payment. An employment lawyer is involved only where the case genuinely calls for one."
       },
       {
         "q": "What is included in the fixed fee?",
-        "a": "The agreed scope and day pattern, plus reachability between office days. HRhelp prices this in advance so that questions, urgent cases and manager coaching do not each trigger a separate charge."
+        "a": "The agreed scope and day pattern, plus reachability between office days. Questions, urgent cases and manager coaching do not each trigger a separate charge."
       }
     ],
     "relatedSlugs": [
@@ -837,104 +1444,184 @@
       "interim-hr-manager",
       "interim-hr-advisor"
     ],
-    "topic": "Flexible HR Capacity"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "A role with a name on it",
+        "desc": "The mandate is deliberately broad, because a half owned HR function is worse than none."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Accountability you can point at",
+        "desc": "One person owns Dutch people risk, and your leadership team knows exactly who that is."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three roles we currently hold",
+        "desc": "Anonymised examples of fractional HR managers placed with international employers."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "Define the role, then fill it",
+        "desc": "Decision rights and escalation routes are written down before day one."
+      },
+      "ideal": {
+        "eyebrow": "Who it suits",
+        "heading": "A fractional HR manager fits when",
+        "desc": "The need is leadership and ownership, delivered on part of the week."
+      },
+      "faq": {
+        "eyebrow": "Good to know",
+        "heading": "How the role works in practice",
+        "desc": "Positioning with staff, authority, casework and what the fee covers."
+      }
+    },
+    "parentService": "/solutions/hr-teams",
+    "parentServiceName": "HR Teams"
   },
   {
     "slug": "interim-hr-support",
-    "title": "Interim HR Support for International Employers",
-    "subtitle": "Hands-on operational HR help that clears your backlog of contracts, cases and administration.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
-    "parentService": "/solutions/hr-teams",
-    "parentServiceName": "HR Teams",
-    "readTime": "9 min read",
-    "atAGlance": [
-      {
-        "icon": "support_agent",
-        "label": "Focus",
-        "value": "Day to day HR"
-      },
-      {
+    "name": "Interim HR Support",
+    "title": "Interim HR Support for International Employers | HRhelp",
+    "metaDescription": "Hands-on operational HR support in the Netherlands: contracts, absence files, payroll preparation and staff questions. From one day a week, fixed monthly fee.",
+    "tagline": "Hands-on help with the daily work",
+    "hero": "Interim HR support is the operational layer of your HR function delivered by a senior consultant: contracts issued, absence files kept current, payroll mutations prepared and employee questions answered. It is the doing, not the leading.",
+    "heroCards": {
+      "tl": {
         "icon": "schedule",
-        "label": "Minimum Block",
+        "label": "Minimum block",
         "value": "1 day per week"
       },
+      "br": {
+        "icon": "description",
+        "label": "Core work",
+        "value": "Contracts and cases"
+      }
+    },
+    "premiseHeading": "HR admin has quietly landed on your office manager or finance controller, and things are slipping.",
+    "premiseBody": [
+      "Your Dutch entity has grown past the point where HR can be absorbed as a side task, but not far enough to justify a permanent HR hire. Contract end dates get missed, sickness paperwork lags, and payroll goes out unchecked.",
+      "HRhelp gives you a named senior consultant in day blocks, starting at one day a week. They clear what is already overdue, then run the operational rhythm so nothing else falls through."
+    ],
+    "included": [
       {
         "icon": "description",
-        "label": "Core Work",
-        "value": "Contracts and cases"
+        "title": "Contract administration",
+        "desc": "Dutch employment contracts, addenda, extensions and probation confirmations drafted and issued on time."
+      },
+      {
+        "icon": "person",
+        "title": "Onboarding and offboarding",
+        "desc": "Identity and BSN checks, payroll enrolment, expat ruling applications, final settlements and holiday balances."
+      },
+      {
+        "icon": "fact_check",
+        "title": "Absence administration",
+        "desc": "Sickness registration, occupational health appointments, reintegration documents and statutory notifications kept current."
       },
       {
         "icon": "euro",
-        "label": "Pricing",
-        "value": "Fixed monthly fee"
+        "title": "Payroll preparation",
+        "desc": "Monthly mutations prepared for your provider and the run verified before anyone is paid."
+      },
+      {
+        "icon": "support_agent",
+        "title": "Employee questions",
+        "desc": "A named person your staff can ask about leave, pay, parental leave and pension, in Dutch or English."
+      },
+      {
+        "icon": "shield",
+        "title": "File hygiene",
+        "desc": "Personnel files brought to a standard that survives an audit, a due diligence review or a court hearing."
       }
     ],
-    "content": "<h2>Operational Support, Not HR Leadership</h2><p>Interim HR support is the hands on layer of the function. It is the work that keeps an employer compliant and employees paid correctly: contracts drafted and issued, absence files kept current, payroll mutations prepared, onboarding run, employee questions answered. It is deliberately not the strategic layer. If you need someone to lead the function and hold decision rights, that is an interim HR manager, and the two are often deployed together.</p><p>Foreign employers usually reach for this when the Dutch entity has grown past the point where an office manager or a finance controller can absorb HR on the side, but has not yet grown enough to justify a permanent HR hire.</p><h2>What Interim HR Support Typically Handles</h2><ul><li><strong>Contract administration:</strong> drafting and issuing Dutch employment contracts, addenda, extensions and probation confirmations</li><li><strong>Onboarding and offboarding:</strong> identity and BSN checks, payroll enrolment, 30% ruling applications, final settlements and holiday balance calculations</li><li><strong>Absence administration:</strong> sickness registration, arbodienst appointments, Poortwachter document deadlines and UWV notifications</li><li><strong>Payroll preparation:</strong> monthly mutations to your payroll provider, verification of the run before payment, holiday allowance and thirteenth month checks</li><li><strong>Employee questions:</strong> a named person staff can ask about leave, pay, parental leave and pension, in English and in Dutch</li><li><strong>File hygiene:</strong> personnel files brought to a standard that survives an audit or a court hearing</li></ul><h2>The Dutch Administration That Catches Foreign Employers Out</h2><p>Most of the expensive mistakes we are asked to clean up are administrative rather than strategic:</p><ul><li><strong>Aanzegtermijn:</strong> written notice of continuation or ending is due one month before a fixed term contract of six months or more expires. Missing it costs one month of gross salary.</li><li><strong>Ketenregeling:</strong> three fixed term contracts, or a chain exceeding 36 months, converts to permanent employment automatically. Nobody sends a warning.</li><li><strong>CAO application:</strong> a sector collective agreement can bind you by activity, setting minimum scales, allowances and notice periods that override your template contract.</li><li><strong>Holiday accrual:</strong> statutory days expire six months after the year they were earned, supplementary days after five years, and the two balances must be tracked separately.</li></ul><h2>Sickness Files and the Poortwachter Clock</h2><p>Absence administration is where operational HR support pays for itself. From the first sick day the employer is on a 104 week clock with fixed checkpoints: a probleemanalyse by week six, a plan van aanpak by week eight, UWV notification by week 42, evaluations every six weeks, and a WIA application at week 88. UWV then audits the file. If the reintegration effort or the paperwork falls short, the wage payment obligation can be extended by a full additional year. Keeping that dossier current is routine work, but only if somebody owns it.</p><h2>Scope, Pricing and Escalation</h2><p>HRhelp scopes interim HR support in day blocks, usually starting at one day a week and scaling with headcount and case volume. You get one named senior consultant rather than a shared service desk, and the fee is fixed monthly. A busy month with three sickness cases and two exits costs the same as a quiet one, which makes the line item predictable for a headquarters budgeting the Dutch entity from abroad.</p><p>Because the consultant is senior, escalation is internal. A complex dismissal or a Wet DBA question on your contractor population is handled inside the same engagement, with an employment lawyer brought in only when litigation is genuinely on the table.</p>",
+    "benefits": [
+      {
+        "icon": "schedule",
+        "title": "Your team gets its week back",
+        "desc": "Finance and office management stop doing HR badly at the edges of their real jobs, and the admin gets done properly."
+      },
+      {
+        "icon": "shield",
+        "title": "Missed deadlines stop costing money",
+        "desc": "Written notice on expiring fixed term contracts and contract chain tracking are handled routinely rather than remembered occasionally."
+      },
+      {
+        "icon": "verified",
+        "title": "Senior person doing junior work",
+        "desc": "Because the consultant is senior, a hidden collective agreement issue or dismissal risk gets flagged instead of quietly filed."
+      },
+      {
+        "icon": "euro",
+        "title": "Predictable monthly cost",
+        "desc": "A busy month with three sickness cases and two exits costs the same as a quiet one, which makes the line item easy for HQ to budget."
+      }
+    ],
+    "examples": [
+      {
+        "tag": "Nordic group, 35 staff",
+        "situation": "The Dutch office manager had been issuing contracts from an old template and tracking absence in a spreadsheet. Two fixed term contracts had passed their notice date unnoticed.",
+        "result": "One day a week cleared the backlog in six weeks, corrected the template, and put a rolling contract calendar in place that has not missed a date since."
+      },
+      {
+        "tag": "Biotech, 50 staff",
+        "situation": "Three employees were on long term sick leave with incomplete reintegration files, and the first statutory assessment was approaching.",
+        "result": "All three dossiers were rebuilt to the required standard, the occupational health service was coordinated properly, and the wage continuation obligation was not extended."
+      },
+      {
+        "tag": "Media company, 20 staff",
+        "situation": "Payroll was sent to the provider without any HR check, and allowance and expat ruling errors were reaching employees most months.",
+        "result": "A pre run verification step was introduced, errors stopped at source, and the monthly correction cycle that had annoyed staff for a year disappeared."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Backlog Review",
-        "desc": "We audit contracts, personnel files, open absence cases and upcoming contract end dates to find what is already overdue."
+        "title": "Backlog review",
+        "desc": "We audit contracts, personnel files, open absence cases and upcoming end dates to find what is already overdue.",
+        "timeframe": "Week 1"
       },
       {
         "step": "02",
-        "title": "Scope in Day Blocks",
-        "desc": "Workload is converted into a weekly day commitment and a fixed monthly fee, with the named consultant confirmed."
+        "title": "Scope in day blocks",
+        "desc": "Workload is converted into a weekly day commitment and a fixed monthly fee, with your named consultant confirmed.",
+        "timeframe": "Week 1"
       },
       {
         "step": "03",
-        "title": "Clear and Stabilise",
-        "desc": "Overdue aanzeggingen, incomplete sickness dossiers and missing contract paperwork are brought current first."
+        "title": "Clear and stabilise",
+        "desc": "Overdue notices, incomplete sickness dossiers and missing contract paperwork are brought current first.",
+        "timeframe": "Weeks 2 to 6"
       },
       {
         "step": "04",
-        "title": "Run the Rhythm",
-        "desc": "Monthly payroll mutations, absence checkpoints and employee queries run on a fixed cycle you can rely on."
+        "title": "Run the rhythm",
+        "desc": "Payroll mutations, absence checkpoints and employee queries run on a fixed cycle you can rely on.",
+        "timeframe": "Ongoing"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "HR Bolted Onto Finance or Office Management",
-        "desc": "Non specialists miss aanzegtermijn and ketenregeling deadlines. Each miss is a direct cash cost or an unintended permanent contract."
-      },
-      {
-        "severity": "high",
-        "title": "Incomplete Sickness Dossiers",
-        "desc": "UWV audits the reintegration file at week 88. Gaps in documentation are treated as failure to meet the obligation and can add a third year of salary."
-      },
-      {
-        "severity": "medium",
-        "title": "Payroll Sent Without Verification",
-        "desc": "Payroll providers process what they receive. Without an HR check on the run, errors in allowances, holiday pay and ruling status reach employees."
-      },
-      {
-        "severity": "medium",
-        "title": "Junior Support on Senior Problems",
-        "desc": "Administrative cover that cannot recognise a CAO issue or a dismissal risk simply files the problem instead of flagging it."
-      }
+    "ideal": [
+      "HR administration is currently a side task for finance or office management",
+      "You have between 10 and 75 employees in the Netherlands",
+      "You need execution and reliability rather than strategy",
+      "Your headquarters wants one predictable monthly cost for Dutch HR operations"
     ],
     "faqs": [
       {
         "q": "How does this differ from an interim HR manager?",
-        "a": "Interim HR support executes the operational work and flags risks. An interim HR manager leads the function, holds decision rights and represents the employer to the works council. Smaller entities often need only the support layer."
+        "a": "Interim HR support executes the operational work and flags risks upward. An interim HR manager leads the function, holds decision rights and represents the employer to the works council. Smaller entities usually need only the support layer."
       },
       {
         "q": "Do you replace our payroll provider?",
-        "a": "No. We sit between your business and your payroll provider, preparing and checking the monthly mutations. Your existing provider keeps running the payroll itself."
-      },
-      {
-        "q": "Can you work in English with our headquarters?",
-        "a": "Yes. Consultants are native Dutch speakers who work fluently in English and German, so the same person can handle a bedrijfsarts call and then report to a US or German HQ."
+        "a": "No. We sit between your business and your provider, preparing and checking the monthly mutations. Your existing provider keeps running the payroll itself."
       },
       {
         "q": "What is the smallest engagement you take?",
-        "a": "One day a week. Below that the consultant loses continuity on live cases, which is where the value sits."
+        "a": "One day a week. Below that the consultant loses continuity on live cases, and continuity is where most of the value sits."
       },
       {
-        "q": "Is HRhelp an employer of record?",
-        "a": "No. HRhelp does not employ your staff. Your people remain employed by your Dutch entity and our consultant runs the HR work for you at a fixed monthly fee."
+        "q": "What happens if something complex comes up?",
+        "a": "It is handled inside the same engagement, because the consultant is senior. We involve an employment lawyer only when litigation is genuinely on the table."
       }
     ],
     "relatedSlugs": [
@@ -942,104 +1629,186 @@
       "temporary-hr-solutions",
       "interim-hr-advisor"
     ],
-    "topic": "Operational HR Support"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "The daily HR work, done properly",
+        "desc": "Six areas of operational delivery, all owned by one named consultant."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Reliability instead of improvisation",
+        "desc": "Operational HR is cheap to run well and expensive to run badly."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three backlogs we cleared",
+        "desc": "Anonymised examples of operational support for international employers in the Netherlands."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "Audit, scope, clear, then run",
+        "desc": "We fix what is overdue before we settle into the monthly rhythm."
+      },
+      "ideal": {
+        "eyebrow": "Who it suits",
+        "heading": "Interim HR support fits when",
+        "desc": "The need is hands-on capacity with senior judgement behind it."
+      },
+      "faq": {
+        "eyebrow": "Good to know",
+        "heading": "Practical questions about scope",
+        "desc": "Minimum commitment, payroll boundaries and escalation."
+      }
+    },
+    "parentService": "/solutions/hr-teams",
+    "parentServiceName": "HR Teams"
   },
   {
     "slug": "hr-compliance-dutch-entity-foreign-company",
-    "title": "HR Compliance for the Dutch Entity of a Foreign Company",
-    "subtitle": "Getting contracts, CAO position, policies and headcount thresholds right before they are tested.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
+    "name": "HR Compliance for a Dutch Entity",
+    "title": "HR Compliance for the Dutch Entity of a Foreign Company | HRhelp",
+    "metaDescription": "A fixed-fee compliance baseline for your Dutch entity: contract clause check, CAO and pension determination, rebuilt policies and a threshold roadmap.",
     "parentService": "/solutions/hr-reset",
     "parentServiceName": "HR Reset",
-    "readTime": "10 min read",
-    "atAGlance": [
+    "tagline": "A documented compliance baseline, fixed fee",
+    "hero": "We check your Dutch entity against the employment obligations it actually carries, then deliver a written baseline and the corrected documents to match. A defined project with a fixed fee and a finish line.",
+    "heroCards": {
+      "tl": {
+        "icon": "description",
+        "label": "Core deliverable",
+        "value": "Written compliance baseline"
+      },
+      "br": {
+        "icon": "schedule",
+        "label": "Findings in",
+        "value": "2 to 3 weeks"
+      }
+    },
+    "premiseHeading": "Your Dutch entity is running on documents nobody has ever checked.",
+    "premiseBody": [
+      "The contracts came from the group template, the handbook came from head office, and the sector position was never formally determined. That holds until an inspection, a pension fund letter, a wage claim or a dismissal puts the paperwork in front of someone who reads it properly.",
+      "This is a one-off, fixed-fee check and clean-up. A senior consultant scans the entity, gives you a written baseline of where you stand, and rewrites the documents that need it, so you can evidence your position rather than hope it holds."
+    ],
+    "included": [
       {
-        "icon": "gavel",
-        "label": "Works Council Threshold",
-        "value": "50 employees"
+        "icon": "fact_check",
+        "title": "Contract clause check",
+        "desc": "Every contract type in use is reviewed clause by clause, with a written list of what to change."
       },
       {
-        "icon": "verified",
-        "label": "CAO Coverage in NL",
-        "value": "Around 75% of staff"
+        "icon": "policy",
+        "title": "CAO applicability determination",
+        "desc": "A written determination of whether a collective agreement applies to your activity, and what follows if it does."
+      },
+      {
+        "icon": "savings",
+        "title": "Sector pension fund check",
+        "desc": "A documented assessment of mandatory sector pension exposure for your entity."
       },
       {
         "icon": "description",
-        "label": "Core Deliverable",
-        "value": "Written compliance baseline"
+        "title": "Policy set rebuild",
+        "desc": "Handbook, leave, absence, privacy and monitoring policies rewritten to Dutch standard in English and Dutch."
+      },
+      {
+        "icon": "groups",
+        "title": "Headcount threshold roadmap",
+        "desc": "Works council, whistleblowing and reporting duties mapped to your growth plan, each with an owner and a date."
+      },
+      {
+        "icon": "shield",
+        "title": "Contractor and RI&E status",
+        "desc": "Your contractor population and risk inventory position are reviewed and documented alongside the rest."
+      }
+    ],
+    "benefits": [
+      {
+        "icon": "verified",
+        "title": "You can evidence your position",
+        "desc": "A written baseline turns assumptions into something your board, your auditor and your parent company can rely on."
       },
       {
         "icon": "euro",
-        "label": "Engagement Model",
-        "value": "Fixed fee, senior consultant"
+        "title": "Fixed price, defined end",
+        "desc": "Scope, cost and deliverables are agreed before we start. This is a project with a finish line, not an open retainer."
+      },
+      {
+        "icon": "shield",
+        "title": "Problems found before they are tested",
+        "desc": "Exposure is far cheaper to correct while nobody is claiming. Discovering it mid-dispute or mid-audit is not."
+      },
+      {
+        "icon": "trending_up",
+        "title": "Ready for the next fifty hires",
+        "desc": "The threshold roadmap tells you what changes at which headcount, so growth stops quietly creating new obligations."
       }
     ],
-    "content": "<h2>What Compliance Actually Means for a Dutch Entity</h2><p>A Dutch BV owned by a foreign parent is a full Dutch employer from the day it puts its first person on payroll. Group templates written for the UK, the US or Germany do not transfer. Most Dutch employment law is mandatory (dwingend recht), so an employee cannot validly sign away a protection, even where the contract says otherwise.</p><p>The risk is rarely a regulator arriving unannounced. It is the first dispute, sickness case or exit, when the paperwork is tested and found thin. Fixing a baseline costs far less than defending a weak one.</p><h2>Contracts: The Clauses That Must Be Exactly Right</h2><ul><li><strong>Probation (proeftijd):</strong> void on contracts of six months or less, capped at one month for fixed-term contracts under two years and two months for longer or indefinite contracts. An over-long clause is void in full, not reduced to the maximum.</li><li><strong>Fixed-term chain (ketenregeling):</strong> three consecutive contracts across 36 months, after which the relationship converts to indefinite by operation of law.</li><li><strong>Non-compete and non-solicitation:</strong> enforceable only in writing with an adult employee, and inside a fixed-term contract only where the compelling business interest (zwaarwegend bedrijfsbelang) is motivated in the contract itself.</li><li><strong>Aanzegplicht:</strong> fixed-term contracts of six months or more require written confirmation of renewal or expiry at least one month in advance, on penalty of one month of salary.</li><li><strong>Transparent and predictable conditions:</strong> a defined information set must be disclosed, secondary employment cannot be banned without objective justification, and legally mandatory training is free of charge and counts as working time.</li></ul><h2>The CAO Check Foreign Parents Skip</h2><p>Around three quarters of Dutch employees sit under a collective labour agreement. Many CAOs are declared generally binding (algemeen verbindend verklaard), meaning they apply because of what your entity does, not because anyone signed them. A CAO can override your contract on pay scales, working hours, overtime, allowances, notice and pension.</p><p>The same activity classification drives mandatory sector pension fund membership (bedrijfstakpensioenfonds). Enrolment is retroactive: a fund that identifies you three years late invoices three years of contributions plus interest, and the employee share is rarely recoverable. HRhelp issues a written determination at the start of an engagement, because this is the most expensive item to get wrong.</p><h2>Registrations, Policies and Records</h2><ul><li><strong>Payroll and tax:</strong> KvK registration, a wage tax number, correct handling of the 30% ruling for eligible international hires, and the werkkostenregeling for allowances and benefits.</li><li><strong>Health and safety:</strong> a written risk inventory and evaluation (RI&amp;E) with a plan of action, plus a contracted arbodienst or company doctor.</li><li><strong>Leave and pay:</strong> statutory holiday of four times weekly hours, 8 percent holiday allowance payable by the end of May, and statutory days expiring six months after the accrual year.</li><li><strong>Data:</strong> personnel files under the AVG, with retention limits and a lawful basis for screening and monitoring.</li><li><strong>Contractors:</strong> Wet DBA reclassification exposure, enforced again since 1 January 2025. Long-running consultants on rolling invoices are the usual finding.</li></ul><h2>Headcount Thresholds That Change Your Obligations</h2><ul><li><strong>10 to 49 employees:</strong> a staff representation body (personeelsvertegenwoordiging) must be set up if a majority of staff ask for one.</li><li><strong>50 employees or more:</strong> a works council (ondernemingsraad) becomes mandatory under the WOR, with consent rights over working time, absence and pension arrangements and advisory rights over reorganisations. Decisions taken without the required consent or advice can be void.</li><li><strong>50 employees or more:</strong> an internal reporting procedure is required under the Wet bescherming klokkenluiders.</li><li><strong>20 dismissals in three months:</strong> collective redundancy rules (WMCO) apply, with notification to UWV and the unions and a one month waiting period.</li></ul><p>HRhelp maps these thresholds to your hiring plan so each duty is prepared for, not discovered.</p>",
+    "examples": [
+      {
+        "tag": "French group, 55 staff",
+        "situation": "The Dutch entity crossed fifty employees during a hiring push and nobody flagged what changed at that point. The parent had assumed local staff would raise anything important.",
+        "result": "The scan produced a threshold roadmap with named owners and dates. Representation and whistleblowing obligations were addressed in the same quarter rather than after a request landed."
+      },
+      {
+        "tag": "US SaaS, 20 staff",
+        "situation": "All twenty employees sat on a translated parent contract, including a probation clause and a non-compete lifted straight from the US template.",
+        "result": "The clause check identified which provisions gave no protection at all. A new Dutch contract set was drafted and signed across the team within six weeks."
+      },
+      {
+        "tag": "Logistics firm, 40 staff",
+        "situation": "A pension provider query prompted the parent to ask whether a sector agreement applied to the Dutch entity. No determination had ever been made or written down.",
+        "result": "A written CAO and pension determination was delivered in under three weeks, with the pay scale comparison the finance team needed to budget the answer."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Entity and Population Scan",
-        "desc": "Map the legal entity, payroll setup, every contract type in use and the full contractor population."
+        "title": "Entity and population scan",
+        "desc": "We map the entity, payroll setup, every contract type in use and the full contractor population.",
+        "timeframe": "Week 1"
       },
       {
         "step": "02",
-        "title": "CAO and Pension Determination",
-        "desc": "Written determination of whether a generally binding CAO and a mandatory sector pension fund apply to your activity."
+        "title": "CAO and pension determination",
+        "desc": "A written determination of collective agreement and sector pension applicability for your activity.",
+        "timeframe": "Week 2 to 3"
       },
       {
         "step": "03",
-        "title": "Document Remediation",
-        "desc": "Rewrite contracts, handbook, leave, privacy and absence policies to a defensible Dutch standard, in English and Dutch."
+        "title": "Document remediation",
+        "desc": "Contracts, handbook and core policies are rewritten to Dutch standard in English and Dutch.",
+        "timeframe": "Week 3 to 6"
       },
       {
         "step": "04",
-        "title": "Threshold Roadmap",
-        "desc": "Representation, whistleblowing and reporting duties mapped to your headcount plan, each with an owner and a date."
+        "title": "Threshold roadmap and handover",
+        "desc": "Obligations are mapped to your headcount plan with an owner and a date each, then handed over.",
+        "timeframe": "Week 6 to 7"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Retroactive Sector Pension Liability",
-        "desc": "A mandatory bedrijfstakpensioenfonds can claim years of unpaid contributions plus interest, with the employee share rarely recoverable."
-      },
-      {
-        "severity": "high",
-        "title": "Void Clauses in Group Templates",
-        "desc": "Probation and non-compete clauses copied from a parent template are frequently void in full, leaving no protection at the moment you need it."
-      },
-      {
-        "severity": "medium",
-        "title": "No RI&E on File",
-        "desc": "The risk inventory and evaluation is a legal duty, not best practice. Its absence surfaces in inspections and in liability claims after an incident."
-      },
-      {
-        "severity": "medium",
-        "title": "Crossing 50 Employees Unnoticed",
-        "desc": "Works council and whistleblowing obligations arrive with headcount, not with a notification. Growing teams cross the line without anyone owning it."
-      }
+    "ideal": [
+      "Dutch entities of foreign parents that have never had a compliance review",
+      "Companies approaching or passing fifty employees in the Netherlands",
+      "Groups preparing for due diligence, audit or an internal control review",
+      "Entities that grew fast on head office templates and never looked back"
     ],
     "faqs": [
       {
         "q": "How is a compliance engagement priced?",
-        "a": "Fixed fee against an agreed scope, quoted before we start. You know the cost of the review, the CAO and pension determination and the document set up front, with no hourly meter."
+        "a": "A fixed fee against an agreed scope, quoted before we start. You know the cost of the scan, the determinations and the document set up front, with no hourly meter running."
       },
       {
-        "q": "How long does a full compliance review take?",
-        "a": "For an entity of up to roughly 50 people, the scan and written findings typically take two to three weeks, with remediated contracts and policies following over the next three to four weeks."
+        "q": "How long does it take?",
+        "a": "For an entity of up to roughly fifty people, the scan and written findings typically take two to three weeks. Remediated contracts and policies follow over the next three to four weeks."
       },
       {
-        "q": "Can we use our global employee handbook in the Netherlands?",
-        "a": "As a cultural document, yes. As a legal one, no. Sections on notice, dismissal, probation, leave, sickness, working hours and monitoring have to be replaced with Dutch provisions, and any applicable CAO takes precedence over both."
+        "q": "Is this a one-off project or an ongoing service?",
+        "a": "One-off by design. It delivers a baseline and a corrected document set with a defined end. Many clients then keep a consultant on call through our advisory service, but that is a separate decision."
       },
       {
-        "q": "Do we have to set up a works council once we hit 50 employees?",
-        "a": "Yes. The obligation under the WOR sits with the employer at 50 employees, regardless of whether staff ask. In practice enforcement usually begins with an employee or union request, but decisions taken without required consent can be challenged and reversed."
-      },
-      {
-        "q": "How does this differ from HR Reset?",
-        "a": "HR Reset is the broader modernisation of an existing HR function, covering structure, processes and people. This service is the compliance layer inside it: the legal baseline your Dutch entity must be able to evidence."
+        "q": "How does this differ from your labour law advice?",
+        "a": "Compliance builds the baseline your entity should be able to evidence at any time. Labour law advice applies to a live decision already in front of you, such as a dismissal or a long-term absence case."
       }
     ],
     "relatedSlugs": [
@@ -1047,104 +1816,184 @@
       "hr-consultancy-foreign-companies",
       "interim-hr-advisor"
     ],
-    "topic": "Compliance and Risk"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "The deliverables in the baseline",
+        "desc": "Six concrete outputs, each written down and handed over at the end."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Certainty instead of assumption",
+        "desc": "What a documented baseline is worth when someone finally asks."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three entities we cleaned up",
+        "desc": "Anonymised projects across growth, template contracts and sector questions."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "Scan, determine, remediate, hand over",
+        "desc": "Findings inside three weeks, full document set inside seven."
+      },
+      "ideal": {
+        "eyebrow": "Right fit",
+        "heading": "Who this service is built for",
+        "desc": "Foreign-owned Dutch entities that need their position documented."
+      },
+      "faq": {
+        "eyebrow": "Before you commit",
+        "heading": "Questions buyers ask us first",
+        "desc": "Cost, duration, scope and where it stops."
+      }
+    }
   },
   {
     "slug": "labor-law-advice-international-employer",
-    "title": "Dutch Labour Law Advice for International Employers",
-    "subtitle": "Practical HR-side counsel on dismissal, sickness, contracts and restructuring under Dutch law.",
-    "vertical": "services",
-    "verticalLabel": "HR Service",
+    "name": "Dutch Labour Law Advice",
+    "title": "Dutch Labour Law Advice for International Employers | HRhelp",
+    "metaDescription": "Practical HR-side counsel on live Dutch employment cases: dismissal, absence, restructuring and contractor reviews. Same working day response when urgent.",
     "parentService": "/solutions/hr-sos",
     "parentServiceName": "HR S.O.S.",
-    "readTime": "9 min read",
-    "atAGlance": [
+    "tagline": "Practical counsel on live employment cases",
+    "hero": "When a Dutch employment decision is already in front of you, we set out your options, what each one is likely to cost and how to run it. HR-side counsel from senior consultants, with a Dutch employment lawyer brought in when the matter needs one.",
+    "heroCards": {
+      "tl": {
+        "icon": "schedule",
+        "label": "Urgent response",
+        "value": "Same working day"
+      },
+      "br": {
+        "icon": "fact_check",
+        "label": "You receive",
+        "value": "Options and cost in writing"
+      }
+    },
+    "premiseHeading": "A decision is already on your desk and head office practice does not transfer.",
+    "premiseBody": [
+      "A dismissal, a long-term absence case, a reorganisation, a contractor arrangement that suddenly looks fragile. Your parent company has a playbook, but it was written somewhere else, and applying it here is how a manageable situation becomes an expensive one.",
+      "We give you HR-side counsel on the case in front of you: the routes available, the likely cost and timeline of each, the documentation your position depends on, and the conversation itself. Where litigation or formal representation is needed, we bring in a Dutch employment lawyer and run the HR side alongside them."
+    ],
+    "included": [
+      {
+        "icon": "schedule",
+        "title": "Same day case briefing",
+        "desc": "A senior consultant takes the facts, the contract and the existing file, then confirms what is actually at stake."
+      },
+      {
+        "icon": "alt_route",
+        "title": "Options and cost in writing",
+        "desc": "Each viable route compared on timeline, likelihood and cost range so you can choose deliberately."
+      },
+      {
+        "icon": "description",
+        "title": "File and documentation build",
+        "desc": "The letters, records and evaluations your position rests on, drafted to the standard that gets tested."
+      },
+      {
+        "icon": "handshake",
+        "title": "Conversation preparation",
+        "desc": "Scripts, scenarios and, where it helps, a consultant in the room for the meeting itself."
+      },
       {
         "icon": "gavel",
-        "label": "Dismissal Routes",
-        "value": "UWV, court or settlement"
+        "title": "Exit route execution",
+        "desc": "Settlement drafting, UWV filings or court preparation, with a lawyer engaged where the matter requires one."
+      },
+      {
+        "icon": "shield",
+        "title": "Absence and contractor reviews",
+        "desc": "Reintegration files and contractor arrangements assessed against what an inspection or a claim would look for."
+      }
+    ],
+    "benefits": [
+      {
+        "icon": "schedule",
+        "title": "An answer the same working day",
+        "desc": "Urgent matters get a senior consultant who reads the file and comes back with options, not a holding response."
       },
       {
         "icon": "euro",
-        "label": "Transition Payment",
-        "value": "1/3 month per year"
+        "title": "You see the number before you commit",
+        "desc": "Cost ranges and settlement expectations are modelled up front, so the route is chosen on facts rather than on hope."
       },
       {
-        "icon": "healing",
-        "label": "Sick Pay Obligation",
-        "value": "Up to 104 weeks"
+        "icon": "person",
+        "title": "Practical, not only defensible",
+        "desc": "A lawyer tells you what holds up. We also tell you what it does to the team, the manager and the timeline, then help you run it."
       },
       {
-        "icon": "schedule",
-        "label": "Urgent Response",
-        "value": "Same working day"
+        "icon": "shield",
+        "title": "The same case does not come back",
+        "desc": "Once the matter closes we fix the cause: the clause, the appraisal habit or the absence procedure that produced it."
       }
     ],
-    "content": "<h2>The Questions International Employers Actually Ask</h2><p>The requests that reach us are rarely academic. Can we let this person go, what will it cost, how long will it take, and what happens if they refuse. Dutch law answers those questions differently from almost every other market, because there is no at-will employment and no unilateral route out of a contract without a state body or a signed settlement.</p><p>HRhelp provides HR-side counsel: the practical reading of the rules, the commercial options, the file, the paperwork and the conversation itself. We are not a law firm and we say so plainly. Where a matter needs litigation, a formal legal opinion or privilege, we brief a Dutch employment lawyer and stay alongside them to run the HR side.</p><h2>Dismissal: Three Routes, No Shortcuts</h2><ul><li><strong>UWV:</strong> the mandatory route for redundancy on economic grounds and for dismissal after 104 weeks of incapacity. Redundancy selection must follow the reflection principle (afspiegelingsbeginsel), which ranks by age bracket and service within interchangeable roles, so you cannot simply choose who leaves.</li><li><strong>Kantonrechter:</strong> the sub-district court handles personal grounds, principally underperformance (ground d), a damaged working relationship (ground g) and the cumulative ground (i), which can add up to 50 percent extra compensation. An underperformance case needs an evidenced improvement process; a court will refuse one built on a single appraisal.</li><li><strong>Settlement agreement (vaststellingsovereenkomst):</strong> the route behind most Dutch exits. The employee retains a statutory 14 day reflection period that must be stated in the document, and the wording directly affects their entitlement to WW unemployment benefit.</li></ul><p>Cost is structured rather than open ended. A transition payment of one third of a month of salary per year of service accrues from the first working day and is also due when a fixed-term contract is simply not renewed. Statutory notice runs from one month to four months by length of service. Seriously culpable conduct by the employer can add a fair compensation (billijke vergoeding) on top of everything else.</p><h2>Sickness: The Obligation That Surprises Head Office</h2><p>Sick pay is the most underestimated liability for a foreign parent. From the first day of employment, illness can trigger up to 104 weeks of continued salary at a statutory minimum of 70 percent, with many CAOs requiring 100 percent in the first year. Dismissal during those two years is blocked apart from narrow exceptions.</p><p>The Wet verbetering poortwachter imposes a fixed calendar: problem analysis by week six, plan of action by week eight, UWV notification at week 42 and a WIA application around week 88. If UWV judges the reintegration effort insufficient it imposes a wage sanction (loonsanctie) of up to a further 52 weeks of pay. Nearly every sanction traces back to a thin file or absent second track (spoor 2) effort rather than to bad intent.</p><h2>Contracts, Contractors and Restructuring</h2><ul><li><strong>Clause hygiene:</strong> probation and non-compete clauses that exceed statutory limits are void rather than reduced, and a non-compete in a fixed-term contract needs a written business justification inside the contract.</li><li><strong>Wet DBA:</strong> the tax authority resumed enforcement on 1 January 2025. A contractor who works set hours, reports to a manager and cannot send a substitute is an employee in substance, with payroll tax, holiday pay and dismissal protection attached retroactively.</li><li><strong>Restructuring:</strong> a works council must be given advice rights at 50 employees or more, and 20 dismissals within three months in one UWV region triggers the collective redundancy rules with union and UWV notification.</li><li><strong>Business transfers:</strong> on a transfer of undertaking, staff move automatically with terms intact, and dismissal by reason of the transfer is void.</li></ul><h2>How the Advice Is Delivered</h2><p>One named senior consultant, reachable directly, with the file read before the call rather than during it. Urgent matters are picked up the same working day through HR S.O.S. Ongoing advisory runs on a fixed monthly fee so a difficult case never comes with a surprise invoice, and you are never handed to a junior halfway through.</p>",
+    "examples": [
+      {
+        "tag": "German parent, Dutch office",
+        "situation": "Head office instructed the Dutch manager to terminate a sales director with immediate effect after a failed quarter. No performance file existed and the announcement was hours from being made.",
+        "result": "We stopped the announcement, set out the two realistic routes with cost ranges, and ran a documented process. The matter closed by negotiated settlement inside the modelled range."
+      },
+      {
+        "tag": "US retailer, 80 staff",
+        "situation": "An employee had been absent for over a year and the reintegration file had visible gaps. The parent wanted its exposure quantified before signing off the next site budget.",
+        "result": "A file review produced a written status, the missing steps and a corrected plan. The exposure question was answered in one memo the parent could take to its board."
+      },
+      {
+        "tag": "Consultancy, 35 staff",
+        "situation": "Three long-running contractors were embedded in delivery teams, and finance had started asking whether the arrangements would survive scrutiny.",
+        "result": "Each arrangement was assessed and classified. Two were converted to employment on prepared terms and the third was restructured with revised documentation."
+      }
+    ],
     "process": [
       {
         "step": "01",
-        "title": "Same Day Briefing",
-        "desc": "We take the facts, the contract, the CAO position and the existing file, then confirm what is actually at stake."
+        "title": "Same day briefing",
+        "desc": "We take the facts, the contract, the sector position and the existing file, then confirm what is at stake.",
+        "timeframe": "Day 1"
       },
       {
         "step": "02",
-        "title": "Options and Cost in Writing",
-        "desc": "Each viable route compared on timeline, likelihood and cost range, including the settlement number a court would anchor to."
+        "title": "Options in writing",
+        "desc": "Each viable route compared on timeline, likelihood and cost, with a clear recommendation.",
+        "timeframe": "Day 2 to 3"
       },
       {
         "step": "03",
         "title": "Execution",
-        "desc": "Documentation, the conversation itself, UWV or court filings and settlement drafting, with a lawyer engaged where the matter requires one."
+        "desc": "Documentation, the conversation, filings and settlement drafting, with a lawyer engaged where required.",
+        "timeframe": "Week 1 to 6"
       },
       {
         "step": "04",
-        "title": "Close and Prevent",
-        "desc": "Fix the underlying cause: clause updates, appraisal discipline, absence procedure, so the same case does not return next quarter."
+        "title": "Close and prevent",
+        "desc": "We fix the underlying cause so the same case does not return next quarter.",
+        "timeframe": "After close"
       }
     ],
-    "pitfalls": [
-      {
-        "severity": "high",
-        "title": "Assuming a Notice Letter Ends It",
-        "desc": "Without UWV permission, a court ruling or a signed settlement, a unilateral dismissal is voidable and can leave you paying salary for months of dispute."
-      },
-      {
-        "severity": "high",
-        "title": "Acting During Sickness",
-        "desc": "Employees who report sick are protected from dismissal for two years. Moving against them anyway converts a manageable case into a wage sanction and a compensation claim."
-      },
-      {
-        "severity": "medium",
-        "title": "Undocumented Underperformance",
-        "desc": "Dutch courts require a genuine improvement plan with support, time and written evaluations. Retrospective notes written the week before filing carry no weight."
-      },
-      {
-        "severity": "medium",
-        "title": "Long Running Contractors",
-        "desc": "A consultant embedded in the team for years is a Wet DBA finding waiting to happen, with retroactive payroll tax and employment protection attached."
-      }
+    "ideal": [
+      "International employers facing a Dutch dismissal, exit or reorganisation",
+      "Head offices that need Dutch exposure quantified before they decide",
+      "Companies with a long-term absence case that has quietly drifted",
+      "Employers questioning whether contractor arrangements will hold up"
     ],
     "faqs": [
       {
         "q": "Are you lawyers?",
-        "a": "No. HRhelp gives HR-side counsel: the practical application of Dutch employment law to your situation, the file, the process and the conversations. Where litigation, privilege or a formal legal opinion is needed, we bring in a Dutch employment lawyer and manage the HR side alongside them."
+        "a": "No. HRhelp gives HR-side counsel: the practical application of Dutch employment rules to your case, the file, the process and the conversations. Where litigation or a formal legal opinion is needed, we bring in a Dutch employment lawyer and manage the HR side alongside them."
       },
       {
         "q": "How quickly can you advise on an urgent case?",
-        "a": "Through HR S.O.S. a senior consultant picks up the same working day, reviews the contract and file, and comes back with options rather than a holding response."
+        "a": "Through HR S.O.S. a senior consultant picks up the same working day, reviews the contract and the file, and comes back with options rather than an acknowledgement."
       },
       {
-        "q": "Can we dismiss someone for poor performance in the Netherlands?",
-        "a": "Yes, but only with an evidenced improvement process: clear expectations, real support, a reasonable period and written evaluations. Without that dossier the sub-district court will refuse the request and you end up settling on worse terms."
-      },
-      {
-        "q": "What does a typical exit cost us?",
-        "a": "The statutory floor is the transition payment at one third of a month per year of service plus notice. Negotiated settlements commonly land above that where the file is weak, which is precisely why the documentation stage decides the number."
+        "q": "How is this priced?",
+        "a": "A defined matter is quoted as a fixed fee once we have seen the file, usually within a day of the briefing. If you have a steady stream of smaller questions, a monthly advisory scope is the better fit."
       },
       {
         "q": "How does this differ from your compliance service?",
-        "a": "Compliance work builds the baseline your Dutch entity must be able to evidence. This service applies Dutch labour law to live decisions: a dismissal, a sickness case, a restructuring or a contract dispute already in front of you."
+        "a": "Compliance builds the documented baseline your Dutch entity should be able to evidence. This service applies to a live decision already in front of you, such as a dismissal, an absence case or a reorganisation."
       }
     ],
     "relatedSlugs": [
@@ -1152,6 +2001,37 @@
       "interim-hr-advisor",
       "hr-consultancy-foreign-companies"
     ],
-    "topic": "Dutch Employment Law"
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "What we handle on a live case",
+        "desc": "From the first briefing through to the settlement or the filing."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Speed, numbers and a plan",
+        "desc": "What changes when counsel arrives before the conversation does."
+      },
+      "examples": {
+        "eyebrow": "In practice",
+        "heading": "Three cases we were called into",
+        "desc": "Anonymised matters across dismissal, absence and contractor arrangements."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "Briefing to close",
+        "desc": "Same day pickup, written options within days, execution from there."
+      },
+      "ideal": {
+        "eyebrow": "Right fit",
+        "heading": "Who this service is built for",
+        "desc": "International employers with a Dutch decision that cannot wait."
+      },
+      "faq": {
+        "eyebrow": "Before you commit",
+        "heading": "Questions buyers ask us first",
+        "desc": "Our role next to lawyers, response speed and how we charge."
+      }
+    }
   }
 ]

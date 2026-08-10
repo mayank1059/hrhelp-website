@@ -4,191 +4,266 @@ import Layout from '../../components/Layout.astro';
 // Service pages, staging-gated (all on staging; only approved on production).
 import { servicesData } from '../../data/pseo/services.js';
 
-const allPages = [...servicesData];
-
-const pageMap = new Map(allPages.map(p => [p.slug, p]));
+const allPages: any[] = [...(servicesData as any[])];
+const pageMap = new Map<string, any>(allPages.map((p: any) => [p.slug, p]));
 
 export function getStaticPaths() {
-  return servicesData.map(p => ({ params: { slug: p.slug } }));
+  return (servicesData as any[]).map((p: any) => ({ params: { slug: p.slug } }));
 }
 
 const { slug } = Astro.params;
-const page = pageMap.get(slug);
-if (!page) return Astro.redirect('/solutions');
+const entry: any = pageMap.get(slug as string);
+if (!entry) return Astro.redirect('/solutions');
 
-// Find related pages
-const relatedPages = (page.relatedSlugs || [])
+// ---- Data with safe fallbacks (content may still be in flight) ----
+const name: string = entry.name || entry.title || 'HR Service';
+const tagline: string = entry.tagline || entry.subtitle || '';
+const heroText: string = entry.hero || entry.subtitle || '';
+const metaDescription: string = entry.metaDescription || entry.subtitle || heroText;
+
+const heroCards = entry.heroCards || {};
+const heroCardTl = heroCards.tl || null;
+const heroCardBr = heroCards.br || null;
+
+const premiseHeading: string = entry.premiseHeading || '';
+const premiseBody: string[] = Array.isArray(entry.premiseBody) ? entry.premiseBody : [];
+
+const included: any[] = Array.isArray(entry.included) ? entry.included : [];
+const benefits: any[] = Array.isArray(entry.benefits) ? entry.benefits : [];
+const examples: any[] = Array.isArray(entry.examples) ? entry.examples : [];
+const process: any[] = Array.isArray(entry.process) ? entry.process : [];
+const ideal: string[] = Array.isArray(entry.ideal) ? entry.ideal : [];
+const faqs: any[] = Array.isArray(entry.faqs) ? entry.faqs : [];
+
+const sections = entry.sections || {};
+const sec = (key: string, fallback: { eyebrow: string; heading: string; desc: string }) => ({
+  eyebrow: (sections[key] && sections[key].eyebrow) || fallback.eyebrow,
+  heading: (sections[key] && sections[key].heading) || fallback.heading,
+  desc: (sections[key] && sections[key].desc) || fallback.desc,
+});
+
+const secIncluded = sec('included', {
+  eyebrow: 'What You Get',
+  heading: `What is included in ${name}`,
+  desc: 'Everything covered from day one, agreed in writing before we start.',
+});
+const secBenefits = sec('benefits', {
+  eyebrow: 'Why Clients Choose It',
+  heading: 'What this delivers for you',
+  desc: 'Senior HR capacity without the cost, delay and risk of hiring permanently.',
+});
+const secExamples = sec('examples', {
+  eyebrow: 'In Practice',
+  heading: 'What this looks like in real companies',
+  desc: 'Three anonymised situations we handled, and what the client walked away with.',
+});
+const secProcess = sec('process', {
+  eyebrow: 'How It Works',
+  heading: 'From first call to work in progress',
+  desc: 'A short, predictable start. You know who you get and what happens next.',
+});
+const secIdeal = sec('ideal', {
+  eyebrow: 'Who It Is For',
+  heading: `Companies that benefit most from ${name}`,
+  desc: 'If any of these describe your situation, this service will fit.',
+});
+const secFaq = sec('faq', {
+  eyebrow: 'Common Questions',
+  heading: 'Questions buyers ask us',
+  desc: 'Straight answers on speed, pricing and commitment.',
+});
+
+// Related services
+const relatedPages: any[] = (entry.relatedSlugs || [])
   .map((s: string) => pageMap.get(s))
   .filter(Boolean)
   .slice(0, 3);
 
-// Vertical color mapping
-const verticalColors: Record<string, { bg: string; text: string; accent: string }> = {
-  'hr-settlers': { bg: 'rgba(244,121,32,0.08)', text: '#f47920', accent: '#f47920' },
-  'hr-teams':    { bg: 'rgba(59,130,246,0.08)', text: '#3b82f6', accent: '#3b82f6' },
-  'hr-sos':      { bg: 'rgba(220,38,38,0.08)', text: '#dc2626', accent: '#dc2626' },
-  'dutch-law':   { bg: 'rgba(16,185,129,0.08)', text: '#10b981', accent: '#10b981' },
-  'services':    { bg: 'rgba(15,43,70,0.08)', text: '#0f2b46', accent: '#f47920' },
-};
-const vc = verticalColors[page.vertical] || verticalColors['services'];
+// Images (already generated per slug)
 const heroImage = `/images/services/hero-${slug}.png`;
 const contentImage = `/images/services/content-${slug}.png`;
 const processImage = `/images/services/process-${slug}.png`;
-const inlineImage = `/images/services/inline-${slug}.png`;
 const ctaImage = `/images/services/cta-${slug}.png`;
+const relatedImage = (s: string) => `/images/services/inline-${s}.png`;
 
-const guideSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": page.title,
-  "description": page.subtitle,
-  "author": {
-    "@type": "Organization",
-    "name": "HRHelp.nl",
-    "url": "https://www.hrhelp.nl"
+const pageUrl = `https://www.hrhelp.nl/services/${slug}`;
+
+// ---- Structured data ----
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: name,
+  serviceType: name,
+  description: heroText,
+  provider: {
+    '@type': 'Organization',
+    name: 'HRHelp.nl',
+    url: 'https://www.hrhelp.nl',
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": "HRHelp.nl",
-    "logo": { "@type": "ImageObject", "url": "https://www.hrhelp.nl/favicon.svg" }
+  areaServed: { '@type': 'Country', name: 'Netherlands' },
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    serviceUrl: pageUrl,
+    servicePhone: '+31-85-760-8188',
   },
-  "mainEntityOfPage": `https://www.hrhelp.nl/services/${slug}`,
-  "breadcrumb": {
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.hrhelp.nl" },
-      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://www.hrhelp.nl/solutions" },
-      { "@type": "ListItem", "position": 3, "name": page.title, "item": `https://www.hrhelp.nl/services/${slug}` }
-    ]
-  }
+  url: pageUrl,
 };
 
-// FAQ Schema
-const faqSchema = page.faqs && page.faqs.length > 0 ? {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": page.faqs.map((faq: any) => ({
-    "@type": "Question",
-    "name": faq.q,
-    "acceptedAnswer": { "@type": "Answer", "text": faq.a }
-  }))
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.hrhelp.nl' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.hrhelp.nl/solutions' },
+    { '@type': 'ListItem', position: 3, name: name, item: pageUrl },
+  ],
+};
+
+const faqSchema = faqs.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq: any) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
 } : null;
+
+const schemas = [serviceSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])];
 ---
 
-<Layout title={`${page.title} | HRHelp.nl`} description={page.subtitle} schema={guideSchema}>
-
-{faqSchema && (
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-)}
+<Layout title={entry.title || name} description={metaDescription} schema={schemas}>
 
 <!-- ===== HERO ===== -->
-<section class="guide-hero">
-  <div class="guide-hero-mesh"></div>
-  <div class="guide-hero-img-bg">
-    <img src={heroImage} alt={page.title} loading="eager" />
-  </div>
-  <div class="container guide-hero-inner">
-    <nav class="guide-breadcrumb" aria-label="Breadcrumb">
-      <a href="/">Home</a>
-      <span class="bc-sep">›</span>
-      <a href="/solutions">Services</a>
-      <span class="bc-sep">›</span>
-      <span class="bc-current">{page.title}</span>
-    </nav>
-    <div class="guide-hero-split">
-      <div class="guide-hero-content">
-        <div class="guide-hero-badge" style={`background: ${vc.bg}; color: ${vc.text};`}>
-          <span class="material-symbols-outlined" style="font-size:16px;">menu_book</span>
-          {page.verticalLabel}
+<section class="svc-hero">
+  <div class="svc-hero-mesh"></div>
+  <div class="container-wide svc-hero-inner">
+    <div class="svc-hero-text" data-animate="fade-right">
+      <nav class="svc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="svc-bc-sep">›</span>
+        <a href="/solutions">Services</a>
+        <span class="svc-bc-sep">›</span>
+        <span class="svc-bc-current">{name}</span>
+      </nav>
+      <h1>{name}</h1>
+      {tagline && <p class="svc-hero-tagline">{tagline}</p>}
+      <p class="svc-hero-desc">{heroText}</p>
+      <div class="svc-hero-actions">
+        <a href="/contact" class="btn btn-primary btn-lg">Book free consultation</a>
+        <a href="/solutions" class="btn btn-secondary btn-lg">See all services</a>
+      </div>
+      <ul class="svc-hero-proof">
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Senior consultants only</span>
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Fixed pricing agreed upfront</span>
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>15+ years Dutch employment law</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="svc-hero-visual" data-animate="fade-left">
+      <div class="svc-hero-photo-wrap">
+        <div class="svc-hero-glass-frame"></div>
+        <img src={heroImage} alt={name} class="svc-hero-img" loading="eager" width="580" height="580" />
+
+        {heroCardTl && (
+          <div class="svc-floating-card svc-card-tl" data-float>
+            <div class="svc-floating-icon"><span class="material-symbols-outlined">{heroCardTl.icon}</span></div>
+            <div class="svc-floating-content">
+              <span class="svc-floating-label">{heroCardTl.label}</span>
+              <span class="svc-floating-value">{heroCardTl.value}</span>
+            </div>
+          </div>
+        )}
+
+        {heroCardBr && (
+          <div class="svc-floating-card svc-card-br" data-float-reverse>
+            <div class="svc-floating-icon svc-icon-orange"><span class="material-symbols-outlined">{heroCardBr.icon}</span></div>
+            <div class="svc-floating-content">
+              <span class="svc-floating-label">{heroCardBr.label}</span>
+              <span class="svc-floating-value">{heroCardBr.value}</span>
+            </div>
+          </div>
+        )}
+
+        <div class="svc-hero-pill">
+          <span class="svc-status-dot"></span>
+          <span>One named consultant per client</span>
         </div>
-        <h1>{page.title}</h1>
-        <p class="guide-hero-sub">{page.subtitle}</p>
-        <div class="guide-hero-meta">
-          <span class="guide-meta-item">
-            <span class="material-symbols-outlined" style="font-size:16px;">schedule</span>
-            {page.readTime}
-          </span>
-          <span class="guide-meta-sep">·</span>
-          <a href={page.parentService} class="guide-meta-link">
-            <span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span>
-            Part of {page.parentServiceName}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PREMISE / STORY ===== -->
+<section class="svc-story section-white">
+  <div class="container">
+    <div class="svc-story-split">
+      <div class="svc-story-text">
+        {premiseHeading && (
+          <div class="svc-story-insight" data-animate="fade-up">
+            <div class="svc-story-insight-accent"></div>
+            <h2>{premiseHeading}</h2>
+          </div>
+        )}
+        {premiseBody.map((p: string, i: number) => (
+          <p class={i === 0 ? 'svc-story-lead' : ''} data-animate="fade-up" data-delay={i * 150}>{p}</p>
+        ))}
+        <div class="svc-story-cta-line" data-animate="fade-up" data-delay="300">
+          <a href="/contact" class="svc-story-link">
+            Talk to a senior consultant
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
         </div>
       </div>
-      <div class="guide-hero-image">
-        <img src={contentImage} alt={page.title} loading="eager" />
+
+      <div class="svc-story-illus" data-animate="fade-up" data-delay="200">
+        <div class="svc-story-photo-frame">
+          <div class="svc-story-frame-accent"></div>
+          <img src={contentImage} alt={`${name} at HRhelp`} class="svc-story-photo" loading="lazy" width="560" height="700" />
+          <div class="svc-story-overlay-card">
+            <div class="svc-overlay-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <span class="svc-overlay-label">Trusted by</span>
+              <span class="svc-overlay-value">75+ international clients</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== AT A GLANCE ===== -->
-<section class="guide-glance">
-  <div class="container">
-    <div class="guide-glance-grid">
-      {page.atAGlance.map((item: any) => (
-        <div class="guide-glance-card">
-          <div class="guide-glance-icon" style={`background: ${vc.bg};`}>
-            <span class="material-symbols-outlined" style={`color: ${vc.text};`}>{item.icon}</span>
-          </div>
-          <div class="guide-glance-content">
-            <span class="guide-glance-label">{item.label}</span>
-            <span class="guide-glance-value">{item.value}</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- ===== MAIN CONTENT ===== -->
-<section class="guide-content-section">
-  <div class="container">
-    <div class="guide-layout">
-      <article class="guide-article" set:html={page.content} />
-
-      <aside class="guide-sidebar">
-        <!-- Table of Contents (populated by JS) -->
-        <div class="guide-sidebar-card guide-toc-card">
-          <h3>In This Guide</h3>
-          <nav class="guide-toc" id="guide-toc"></nav>
-        </div>
-
-        <!-- CTA Card -->
-        <div class="guide-sidebar-card guide-cta-sidebar">
-          <div class="guide-cta-icon" style={`background: ${vc.bg};`}>
-            <span class="material-symbols-outlined" style={`color: ${vc.text}; font-size:28px;`}>support_agent</span>
-          </div>
-          <h3>Need Expert Help?</h3>
-          <p>Our HR specialists can guide you through every step of this process.</p>
-          <a href="/contact" class="btn btn-primary" style="width:100%; text-align:center;">Book a Consultation →</a>
-        </div>
-
-        <!-- Parent Service Card -->
-        <div class="guide-sidebar-card">
-          <h3>{page.parentServiceName}</h3>
-          <p>This guide is part of our {page.parentServiceName} service — comprehensive HR support for companies in the Netherlands.</p>
-          <a href={page.parentService} class="guide-sidebar-link">Learn about {page.parentServiceName} →</a>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ===== PROCESS STEPS ===== -->
-{page.process && page.process.length > 0 && (
-<section class="guide-process">
+<!-- ===== WHAT'S INCLUDED ===== -->
+{included.length > 0 && (
+<section class="svc-included section-cream" id="svc-included">
   <div class="container">
     <div class="section-header">
-      <span class="eyebrow" style={`color: ${vc.text};`}>How It Works</span>
-      <h2>Step-by-Step Process</h2>
+      <span class="eyebrow">{secIncluded.eyebrow}</span>
+      <h2>{secIncluded.heading}</h2>
+      <p class="section-desc">{secIncluded.desc}</p>
     </div>
-    <div class="guide-process-grid">
-      {page.process.map((step: any, i: number) => (
-        <div class="guide-process-card" data-animate="fade-up" data-delay={i * 100}>
-          <div class="guide-process-num" style={`background: ${vc.bg}; color: ${vc.text};`}>{step.step}</div>
-          <h3>{step.title}</h3>
-          <p>{step.desc}</p>
+    <div class="svc-feature-grid">
+      {included.map((item: any, i: number) => (
+        <div class="svc-feature-card" data-animate="fade-up" data-delay={i * 90}>
+          <div class="svc-feature-top">
+            <div class="svc-feature-icon-wrap">
+              <span class="material-symbols-outlined">{item.icon}</span>
+            </div>
+            <span class="svc-feature-num">{String(i + 1).padStart(2, '0')}</span>
+          </div>
+          <h3>{item.title}</h3>
+          <p>{item.desc}</p>
         </div>
       ))}
     </div>
@@ -196,77 +271,147 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
 </section>
 )}
 
-<!-- ===== KEY INSIGHTS — IMAGE-RICH SECTION ===== -->
-<section class="guide-insights">
+<!-- ===== BENEFITS ===== -->
+{benefits.length > 0 && (
+<section class="svc-benefits section-white">
   <div class="container">
-    <div class="guide-insights-top">
-      <div class="guide-insights-img-left">
-        <img src={processImage} alt={`${page.title} — key insight`} loading="lazy" />
-      </div>
-      <div class="guide-insights-content">
-        <span class="eyebrow" style={`color: ${vc.text};`}>Why It Matters</span>
-        <h2>Key Insights for Your Business</h2>
-        <div class="guide-insights-stats">
-          <div class="guide-insight-stat">
-            <div class="guide-insight-stat-icon" style={`background: ${vc.bg};`}>
-              <span class="material-symbols-outlined" style={`color: ${vc.text};`}>trending_up</span>
-            </div>
-            <div>
-              <span class="guide-insight-stat-value">93%</span>
-              <span class="guide-insight-stat-label">of companies report smoother operations with proper HR setup</span>
-            </div>
+    <div class="section-header">
+      <span class="eyebrow">{secBenefits.eyebrow}</span>
+      <h2>{secBenefits.heading}</h2>
+      <p class="section-desc">{secBenefits.desc}</p>
+    </div>
+    <div class="svc-benefit-grid">
+      {benefits.map((item: any, i: number) => (
+        <div class="svc-benefit-card" data-animate="fade-up" data-delay={i * 110}>
+          <div class="svc-benefit-icon">
+            <span class="material-symbols-outlined">{item.icon}</span>
           </div>
-          <div class="guide-insight-stat">
-            <div class="guide-insight-stat-icon" style={`background: ${vc.bg};`}>
-              <span class="material-symbols-outlined" style={`color: ${vc.text};`}>shield</span>
-            </div>
-            <div>
-              <span class="guide-insight-stat-value">€25K+</span>
-              <span class="guide-insight-stat-label">average savings from avoiding common compliance penalties</span>
-            </div>
-          </div>
-          <div class="guide-insight-stat">
-            <div class="guide-insight-stat-icon" style={`background: ${vc.bg};`}>
-              <span class="material-symbols-outlined" style={`color: ${vc.text};`}>schedule</span>
-            </div>
-            <div>
-              <span class="guide-insight-stat-value">4–6 weeks</span>
-              <span class="guide-insight-stat-label">to fully operational with expert guidance vs. 3+ months DIY</span>
-            </div>
+          <div class="svc-benefit-body">
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
           </div>
         </div>
+      ))}
+    </div>
+  </div>
+</section>
+)}
+
+<!-- ===== EXAMPLES IN PRACTICE ===== -->
+{examples.length > 0 && (
+<section class="svc-examples section-cream">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">{secExamples.eyebrow}</span>
+      <h2>{secExamples.heading}</h2>
+      <p class="section-desc">{secExamples.desc}</p>
+    </div>
+    <div class="svc-example-grid">
+      {examples.map((ex: any, i: number) => (
+        <article class="svc-example-card" data-animate="fade-up" data-delay={i * 120}>
+          <div class="svc-example-head">
+            <span class="svc-example-tag">{ex.tag}</span>
+            <span class="svc-example-index">{String(i + 1).padStart(2, '0')}</span>
+          </div>
+          <div class="svc-example-block">
+            <span class="svc-example-label">The situation</span>
+            <p class="svc-example-situation">{ex.situation}</p>
+          </div>
+          <div class="svc-example-result">
+            <span class="svc-example-label svc-label-result">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+              What we delivered
+            </span>
+            <p>{ex.result}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="svc-example-note">Client situations are anonymised. Names and identifying details have been changed.</p>
+  </div>
+</section>
+)}
+
+<!-- ===== HOW IT WORKS ===== -->
+{process.length > 0 && (
+<section class="svc-process section-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">{secProcess.eyebrow}</span>
+      <h2>{secProcess.heading}</h2>
+      <p class="section-desc">{secProcess.desc}</p>
+    </div>
+
+    <div class="svc-process-split">
+      <div class="svc-process-visual" data-animate="fade-right">
+        <div class="svc-process-photo-frame">
+          <div class="svc-process-frame-accent"></div>
+          <img src={processImage} alt={`How ${name} works`} loading="lazy" width="520" height="620" />
+        </div>
+      </div>
+
+      <div class="svc-timeline" data-vtimeline>
+        <div class="svc-timeline-track"><div class="svc-timeline-track-fill"></div></div>
+        {process.map((step: any, i: number) => (
+          <div class="svc-timeline-step" data-vstep={i}>
+            <div class="svc-timeline-marker">
+              <span>{step.step || String(i + 1).padStart(2, '0')}</span>
+              <div class="svc-marker-ring"></div>
+            </div>
+            <div class="svc-timeline-content">
+              {step.timeframe && <span class="svc-step-badge">{step.timeframe}</span>}
+              <h3>{step.title}</h3>
+              <p>{step.desc}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
-    <div class="guide-insights-bottom">
-      <div class="guide-insights-quote">
-        <blockquote>
-          <p>"Having the right HR infrastructure in place from day one saved us months of fixing problems later. It's the foundation everything else builds on."</p>
-          <cite>— HR Director, International Company in NL</cite>
-        </blockquote>
+  </div>
+</section>
+)}
+
+<!-- ===== FIXED PRICING BAND ===== -->
+<section class="svc-pricing section-navy">
+  <div class="container">
+    <div class="svc-pricing-inner" data-animate="fade-up">
+      <div class="svc-pricing-text">
+        <span class="eyebrow svc-eyebrow-light">Pricing</span>
+        <h2>Fixed pricing, agreed before we start</h2>
+        <p>You get a written scope and a fixed fee before any work begins, so the cost is settled at the start instead of arriving as an hourly invoice at the end of the month.</p>
+        <ul class="svc-pricing-chips">
+          <li>No hourly billing</li>
+          <li>One named senior consultant</li>
+          <li>Scope agreed in writing</li>
+        </ul>
       </div>
-      <div class="guide-insights-img-right">
-        <img src={inlineImage} alt={`${page.title} — results`} loading="lazy" />
+      <div class="svc-pricing-action">
+        <a href="/contact" class="btn btn-primary btn-lg">Get your fixed quote</a>
+        <span class="svc-pricing-note">Free 30 minute consultation, no obligation.</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== KEY CONSIDERATIONS / PITFALLS ===== -->
-{page.pitfalls && page.pitfalls.length > 0 && (
-<section class="guide-pitfalls">
+<!-- ===== WHO IT IS FOR ===== -->
+{ideal.length > 0 && (
+<section class="svc-ideal section-cream">
   <div class="container">
     <div class="section-header">
-      <span class="eyebrow" style={`color: ${vc.text};`}>Important Considerations</span>
-      <h2>What to Watch Out For</h2>
+      <span class="eyebrow">{secIdeal.eyebrow}</span>
+      <h2>{secIdeal.heading}</h2>
+      <p class="section-desc">{secIdeal.desc}</p>
     </div>
-    <div class="guide-pitfalls-grid">
-      {page.pitfalls.map((pitfall: any, i: number) => (
-        <div class="guide-pitfall-card" data-animate="fade-up" data-delay={i * 100}>
-          <div class="guide-pitfall-header">
-            <span class={`guide-severity guide-severity-${pitfall.severity}`}>{pitfall.severity}</span>
+    <div class="svc-ideal-grid">
+      {ideal.map((item: string, i: number) => (
+        <div class="svc-ideal-card" data-animate="fade-up" data-delay={i * 90}>
+          <div class="svc-ideal-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <h3>{pitfall.title}</h3>
-          <p>{pitfall.desc}</p>
+          <div class="svc-ideal-content">
+            <span class="svc-ideal-num">{String(i + 1).padStart(2, '0')}</span>
+            <p>{item}</p>
+          </div>
         </div>
       ))}
     </div>
@@ -275,21 +420,22 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
 )}
 
 <!-- ===== FAQ ===== -->
-{page.faqs && page.faqs.length > 0 && (
-<section class="guide-faq">
+{faqs.length > 0 && (
+<section class="svc-faq section-white">
   <div class="container">
     <div class="section-header">
-      <span class="eyebrow" style={`color: ${vc.text};`}>Common Questions</span>
-      <h2>Frequently Asked Questions</h2>
+      <span class="eyebrow">{secFaq.eyebrow}</span>
+      <h2>{secFaq.heading}</h2>
+      <p class="section-desc">{secFaq.desc}</p>
     </div>
-    <div class="guide-faq-list">
-      {page.faqs.map((faq: any) => (
-        <details class="guide-faq-item">
+    <div class="svc-faq-list">
+      {faqs.map((faq: any) => (
+        <details class="svc-faq-item">
           <summary>
             <span>{faq.q}</span>
-            <svg class="guide-faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg class="svc-faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
-          <div class="guide-faq-answer">
+          <div class="svc-faq-answer">
             <p>{faq.a}</p>
           </div>
         </details>
@@ -299,22 +445,49 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
 </section>
 )}
 
-<!-- ===== RELATED GUIDES ===== -->
+<!-- ===== CTA ===== -->
+<section class="svc-cta">
+  <div class="container">
+    <div class="svc-cta-inner" data-animate="fade-up">
+      <div class="svc-cta-content">
+        <span class="eyebrow svc-eyebrow-light">Next Step</span>
+        <h2>Ready to get started with {name}?</h2>
+        <p>Book a free 30 minute consultation. We will look at your situation, tell you exactly what we would do, and put a fixed price in writing before you commit to anything.</p>
+        <div class="svc-cta-buttons">
+          <a href="/contact" class="btn btn-primary btn-lg">Book free consultation</a>
+          <a href="/solutions" class="btn btn-ghost btn-lg">See all services</a>
+        </div>
+      </div>
+      <div class="svc-cta-photo">
+        <img src={ctaImage} alt={`Speak to us about ${name}`} loading="lazy" width="480" height="420" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RELATED ===== -->
 {relatedPages.length > 0 && (
-<section class="guide-related">
+<section class="svc-related section-cream">
   <div class="container">
     <div class="section-header">
-      <h2>Related Guides</h2>
+      <span class="eyebrow">Keep Exploring</span>
+      <h2>Related services</h2>
+      <p class="section-desc">Other ways we support international employers operating in the Netherlands.</p>
     </div>
-    <div class="guide-related-grid">
-      {relatedPages.map((rp: any) => (
-        <a href={`/guides/${rp.slug}`} class="guide-related-card">
-          <div class="guide-related-badge" style={`background: ${verticalColors[rp.vertical]?.bg || vc.bg}; color: ${verticalColors[rp.vertical]?.text || vc.text};`}>
-            {rp.verticalLabel}
+    <div class="svc-related-grid">
+      {relatedPages.map((r: any) => (
+        <a href={`/services/${r.slug}`} class="svc-related-card">
+          <div class="svc-related-media">
+            <img src={relatedImage(r.slug)} alt={r.name || r.title} loading="lazy" width="360" height="220" />
           </div>
-          <h3>{rp.title}</h3>
-          <p>{rp.subtitle}</p>
-          <span class="guide-related-link" style={`color: ${verticalColors[rp.vertical]?.text || vc.text};`}>Read Guide →</span>
+          <div class="svc-related-body">
+            <h3>{r.name || r.title}</h3>
+            <p>{r.tagline || r.subtitle}</p>
+            <span class="svc-related-link">
+              View service
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+          </div>
         </a>
       ))}
     </div>
@@ -322,642 +495,1124 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
 </section>
 )}
 
-<!-- ===== CTA ===== -->
-<section class="guide-cta-section">
-  <div class="guide-cta-bg">
-    <img src={ctaImage} alt="" loading="lazy" />
-  </div>
-  <div class="container" style="position:relative; z-index:2;">
-    <div class="guide-cta-inner">
-      <div class="guide-cta-content">
-        <span class="eyebrow" style="color: var(--orange-light);">Need Help?</span>
-        <h2>Ready to get started with {page.parentServiceName}?</h2>
-        <p>Book a free 30-minute consultation. We'll assess your situation and propose a clear path forward — no commitment required.</p>
-        <div class="guide-cta-buttons">
-          <a href="/contact" class="btn btn-primary btn-lg">Book a Consultation</a>
-          <a href={page.parentService} class="btn btn-ghost btn-lg">Learn about {page.parentServiceName}</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 </Layout>
 
-<!-- TABLE OF CONTENTS SCRIPT -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const article = document.querySelector('.guide-article');
-    const tocNav = document.getElementById('guide-toc');
-    if (!article || !tocNav) return;
-
-    const headings = article.querySelectorAll('h2');
-    if (headings.length === 0) return;
-
-    headings.forEach((h, i) => {
-      const id = `section-${i}`;
-      h.id = id;
-      const link = document.createElement('a');
-      link.href = `#${id}`;
-      link.textContent = h.textContent || '';
-      link.className = 'guide-toc-link';
-      tocNav.appendChild(link);
-    });
-
-    // Active state on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          tocNav.querySelectorAll('.guide-toc-link').forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-          });
-        }
-      });
-    }, { rootMargin: '-20% 0px -70% 0px' });
-
-    headings.forEach(h => observer.observe(h));
-
-    // Inject mid-article image after the 2nd H2
-    if (headings.length >= 3) {
-      const targetH2 = headings[2];
-      const imgWrapper = document.createElement('div');
-      imgWrapper.className = 'guide-article-img';
-      const slug = window.location.pathname.split('/').filter(Boolean).pop();
-      imgWrapper.innerHTML = `<img src="/images/services/hero-${slug}.png" alt="" loading="lazy" />`;
-      targetH2.parentNode?.insertBefore(imgWrapper, targetH2);
-    }
-  });
-</script>
-
 <style>
-/* ===== HERO ===== */
-.guide-hero {
-  padding: 9rem 0 4rem;
-  background: var(--navy);
-  color: white;
-  position: relative;
-  overflow: hidden;
+/* ========== SHARED ========== */
+.btn-lg {
+  padding: 1.1rem 2.15rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
 }
-.guide-hero-mesh {
-  position: absolute; inset: 0; z-index: 0;
-  background:
-    radial-gradient(at 10% 20%, rgba(244,121,32,0.08) 0px, transparent 50%),
-    radial-gradient(at 90% 80%, rgba(255,255,255,0.03) 0px, transparent 50%);
-  filter: blur(80px);
+.btn-primary, .btn-secondary { box-shadow: none; }
+.btn-primary:hover, .btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-.guide-hero-img-bg {
-  position: absolute; inset: 0; z-index: 0;
-  opacity: 0.12;
-}
-.guide-hero-img-bg img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-.guide-hero-split {
-  display: flex; align-items: center; gap: 3rem;
-}
-.guide-hero-content { flex: 1; }
-.guide-hero-image {
-  flex-shrink: 0; width: 400px; height: 280px;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  border: 3px solid rgba(255,255,255,0.15);
-}
-.guide-hero-image img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-.guide-hero-inner { position: relative; z-index: 1; }
-.guide-breadcrumb {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.82rem; margin-bottom: 2rem;
-}
-.guide-breadcrumb a {
-  color: rgba(255,255,255,0.5); text-decoration: none;
-  transition: color 0.2s;
-}
-.guide-breadcrumb a:hover { color: rgba(255,255,255,0.8); }
-.bc-sep { color: rgba(255,255,255,0.3); }
-.bc-current { color: rgba(255,255,255,0.7); }
 
-.guide-hero-badge {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  font-size: 0.75rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  padding: 0.35rem 0.9rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 1.25rem;
+.section-desc {
+  max-width: 660px;
+  margin: 0.75rem auto 0;
+  color: var(--gray-600);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  text-align: center;
 }
-.guide-hero h1 {
-  font-size: clamp(2rem, 4.5vw, 3rem);
-  font-weight: 800; line-height: 1.15;
-  margin-bottom: 1rem; color: white;
-  max-width: 800px;
+
+.svc-eyebrow-light { color: var(--orange-light); }
+
+/* Material icon sizing inside this page */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  line-height: 1;
 }
-.guide-hero-sub {
-  font-size: 1.15rem;
-  color: rgba(255,255,255,0.7);
-  max-width: 640px; line-height: 1.7;
+
+/* Scroll reveal */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] { opacity: 1; transform: none; transition: none; }
+  [data-float], [data-float-reverse] { animation: none; }
+}
+
+/* ========== HERO ========== */
+.svc-hero {
+  position: relative;
+  background: linear-gradient(175deg, #fdf8f3 0%, #f6f2ed 42%, var(--white) 100%);
+  padding: 7.5rem 0 6.5rem;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.svc-hero-mesh {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(at 10% 20%, rgba(244, 121, 32, 0.05) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(26, 58, 110, 0.05) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(244, 121, 32, 0.03) 0px, transparent 50%);
+  filter: blur(100px);
+  animation: svc-mesh-drift 22s ease-in-out infinite;
+}
+@keyframes svc-mesh-drift {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.1) translate(20px, -20px); }
+}
+.svc-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.svc-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-500);
   margin-bottom: 1.5rem;
 }
-.guide-hero-meta {
-  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
-  font-size: 0.85rem; color: rgba(255,255,255,0.5);
-}
-.guide-meta-item {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-}
-.guide-meta-sep { opacity: 0.3; }
-.guide-meta-link {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  color: var(--orange); text-decoration: none;
-  font-weight: 600;
-}
-.guide-meta-link:hover { text-decoration: underline; }
+.svc-breadcrumb a { color: var(--gray-500); transition: color 0.25s ease; }
+.svc-breadcrumb a:hover { color: var(--orange); }
+.svc-bc-sep { color: var(--gray-300); }
+.svc-bc-current { color: var(--navy); }
 
-/* ===== AT A GLANCE ===== */
-.guide-glance {
-  padding: 0;
-  background: white;
-  margin-top: -2rem;
-  position: relative;
-  z-index: 2;
-}
-.guide-glance-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--gray-200);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
-}
-.guide-glance-card {
-  display: flex; align-items: center; gap: 1rem;
-  padding: 1.5rem;
-  background: white;
-}
-.guide-glance-icon {
-  width: 48px; height: 48px;
-  border-radius: var(--radius-md);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.guide-glance-icon .material-symbols-outlined { font-size: 24px; }
-.guide-glance-label {
-  display: block;
-  font-size: 0.72rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--text-secondary);
-  margin-bottom: 0.15rem;
-}
-.guide-glance-value {
-  display: block;
-  font-size: 1.1rem; font-weight: 800;
+.svc-hero-text h1 {
+  font-size: clamp(2.5rem, 5.2vw, 3.9rem);
+  font-weight: 900;
+  line-height: 1.04;
+  margin: 0 0 1rem;
+  letter-spacing: -0.035em;
   color: var(--navy);
 }
-
-/* ===== MAIN CONTENT LAYOUT ===== */
-.guide-content-section {
-  padding: 4rem 0;
-  background: var(--cream);
-}
-.guide-layout {
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 2.5rem;
-  align-items: start;
-}
-.guide-article {
-  background: white;
-  border-radius: var(--radius-xl);
-  padding: 2.5rem;
-  border: 1px solid var(--gray-200);
-  font-size: 1.05rem;
-  line-height: 1.85;
-  color: var(--text-secondary);
-}
-.guide-article :global(h2) {
-  font-size: 1.45rem; font-weight: 700;
-  color: var(--navy);
-  margin: 2.5rem 0 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--orange);
-}
-.guide-article :global(h2:first-child) { margin-top: 0; }
-.guide-article :global(p) { margin-bottom: 1.25rem; }
-.guide-article :global(ul), .guide-article :global(ol) {
-  margin: 1rem 0 1.5rem; padding-left: 1.5rem;
-}
-.guide-article :global(li) { margin-bottom: 0.5rem; }
-.guide-article :global(strong) { color: var(--navy); }
-.guide-article :global(ul ul) { margin: 0.5rem 0 0.75rem; }
-.guide-article :global(.guide-article-img) {
-  margin: 2rem -0.5rem;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-}
-.guide-article :global(.guide-article-img img) {
-  width: 100%; height: auto; max-height: 320px;
-  object-fit: cover; display: block;
-}
-
-/* SIDEBAR */
-.guide-sidebar {
-  display: flex; flex-direction: column; gap: 1.5rem;
-  position: sticky; top: 6rem;
-}
-.guide-sidebar-card {
-  background: white;
-  border-radius: var(--radius-xl);
-  padding: 1.5rem;
-  border: 1px solid var(--gray-200);
-}
-.guide-sidebar-card h3 {
-  font-size: 1.05rem; font-weight: 700;
-  color: var(--navy); margin-bottom: 0.75rem;
-}
-.guide-sidebar-card p {
-  font-size: 0.88rem; color: var(--text-secondary);
-  line-height: 1.6; margin-bottom: 1rem;
-}
-.guide-sidebar-link {
-  font-size: 0.85rem; font-weight: 700;
-  color: var(--orange); text-decoration: none;
-}
-.guide-sidebar-link:hover { text-decoration: underline; }
-
-/* CTA Sidebar Card */
-.guide-cta-sidebar { text-align: center; }
-.guide-cta-icon {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 1rem;
-}
-
-/* Table of Contents */
-.guide-toc { display: flex; flex-direction: column; gap: 0; }
-.guide-toc :global(.guide-toc-link) {
-  display: block;
-  padding: 0.5rem 0;
-  font-size: 0.85rem; font-weight: 500;
-  color: var(--text-secondary);
-  text-decoration: none;
-  border-left: 2px solid var(--gray-200);
-  padding-left: 1rem;
-  transition: all 0.2s;
-}
-.guide-toc :global(.guide-toc-link:hover) {
-  color: var(--orange);
-  border-left-color: var(--orange);
-}
-.guide-toc :global(.guide-toc-link.active) {
-  color: var(--orange);
+.svc-hero-tagline {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
   font-weight: 700;
-  border-left-color: var(--orange);
-  background: rgba(244,121,32,0.04);
-}
-
-/* ===== PROCESS ===== */
-.guide-process {
-  padding: var(--section-padding);
-  background: white;
-}
-
-/* ===== KEY INSIGHTS ===== */
-.guide-insights {
-  padding: var(--section-padding);
-  background: var(--cream);
-}
-.guide-insights-top {
-  display: flex; gap: 3rem; align-items: center;
-  margin-bottom: 3rem;
-}
-.guide-insights-img-left {
-  flex-shrink: 0; width: 380px; height: 320px;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 16px 50px rgba(0,0,0,0.1);
-}
-.guide-insights-img-left img {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block;
-}
-.guide-insights-content {
-  flex: 1;
-}
-.guide-insights-content h2 {
-  font-size: 1.8rem; font-weight: 800;
-  color: var(--navy); margin-bottom: 1.5rem;
-}
-.guide-insights-stats {
-  display: flex; flex-direction: column; gap: 1.25rem;
-}
-.guide-insight-stat {
-  display: flex; align-items: flex-start; gap: 1rem;
-  padding: 1rem 1.25rem;
-  background: white;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--gray-200);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.guide-insight-stat:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-}
-.guide-insight-stat-icon {
-  width: 44px; height: 44px;
-  border-radius: var(--radius-md);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.guide-insight-stat-value {
-  display: block;
-  font-size: 1.35rem; font-weight: 800;
-  color: var(--navy); line-height: 1.2;
-}
-.guide-insight-stat-label {
-  display: block;
-  font-size: 0.82rem; color: var(--text-secondary);
-  line-height: 1.5; margin-top: 0.15rem;
-}
-.guide-insights-bottom {
-  display: flex; gap: 3rem; align-items: center;
-}
-.guide-insights-quote {
-  flex: 1;
-  background: white;
-  border-radius: var(--radius-xl);
-  padding: 2.5rem;
-  border: 1px solid var(--gray-200);
-  border-left: 4px solid var(--orange);
-}
-.guide-insights-quote blockquote { margin: 0; }
-.guide-insights-quote p {
-  font-size: 1.15rem; font-weight: 500;
-  color: var(--navy); line-height: 1.7;
-  font-style: italic; margin-bottom: 1rem;
-}
-.guide-insights-quote cite {
-  font-size: 0.85rem; font-style: normal;
-  color: var(--text-secondary); font-weight: 600;
-}
-.guide-insights-img-right {
-  flex-shrink: 0; width: 340px; height: 260px;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 16px 50px rgba(0,0,0,0.1);
-}
-.guide-insights-img-right img {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block;
-}
-
-.guide-process-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
-.guide-process-card {
-  padding: 2rem;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--gray-200);
-  background: var(--cream);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.guide-process-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-}
-.guide-process-num {
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem; font-weight: 800;
+  color: var(--orange);
+  letter-spacing: -0.01em;
   margin-bottom: 1.25rem;
 }
-.guide-process-card h3 {
-  font-size: 1.1rem; font-weight: 700;
-  color: var(--navy); margin-bottom: 0.5rem;
+.svc-hero-desc {
+  font-size: 1.15rem;
+  color: var(--gray-600);
+  line-height: 1.75;
+  max-width: 560px;
+  margin-bottom: 2.25rem;
+  font-weight: 500;
 }
-.guide-process-card p {
-  font-size: 0.88rem; line-height: 1.6;
-  color: var(--text-secondary);
+.svc-hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
 }
+.svc-hero-proof {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  padding: 0;
+  margin: 0;
+}
+.svc-hero-proof li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gray-600);
+}
+.svc-hero-proof svg { color: var(--orange); flex-shrink: 0; }
 
-/* ===== PITFALLS ===== */
-.guide-pitfalls {
-  padding: var(--section-padding);
+.svc-hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+.svc-hero-photo-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+}
+.svc-hero-glass-frame {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: -20px;
+  bottom: -20px;
+  border-radius: var(--radius-xl);
+  border: 2px solid rgba(244, 121, 32, 0.16);
+  z-index: 0;
+}
+.svc-hero-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
   background: var(--cream);
 }
-.guide-pitfalls-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+
+.svc-floating-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 1.4rem;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
-.guide-pitfall-card {
-  padding: 2rem;
-  border-radius: var(--radius-xl);
-  background: white;
-  border: 1px solid var(--gray-200);
-  border-top: 4px solid transparent;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.svc-card-tl { top: 9%; left: -56px; }
+.svc-card-br { bottom: 9%; right: -32px; }
+
+.svc-floating-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(26, 58, 110, 0.08);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
-.guide-pitfall-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+.svc-floating-icon .material-symbols-outlined { font-size: 22px; }
+.svc-floating-icon.svc-icon-orange { background: rgba(244, 121, 32, 0.12); color: var(--orange); }
+.svc-floating-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--gray-500);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
 }
-.guide-pitfall-header { margin-bottom: 1rem; }
-.guide-severity {
-  display: inline-block;
-  font-size: 0.65rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full);
-}
-.guide-severity-high {
-  background: rgba(220,38,38,0.08); color: #dc2626;
-}
-.guide-severity-medium {
-  background: rgba(234,179,8,0.08); color: #b45309;
-}
-.guide-severity-low {
-  background: rgba(34,197,94,0.08); color: #16a34a;
-}
-.guide-pitfall-card h3 {
-  font-size: 1.1rem; font-weight: 700;
-  color: var(--navy); margin-bottom: 0.5rem;
-}
-.guide-pitfall-card p {
-  font-size: 0.88rem; line-height: 1.6;
-  color: var(--text-secondary);
+.svc-floating-value {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--navy);
+  white-space: nowrap;
 }
 
-/* ===== FAQ ===== */
-.guide-faq {
-  padding: var(--section-padding);
-  background: white;
+.svc-hero-pill {
+  position: absolute;
+  top: -22px;
+  right: 16px;
+  background: var(--white);
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  z-index: 11;
+  white-space: nowrap;
 }
-.guide-faq-list {
-  max-width: 800px;
+.svc-status-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+[data-float] { animation: svc-float 6s ease-in-out infinite; }
+[data-float-reverse] { animation: svc-float-reverse 7s ease-in-out infinite; }
+@keyframes svc-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes svc-float-reverse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(14px); }
+}
+
+/* ========== STORY / PREMISE ========== */
+.svc-story { padding: 6rem 0 5.5rem; }
+.svc-story-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.svc-story-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.svc-story-insight {
+  position: relative;
+  background: linear-gradient(135deg, var(--cream) 0%, #f9f5ef 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem 1.75rem 3rem;
+  margin-bottom: 0.25rem;
+}
+.svc-story-insight-accent {
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 5px;
+  background: var(--orange);
+  border-radius: 3px;
+}
+.svc-story-insight h2 {
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.svc-story-text p {
+  font-size: 1.05rem;
+  color: var(--gray-600);
+  line-height: 1.85;
+  margin: 0;
+}
+.svc-story-lead {
+  font-size: 1.15rem !important;
+  color: var(--navy) !important;
+  font-weight: 500;
+  line-height: 1.75 !important;
+}
+.svc-story-cta-line { padding-top: 0.35rem; }
+.svc-story-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--orange);
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+.svc-story-link:hover { gap: 0.85rem; color: var(--navy); }
+
+.svc-story-illus { display: flex; justify-content: center; }
+.svc-story-photo-frame { position: relative; width: 100%; }
+.svc-story-frame-accent {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: -16px;
+  bottom: -16px;
+  border-radius: var(--radius-xl);
+  border: 2.5px solid rgba(244, 121, 32, 0.2);
+  z-index: 0;
+}
+.svc-story-photo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  background: var(--cream);
+}
+.svc-story-overlay-card {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.4rem;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+.svc-overlay-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.svc-overlay-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-500);
+  margin-bottom: 1px;
+}
+.svc-overlay-value {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+/* ========== WHAT'S INCLUDED ========== */
+.svc-included { padding: 5.5rem 0; }
+.svc-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.svc-feature-card {
+  background: var(--white);
+  padding: 2.25rem 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.svc-feature-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+.svc-feature-card:hover .svc-feature-icon-wrap {
+  background: var(--orange);
+  color: var(--white);
+  transform: scale(1.06);
+}
+.svc-feature-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+.svc-feature-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(244, 121, 32, 0.1);
+  color: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.svc-feature-icon-wrap .material-symbols-outlined { font-size: 26px; }
+.svc-feature-num {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--gray-200);
+  letter-spacing: 0.02em;
+  font-family: var(--font-heading);
+  transition: color 0.3s ease;
+}
+.svc-feature-card:hover .svc-feature-num { color: rgba(244, 121, 32, 0.35); }
+.svc-feature-card h3 {
+  font-size: 1.12rem;
+  margin: 0 0 0.6rem;
+  color: var(--navy);
+}
+.svc-feature-card p {
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ========== BENEFITS ========== */
+.svc-benefits { padding: 5.5rem 0; }
+.svc-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 1000px;
   margin: 0 auto;
 }
-.guide-faq-item {
+.svc-benefit-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2.25rem 2.25rem;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--cream) 0%, #f9f5ef 100%);
   border: 1px solid var(--gray-200);
-  border-radius: var(--radius-md);
-  margin-bottom: 0.75rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.svc-benefit-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(244, 121, 32, 0.4);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.07);
+}
+.svc-benefit-icon {
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+.svc-benefit-card:hover .svc-benefit-icon { background: var(--orange); }
+.svc-benefit-icon .material-symbols-outlined { font-size: 26px; }
+.svc-benefit-body h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+  color: var(--navy);
+}
+.svc-benefit-body p {
+  font-size: 0.98rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ========== EXAMPLES ========== */
+.svc-examples { padding: 5.5rem 0; }
+.svc-example-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+.svc-example-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  padding: 2rem 2rem 0;
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
-.guide-faq-item:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+.svc-example-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--orange);
+  box-shadow: var(--shadow-lg);
 }
-.guide-faq-item summary {
-  padding: 1.25rem 1.5rem;
+.svc-example-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.svc-example-tag {
+  display: inline-block;
+  background: rgba(26, 58, 110, 0.07);
+  color: var(--navy);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+}
+.svc-example-index {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--gray-200);
+  font-family: var(--font-heading);
+  line-height: 1;
+}
+.svc-example-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--gray-500);
+  margin-bottom: 0.6rem;
+}
+.svc-example-block { flex: 1; padding-bottom: 1.75rem; }
+.svc-example-situation {
+  font-size: 0.98rem;
+  color: var(--gray-600);
+  line-height: 1.75;
+  margin: 0;
+}
+.svc-example-result {
+  margin: 0 -2rem;
+  padding: 1.5rem 2rem 1.75rem;
+  background: linear-gradient(135deg, rgba(244, 121, 32, 0.07) 0%, rgba(244, 121, 32, 0.03) 100%);
+  border-top: 1px solid rgba(244, 121, 32, 0.18);
+}
+.svc-label-result { color: var(--orange); }
+.svc-label-result svg { color: var(--orange); }
+.svc-example-result p {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.65;
+  margin: 0;
+}
+.svc-example-note {
+  text-align: center;
+  margin: 2.25rem auto 0;
+  font-size: 0.85rem;
+  color: var(--gray-500);
+}
+
+/* ========== PROCESS ========== */
+.svc-process { padding: 5.5rem 0; }
+.svc-process-split {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 4rem;
+  align-items: start;
+}
+.svc-process-visual { position: sticky; top: 7rem; }
+.svc-process-photo-frame { position: relative; }
+.svc-process-frame-accent {
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  right: 20px;
+  bottom: 20px;
+  border-radius: var(--radius-xl);
+  border: 2.5px solid rgba(244, 121, 32, 0.2);
+  z-index: 0;
+}
+.svc-process-photo-frame img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  background: var(--cream);
+}
+
+.svc-timeline {
+  position: relative;
+  padding-left: 40px;
+}
+.svc-timeline-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 24px;
+  width: 3px;
+  background: var(--gray-200);
+  border-radius: 2px;
+  z-index: 1;
+}
+.svc-timeline-track-fill {
+  width: 100%;
+  height: 0;
+  background: var(--orange);
+  border-radius: 2px;
+  transition: height 0.4s ease-out;
+}
+.svc-timeline-step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.75rem;
+  padding-bottom: 2.5rem;
+  opacity: 0.35;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.svc-timeline-step:last-child { padding-bottom: 0; }
+.svc-timeline-step.is-active { opacity: 1; transform: translateY(0); }
+.svc-timeline-marker {
+  position: relative;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.85rem;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(26, 58, 110, 0.2);
+  transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+.svc-timeline-step.is-active .svc-timeline-marker {
+  background: var(--orange);
+  transform: scale(1.12);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+.svc-marker-ring {
+  position: absolute;
+  inset: -8px;
+  border: 2px solid var(--orange);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+.svc-timeline-step.is-active .svc-marker-ring {
+  opacity: 1;
+  animation: svc-ring-pulse 2.2s ease-out infinite;
+}
+@keyframes svc-ring-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  70%, 100% { transform: scale(1.5); opacity: 0; }
+}
+.svc-timeline-content {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 1.9rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.svc-timeline-step.is-active .svc-timeline-content {
+  border-color: var(--orange);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+.svc-step-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--orange);
+  background: #fff7ed;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.7rem;
+}
+.svc-timeline-content h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+  color: var(--navy);
+  transition: color 0.3s ease;
+}
+.svc-timeline-step.is-active .svc-timeline-content h3 { color: var(--orange); }
+.svc-timeline-content p {
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ========== PRICING BAND ========== */
+.svc-pricing {
+  padding: 4.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.svc-pricing::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(244, 121, 32, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.svc-pricing-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+.svc-pricing-text h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+}
+.svc-pricing-text > p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  max-width: 620px;
+  margin: 0 0 1.5rem;
+}
+.svc-pricing-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0;
+}
+.svc-pricing-chips li {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+}
+.svc-pricing-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+.svc-pricing-action .btn { width: 100%; justify-content: center; }
+.svc-pricing-note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ========== IDEAL ========== */
+.svc-ideal { padding: 5.5rem 0; }
+.svc-ideal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.svc-ideal-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: var(--white);
+  padding: 1.5rem 1.85rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+}
+.svc-ideal-card:hover {
+  border-left-color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+.svc-ideal-icon {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.svc-ideal-content { flex: 1; min-width: 0; }
+.svc-ideal-num {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--orange);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.2rem;
+}
+.svc-ideal-content p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.45;
+}
+
+/* ========== FAQ ========== */
+.svc-faq { padding: 5.5rem 0; }
+.svc-faq-list { max-width: 850px; margin: 0 auto; }
+.svc-faq-item {
+  background: var(--cream);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  transition: border-color 0.3s ease;
+}
+.svc-faq-item[open] { background: var(--white); border-color: var(--orange); }
+.svc-faq-item summary {
+  padding: 1.4rem 1.9rem;
   cursor: pointer;
+  list-style: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 600;
-  font-size: 1rem;
+  gap: 1.5rem;
+  font-weight: 700;
+  font-size: 1.05rem;
   color: var(--navy);
-  list-style: none;
-  background: white;
 }
-.guide-faq-item summary::-webkit-details-marker { display: none; }
-.guide-faq-item summary span { flex: 1; padding-right: 1rem; }
-.guide-faq-chevron {
-  transition: transform 0.3s ease;
-  flex-shrink: 0;
-  color: var(--text-secondary);
-}
-.guide-faq-item[open] .guide-faq-chevron {
-  transform: rotate(180deg);
-}
-.guide-faq-answer {
-  padding: 0 1.5rem 1.25rem;
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
-}
-.guide-faq-answer p { margin: 0; }
-
-/* ===== RELATED ===== */
-.guide-related {
-  padding: var(--section-padding);
-  background: var(--cream);
-}
-.guide-related-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
-.guide-related-card {
-  text-decoration: none;
-  background: white;
-  border-radius: var(--radius-xl);
-  padding: 2rem;
-  border: 1px solid var(--gray-200);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-.guide-related-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-}
-.guide-related-badge {
-  display: inline-flex;
-  font-size: 0.65rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 1rem;
-  align-self: flex-start;
-}
-.guide-related-card h3 {
-  font-size: 1.1rem; font-weight: 700;
-  color: var(--navy); margin-bottom: 0.5rem;
-  line-height: 1.3;
-}
-.guide-related-card p {
-  font-size: 0.85rem; line-height: 1.6;
-  color: var(--text-secondary);
-  margin-bottom: 1rem; flex: 1;
-}
-.guide-related-link {
-  font-size: 0.85rem; font-weight: 700;
+.svc-faq-item summary::-webkit-details-marker { display: none; }
+.svc-faq-chevron { color: var(--orange); flex-shrink: 0; transition: transform 0.3s ease; }
+.svc-faq-item[open] .svc-faq-chevron { transform: rotate(180deg); }
+.svc-faq-answer { padding: 0 1.9rem 1.5rem; }
+.svc-faq-answer p {
+  margin: 0;
+  color: var(--gray-600);
+  font-size: 1rem;
+  line-height: 1.75;
 }
 
-/* ===== CTA SECTION ===== */
-.guide-cta-section {
-  padding: 5rem 0;
-  background: var(--navy);
-  color: white;
+/* ========== CTA ========== */
+.svc-cta {
+  padding: 5.5rem 0;
+  background: linear-gradient(135deg, var(--navy) 0%, #12294f 100%);
   position: relative;
   overflow: hidden;
 }
-.guide-cta-bg {
-  position: absolute; inset: 0;
-  opacity: 0.15;
+.svc-cta::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -15%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(244, 121, 32, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
 }
-.guide-cta-bg img {
-  width: 100%; height: 100%;
+.svc-cta-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+.svc-cta-content h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  margin: 0 0 1rem;
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.svc-cta-content p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin: 0 0 2rem;
+  max-width: 560px;
+  color: rgba(255, 255, 255, 0.75);
+}
+.svc-cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+.svc-cta .btn-ghost { color: var(--white); border-color: rgba(255, 255, 255, 0.3); }
+.svc-cta .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.55); }
+.svc-cta-photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-}
-.guide-cta-inner { text-align: center; }
-.guide-cta-content h2 {
-  color: white;
-  margin-bottom: 0.75rem;
-}
-.guide-cta-content p {
-  color: rgba(255,255,255,0.7);
-  max-width: 540px;
-  margin: 0 auto 2rem;
-  line-height: 1.7;
-}
-.guide-cta-buttons {
-  display: flex; gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.guide-cta-buttons .btn-ghost {
-  border-color: rgba(255,255,255,0.3);
-  color: white;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.28);
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 992px) {
-  .guide-glance-grid { grid-template-columns: repeat(2, 1fr); }
-  .guide-layout { grid-template-columns: 1fr; }
-  .guide-sidebar { position: static; }
-  .guide-toc-card { display: none; }
-  .guide-process-grid { grid-template-columns: repeat(2, 1fr); }
-  .guide-insights-top { flex-direction: column; }
-  .guide-insights-img-left { width: 100%; height: 240px; }
-  .guide-insights-bottom { flex-direction: column; }
-  .guide-insights-img-right { width: 100%; height: 220px; }
-  .guide-pitfalls-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
-  .guide-related-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+/* ========== RELATED ========== */
+.svc-related { padding: 5.5rem 0; }
+.svc-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
 }
+.svc-related-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.svc-related-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--orange);
+  box-shadow: var(--shadow-lg);
+}
+.svc-related-media {
+  overflow: hidden;
+  background: var(--cream);
+}
+.svc-related-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.svc-related-card:hover .svc-related-media img { transform: scale(1.05); }
+.svc-related-body {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.svc-related-body h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+  color: var(--navy);
+}
+.svc-related-body p {
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin: 0 0 1rem;
+  flex: 1;
+}
+.svc-related-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--orange);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: gap 0.3s ease;
+}
+.svc-related-card:hover .svc-related-link { gap: 0.75rem; }
+
+/* ========== RESPONSIVE ========== */
+/* Keep floating cards inside the hero on narrower desktops */
+@media (max-width: 1460px) {
+  .svc-card-tl { left: -28px; }
+  .svc-card-br { right: 0; }
+}
+
+@media (max-width: 1100px) {
+  .svc-feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .svc-example-grid { grid-template-columns: 1fr; }
+  .svc-example-card { max-width: 720px; margin: 0 auto; width: 100%; }
+  .svc-related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 1024px) {
+  .svc-hero { padding: 5.5rem 0 5rem; }
+  .svc-hero-inner { grid-template-columns: 1fr; gap: 3.5rem; text-align: center; }
+  .svc-breadcrumb { justify-content: center; }
+  .svc-hero-desc { margin-left: auto; margin-right: auto; }
+  .svc-hero-actions { justify-content: center; }
+  .svc-hero-proof { justify-content: center; }
+  .svc-hero-visual { justify-content: center; }
+  .svc-hero-photo-wrap { max-width: 460px; margin: 0 auto; }
+  .svc-floating-card, .svc-hero-pill, .svc-hero-glass-frame { display: none; }
+
+  .svc-story-split { grid-template-columns: 1fr; gap: 3rem; }
+  .svc-story-illus { order: -1; }
+  .svc-story-frame-accent { display: none; }
+
+  .svc-process-split { grid-template-columns: 1fr; gap: 3rem; }
+  .svc-process-visual { position: static; max-width: 460px; margin: 0 auto; width: 100%; }
+  .svc-process-frame-accent { display: none; }
+
+  .svc-pricing-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .svc-pricing-action { align-items: flex-start; }
+  .svc-pricing-action .btn { width: auto; }
+
+  .svc-cta-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .svc-cta-photo { max-width: 520px; }
+}
+
 @media (max-width: 768px) {
-  .guide-hero { padding: 7rem 0 3rem; }
-  .guide-hero h1 { font-size: 1.6rem; }
-  .guide-hero-image { display: none; }
-  .guide-hero-split { flex-direction: column; }
-  .guide-glance-grid { grid-template-columns: 1fr; }
-  .guide-glance { margin-top: -1rem; }
-  .guide-content-section { padding: 2rem 0; }
-  .guide-article { padding: 1.25rem; font-size: 1rem; line-height: 1.75; }
-  .guide-article :global(h2) { font-size: 1.2rem; margin: 1.5rem 0 0.75rem; }
-  .guide-process-grid { grid-template-columns: 1fr; }
-  .guide-insights-content h2 { font-size: 1.3rem; }
-  .guide-insight-stat-value { font-size: 1.1rem; }
-  .guide-insights-quote { padding: 1.5rem; }
-  .guide-cta-section { padding: 3rem 0; }
+  .svc-hero { padding: 4rem 0 4rem; }
+  .svc-story { padding: 4rem 0; }
+  .svc-included, .svc-benefits, .svc-examples, .svc-process,
+  .svc-ideal, .svc-faq, .svc-related { padding: 4rem 0; }
+  .svc-pricing, .svc-cta { padding: 3.5rem 0; }
+
+  .svc-feature-grid { grid-template-columns: 1fr; }
+  .svc-benefit-grid { grid-template-columns: 1fr; }
+  .svc-benefit-card { padding: 1.75rem; gap: 1.15rem; }
+  .svc-ideal-grid { grid-template-columns: 1fr; }
+  .svc-related-grid { grid-template-columns: 1fr; }
+
+  .svc-story-photo { aspect-ratio: 4 / 3; }
+  .svc-story-overlay-card { bottom: -14px; left: 10px; padding: 0.75rem 1rem; }
+  .svc-overlay-icon { width: 32px; height: 32px; }
+  .svc-overlay-value { font-size: 0.85rem; }
+  .svc-story-insight { padding: 1.5rem 1.5rem 1.5rem 2.4rem; }
+
+  .svc-timeline { padding-left: 28px; }
+  .svc-timeline-track { left: 17px; }
+  .svc-timeline-step { gap: 1.15rem; }
+  .svc-timeline-marker { width: 36px; height: 36px; font-size: 0.75rem; }
+  .svc-timeline-content { padding: 1.25rem 1.35rem; }
+
+  .svc-example-card { padding: 1.65rem 1.65rem 0; }
+  .svc-example-result { margin: 0 -1.65rem; padding: 1.35rem 1.65rem 1.5rem; }
+
+  .svc-faq-item summary { padding: 1.15rem 1.35rem; font-size: 0.98rem; gap: 1rem; }
+  .svc-faq-answer { padding: 0 1.35rem 1.25rem; }
+
+  .svc-cta-buttons { flex-direction: column; align-items: stretch; }
+  .svc-cta-buttons .btn { justify-content: center; }
+  .svc-cta-photo img { aspect-ratio: 16 / 10; }
 }
 </style>
+
+<script>
+  // Scroll-triggered reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const delay = parseInt((entry.target as HTMLElement).dataset.delay || '0', 10);
+        setTimeout(() => entry.target.classList.add('is-visible'), delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
+
+  // Process timeline: scroll-driven step activation
+  const vtimeline = document.querySelector('[data-vtimeline]') as HTMLElement | null;
+  if (vtimeline) {
+    const steps = vtimeline.querySelectorAll('.svc-timeline-step') as NodeListOf<HTMLElement>;
+    const trackFill = vtimeline.querySelector('.svc-timeline-track-fill') as HTMLElement | null;
+
+    const updateTimeline = () => {
+      const rect = vtimeline.getBoundingClientRect();
+      const trigger = window.innerHeight * 0.75;
+      const progress = Math.max(0, Math.min(1, (trigger - rect.top) / (rect.height || 1)));
+      if (trackFill) trackFill.style.height = `${progress * 100}%`;
+
+      steps.forEach((step) => {
+        const stepRect = step.getBoundingClientRect();
+        if (stepRect.top + stepRect.height * 0.3 < trigger) {
+          step.classList.add('is-active');
+        } else {
+          step.classList.remove('is-active');
+        }
+      });
+    };
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => { updateTimeline(); ticking = false; });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateTimeline();
+  }
+</script>

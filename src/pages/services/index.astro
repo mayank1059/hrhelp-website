@@ -1,0 +1,162 @@
+---
+import Layout from '../../components/Layout.astro';
+import { servicesData } from '../../data/pseo/services.js';
+
+// Group services for a scannable overview
+const groups = [
+  {
+    label: 'Flexible HR Capacity',
+    desc: 'Senior HR capacity exactly when and how long you need it.',
+    slugs: ['interim-hr-solutions', 'fractional-hr-solutions', 'temporary-hr-solutions', 'interim-hr-support'],
+  },
+  {
+    label: 'Embedded HR Roles',
+    desc: 'A named senior professional inside your organisation.',
+    slugs: ['interim-hr-manager', 'fractional-hr-manager', 'interim-hr-advisor'],
+  },
+  {
+    label: 'For Foreign Companies',
+    desc: 'Specialist support for international employers in the Netherlands.',
+    slugs: ['hr-consultancy-foreign-companies', 'hr-compliance-dutch-entity-foreign-company', 'labor-law-advice-international-employer', 'hr-recruitment-netherlands'],
+  },
+].map(g => ({
+  ...g,
+  items: g.slugs.map(s => servicesData.find(e => e.slug === s)).filter(Boolean),
+})).filter(g => g.items.length > 0);
+
+const count = servicesData.length;
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "HR Services Netherlands",
+  "description": "Specialist HR services for international companies in the Netherlands: interim, fractional and temporary HR, embedded HR roles, compliance and Dutch labour law advice.",
+  "url": "https://www.hrhelp.nl/services/",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.hrhelp.nl" },
+      { "@type": "ListItem", "position": 2, "name": "HR Services", "item": "https://www.hrhelp.nl/services/" }
+    ]
+  }
+};
+---
+
+<Layout title="HR Services Netherlands: Interim, Fractional & Compliance" description="Specialist HR services for international companies in the Netherlands. Interim and fractional HR, embedded HR roles, Dutch entity compliance and labour law advice. Fixed pricing." schema={collectionSchema}>
+
+<!-- ===== HERO ===== -->
+<section class="svcs-hero">
+  <div class="svcs-hero-mesh"></div>
+  <div class="container svcs-hero-inner">
+    <span class="eyebrow-badge">Specialist HR Services</span>
+    <h1>Senior Dutch HR expertise,<br/><span class="svcs-orange">shaped to how you need it</span></h1>
+    <p class="svcs-hero-p">Beyond our four core solutions, HRhelp delivers focused services for specific situations: an HR gap to bridge, a part-time HR lead, a compliance baseline, or a live employment-law question. Senior consultants only, fixed pricing always.</p>
+    <div class="svcs-hero-actions">
+      <a href="/contact" class="btn btn-primary btn-lg" style="box-shadow:none;">Book a Free Consultation</a>
+      <a href="/solutions" class="btn btn-ghost btn-lg">Our Core Solutions</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GROUPS ===== -->
+{groups.map((g, gi) => (
+  <section class={gi % 2 === 0 ? 'svcs-group section-cream' : 'svcs-group section-white'}>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">{g.label}</span>
+        <h2>{g.label}</h2>
+        <p class="section-desc">{g.desc}</p>
+      </div>
+      <div class="svcs-grid">
+        {g.items.map((s) => (
+          <a href={`/services/${s.slug}/`} class="svcs-card">
+            <div class="svcs-card-img">
+              <img src={`/images/services/inline-${s.slug}.png`} alt={s.name} loading="lazy" />
+            </div>
+            <div class="svcs-card-body">
+              <h3>{s.name}</h3>
+              <p class="svcs-card-tagline">{s.tagline}</p>
+              <p class="svcs-card-desc">{s.hero}</p>
+              <span class="svcs-card-link">
+                Explore this service
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+))}
+
+<!-- ===== CTA ===== -->
+<section class="svcs-cta">
+  <div class="container svcs-cta-inner">
+    <h2>Not sure which service fits?</h2>
+    <p>Describe your situation in a free 30-minute call and a senior consultant will tell you exactly what you need, and what it costs. No obligation.</p>
+    <a href="/contact" class="btn btn-primary btn-lg" style="box-shadow:none;">Talk to a Senior Consultant</a>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* ===== HERO ===== */
+.svcs-hero {
+  padding: 10rem 0 5rem;
+  background: var(--navy);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.svcs-hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 65% 15%, rgba(244,121,32,0.14), transparent 50%),
+              radial-gradient(circle at 15% 85%, rgba(255,255,255,0.05), transparent 40%);
+  z-index: 1;
+}
+.svcs-hero-inner { position: relative; z-index: 2; }
+.svcs-hero h1 { font-size: 3.4rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
+.svcs-orange { color: var(--orange); }
+.svcs-hero-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.78); max-width: 660px; margin: 0 auto 2.5rem; }
+.svcs-hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ===== GROUPS ===== */
+.svcs-group { padding: 5.5rem 0; }
+.svcs-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.75rem; margin-top: 2.5rem;
+}
+.svcs-card {
+  display: flex; flex-direction: column;
+  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+  overflow: hidden; text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.svcs-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(15,43,70,0.12); border-color: var(--orange); }
+.svcs-card-img { aspect-ratio: 16/9; overflow: hidden; background: var(--gray-100); }
+.svcs-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
+.svcs-card:hover .svcs-card-img img { transform: scale(1.04); }
+.svcs-card-body { padding: 1.6rem 1.6rem 1.75rem; display: flex; flex-direction: column; flex: 1; }
+.svcs-card-body h3 { font-size: 1.22rem; color: var(--navy); margin-bottom: 0.35rem; }
+.svcs-card-tagline { font-size: 0.85rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 0.8rem; }
+.svcs-card-desc { font-size: 0.95rem; line-height: 1.65; color: var(--gray-500); margin-bottom: 1.25rem; flex: 1; }
+.svcs-card-link {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.9rem; font-weight: 700; color: var(--navy);
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+.svcs-card:hover .svcs-card-link { color: var(--orange); gap: 0.7rem; }
+
+/* ===== CTA ===== */
+.svcs-cta { padding: 6rem 0; background: var(--cream); text-align: center; }
+.svcs-cta-inner { max-width: 640px; }
+.svcs-cta h2 { font-size: 2.3rem; color: var(--navy); margin-bottom: 1rem; }
+.svcs-cta p { font-size: 1.1rem; line-height: 1.7; color: var(--gray-600); margin-bottom: 2rem; }
+
+@media (max-width: 576px) {
+  .svcs-hero h1 { font-size: 2.3rem; }
+  .svcs-group { padding: 3.5rem 0; }
+}
+</style>

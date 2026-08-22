@@ -521,11 +521,17 @@ const solutionSchema = {
 <section class="sv-testimonial section-cream">
   <div class="container">
     <div class="sv-testimonial-card">
-      <div class="sv-testimonial-content" style="text-align:center; width:100%;">
-        <blockquote style="margin-bottom:1.5rem;">Companies like LG, Sandvik, Viacom and C.H. Robinson run their Dutch HR through HRhelp. One named senior consultant, fixed pricing agreed upfront, 15+ years of Dutch employment law.</blockquote>
-        <div class="sv-testimonial-author" style="justify-content:center; display:flex; gap:0.5rem;">
-          <strong>75+ international clients</strong>
-          <span>and counting</span>
+      <div class="sv-testimonial-avatar">
+        <span>{service.testimonial.name.split(' ').map((w: string) => w[0]).join('')}</span>
+      </div>
+      <div class="sv-testimonial-content">
+        <svg class="sv-quote-icon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z"/>
+        </svg>
+        <blockquote>{service.testimonial.quote}</blockquote>
+        <div class="sv-testimonial-author">
+          <strong>{service.testimonial.name}</strong>
+          <span>{service.testimonial.role}, {service.testimonial.company}</span>
         </div>
       </div>
     </div>

@@ -47,7 +47,7 @@ const contactSchema = {
       <p class="ct2-hero-p">Whether you're entering the Dutch market, restructuring your team, or need expert compliance guidance — our senior consultants are ready to help.</p>
       
       <div class="ct2-hero-actions">
-        <a href="#contact-form" class="btn btn-primary btn-lg" style="box-shadow:none;">Book Free Consultation</a>
+        <a href="#book" class="btn btn-primary btn-lg" style="box-shadow:none;">Book Free Consultation</a>
         <a href="tel:+31857608188" class="btn btn-secondary btn-lg">
           <span class="material-symbols-outlined" style="font-size:20px;">call</span>
           +31 85 760 8188
@@ -105,6 +105,29 @@ const contactSchema = {
         </div>
       ))}
     </div>
+  </div>
+</section>
+
+<!-- ===== BOOK A CONSULTATION (primary action) ===== -->
+<section class="ct2-book" id="book">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Fastest Way to Start</span>
+      <h2>Book Your Free 30-Minute Consultation</h2>
+      <p class="section-desc">Pick a time that suits you and speak directly with a senior consultant. You'll leave the call knowing your options and what they cost. Fixed pricing, no obligation.</p>
+    </div>
+    <div class="ct2-book-trust">
+      <span><span class="material-symbols-outlined">schedule</span>30 minutes</span>
+      <span><span class="material-symbols-outlined">videocam</span>Online or by phone</span>
+      <span><span class="material-symbols-outlined">lock</span>100% confidential</span>
+      <span><span class="material-symbols-outlined">euro</span>Fixed pricing, agreed upfront</span>
+    </div>
+    <div class="ct2-book-widget">
+      <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+      <script src="https://assets.calendly.com/assets/external/widget.js" async is:inline></script>
+      <div class="calendly-inline-widget" data-url="https://calendly.com/hrhelp-info/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=f47920" style="min-width:320px;height:700px;"></div>
+    </div>
+    <p class="ct2-book-alt">Prefer to write first? <a href="#contact-form">Send us a message below</a> — we reply within one business day.</p>
   </div>
 </section>
 
@@ -463,4 +486,19 @@ a.ct2-channel-value:hover { text-decoration: underline; }
   .ct2-form-row { grid-template-columns: 1fr; }
 }
 
+
+/* ===== BOOKING SECTION ===== */
+.ct2-book { padding: 5.5rem 0 4rem; background: var(--cream); }
+.ct2-book-trust {
+  display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; justify-content: center;
+  margin: 1.75rem 0 2rem; font-size: 0.92rem; color: var(--gray-500);
+}
+.ct2-book-trust span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.ct2-book-trust .material-symbols-outlined { font-size: 19px; color: var(--orange); }
+.ct2-book-widget {
+  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-xl);
+  box-shadow: 0 20px 50px rgba(15,43,70,0.10); padding: 0.5rem; overflow: hidden;
+}
+.ct2-book-alt { text-align: center; margin-top: 1.5rem; font-size: 0.95rem; color: var(--gray-500); }
+.ct2-book-alt a { color: var(--orange); font-weight: 600; }
 </style>

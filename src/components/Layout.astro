@@ -132,5 +132,27 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
   <!-- Elfsight chatbot container — script loaded only after cookie consent -->
   <div class="elfsight-app-b5ddbfcb-a7b8-49e3-aa9d-88aea10f86df" data-elfsight-app-lazy></div>
   <CookieConsent />
+  <!-- Conversion tracking: CTA clicks + Calendly bookings -->
+  <script is:inline>
+    (function () {
+      document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a.btn-primary, button.btn-primary') : null;
+        if (a && typeof gtag === 'function') {
+          gtag('event', 'cta_click', {
+            cta_text: (a.textContent || '').trim().slice(0, 60),
+            page_path: location.pathname,
+          });
+        }
+      }, { passive: true });
+      window.addEventListener('message', function (e) {
+        if (e.data && typeof e.data.event === 'string' && e.data.event === 'calendly.event_scheduled') {
+          if (typeof gtag === 'function') {
+            gtag('event', 'conversion', { 'send_to': 'AW-16843385395/u4MnCPi347gcELPUxt8-' });
+            gtag('event', 'book_consultation', { page_path: location.pathname });
+          }
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

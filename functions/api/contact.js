@@ -1,5 +1,44 @@
 // Cloudflare Pages Function — proxies form submissions to WordPress REST API
 // Bypasses CORS and attempts to bypass Mod Security with proper headers
+
+// Fire-and-forget copy of the submission into the CRM at client.hrhelp.nl.
+// Never throws: any failure here must stay invisible to the visitor.
+async function sendToCrm(context, body) {
+  const secret = context.env && context.env.HRHELP_LEAD_INTAKE_SECRET;
+  if (!secret) {
+    console.log('CRM intake skipped/failed:', 'HRHELP_LEAD_INTAKE_SECRET not set');
+    return;
+  }
+
+  const lead = {
+    name: body.name,
+    email: body.email,
+    company: body.company,
+    phone: body.phone,
+    topic: body.topic,
+    message: body.message,
+  };
+  // Pass the honeypot through verbatim so the CRM can silently drop bot fills
+  if ('website' in body) lead.website = body.website;
+
+  try {
+    const res = await fetch('https://client.hrhelp.nl/api/leads/intake', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'x-intake-secret': secret,
+      },
+      body: JSON.stringify(lead),
+    });
+    if (!res.ok) {
+      console.log('CRM intake skipped/failed:', 'status ' + res.status);
+    }
+  } catch (error) {
+    console.log('CRM intake skipped/failed:', error.message);
+  }
+}
+
 export async function onRequestPost(context) {
   try {
     const body = await context.request.json();
@@ -11,6 +50,11 @@ export async function onRequestPost(context) {
         message: 'Name and email are required.'
       }, { status: 400 });
     }
+
+    // Copy the lead into the CRM regardless of what WordPress does below.
+    // The ModSec fallback used to drop submissions entirely; this copy is the safety net.
+    // Fire-and-forget so the visitor response is never delayed by it.
+    context.waitUntil(sendToCrm(context, body));
 
     // Forward to WordPress REST API with browser-like headers to bypass Mod Security
     const wpResponse = await fetch('https://admin.hrhelp.nl/wp-json/hrhelp/v1/contact', {

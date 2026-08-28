@@ -42,6 +42,15 @@ const verticalColors: Record<string, { bg: string; text: string; accent: string 
   'dutch-law':   { bg: 'rgba(16,185,129,0.08)', text: '#10b981', accent: '#10b981' },
 };
 const vc = verticalColors[page.vertical] || verticalColors['hr-settlers'];
+// Guides that rank for employee/expat-intent queries (visa, 30% ruling, permits).
+// These readers are not HRhelp's audience; refer them to the sister platform.
+const EMPLOYEE_REFERRAL_SLUGS = new Set([
+  '30-percent-ruling-application-2026',
+  'work-permits-visa-sponsorship-netherlands',
+  'expat-employee-management-netherlands',
+]);
+const showEmployeeReferral = EMPLOYEE_REFERRAL_SLUGS.has(slug);
+
 const heroImage = `/images/guides/hero-${slug}.png`;
 const contentImage = `/images/guides/content-${slug}.png`;
 const processImage = `/images/guides/process-${slug}.png`;
@@ -153,6 +162,32 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
 </section>
 
 <!-- ===== MAIN CONTENT ===== -->
+{showEmployeeReferral && (
+<section class="emp-referral">
+  <div class="container">
+    <div class="emp-referral-card">
+      <div class="emp-referral-head">
+        <span class="emp-referral-eyebrow">Are you an employee or expat?</span>
+        <h3>This guide is for employers. For your personal visa or 30% ruling, go here instead:</h3>
+      </div>
+      <div class="emp-referral-body">
+        <a href="https://quality-immigration.com/?utm_source=hrhelp&utm_medium=referral&utm_campaign=guides" target="_blank" rel="noopener" class="emp-referral-logo" onclick="typeof gtag==='function'&&gtag('event','referral_quality_immigration',{page_path:location.pathname})">
+          <img src="/images/partners/quality-immigration-logo.svg" alt="Quality Immigration" loading="lazy" />
+        </a>
+        <div class="emp-referral-text">
+          <p><strong>Quality Immigration</strong> is our official partner platform for individuals: work visas, residence permits, HSM applications and the 30% ruling, handled personally from start to finish.</p>
+          <p class="emp-referral-note">HRhelp advises companies only and cannot take on individual immigration cases.</p>
+        </div>
+        <a href="https://quality-immigration.com/?utm_source=hrhelp&utm_medium=referral&utm_campaign=guides" target="_blank" rel="noopener" class="emp-referral-btn" onclick="typeof gtag==='function'&&gtag('event','referral_quality_immigration',{page_path:location.pathname})">
+          Book your immigration consultation
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+)}
+
 <section class="guide-content-section">
   <div class="container">
     <div class="guide-layout">
@@ -971,4 +1006,40 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
   .guide-insights-quote { padding: 1.5rem; }
   .guide-cta-section { padding: 3rem 0; }
 }
+
+/* ===== EMPLOYEE REFERRAL (Quality Immigration) ===== */
+.emp-referral { padding: 2.75rem 0 0; }
+.emp-referral-card {
+  background: linear-gradient(135deg, #eef6fb 0%, #f7fbfd 100%);
+  border: 2px solid #2b7bb9; border-radius: var(--radius-xl);
+  padding: 2rem 2.25rem; box-shadow: 0 12px 32px rgba(43,123,185,0.14);
+}
+.emp-referral-eyebrow {
+  display: inline-block; background: #2b7bb9; color: #fff;
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px;
+  padding: 0.35rem 0.9rem; border-radius: var(--radius-full); margin-bottom: 0.75rem;
+}
+.emp-referral-head h3 { font-size: 1.35rem; line-height: 1.35; color: #17435f; margin-bottom: 1.25rem; }
+.emp-referral-body { display: flex; align-items: center; gap: 1.75rem; }
+.emp-referral-logo { flex-shrink: 0; display: block; background: #fff; border: 1px solid #cfe5f2; border-radius: var(--radius-md); padding: 0.9rem 1.1rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.emp-referral-logo:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(43,123,185,0.2); }
+.emp-referral-logo img { width: 190px; height: auto; display: block; }
+.emp-referral-text { flex: 1; }
+.emp-referral-text p { font-size: 0.95rem; line-height: 1.65; color: #2e5a75; margin: 0 0 0.5rem; }
+.emp-referral-note { font-size: 0.83rem !important; color: #6b8ba0 !important; font-style: italic; }
+.emp-referral-btn {
+  flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.5rem;
+  background: #2b7bb9; color: #fff; font-weight: 800; font-size: 0.95rem;
+  padding: 0.95rem 1.5rem; border-radius: var(--radius-md); text-decoration: none;
+  box-shadow: 0 6px 16px rgba(43,123,185,0.35);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.emp-referral-btn:hover { background: #17435f; transform: translateY(-2px); }
+@media (max-width: 900px) {
+  .emp-referral-body { flex-direction: column; align-items: stretch; text-align: center; }
+  .emp-referral-logo { align-self: center; }
+  .emp-referral-btn { justify-content: center; }
+  .emp-referral-head h3 { font-size: 1.15rem; }
+}
+
 </style>

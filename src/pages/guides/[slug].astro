@@ -200,7 +200,15 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
           <nav class="guide-toc" id="guide-toc"></nav>
         </div>
 
-        <!-- CTA Card -->
+        <!-- CTA Card (routes to partner on employee-magnet guides) -->
+        {showEmployeeReferral ? (
+        <div class="guide-sidebar-card guide-cta-sidebar emp-sidebar-cta">
+          <img src="/images/partners/quality-immigration-logo.svg" alt="Quality Immigration" class="emp-sidebar-logo" loading="lazy" />
+          <h3>Applying for yourself?</h3>
+          <p>Visas, permits and the 30% ruling for individuals are handled by our partner platform Quality Immigration.</p>
+          <a href="https://quality-immigration.com/?utm_source=hrhelp&utm_medium=referral&utm_campaign=guides" target="_blank" rel="noopener" class="btn btn-primary emp-sidebar-btn" style="width:100%; text-align:center;" onclick="typeof gtag==='function'&&gtag('event','referral_quality_immigration',{page_path:location.pathname})">Book an Immigration Consultation →</a>
+        </div>
+        ) : (
         <div class="guide-sidebar-card guide-cta-sidebar">
           <div class="guide-cta-icon" style={`background: ${vc.bg};`}>
             <span class="material-symbols-outlined" style={`color: ${vc.text}; font-size:28px;`}>support_agent</span>
@@ -209,6 +217,7 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
           <p>Our HR specialists can guide you through every step of this process.</p>
           <a href="/contact" class="btn btn-primary" style="width:100%; text-align:center;">Book a Consultation →</a>
         </div>
+        )}
 
         <!-- Parent Service Card -->
         <div class="guide-sidebar-card">
@@ -375,6 +384,17 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
   </div>
   <div class="container" style="position:relative; z-index:2;">
     <div class="guide-cta-inner">
+      {showEmployeeReferral ? (
+      <div class="guide-cta-content">
+        <span class="eyebrow" style="color: var(--orange-light);">For Individuals</span>
+        <h2>Need help with your own visa or 30% ruling?</h2>
+        <p>Our partner platform Quality Immigration advises individuals on work visas, residence permits, HSM applications and the 30% ruling, from start to finish.</p>
+        <div class="guide-cta-buttons">
+          <a href="https://quality-immigration.com/?utm_source=hrhelp&utm_medium=referral&utm_campaign=guides" target="_blank" rel="noopener" class="btn btn-primary btn-lg" onclick="typeof gtag==='function'&&gtag('event','referral_quality_immigration',{page_path:location.pathname})">Go to Quality Immigration</a>
+          <a href="/contact" class="btn btn-ghost btn-lg">I'm an employer, talk to HRhelp</a>
+        </div>
+      </div>
+      ) : (
       <div class="guide-cta-content">
         <span class="eyebrow" style="color: var(--orange-light);">Need Help?</span>
         <h2>Ready to get started with {page.parentServiceName}?</h2>
@@ -384,6 +404,7 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
           <a href={page.parentService} class="btn btn-ghost btn-lg">Learn about {page.parentServiceName}</a>
         </div>
       </div>
+      )}
     </div>
   </div>
 </section>
@@ -1042,4 +1063,10 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
   .emp-referral-head h3 { font-size: 1.15rem; }
 }
 
+
+.emp-sidebar-cta { border: 2px solid #2b7bb9 !important; background: #f4fafd !important; }
+.emp-sidebar-logo { width: 150px; height: auto; margin: 0 auto 0.9rem; display: block; }
+.emp-sidebar-cta h3 { color: #17435f; }
+.emp-sidebar-btn { background: #2b7bb9 !important; border-color: #2b7bb9 !important; }
+.emp-sidebar-btn:hover { background: #17435f !important; border-color: #17435f !important; }
 </style>

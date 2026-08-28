@@ -15,7 +15,10 @@ async function sendToCrm(context, body) {
     email: body.email,
     company: body.company,
     phone: body.phone,
-    topic: body.topic,
+    // The whitepaper forms send no topic but do send a source label
+    // ("Whitepaper Download"); without it a guide download is
+    // indistinguishable from a contact lead in the CRM.
+    topic: body.topic || body.source,
     message: body.message,
   };
   // Pass the honeypot through verbatim so the CRM can silently drop bot fills

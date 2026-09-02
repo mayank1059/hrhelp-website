@@ -199,8 +199,8 @@ const contactSchema = {
           <div class="ct2-form-group">
             <label>What can we help you with?</label>
             <div class="ct2-select-wrap">
-              <select name="topic">
-                <option>Select a topic...</option>
+              <select name="topic" required>
+                <option value="" disabled selected>Select a topic...</option>
                 <option>HR Compliance & Employment Law</option>
                 <option>Recruitment & Talent Strategy</option>
                 <option>Payroll & Benefits</option>
@@ -214,6 +214,12 @@ const contactSchema = {
           <div class="ct2-form-group">
             <label>Your Message</label>
             <textarea name="message" placeholder="Tell us about your situation..." rows="5"></textarea>
+          </div>
+          <!-- Honeypot: off-screen and out of the tab order, so only bots fill it.
+               A non-empty url_confirm makes /api/contact drop the submission. -->
+          <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+            <label for="ct2-url-confirm">Your website</label>
+            <input type="text" id="ct2-url-confirm" name="url_confirm" tabindex="-1" autocomplete="off" />
           </div>
           <div class="ct2-form-footer">
             <div class="ct2-form-check">
@@ -244,6 +250,7 @@ const contactSchema = {
     btn.style.opacity = '0.7';
     status.style.display = 'none';
 
+    var params = new URLSearchParams(window.location.search);
     var data = {
       name: form.querySelector('[name="name"]').value.trim(),
       email: form.querySelector('[name="email"]').value.trim(),
@@ -251,7 +258,12 @@ const contactSchema = {
       phone: form.querySelector('[name="phone"]').value.trim(),
       topic: form.querySelector('[name="topic"]').value,
       message: form.querySelector('[name="message"]').value.trim(),
-      source: 'Contact Form'
+      source: 'Contact Form',
+      url_confirm: form.querySelector('[name="url_confirm"]').value,
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      referrer: document.referrer || ''
     };
 
     fetch('/api/contact', {
@@ -266,12 +278,17 @@ const contactSchema = {
         status.style.background = '#e8f5e9';
         status.style.color = '#2e7d32';
         status.textContent = '✓ ' + result.message;
-        form.reset();
+        // Terminal state: the message is in, so don't re-arm the form.
+        btn.textContent = 'Message sent';
+        btn.style.opacity = '1';
       } else {
         status.style.display = 'block';
         status.style.background = '#fce4ec';
         status.style.color = '#c62828';
         status.textContent = '✗ ' + (result.message || 'Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = originalText;
+        btn.style.opacity = '1';
       }
     })
     .catch(function() {
@@ -279,8 +296,6 @@ const contactSchema = {
       status.style.background = '#fce4ec';
       status.style.color = '#c62828';
       status.textContent = '✗ Network error. Please try again or email us directly.';
-    })
-    .finally(function() {
       btn.disabled = false;
       btn.textContent = originalText;
       btn.style.opacity = '1';

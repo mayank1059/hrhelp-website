@@ -486,6 +486,12 @@ const localBusinessSchema = {
               Download Free Guide
             </button>
           </div>
+          <!-- Honeypot: off-screen and out of the tab order, so only bots fill it.
+               A non-empty url_confirm makes /api/contact drop the submission. -->
+          <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+            <label for="wp-url-confirm">Your website</label>
+            <input type="text" id="wp-url-confirm" name="url_confirm" tabindex="-1" autocomplete="off" />
+          </div>
           <div id="wp-form-status" style="display:none; padding: 0.6rem; border-radius: 8px; margin-top: 0.75rem; font-size: 0.85rem;"></div>
           <p class="wp-cta-disclaimer">No spam. We respect your privacy. Unsubscribe anytime.</p>
         </form>
@@ -510,10 +516,16 @@ const localBusinessSchema = {
     btn.style.opacity = '0.7';
     status.style.display = 'none';
 
+    var params = new URLSearchParams(window.location.search);
     var data = {
       name: form.querySelector('[name="name"]').value.trim(),
       email: form.querySelector('[name="email"]').value.trim(),
-      source: 'Whitepaper Download'
+      source: 'Whitepaper Download',
+      url_confirm: form.querySelector('[name="url_confirm"]').value,
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      referrer: document.referrer || ''
     };
 
     fetch('/api/contact', {
@@ -737,13 +749,19 @@ const localBusinessSchema = {
       <div class="wp-modal-body">
         <span class="wp-cta-badge">FREE DOWNLOAD</span>
         <h3>Get the 2026 HR Rules &amp; Regulations Guide</h3>
-        <p>Enter your details below and we'll send you the complete guide instantly.</p>
+        <p>Enter your details and the download starts right away.</p>
         <form id="wp-modal-form">
           <div class="wp-modal-field">
             <input type="text" name="name" placeholder="Your full name" required />
           </div>
           <div class="wp-modal-field">
             <input type="email" name="email" placeholder="Work email" required />
+          </div>
+          <!-- Honeypot: off-screen and out of the tab order, so only bots fill it.
+               A non-empty url_confirm makes /api/contact drop the submission. -->
+          <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+            <label for="wp-modal-url-confirm">Your website</label>
+            <input type="text" id="wp-modal-url-confirm" name="url_confirm" tabindex="-1" autocomplete="off" />
           </div>
           <div id="wp-modal-status" style="display:none; padding: 0.6rem; border-radius: 8px; font-size: 0.85rem;"></div>
           <button type="submit" class="btn btn-primary" id="wp-modal-submit" style="width:100%; display:flex; align-items:center; justify-content:center; gap:0.4rem;">
@@ -796,10 +814,16 @@ const localBusinessSchema = {
     btn.style.opacity = '0.7';
     status.style.display = 'none';
 
+    var params = new URLSearchParams(window.location.search);
     var data = {
       name: form.querySelector('[name="name"]').value.trim(),
       email: form.querySelector('[name="email"]').value.trim(),
-      source: 'Whitepaper Download (Hero)'
+      source: 'Whitepaper Download (Hero)',
+      url_confirm: form.querySelector('[name="url_confirm"]').value,
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      referrer: document.referrer || ''
     };
 
     fetch('/api/contact', {

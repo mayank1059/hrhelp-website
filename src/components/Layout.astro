@@ -154,5 +154,24 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
       });
     })();
   </script>
+  <!-- Calendly booking relay: hand the two URIs to the CRM, which fetches the details -->
+  <script is:inline>
+    (function () {
+      window.addEventListener('message', function (e) {
+        if (e.origin !== 'https://calendly.com') return;
+        if (!e.data || e.data.event !== 'calendly.event_scheduled') return;
+        var payload = e.data.payload || {};
+        var invitee = payload.invitee || {};
+        var event = payload.event || {};
+        if (!invitee.uri || !event.uri) return;
+        fetch('/api/calendly', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ invitee_uri: invitee.uri, event_uri: event.uri }),
+          keepalive: true,
+        }).catch(function () {});
+      });
+    })();
+  </script>
 </body>
 </html>

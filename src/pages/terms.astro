@@ -121,7 +121,7 @@ const sections = [
 const toArray = (c) => (Array.isArray(c) ? c : c ? [c] : []);
 ---
 
-<Layout title="General Terms and Conditions" description="General Terms and Conditions for HRHelp.nl — Dutch HR consultancy services for international companies.">
+<Layout title="General Terms and Conditions" description="General Terms and Conditions for HRHelp.nl: Dutch HR consultancy services for international companies.">
 
 <!-- ===== HERO ===== -->
 <section class="lg-hero">
@@ -145,7 +145,7 @@ const toArray = (c) => (Array.isArray(c) ? c : c ? [c] : []);
           <ul>
             {s.list.map((item) => (
               <li>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange-ink)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                 {item}
               </li>
             ))}
@@ -177,14 +177,14 @@ const toArray = (c) => (Array.isArray(c) ? c : c ? [c] : []);
       <p>For questions regarding these General Terms and Conditions or to exercise your data rights, please contact us:</p>
       <div class="lg-address-card">
         <div class="lg-addr-item">
-          <span class="material-symbols-outlined">location_on</span>
+          <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
           <div>
             <strong>HRHelp.nl B.V.</strong>
             <p>Oeverwalweg 3, 1332 CG Almere, Netherlands</p>
           </div>
         </div>
         <div class="lg-addr-item">
-          <span class="material-symbols-outlined">mail</span>
+          <span class="material-symbols-outlined" aria-hidden="true">mail</span>
           <div>
             <strong>info@hrhelp.nl</strong>
             <p>Legal and service inquiries</p>
@@ -205,22 +205,24 @@ const toArray = (c) => (Array.isArray(c) ? c : c ? [c] : []);
   color: white;
   position: relative;
   overflow: hidden;
-  text-align: center;
+  /* Left-aligned so the hero lines up with the prose below */
+  text-align: left;
 }
 .lg-hero-mesh {
   position: absolute; inset: 0;
-  background: radial-gradient(circle at 60% 20%, rgba(244,121,32,0.12), transparent 50%),
-              radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04), transparent 40%);
+  background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04), transparent 40%);
   z-index: 1;
 }
 .lg-hero-inner { position: relative; z-index: 2; }
+/* The global badge ink is dark orange for light bands; on navy it needs a light tint (5:1+) */
+.lg-hero .eyebrow-badge { color: var(--orange-light); }
 .lg-hero h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
-.lg-hero-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto; }
-.lg-meta { font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-top: 1.5rem; }
+.lg-hero-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255, 255, 255, 0.88); max-width: 600px; margin: 0; }
+.lg-meta { font-size: 0.85rem; color: rgba(255, 255, 255, 0.88); margin-top: 1.5rem; }
 
 /* ===== CONTENT ===== */
 .lg-content { padding: 6rem 0 8rem; }
-.lg-narrow { max-width: 800px; }
+.lg-narrow > * { max-width: var(--measure); }
 
 .lg-block { margin-bottom: 3rem; }
 .lg-block h2 {
@@ -249,7 +251,7 @@ const toArray = (c) => (Array.isArray(c) ? c : c ? [c] : []);
 .lg-table th {
   background: var(--cream); font-weight: 700; color: var(--navy);
 }
-.lg-table tbody tr:hover { background: rgba(244, 121, 32, 0.03); }
+.lg-table tbody tr:hover { background: rgba(15, 37, 72, 0.03); }
 
 /* Address Card */
 .lg-address-card {
@@ -258,11 +260,19 @@ const toArray = (c) => (Array.isArray(c) ? c : c ? [c] : []);
   display: flex; flex-direction: column; gap: 1.5rem;
 }
 .lg-addr-item { display: flex; gap: 1rem; align-items: flex-start; }
-.lg-addr-item > span { color: var(--orange); margin-top: 2px; }
+.lg-addr-item > span { color: var(--orange-ink); margin-top: 2px; }
 .lg-addr-item strong { display: block; font-size: 1rem; color: var(--navy); }
 .lg-addr-item p { font-size: 0.9rem; color: var(--gray-500); margin: 0; }
 
 @media (max-width: 576px) {
   .lg-hero h1 { font-size: 2.5rem; }
+}
+
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .lg-address-card {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>

@@ -1,47 +1,43 @@
 ---
 import Layout from '../../components/Layout.astro';
-import { getCaseStudies } from '../../lib/wordpress';
+import PageHero from '../../components/PageHero.astro';
+import LineIcon from '../../components/LineIcon.astro';
+import { resourcePhoto } from '../../lib/resourcePhotos';
+import { getCaseStudies, clip } from '../../lib/wordpress';
 
 const allCaseStudies = await getCaseStudies();
 const caseStudies = allCaseStudies.map(cs => ({
   slug: cs.slug,
   tag: cs.tag,
   title: cs.title,
-  desc: cs.intro.slice(0, 120) + '...',
+  desc: clip(cs.intro, 120),
   icon: cs.icon,
-  image: cs.image,
+  image: resourcePhoto(cs.image, true),
 }));
 ---
 
-<Layout title="Case Studies" description="Real challenges, measurable outcomes — authentic case studies from HRHelp.nl's client engagements.">
+<Layout title="Case Studies" description="Real challenges, measurable outcomes: case studies from HRHelp.nl's client engagements.">
 
 <!-- ===== HERO ===== -->
-<section class="cs-hero">
-  <div class="cs-hero-mesh"></div>
-  <div class="container" style="position: relative; z-index: 2; text-align: center;">
-    <span class="eyebrow-badge" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);">
-      Our Work in Practice
-    </span>
-    <h1>Client <span style="color: var(--orange);">Case Studies</span></h1>
-    <p class="cs-hero-sub">Real challenges, measurable outcomes — a selection of engagements that reflect how we work.</p>
-  </div>
-</section>
+<PageHero variant="archive" eyebrow="Our Work in Practice" subtitle="Real challenges, measurable outcomes: a selection of engagements that reflect how we work.">
+  <Fragment slot="title">Client <span>Case Studies</span></Fragment>
+</PageHero>
 
 <!-- ===== CASE STUDY CARDS ===== -->
 <section class="cs-section">
   <div class="container">
     <div class="cs-grid">
-      {caseStudies.map((cs, i) => (
-        <a href={`/resources/case-studies/${cs.slug}`} class="cs-card" data-animate="fade-up" data-delay={i * 100}>
+      {caseStudies.map((cs) => (
+        <a href={`/resources/case-studies/${cs.slug}/`} class="cs-card">
           <div class="cs-card-img">
-            <img src={cs.image} alt={cs.title} />
+            <img src={cs.image.src} alt={cs.title} width={cs.image.width} height={cs.image.height} loading="lazy" decoding="async" />
           </div>
           <div class="cs-card-body">
             <span class="cs-tag">
-              <span class="material-symbols-outlined" style="font-size:16px; color: var(--orange);">{cs.icon}</span>
+              <LineIcon name={cs.icon} size={16} />
               {cs.tag}
             </span>
-            <h2>{cs.title}</h2>
+            <h2 class="as-h3">{cs.title}</h2>
             <p>{cs.desc}</p>
             <span class="cs-link">Read Full Case Study →</span>
           </div>
@@ -53,62 +49,78 @@ const caseStudies = allCaseStudies.map(cs => ({
 
 <!-- ===== CTA ===== -->
 <section class="cs-cta">
-  <div class="container" style="text-align: center;">
-    <h2>Ready to See Similar Results?</h2>
-    <p>Every engagement starts with understanding your unique challenge. Let's discuss how we can help.</p>
-    <a href="/contact" class="btn btn-primary btn-lg" style="margin-top: 1.5rem;">Book a Free Consultation →</a>
+  <div class="container">
+    <div class="cs-cta-inner">
+      <div>
+        <h2>Ready to See Similar Results?</h2>
+        <p>Every engagement starts with understanding your unique challenge. Let's discuss how we can help.</p>
+        <a href="/contact/" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
+      </div>
+      <div class="cs-cta-photo">
+        <img src="/images/home/cornelis-candid.jpg" alt="Cornelis Leerlooijer, founder of HRHelp" width="962" height="825" loading="lazy" decoding="async" />
+      </div>
+    </div>
   </div>
 </section>
 
 </Layout>
 
 <style>
-.cs-hero {
-  padding: 10rem 0 5rem;
-  background: var(--navy); color: white;
-  position: relative; overflow: hidden;
-}
-.cs-hero-mesh {
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 70% 20%, rgba(244,121,32,0.15), transparent 40%),
-              radial-gradient(circle at 20% 80%, rgba(255,255,255,0.05), transparent 40%);
-  z-index: 1;
-}
-.cs-hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; margin-top: 1rem; color: white; }
-.cs-hero-sub { font-size: 1.15rem; color: rgba(255,255,255,0.7); max-width: 520px; margin: 1rem auto 0; line-height: 1.7; }
-
-.cs-section { padding: var(--section-padding); background: var(--cream); }
-.cs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-
+/* Same sections; calmer treatment: shared archive hero, documentary photos,
+   hairline cards, light CTA panel. */
+h2 { font-weight: 700; letter-spacing: -0.015em; }
+.cs-section { padding: 4.5rem 0 5rem; background: var(--white); }
+.cs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 .cs-card {
-  text-decoration: none;
-  background: white; border-radius: var(--radius-xl);
-  overflow: hidden; border: 1px solid var(--gray-200);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex; flex-direction: column; text-decoration: none;
+  background: white; border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 12px; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
+  transition: border-color 0.2s ease;
 }
-.cs-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-}
-.cs-card-img {
-  height: 200px; overflow: hidden;
-}
-.cs-card-img img { width: 100%; height: 100%; object-fit: cover; }
+.cs-card:hover { border-color: rgba(15, 37, 72, 0.28); }
+.cs-card-img { background: #e9edf2; }
+.cs-card-img img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+.cs-card-body { padding: 1.4rem 1.5rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
+.cs-tag { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #44546d; margin-bottom: 0.75rem; }
+.cs-tag :global(svg) { color: var(--icon-accent); }
+.cs-card-body h2 { color: var(--navy); margin-bottom: 0.5rem; }
+.cs-card-body p { font-size: 0.92rem; line-height: 1.6; color: var(--gray-600); margin-bottom: 1rem; flex: 1; }
+.cs-link { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+.cs-card:hover .cs-link { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
 
-.cs-card-body { padding: 1.5rem; }
-.cs-tag {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  font-size: 0.7rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--orange); margin-bottom: 0.75rem;
+.cs-cta { padding: 0 0 5.5rem; background: var(--white); }
+.cs-cta-inner {
+  display: grid; grid-template-columns: minmax(0, 1fr) 22rem; gap: 3rem; align-items: center;
+  background: #f6f7f9; border: 1px solid rgba(15, 37, 72, 0.08); border-radius: 12px; padding: 2.75rem 3rem;
 }
-.cs-card-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; line-height: 1.3; }
-.cs-card-body p { font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; }
-.cs-link { font-size: 0.85rem; font-weight: 700; color: var(--orange); }
+.cs-cta h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); color: var(--navy); margin-bottom: 0.9rem; }
+.cs-cta p { color: var(--gray-600); line-height: 1.7; margin-bottom: 1.75rem; max-width: 520px; }
+/* Photo fills the height of the text column (floor 220px) in a fixed 22rem column, instead of a fixed square */
+.cs-cta-photo { position: relative; align-self: stretch; min-height: 220px; }
+.cs-cta-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 22%; border-radius: 4px; background: #e9edf2; }
 
-.cs-cta { padding: 5rem 0; background: var(--navy); color: white; }
-.cs-cta h2 { margin-bottom: 0.75rem; color: white; }
-.cs-cta p { color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto; }
+@media (max-width: 1024px) {
+  .cs-grid { grid-template-columns: repeat(2, 1fr); }
+  .cs-cta-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .cs-cta-photo { max-width: 360px; }
+  .cs-cta-photo { min-height: 0; }
+  .cs-cta-photo img { position: static; height: auto; aspect-ratio: 4 / 3; }
+}
+@media (max-width: 768px) {
+  .cs-section { padding: 2.5rem 0 3.5rem; }
+  .cs-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .cs-card-img img { aspect-ratio: 2 / 1; }
+  .cs-cta { padding: 0 0 4rem; }
+  .cs-cta-inner { padding: 1.75rem 1.35rem; }
+  .cs-cta .btn { width: 100%; justify-content: center; }
+}
 
-@media (max-width: 992px) { .cs-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; } }
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .cs-card-body,
+  .cs-cta-inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
 </style>

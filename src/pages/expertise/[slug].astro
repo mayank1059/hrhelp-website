@@ -1,0 +1,907 @@
+---
+import Layout from '../../components/Layout.astro';
+import { getExpertiseItems, getExpertiseItem, getCaseStudy } from '../../lib/wordpress';
+import PageHero from '../../components/PageHero.astro';
+import LineIcon from '../../components/LineIcon.astro';
+import { resourcePhoto } from '../../lib/resourcePhotos';
+import { getExpertiseContent } from '../../lib/expertiseContent';
+import { solutionBySlug } from '../../data/solutions.js';
+import { servicesData } from '../../data/pseo/services.js';
+
+export async function getStaticPaths() {
+  const items = await getExpertiseItems();
+  return items.map(e => ({
+    params: { slug: e.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const svc = await getExpertiseItem(slug as string);
+if (!svc) return Astro.redirect('/services/#core-expertise');
+
+const heroImage = resourcePhoto(svc.image);
+const premiseImage = resourcePhoto(svc.illustration);
+
+// Service-page content from src/data/expertise/<slug>.json; without it the
+// WordPress-only layout below is used.
+const content = getExpertiseContent(slug as string);
+const caseStudy = content ? await getCaseStudy(slug as string) : null;
+
+// Card grids that balance: 2x2 for 4 (and other even counts not divisible by 3), 3 columns otherwise
+const incCount = content?.included.items.length ?? 0;
+const incCols = incCount % 3 !== 0 && incCount % 2 === 0 ? 2 : 3;
+const relCount = content?.related.length ?? 0;
+const kindLabel: Record<string, string> = { guide: 'Guide', blog: 'Article', solution: 'Solution', service: 'Service' };
+
+// Title, meta description and H1 from content.seo when set (Layout adds " | HRHelp.nl")
+const pageTitle = content?.seo?.title || svc.title;
+const pageDescription = content?.seo?.description || svc.intro.slice(0, 160);
+const pageH1 = content?.seo?.h1 || svc.title;
+const pageUrl = `https://www.hrhelp.nl/expertise/${slug}/`;
+
+// "Updated 3 October 2026" from content.updated (ISO date)
+const updatedDate = content?.updated ? new Date(`${content.updated.slice(0, 10)}T00:00:00Z`) : null;
+const updatedIso = updatedDate && !isNaN(updatedDate.getTime()) ? updatedDate.toISOString().slice(0, 10) : '';
+const updatedLabel = updatedIso
+  ? updatedDate!.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+  : '';
+
+// "How HRhelp supports you": name, tagline and URL come from the solution and
+// service data; a slug without a page in this build is left out.
+const serviceBySlug = new Map((servicesData as any[]).map((s: any) => [s.slug, s]));
+const helpCards = (items: { slug: string; why: string }[] | undefined, kind: 'solution' | 'service') =>
+  (items ?? []).flatMap(({ slug: s, why }) => {
+    const page = kind === 'solution' ? (solutionBySlug as Record<string, any>)[s] : serviceBySlug.get(s);
+    if (!page) {
+      console.warn(`[expertise/${slug}] helpWith: no ${kind} page for "${s}", card left out`);
+      return [];
+    }
+    return [{ name: page.name, desc: page.tagline, why, href: `/${kind}s/${s}/` }];
+  });
+const helpSolutions = helpCards(content?.helpWith?.solutions, 'solution');
+const helpServices = helpCards(content?.helpWith?.services, 'service');
+// Up to 4 cards in all: both groups share one row on desktop (solutions left,
+// services right). More: the groups stack, with 3 or 4 columns.
+const helpInline = helpSolutions.length + helpServices.length <= 4;
+const helpCols = Math.min(4, Math.max(3, helpSolutions.length, helpServices.length));
+const helpGroups = [
+  { label: 'Solutions', more: 'View solution', cards: helpSolutions },
+  { label: 'Services', more: 'View service', cards: helpServices },
+].filter((g) => g.cards.length > 0);
+
+const deepDive = content?.deepDive ?? [];
+const timelineRows = content?.timeline?.rows ?? [];
+const mistakeCount = content?.mistakes?.items?.length ?? 0;
+const misCols = mistakeCount % 3 !== 0 && mistakeCount % 2 === 0 ? 2 : 3;
+const glossaryItems = content?.glossary?.items ?? [];
+
+// Section backgrounds alternate white / cream over the sections this page has
+const sectionKeys = content ? [
+  'situation',
+  ...deepDive.map((_, i) => `deepDive${i}`),
+  ...(timelineRows.length > 0 ? ['timeline'] : []),
+  'approach',
+  'included',
+  ...(helpSolutions.length + helpServices.length > 0 ? ['helpWith'] : []),
+  ...(mistakeCount > 0 ? ['mistakes'] : []),
+  'fit',
+  ...(glossaryItems.length > 0 ? ['glossary'] : []),
+  ...(content.faq.length > 0 ? ['faq'] : []),
+  ...(relCount > 0 ? ['related'] : []),
+] : [];
+const tone: Record<string, string> = Object.fromEntries(
+  sectionKeys.map((k, i) => [k, i % 2 === 0 ? 'section-white' : 'section-cream'])
+);
+// The CTA band is white: after a white section it drops its top padding
+const ctaFlush = sectionKeys.length > 0 && tone[sectionKeys[sectionKeys.length - 1]] === 'section-white';
+
+const faqSchema = content && content.faq.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": content.faq.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+} : null;
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": pageH1,
+  "serviceType": svc.title,
+  "description": pageDescription,
+  "provider": {
+    "@type": "Organization",
+    "name": "HRHelp.nl",
+    "url": "https://www.hrhelp.nl"
+  },
+  "areaServed": { "@type": "Country", "name": "Netherlands" },
+  "url": pageUrl
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.hrhelp.nl/" },
+    { "@type": "ListItem", "position": 2, "name": "HR Services", "item": "https://www.hrhelp.nl/services/" },
+    { "@type": "ListItem", "position": 3, "name": svc.title, "item": pageUrl }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={[serviceSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}>
+
+{content ? (
+<>
+<!-- ===== HERO ===== -->
+<PageHero variant="split" title={pageH1} subtitle={content.intro} image={{ ...heroImage, alt: svc.title }}>
+  <nav class="ex-breadcrumb" aria-label="Breadcrumb" slot="top">
+    <a href="/">Home</a>
+    <span class="ex-bc-sep" aria-hidden="true">›</span>
+    <a href="/services/">HR Services</a>
+    <span class="ex-bc-sep" aria-hidden="true">›</span>
+    <span class="ex-bc-current" aria-current="page">{svc.title}</span>
+  </nav>
+  <span class="expd-eyebrow" slot="eyebrow">
+    <LineIcon name={svc.icon} size={16} />
+    {svc.subtitle}
+  </span>
+  <div class="page-hero-actions">
+    <a href="/contact/#book" class="btn btn-primary btn-lg">Book a Free Consultation</a>
+    <a href="#approach" class="btn btn-secondary btn-lg">How we work</a>
+  </div>
+  {updatedLabel && (
+    <p class="ex-updated">Updated <time datetime={updatedIso}>{updatedLabel}</time></p>
+  )}
+</PageHero>
+
+<!-- ===== SITUATION ===== -->
+<section class:list={['ex-situation', tone.situation]}>
+  <div class="container">
+    <div class="ex-split">
+      <div class="ex-situation-text">
+        <span class="eyebrow">{content.situation.eyebrow}</span>
+        <h2>{content.situation.heading}</h2>
+        {content.situation.paragraphs.map((p) => <p>{p}</p>)}
+        {caseStudy && (
+          <a href={`/resources/case-studies/${slug}/`} class="ex-text-link">See the case study <span aria-hidden="true">→</span></a>
+        )}
+      </div>
+      <div class="ex-situation-photo">
+        <img src={premiseImage.src} alt="" width={premiseImage.width} height={premiseImage.height} loading="lazy" decoding="async" />
+      </div>
+    </div>
+    {content.situation.keyFacts.length > 0 && (
+      <dl class="ex-facts" style={`--n: ${content.situation.keyFacts.length}`}>
+        {content.situation.keyFacts.map((f) => (
+          <div class="ex-fact">
+            <dt>{f.value}</dt>
+            <dd>{f.label}</dd>
+          </div>
+        ))}
+      </dl>
+    )}
+  </div>
+</section>
+
+<!-- ===== DEEP DIVE: long-form sections, alternating: heading column left
+     with the text right, then heading on top with the paragraphs in two
+     columns. Bullets always follow the paragraphs, so a lead-in sentence
+     ("The notification covers:") stays next to its list. ===== -->
+{deepDive.map((dd, i) => {
+  const bullets = dd.bullets ?? [];
+  const twoCols = dd.paragraphs.length > 1;
+  return (
+    <section class:list={['ex-dd', tone[`deepDive${i}`]]}>
+      <div class="container">
+        {i % 2 === 1 ? (
+          <div class="ex-dd-stack">
+            <span class="eyebrow">{dd.eyebrow}</span>
+            <h2>{dd.heading}</h2>
+            <div class:list={['ex-dd-cols', twoCols && 'is-two']}>
+              {dd.paragraphs.map((p) => <p>{p}</p>)}
+            </div>
+            {bullets.length > 0 && (
+              <ul class:list={['ex-dd-list', twoCols && bullets.length > 1 && 'is-grid']}>
+                {bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            )}
+          </div>
+        ) : (
+          <div class="ex-dd-split">
+            <div class="ex-dd-head">
+              <span class="eyebrow">{dd.eyebrow}</span>
+              <h2>{dd.heading}</h2>
+            </div>
+            <div class="ex-dd-body">
+              {dd.paragraphs.map((p) => <p>{p}</p>)}
+              {bullets.length > 0 && (
+                <ul class="ex-dd-list">
+                  {bullets.map((b) => <li>{b}</li>)}
+                </ul>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+})}
+
+<!-- ===== TIMELINE: a table; rows stack on phones ===== -->
+{content.timeline && timelineRows.length > 0 && (
+<section class:list={['ex-timeline', tone.timeline]}>
+  <div class="container">
+    <div class="ex-head">
+      <span class="eyebrow">{content.timeline.eyebrow}</span>
+      <h2>{content.timeline.heading}</h2>
+      {content.timeline.intro && <p class="ex-head-intro">{content.timeline.intro}</p>}
+    </div>
+    <div class="ex-tl-wrap">
+      <table class="ex-tl">
+        <thead>
+          <tr><th scope="col">When</th><th scope="col">What</th><th scope="col">Who</th></tr>
+        </thead>
+        <tbody>
+          {timelineRows.map((r) => (
+            <tr>
+              <th scope="row">{r.when}</th>
+              <td>{r.what}</td>
+              <td class="ex-tl-who">{r.who}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+)}
+
+<!-- ===== APPROACH ===== -->
+<section class:list={['ex-approach', tone.approach]} id="approach">
+  <div class="container">
+    <div class="ex-head">
+      <span class="eyebrow">{content.approach.eyebrow}</span>
+      <h2>{content.approach.heading}</h2>
+    </div>
+    <ol class="ex-steps" style={`--n: ${content.approach.steps.length}`}>
+      {content.approach.steps.map((step, i) => (
+        <li class="ex-step">
+          <div class="ex-step-meta">
+            <span class="ex-step-num">{String(i + 1).padStart(2, '0')}</span>
+            {step.timing && <span class="ex-step-time">{step.timing}</span>}
+          </div>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- ===== WHAT'S INCLUDED ===== -->
+<section class:list={['ex-included', tone.included]}>
+  <div class="container">
+    <div class="ex-head">
+      <span class="eyebrow">{content.included.eyebrow}</span>
+      <h2>{content.included.heading}</h2>
+    </div>
+    <div class:list={['ex-inc-grid', `ex-cols-${incCols}`]}>
+      {content.included.items.map((item, i) => (
+        <div class="ex-inc-card">
+          <span class="ex-inc-num">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW HRHELP SUPPORTS YOU: solution cards, then service cards ===== -->
+{content.helpWith && helpSolutions.length + helpServices.length > 0 && (
+<section class:list={['ex-help', tone.helpWith]}>
+  <div class="container">
+    <div class="ex-head">
+      <span class="eyebrow">{content.helpWith.eyebrow}</span>
+      <h2>{content.helpWith.heading}</h2>
+      {content.helpWith.intro && <p class="ex-head-intro">{content.helpWith.intro}</p>}
+    </div>
+    <div
+      class:list={['ex-help-groups', helpInline && 'is-inline']}
+      style={helpInline ? `--groups: ${helpGroups.map((g) => `${g.cards.length}fr`).join(' ')}` : undefined}
+    >
+    {helpGroups.map((g) => (
+      <div class="ex-help-group">
+        <p class="ex-group-label">{g.label}</p>
+        <div class="ex-help-grid" style={`--cols: ${helpInline ? g.cards.length : helpCols}`}>
+          {g.cards.map((c) => (
+            <div class="ex-help-card">
+              <h3><a href={c.href} class="ex-help-link">{c.name}</a></h3>
+              {c.desc && <p class="ex-help-desc">{c.desc}</p>}
+              <p class="ex-help-why">{c.why}</p>
+              <span class="ex-help-more" aria-hidden="true">{g.more} →</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+    </div>
+  </div>
+</section>
+)}
+
+<!-- ===== COMMON MISTAKES ===== -->
+{content.mistakes && mistakeCount > 0 && (
+<section class:list={['ex-mistakes', tone.mistakes]}>
+  <div class="container">
+    <div class="ex-head">
+      <span class="eyebrow">{content.mistakes.eyebrow}</span>
+      <h2>{content.mistakes.heading}</h2>
+    </div>
+    <div class:list={['ex-inc-grid', `ex-cols-${misCols}`]}>
+      {content.mistakes.items.map((m) => (
+        <div class="ex-mis-card">
+          <svg class="ex-mis-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7.5" x2="12" y2="12.5"/><line x1="12" y1="16.2" x2="12" y2="16.3"/></svg>
+          <h3>{m.title}</h3>
+          <p>{m.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+)}
+
+<!-- ===== WHO IT'S FOR + PRICING ===== -->
+<section class:list={['ex-fit', tone.fit]}>
+  <div class="container">
+    <div class="ex-fit-grid">
+      <div class="ex-who">
+        <span class="eyebrow">{content.forWho.eyebrow}</span>
+        <h2>{content.forWho.heading}</h2>
+        <ul class="ex-checklist">
+          {content.forWho.items.map((item) => (
+            <li>
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="ex-pricing">
+        <span class="eyebrow">{content.pricing.eyebrow}</span>
+        <h2>{content.pricing.heading}</h2>
+        <p>{content.pricing.text}</p>
+        <a href="/contact/#book" class="btn btn-primary">Book a Free Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GLOSSARY: definition list, two columns ===== -->
+{content.glossary && glossaryItems.length > 0 && (
+<section class:list={['ex-glossary', tone.glossary]}>
+  <div class="container">
+    <div class="ex-head">
+      <span class="eyebrow">{content.glossary.eyebrow}</span>
+      <h2>{content.glossary.heading}</h2>
+    </div>
+    <dl class="ex-gloss">
+      {glossaryItems.map((g) => (
+        <div class="ex-gloss-item">
+          <dt>{g.term}</dt>
+          <dd>{g.meaning}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+)}
+
+<!-- ===== FAQ ===== -->
+{content.faq.length > 0 && (
+<section class:list={['ex-faq', tone.faq]}>
+  <div class="container ex-faq-layout">
+    <div class="ex-faq-intro">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions about {svc.title.toLowerCase()}</h2>
+      <div class="ex-faq-cta">
+        <span>Still have a question?</span>
+        <a href="/contact/" class="btn btn-secondary">Contact us →</a>
+      </div>
+    </div>
+    <div class="ex-faq-list">
+      {content.faq.map((f) => (
+        <details class="ex-faq-item">
+          <summary>{f.q}</summary>
+          <div class="ex-faq-answer"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+)}
+
+<!-- ===== RELATED READING ===== -->
+{relCount > 0 && (
+<section class:list={['ex-related', tone.related]}>
+  <div class="container">
+    <div class="ex-head">
+      <span class="eyebrow">Keep reading</span>
+      <h2>Related reading</h2>
+    </div>
+    <div class:list={['ex-rel-grid', `ex-rel-${relCount}`]}>
+      {content.related.map((r) => (
+        <a href={r.href} class="ex-rel-card">
+          <span class="ex-rel-kind">{kindLabel[r.kind.toLowerCase()] ?? r.kind}</span>
+          <span class="ex-rel-title">{r.title}</span>
+          <span class="ex-rel-more" aria-hidden="true">Read more →</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+)}
+</>
+) : (
+<>
+<!-- ===== HERO ===== -->
+<PageHero variant="split" title={svc.title} image={{ ...heroImage, alt: svc.title }}>
+  <nav class="ex-breadcrumb" aria-label="Breadcrumb" slot="top">
+    <a href="/">Home</a>
+    <span class="ex-bc-sep" aria-hidden="true">›</span>
+    <a href="/services/">HR Services</a>
+    <span class="ex-bc-sep" aria-hidden="true">›</span>
+    <span class="ex-bc-current" aria-current="page">{svc.title}</span>
+  </nav>
+  <span class="expd-eyebrow" slot="eyebrow">
+    <LineIcon name={svc.icon} size={16} />
+    {svc.subtitle}
+  </span>
+  <p class="expd-hero-desc">{svc.tagline}</p>
+  <div class="page-hero-actions">
+    <a href="/contact/" class="btn btn-primary btn-lg">Book a Consultation</a>
+    <a href="#expd-included" class="btn btn-secondary btn-lg">What's Included</a>
+  </div>
+  <ul class="expd-hero-facts" slot="media">
+    <li>
+      <span class="floating-label">{svc.floatCards.tl.label}</span>
+      <strong class="floating-value">{svc.floatCards.tl.value}</strong>
+    </li>
+    <li>
+      <span class="floating-label">{svc.floatCards.br.label}</span>
+      <strong class="floating-value">{svc.floatCards.br.value}</strong>
+    </li>
+    <li class="expd-fact-note">
+      <span>Expert Advisor Online</span>
+    </li>
+  </ul>
+</PageHero>
+
+<!-- ===== THE CHALLENGE ===== -->
+<section class="expd-premise section-white">
+  <div class="container">
+    <div class="expd-premise-inner">
+      <div class="expd-premise-content">
+        <span class="eyebrow">The Challenge</span>
+        <h2>{svc.premiseHeading}</h2>
+        {svc.premiseBody.map((p: string) => <p>{p}</p>)}
+      </div>
+      <div class="expd-premise-illus">
+        <img src={premiseImage.src} alt={`${svc.title} illustration`} width={premiseImage.width} height={premiseImage.height} loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHAT'S INCLUDED ===== -->
+<section class="expd-included section-cream" id="expd-included">
+  <div class="container">
+    <div class="section-header expd-head">
+      <span class="eyebrow">What's Included</span>
+      <h2>How We Help</h2>
+    </div>
+    <div class="expd-inc-grid">
+      {svc.included.map((item: any, i: number) => (
+        <div class="expd-inc-card">
+          <div class="expd-inc-num">{String(i + 1).padStart(2, '0')}</div>
+          <h3>{item.title}</h3>
+          <p>{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ===== RESULTS ===== -->
+<section class="expd-result section-white">
+  <div class="container">
+    <div class="section-header expd-head">
+      <span class="eyebrow">Results</span>
+      <h2>The Outcome</h2>
+    </div>
+    <div class="expd-result-card">
+      <p>{svc.result}</p>
+      {svc.stats.length > 0 && (
+        <div class="expd-result-stats">
+          {svc.stats.map((stat: any) => (
+            <div class="expd-stat">
+              <span class="expd-stat-val">{stat.value}</span>
+              <span class="expd-stat-lbl">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+</>
+)}
+
+<!-- ===== CTA ===== -->
+<!-- Text-only panel: the lazy Cornelis photo rendered as an empty grey box, and
+     the footer band right below already shows his photo -->
+<section class:list={['expd-cta', content && 'section-white ex-cta', ctaFlush && 'ex-cta--flush']}>
+  <div class="container">
+    <div class="expd-cta-inner">
+      <div>
+        <h2>Ready to Get Started?</h2>
+        <p>Let's discuss what this could look like for your organisation.</p>
+      </div>
+      <div class="expd-cta-btns">
+        <a href="/contact/#book" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
+        <a href="/services/" class="btn btn-secondary btn-lg">All HR services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+/* Same sections and order; calmer treatment matching the service pages:
+   shared split hero with a documentary photo and a quiet facts row instead
+   of floating glass cards, big numerals, light CTA panel with Cornelis. */
+h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
+.eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; color: #44546d; margin-bottom: 0.75rem; }
+.expd-head { text-align: left; max-width: 760px; margin: 0 0 2.5rem; }
+.expd-head h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0; }
+
+/* HERO extras */
+.expd-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #44546d; margin-bottom: 1rem; }
+.expd-eyebrow :global(svg) { color: var(--icon-accent); }
+.expd-hero-desc { font-size: 1.125rem; color: var(--gray-600); line-height: 1.65; max-width: 620px; }
+.expd-hero-facts {
+  list-style: none; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem;
+  margin: 1.25rem 0 0; padding: 1.1rem 0 0; border-top: 1px solid rgba(15, 37, 72, 0.14);
+}
+.expd-hero-facts li + li { border-left: 1px solid rgba(15, 37, 72, 0.12); padding-left: 1.25rem; }
+.floating-label { display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #44546d; margin-bottom: 0.25rem; }
+.floating-value { display: block; font-size: 0.95rem; font-weight: 600; color: var(--navy); line-height: 1.35; }
+.expd-fact-note span { display: block; font-size: 0.88rem; font-weight: 500; color: var(--gray-600); line-height: 1.4; }
+
+/* PREMISE */
+.expd-premise { padding: 5.5rem 0; }
+.expd-premise-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4.5rem; align-items: center; }
+.expd-premise-content h2 { font-size: clamp(1.6rem, 2.8vw, 2.1rem); margin-bottom: 1.25rem; line-height: 1.3; }
+.expd-premise-content p { font-size: 1.05rem; line-height: 1.8; color: var(--gray-600); margin-bottom: 1rem; }
+.expd-premise-illus img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; background: #e9edf2; }
+
+/* INCLUDED */
+.expd-included { padding: 5.5rem 0; }
+.expd-inc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.expd-inc-card { position: relative; background: white; border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 10px; padding: 1.6rem 1.5rem; }
+.expd-inc-num { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: var(--navy); margin-bottom: 1rem; font-variant-numeric: tabular-nums; }
+.expd-inc-card h3 { font-size: 1.1rem; color: var(--navy); margin-bottom: 0.5rem; }
+.expd-inc-card p { font-size: 0.93rem; line-height: 1.65; color: var(--gray-600); }
+
+/* RESULT */
+.expd-result { padding: 5.5rem 0; }
+.expd-result-card { max-width: 860px; padding-left: 1.5rem; border-left: 3px solid var(--orange); }
+.expd-result-card > p { font-size: 1.15rem; line-height: 1.75; color: var(--navy); font-weight: 500; }
+.expd-result-stats { display: flex; flex-wrap: wrap; gap: 1.25rem 3rem; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid rgba(15, 37, 72, 0.14); }
+.expd-stat-val { display: block; font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); line-height: 1.1; }
+.expd-stat-lbl { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #44546d; margin-top: 0.3rem; }
+
+/* CTA */
+.expd-cta { padding: 0 0 5.5rem; }
+.expd-cta-inner {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem 3rem;
+  background: #f6f7f9; border: 1px solid rgba(15, 37, 72, 0.08); border-radius: 12px; padding: 2.5rem 3rem;
+}
+.expd-cta h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); color: var(--navy); margin-bottom: 0.6rem; }
+.expd-cta p { color: var(--gray-600); line-height: 1.7; margin: 0; }
+.expd-cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+@media (max-width: 1024px) {
+  .expd-premise-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .expd-premise-illus { max-width: 560px; }
+  .expd-inc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .expd-premise, .expd-included, .expd-result { padding: 4rem 0; }
+  .expd-hero-facts { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .expd-hero-facts li + li { padding-left: 1rem; }
+  .expd-hero-facts li + li.expd-fact-note { grid-column: 1 / -1; border-left: 0; padding-left: 0; }
+  .expd-inc-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .expd-result-card { padding-left: 1.1rem; }
+  .expd-cta { padding: 0 0 4rem; }
+  .expd-cta-inner { padding: 1.75rem 1.35rem; }
+  .expd-cta-btns { flex-direction: column; align-items: stretch; width: 100%; }
+  .expd-cta-btns .btn { justify-content: center; }
+}
+
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .expd-inc-card,
+  .expd-cta-inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .expd-result-card { padding-left: 1rem; }
+}
+
+/* =========================================================
+   Service-page layout (when src/data/expertise/<slug>.json exists).
+   Same system as the solution pages and homepage: split hero, compact
+   left-aligned heads, hairline cards (12px), orange-ink only for small markers.
+   ========================================================= */
+.ex-situation, .ex-approach, .ex-included, .ex-fit, .ex-faq, .ex-related,
+.ex-dd, .ex-timeline, .ex-help, .ex-mistakes, .ex-glossary { padding: 4.5rem 0; }
+.ex-head { max-width: 760px; margin: 0 0 2rem; }
+.ex-head .eyebrow { margin-bottom: 0.5rem; }
+.ex-head h2, .ex-situation h2, .ex-fit h2, .ex-faq h2, .ex-dd h2 { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); line-height: 1.2; color: var(--navy); margin: 0; }
+.ex-head-intro { margin: 0.9rem 0 0; font-size: 1.05rem; line-height: 1.7; color: var(--gray-600); max-width: 68ch; }
+
+/* Hero: breadcrumb (base style from PageHero) and the updated date */
+.ex-bc-sep { color: var(--gray-400); }
+.ex-bc-current { color: var(--navy); }
+.ex-updated { margin: 1.25rem 0 0; font-size: 0.88rem; line-height: 1.5; color: var(--gray-500); }
+.ex-text-link { display: inline-block; margin-top: 0.5rem; font-weight: 600; font-size: 0.95rem; color: var(--navy); text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+.ex-text-link:hover { color: var(--orange-ink); }
+
+/* Situation: text + WP photo, fact strip below */
+.ex-split { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2rem, 1rem + 3vw, 4.5rem); align-items: start; }
+.ex-situation-text h2 { margin-bottom: 1.25rem; max-width: 24ch; }
+.ex-situation-text p { font-size: 1.05rem; line-height: 1.75; color: var(--gray-600); margin: 0 0 1rem; max-width: 68ch; }
+.ex-situation-photo { position: sticky; top: calc(72px + 1.5rem); }
+.ex-situation-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; background: #e9edf2; }
+.ex-facts {
+  display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); gap: 0;
+  margin: 3rem 0 0; padding: 1.5rem 0 0; border-top: 1px solid rgba(15, 37, 72, 0.14);
+}
+.ex-fact { padding: 0 1.5rem; }
+.ex-fact:first-child { padding-left: 0; }
+.ex-fact + .ex-fact { border-left: 1px solid rgba(15, 37, 72, 0.12); }
+.ex-fact dt { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--navy); margin-bottom: 0.4rem; font-variant-numeric: tabular-nums; }
+.ex-fact dd { margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--gray-600); }
+
+/* Deep dive: long-form text at a reading measure. Split = heading column left,
+   text right; stack = heading on top, paragraphs (and bullets) in two columns. */
+.ex-dd-split { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2rem, 1rem + 3vw, 4.5rem); align-items: start; }
+.ex-dd-head { position: sticky; top: calc(72px + 2rem); }
+.ex-dd-head h2 { max-width: 24ch; }
+.ex-dd-stack h2 { max-width: 28ch; margin-bottom: 1.5rem; }
+.ex-dd-cols.is-two { columns: 2; column-gap: clamp(2rem, 1rem + 3vw, 4.5rem); }
+.ex-dd-body > p, .ex-dd-cols > p { break-inside: avoid; font-size: 1.05rem; line-height: 1.75; color: var(--gray-600); margin: 0 0 1rem; max-width: 68ch; }
+.ex-dd-body > p:last-child, .ex-dd-cols > p:last-child { margin-bottom: 0; }
+.ex-dd-list { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 68ch; border-top: 1px solid rgba(15, 37, 72, 0.12); }
+.ex-dd-list li {
+  position: relative; padding: 0.8rem 0 0.8rem 1.4rem;
+  border-bottom: 1px solid rgba(15, 37, 72, 0.12);
+  font-size: 1rem; line-height: 1.55; color: var(--navy);
+}
+.ex-dd-list li::before {
+  content: ''; position: absolute; left: 0.15rem; top: calc(0.8rem + 0.55em);
+  width: 6px; height: 6px; border-radius: 50%; background: var(--orange-ink);
+}
+.ex-dd-list.is-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2rem, 1rem + 3vw, 4.5rem);
+  max-width: none; margin-top: 1.75rem; border-top: 0;
+}
+.ex-dd-list.is-grid li { border-bottom: 0; border-top: 1px solid rgba(15, 37, 72, 0.12); }
+
+/* Timeline: When / What / Who table in a hairline card */
+.ex-tl-wrap { background: var(--white); border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 12px; overflow: hidden; }
+.ex-tl { width: 100%; border-collapse: collapse; }
+.ex-tl thead th {
+  text-align: left; padding: 0.85rem 1.5rem; background: #f6f7f9; border-bottom: 1px solid rgba(15, 37, 72, 0.1);
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #44546d;
+}
+.ex-tl tbody tr + tr { border-top: 1px solid rgba(15, 37, 72, 0.1); }
+.ex-tl tbody th, .ex-tl td { text-align: left; vertical-align: top; padding: 1rem 1.5rem; font-size: 0.97rem; line-height: 1.55; }
+.ex-tl tbody th { width: 20%; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+.ex-tl td { color: var(--gray-700); }
+.ex-tl td.ex-tl-who { width: 28%; font-size: 0.93rem; color: var(--gray-600); }
+
+/* How HRhelp supports you: whole card clickable through the title link */
+.ex-help-groups { display: grid; row-gap: 2.25rem; }
+.ex-help-groups.is-inline { grid-template-columns: var(--groups); column-gap: 1rem; }
+/* Inline groups: cards in both groups end on one line */
+.ex-help-groups.is-inline .ex-help-group { display: flex; flex-direction: column; }
+.ex-help-groups.is-inline .ex-help-grid { flex: 1; }
+.ex-group-label {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  line-height: 1.4; color: #44546d; margin: 0 0 0.75rem;
+}
+.ex-help-group { min-width: 0; }
+.ex-help-grid { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 1rem; }
+.ex-help-card {
+  position: relative; display: flex; flex-direction: column;
+  background: var(--white); border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 12px;
+  padding: 1.35rem 1.5rem 1.3rem; transition: border-color 0.2s ease;
+}
+.ex-help-card:hover { border-color: rgba(15, 37, 72, 0.28); }
+.ex-help-card h3 { margin: 0; }
+.ex-help-link { color: var(--navy); text-decoration: none; }
+.ex-help-link::after { content: ''; position: absolute; inset: 0; border-radius: 12px; }
+.ex-help-link:focus-visible { outline: none; }
+.ex-help-link:focus-visible::after { outline: 2px solid var(--orange-ink); outline-offset: 2px; }
+.ex-help-desc { margin: 0.3rem 0 0; font-size: 0.88rem; line-height: 1.5; color: var(--gray-500); }
+.ex-help-why {
+  flex: 1; margin: 0.9rem 0 1rem; padding-top: 0.9rem; border-top: 1px solid rgba(15, 37, 72, 0.1);
+  font-size: 0.93rem; line-height: 1.65; color: var(--gray-600);
+}
+.ex-help-more { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+.ex-help-card:hover .ex-help-more { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+
+/* Common mistakes */
+.ex-mis-card { background: var(--white); border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 12px; padding: 1.5rem 1.5rem 1.6rem; }
+.ex-mis-icon { display: block; color: var(--orange-ink); margin-bottom: 0.75rem; }
+.ex-mis-card h3 { font-size: 1.1rem; color: var(--navy); margin: 0 0 0.5rem; }
+.ex-mis-card p { font-size: 0.93rem; line-height: 1.65; color: var(--gray-600); margin: 0; }
+
+/* Glossary: two-column definition list with hairlines */
+.ex-gloss {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2rem, 1rem + 3vw, 4rem);
+  margin: 0; border-bottom: 1px solid rgba(15, 37, 72, 0.12);
+}
+.ex-gloss-item { padding: 1.1rem 0; border-top: 1px solid rgba(15, 37, 72, 0.12); }
+.ex-gloss dt { font-size: 1rem; font-weight: 700; line-height: 1.4; color: var(--navy); }
+.ex-gloss dd { margin: 0.35rem 0 0; font-size: 0.95rem; line-height: 1.65; color: var(--gray-600); max-width: 62ch; }
+
+/* Approach: one horizontal strip, like the homepage process */
+.ex-steps {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
+  background: var(--white); border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
+}
+.ex-step { padding: 1.35rem 1.4rem 1.5rem; }
+.ex-step + .ex-step { border-left: 1px solid rgba(15, 37, 72, 0.1); }
+.ex-step-meta { display: flex; flex-direction: column; gap: 0.2rem; margin-bottom: 0.6rem; }
+.ex-step-num { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em; color: var(--orange-ink); font-variant-numeric: tabular-nums; }
+.ex-step-time { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-500); }
+.ex-step h3 { font-size: 1.05rem; color: var(--navy); margin: 0 0 0.4rem; }
+.ex-step p { font-size: 0.9rem; line-height: 1.6; color: var(--gray-600); margin: 0; }
+
+/* What's included */
+.ex-inc-grid { display: grid; gap: 1rem; }
+.ex-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ex-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ex-inc-card { background: var(--white); border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 12px; padding: 1.5rem 1.5rem 1.6rem; }
+.ex-inc-num { display: block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em; color: var(--orange-ink); margin-bottom: 0.75rem; font-variant-numeric: tabular-nums; }
+.ex-inc-card h3 { font-size: 1.1rem; color: var(--navy); margin: 0 0 0.5rem; }
+.ex-inc-card p { font-size: 0.93rem; line-height: 1.65; color: var(--gray-600); margin: 0; }
+
+/* Who it's for + pricing */
+.ex-fit-grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2rem, 1rem + 3vw, 4rem); align-items: start; }
+.ex-checklist { list-style: none; margin: 1.5rem 0 0; padding: 0; border-top: 1px solid rgba(15, 37, 72, 0.12); }
+.ex-checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem 0; border-bottom: 1px solid rgba(15, 37, 72, 0.12); font-size: 1rem; line-height: 1.55; color: var(--navy); }
+.ex-checklist svg { flex-shrink: 0; margin-top: 0.15rem; color: var(--orange-ink); }
+.ex-pricing { background: var(--white); border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 12px; padding: 2rem; }
+.ex-pricing h2 { font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.7rem); }
+.ex-pricing p { font-size: 1rem; line-height: 1.7; color: var(--gray-600); margin: 1rem 0 1.5rem; }
+
+/* FAQ: same pattern as the homepage FAQ */
+.ex-faq-layout { display: grid; grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; }
+.ex-faq-intro { position: sticky; top: calc(72px + 2rem); }
+.ex-faq-intro h2 { margin-bottom: 1.5rem; }
+.ex-faq-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; }
+.ex-faq-cta span { color: var(--gray-500); font-size: 0.95rem; }
+.ex-faq-list { border-top: 1px solid rgba(15, 37, 72, 0.12); }
+.ex-faq-item { border-bottom: 1px solid rgba(15, 37, 72, 0.12); }
+.ex-faq-item summary {
+  padding: 1.05rem 0; font-weight: 600; font-size: 1.05rem; line-height: 1.45; color: var(--navy);
+  cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem;
+}
+.ex-faq-item summary::-webkit-details-marker { display: none; }
+.ex-faq-item summary::after { content: '+'; flex-shrink: 0; width: 1.5rem; text-align: center; font-size: 1.5rem; line-height: 1; font-weight: 400; color: var(--orange-ink); }
+.ex-faq-item[open] summary::after { content: '\2212'; }
+.ex-faq-item summary:hover { color: var(--orange-ink); }
+.ex-faq-item summary:focus-visible { outline: 2px solid var(--navy) !important; outline-offset: 4px !important; border-radius: 2px; }
+.ex-faq-answer { padding: 0 3rem 1.15rem 0; }
+.ex-faq-answer p { max-width: 62ch; font-size: 1rem; line-height: 1.7; color: var(--gray-700); margin: 0; }
+@supports selector(::details-content) {
+  .ex-faq-list { interpolate-size: allow-keywords; }
+  .ex-faq-item::details-content { block-size: 0; overflow: hidden; transition: block-size 0.25s ease, content-visibility 0.25s allow-discrete; }
+  .ex-faq-item[open]::details-content { block-size: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .ex-faq-item::details-content { transition: none; } }
+
+/* Related reading: rows balance (5 = 3 + 2, 4 = 2x2) */
+.ex-rel-grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ex-rel-1 { grid-template-columns: minmax(0, 1fr); max-width: 480px; }
+.ex-rel-2, .ex-rel-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ex-rel-5 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.ex-rel-5 .ex-rel-card { grid-column: span 2; }
+.ex-rel-5 .ex-rel-card:nth-child(n+4) { grid-column: span 3; }
+.ex-rel-card {
+  display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;
+  background: var(--white); border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 12px; padding: 1.35rem 1.5rem;
+  transition: border-color 0.2s ease;
+}
+.ex-rel-card:hover { border-color: rgba(15, 37, 72, 0.28); }
+.ex-rel-kind { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #44546d; }
+.ex-rel-title { font-size: 1.02rem; font-weight: 700; line-height: 1.4; color: var(--navy); flex: 1; }
+.ex-rel-more { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+.ex-rel-card:hover .ex-rel-more { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+
+.ex-cta { padding: 4.5rem 0; }
+.ex-cta.ex-cta--flush { padding-top: 0; }
+
+@media (max-width: 1100px) {
+  .ex-help-groups.is-inline { grid-template-columns: minmax(0, 1fr); }
+  .ex-help-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Steps: compact numbered list once five columns get too narrow */
+  .ex-steps { grid-template-columns: 1fr; }
+  .ex-step { display: grid; grid-template-columns: 9rem 1fr; column-gap: 1.5rem; padding: 1.1rem 1.4rem; }
+  .ex-step + .ex-step { border-left: 0; border-top: 1px solid rgba(15, 37, 72, 0.1); }
+  .ex-step-meta { grid-row: 1 / span 2; margin: 0.15rem 0 0; }
+  .ex-step h3, .ex-step p { grid-column: 2; }
+}
+@media (max-width: 1024px) {
+  .ex-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.5rem; }
+  .ex-fact:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .ex-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ex-rel-grid, .ex-rel-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ex-rel-5 .ex-rel-card, .ex-rel-5 .ex-rel-card:nth-child(n+4) { grid-column: auto; }
+  .ex-rel-5 .ex-rel-card:last-child, .ex-rel-3 .ex-rel-card:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 900px) {
+  .ex-split, .ex-fit-grid, .ex-faq-layout { grid-template-columns: 1fr; }
+  .ex-situation-photo { position: static; max-width: 560px; }
+  .ex-dd-split { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+  .ex-dd-head { position: static; }
+  .ex-dd-head h2, .ex-dd-stack h2 { max-width: none; }
+  .ex-dd-stack h2 { margin-bottom: 1.25rem; }
+  .ex-dd-cols.is-two { columns: 1; }
+  .ex-dd-list.is-grid { grid-template-columns: minmax(0, 1fr); margin-top: 1.5rem; }
+  .ex-faq-layout { gap: 1.25rem; }
+  .ex-faq-intro { position: static; }
+  .ex-faq-intro h2 { margin-bottom: 1rem; }
+}
+@media (max-width: 768px) {
+  .ex-situation, .ex-approach, .ex-included, .ex-fit, .ex-faq, .ex-related, .ex-cta,
+  .ex-dd, .ex-timeline, .ex-help, .ex-mistakes, .ex-glossary { padding: 3rem 0; }
+  .ex-help-grid { grid-template-columns: minmax(0, 1fr); gap: 0.75rem; }
+  .ex-help-card, .ex-mis-card { padding: 1.25rem 1rem; }
+  .ex-gloss { grid-template-columns: minmax(0, 1fr); }
+  .ex-cols-3, .ex-cols-2, .ex-rel-grid, .ex-rel-5 { grid-template-columns: minmax(0, 1fr); gap: 0.75rem; }
+  .ex-rel-5 .ex-rel-card:last-child, .ex-rel-3 .ex-rel-card:last-child { grid-column: auto; }
+  .ex-inc-card, .ex-rel-card, .ex-pricing { padding: 1.25rem 1rem; }
+  .ex-step { grid-template-columns: 1fr; padding: 1rem; }
+  .ex-step-meta { grid-row: auto; flex-direction: row; align-items: baseline; gap: 0.6rem; margin-bottom: 0.4rem; }
+  .ex-step h3, .ex-step p { grid-column: 1; }
+  .ex-faq-item summary { font-size: 1rem; padding: 0.95rem 0; }
+  .ex-faq-answer { padding-right: 0; }
+}
+@media (max-width: 560px) {
+  .ex-facts { grid-template-columns: minmax(0, 1fr); row-gap: 0; padding-top: 0; }
+  .ex-fact, .ex-fact:nth-child(odd) { padding: 1rem 0; border-left: 0; }
+  .ex-fact + .ex-fact { border-left: 0; border-top: 1px solid rgba(15, 37, 72, 0.12); }
+  .ex-fact dt { font-size: 1.4rem; }
+}
+/* Timeline on phones: each row becomes a block (when, what, who) */
+@media (max-width: 640px) {
+  .ex-tl thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .ex-tl, .ex-tl tbody, .ex-tl tr, .ex-tl tbody th, .ex-tl td { display: block; width: auto; }
+  .ex-tl tbody tr { padding: 1rem; }
+  .ex-tl tbody th, .ex-tl td { padding: 0; }
+  .ex-tl tbody th { margin-bottom: 0.3rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange-ink); }
+  .ex-tl td.ex-tl-who { width: auto; margin-top: 0.4rem; }
+  .ex-tl td.ex-tl-who::before { content: 'Who: '; font-weight: 600; color: var(--navy); }
+}
+</style>

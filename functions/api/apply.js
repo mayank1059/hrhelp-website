@@ -1,156 +1,239 @@
-// Cloudflare Pages Function — job applications go to the HRHelp CRM.
+// Cloudflare Pages Function: job applications go to the HRhelp CRM at
+// client.hrhelp.nl, and nowhere else. WordPress no longer receives them.
 //
-// This used to forward the whole multipart body to WordPress and nowhere else, which meant an
-// application lived in the media library and the form entries of a site nobody signs into.
-// The CRM at client.hrhelp.nl now has a recruitment pipeline (applicants, a journal per
-// candidate, a CV shelf, a notification to the owner), so the CRM is the destination and
-// WordPress is a net underneath it.
+// The CRM files the applicant, stores the CV and notifies the owner itself, so
+// on a CRM 2xx this function answers success and stops.
 //
-// TWO LEGS, IN ORDER, AND NEVER BOTH STORING
+// When the CRM fails (error, timeout, non-2xx, or no secret), the application is
+// emailed to the team (LEAD_ALERT_TO) through Brevo instead, with the CV attached when
+// Brevo can take it (PDF or Word, at most 4 MB). The candidate hears
+// "Application received" only when the CRM or that email accepted it:
+//  - email accepted with the CV (or no CV was uploaded): success;
+//  - email accepted without the CV (too big, wrong type, or refused by Brevo):
+//    an error asking the candidate to email the CV, because nothing holds it;
+//  - no email either: 502 and the "email your application" message.
 //
-// The CRM is tried first. On a 2xx the application is filed, the owner has been emailed, and
-// this function answers success and stops: WordPress is not called, so nothing is recorded
-// twice and nobody is notified twice. Only when the CRM leg fails does the WordPress leg run,
-// fire and forget, so that nothing is lost while the switch settles. The contact form
-// (functions/api/contact.js) posts to both concurrently and is happy with either; this one
-// deliberately does not, because a duplicated lead is a tidy-up and a duplicated application
-// is a second candidate record with half a history in each.
-//
-// The WordPress leg keeps its own WAF tolerance: Mod Security answers an HTML challenge page
-// and stores nothing, which is exactly the failure that check was written around.
-//
-// The response shape is unchanged, because the form in src/pages/careers/apply/[slug].astro
+// The response shape is unchanged: the form in src/pages/careers/apply/[slug].astro
 // reads `data.success` and `data.message` and nothing else.
 
 const CRM_ENDPOINT = 'https://client.hrhelp.nl/api/applicants/intake';
-const WP_ENDPOINT = 'https://admin.hrhelp.nl/wp-json/hrhelp/v1/apply';
+const BREVO_ENDPOINT = 'https://api.brevo.com/v3/smtp/email';
+// Brevo sender: the address the old WordPress alerts already used, verified in
+// Brevo. Recipients come from the LEAD_ALERT_TO env var (comma-separated) so no
+// personal addresses live in this public repo; info@hrhelp.nl if it is unset.
+const SENDER = { name: 'HRHelp Website Alert', email: 'website-alert@hrhelp.nl' };
+function teamRecipients(env) {
+  const raw = (env && env.LEAD_ALERT_TO) || 'info@hrhelp.nl';
+  return raw.split(',').map((s) => s.trim()).filter(Boolean).map((email) => ({ email }));
+}
+// The CRM leg carries the CV, so it gets longer than the 8 seconds an email gets.
+const CRM_TIMEOUT_MS = 15000;
+const EMAIL_TIMEOUT_MS = 8000;
+// Brevo's limit for one attachment, and the types the form offers.
+const MAX_ATTACHMENT_BYTES = 4 * 1024 * 1024;
+const CV_TYPES = /\.(pdf|doc|docx)$/i;
+// The CRM's own check (APPLICANT_EMAIL_SHAPE in its applicant intake).
+const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-// Forward the multipart body to the CRM, verbatim.
-//
-// The same FormData object the browser sent, handed to fetch unchanged: the file part keeps
-// its filename and its content type, which is what the CRM's whitelist and its byte sniffer
-// both read. Rebuilding the body field by field would be a second chance to drop the CV.
-//
-// Never throws: resolves true only when the CRM accepted the application.
-async function sendToCrm(context, formData) {
-  const secret = context.env && context.env.HRHELP_LEAD_INTAKE_SECRET;
-  if (!secret) {
-    console.log('CRM apply skipped/failed:', 'HRHELP_LEAD_INTAKE_SECRET not set');
-    return false;
-  }
+const RECEIVED = { success: true, message: "Application received! We'll review it and get back to you shortly." };
+const NOT_SENT = {
+  success: false,
+  message: 'We could not submit your application. Please email it to info@hrhelp.nl',
+};
+const CV_NOT_SENT = {
+  success: false,
+  message: 'We have your details, but your CV could not be uploaded. Please email your CV to info@hrhelp.nl and mention the role you applied for.',
+};
 
+function field(formData, key, max) {
+  const value = formData.get(key);
+  return typeof value === 'string' ? value.trim().slice(0, max) : '';
+}
+
+// POST with a deadline that also covers reading the answer. Never throws:
+// resolves { ok, status, type, body, ms } or { ok: false, error, ms }.
+async function post(url, headers, body, timeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const started = Date.now();
   try {
-    const res = await fetch(CRM_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        // No Content-Type here on purpose: fetch sets it from the FormData, including the
-        // multipart boundary, and a hand written one would name a boundary that is not in
-        // the body.
-        'Accept': 'application/json',
-        'x-intake-secret': secret,
-      },
-      body: formData,
-    });
-
-    // Any 2xx is success. The CRM answers 201 for a new applicant and 200 for one merged into
-    // somebody already in the pipeline, and both mean the same thing here, which is that this
-    // function has nothing left to do.
-    if (!res.ok) {
-      console.log('CRM apply skipped/failed:', 'status ' + res.status);
-      return false;
-    }
-    return true;
+    const res = await fetch(url, { method: 'POST', headers, body, signal: controller.signal });
+    const answer = await res.text();
+    return {
+      ok: res.ok,
+      status: res.status,
+      type: res.headers.get('content-type') || '',
+      body: answer,
+      ms: Date.now() - started,
+    };
   } catch (error) {
-    console.log('CRM apply skipped/failed:', error.message);
-    return false;
+    const timedOut = error && error.name === 'AbortError';
+    return {
+      ok: false,
+      error: timedOut ? 'timeout after ' + timeoutMs + ' ms' : String((error && error.message) || error),
+      ms: Date.now() - started,
+    };
+  } finally {
+    clearTimeout(timer);
   }
 }
 
-// The fallback leg. Only runs when the CRM leg failed, so an application is never in both
-// systems. Never throws.
-async function sendToWordPress(formData) {
-  try {
-    const res = await fetch(WP_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; HRHelpWebsite/1.0)',
-        'Accept': 'application/json',
-      },
-      body: formData, // Forward multipart/form-data as-is (preserves file uploads)
-    });
-
-    // Mod Security returns an HTML block page and stores nothing.
-    const contentType = res.headers.get('content-type') || '';
-    if (!contentType.includes('application/json')) {
-      console.log('WordPress apply forward failed:', 'non-JSON response, status ' + res.status);
-      return false;
-    }
-    if (!res.ok) {
-      console.log('WordPress apply forward failed:', 'status ' + res.status);
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.log('WordPress apply forward failed:', error.message);
-    return false;
+// Status, content type, latency and the start of the body, for the Pages log.
+function logFailure(what, r) {
+  if (r.error) {
+    console.log(what + ' failed:', r.error + ' after ' + r.ms + ' ms');
+    return;
   }
+  console.log(
+    what + ' failed:',
+    'status ' + r.status,
+    '| content-type ' + (r.type || 'none'),
+    '| ' + r.ms + ' ms',
+    '| body ' + JSON.stringify(r.body.slice(0, 200)),
+  );
+}
+
+// The multipart body to the CRM, verbatim: the same FormData the browser sent,
+// so the CV keeps its filename and content type, which the CRM's whitelist and
+// byte sniffer both read. No Content-Type header on purpose: fetch sets it from
+// the FormData, including the boundary. Any 2xx is success (201 for a new
+// applicant, 200 for one merged into an open record).
+async function sendToCrm(env, formData) {
+  const secret = env && env.HRHELP_LEAD_INTAKE_SECRET;
+  if (!secret) {
+    console.log('CRM apply skipped:', 'HRHELP_LEAD_INTAKE_SECRET not set');
+    return { ok: false, error: 'HRHELP_LEAD_INTAKE_SECRET not set', ms: 0 };
+  }
+  const r = await post(CRM_ENDPOINT, {
+    'Accept': 'application/json',
+    'x-intake-secret': secret,
+  }, formData, CRM_TIMEOUT_MS);
+  if (!r.ok) logFailure('CRM apply', r);
+  return r;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// One email to the team (LEAD_ALERT_TO) through Brevo's transactional API. Never throws.
+async function sendEmail(env, subject, body, replyTo, attachment) {
+  const payload = {
+    sender: SENDER,
+    to: teamRecipients(env),
+    subject,
+    textContent: body,
+    htmlContent: '<pre style="font: 14px/1.5 Arial, sans-serif; white-space: pre-wrap;">' + escapeHtml(body) + '</pre>',
+  };
+  if (replyTo) payload.replyTo = replyTo;
+  if (attachment) payload.attachment = [attachment];
+  const r = await post(BREVO_ENDPOINT, {
+    'api-key': env.BREVO_API_KEY,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  }, JSON.stringify(payload), EMAIL_TIMEOUT_MS);
+  if (!r.ok) logFailure('Brevo email', r);
+  return r;
+}
+
+// Base64 in slices, because String.fromCharCode cannot take megabytes at once.
+function toBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  }
+  return btoa(binary);
+}
+
+function megabytes(bytes) {
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+// The application by email, when the CRM did not take it.
+async function emailApplication(env, formData, reason) {
+  const name = field(formData, 'name', 160);
+  const email = field(formData, 'email', 200);
+  const job = field(formData, 'job_title', 160);
+  const resume = formData.get('resume');
+  const cv = resume && typeof resume === 'object' && resume.size > 0 ? resume : null;
+
+  let attachment = null;
+  let cvLine = 'none uploaded';
+  if (cv && cv.size > MAX_ATTACHMENT_BYTES) {
+    cvLine = 'NOT attached: ' + cv.name + ' is ' + megabytes(cv.size) + ', over the 4 MB email limit. The candidate was asked to email it.';
+  } else if (cv && !CV_TYPES.test(cv.name)) {
+    cvLine = 'NOT attached: ' + cv.name + ' is not a PDF or Word file. The candidate was asked to email it.';
+  } else if (cv) {
+    attachment = {
+      name: cv.name.replace(/[^\w.() -]+/g, '_').slice(-100),
+      content: toBase64(await cv.arrayBuffer()),
+    };
+    cvLine = 'attached (' + cv.name + ', ' + megabytes(cv.size) + ')';
+  }
+
+  const message = (line) => [
+    'The website could not save this application in the CRM (' + reason + ').',
+    'Please add it to the CRM by hand.',
+    '',
+    'Vacancy: ' + job + (field(formData, 'job_slug', 160) ? ' (' + field(formData, 'job_slug', 160) + ')' : ''),
+    'Name: ' + name,
+    'Email: ' + email,
+    'Phone: ' + (field(formData, 'phone', 40) || '-'),
+    'LinkedIn: ' + (field(formData, 'linkedin', 300) || '-'),
+    'CV: ' + line,
+    '',
+    'Cover letter:',
+    field(formData, 'cover_letter', 8000) || '-',
+    '',
+  ].join('\n');
+  const subject = '[HRHelp] Application not saved in CRM: ' + name.replace(/\s+/g, ' ');
+  const replyTo = /^[\x21-\x7e]+$/.test(email) ? { email, name: name.slice(0, 70) } : undefined;
+
+  let r = await sendEmail(env, subject, message(cvLine), replyTo, attachment);
+  // Brevo refused the email that carried the CV (a 4xx is about the content, for
+  // example a file it will not take): send the details alone.
+  if (!r.ok && attachment && r.status >= 400 && r.status < 500) {
+    attachment = null;
+    r = await sendEmail(env, subject, message('NOT attached: Brevo refused the email with ' + cv.name + '. The candidate was asked to email it.'), replyTo, null);
+  }
+  return { sent: r.ok, cvMissing: Boolean(cv) && !attachment };
 }
 
 export async function onRequestPost(context) {
   try {
     const formData = await context.request.formData();
 
-    // The honeypot, answered before anything else and before any validation. No human ever
-    // sees url_confirm, so anything in it is a bot: answer exactly like a success so it learns
-    // nothing, and do no work. It also rides along to the CRM in the body of any request that
-    // somehow gets past this, so the CRM's own guard still catches it.
+    // The honeypot, answered before anything else and before any validation. No
+    // human ever sees url_confirm, so anything in it is a bot: answer exactly like
+    // a success so it learns nothing, and do no work.
     const honeypot = formData.get('url_confirm');
     if (typeof honeypot === 'string' && honeypot.trim()) {
       console.log('Apply honeypot tripped');
-      return Response.json({
-        success: true,
-        message: "Application received! We'll review it and get back to you shortly.",
-      }, { status: 200 });
+      return Response.json(RECEIVED, { status: 200 });
     }
 
-    // Validate required fields
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const jobTitle = formData.get('job_title');
-
-    if (!name || !email) {
-      return Response.json({
-        success: false,
-        message: 'Name and email are required.'
-      }, { status: 400 });
+    if (!field(formData, 'name', 160) || !field(formData, 'email', 200)) {
+      return Response.json({ success: false, message: 'Name and email are required.' }, { status: 400 });
+    }
+    if (!EMAIL_SHAPE.test(field(formData, 'email', 200))) {
+      return Response.json({ success: false, message: 'Please enter a valid email address.' }, { status: 400 });
+    }
+    if (!field(formData, 'job_title', 160)) {
+      return Response.json({ success: false, message: 'Job title is required.' }, { status: 400 });
     }
 
-    if (!jobTitle) {
-      return Response.json({
-        success: false,
-        message: 'Job title is required.'
-      }, { status: 400 });
+    const crm = await sendToCrm(context.env, formData);
+    if (crm.ok) return Response.json(RECEIVED, { status: 200 });
+
+    if (!(context.env && context.env.BREVO_API_KEY)) {
+      console.log('Brevo email skipped:', 'BREVO_API_KEY not set');
+      return Response.json(NOT_SENT, { status: 502 });
     }
-
-    const stored = await sendToCrm(context, formData);
-
-    if (!stored) {
-      // The net. Fire and forget: the visitor should not wait on a WordPress install that is
-      // being blocked by its own WAF, and there is nothing left to tell them either way,
-      // because the answer below is the same whichever leg took it. waitUntil is what keeps
-      // the request alive long enough for the forward to finish after the response is sent.
-      const forward = sendToWordPress(formData);
-      if (context.waitUntil) {
-        context.waitUntil(forward);
-      } else {
-        await forward;
-      }
-    }
-
-    return Response.json({
-      success: true,
-      message: "Application received! We'll review it and get back to you shortly.",
-    }, { status: 200 });
+    const { sent, cvMissing } = await emailApplication(context.env, formData, crm.error || 'the CRM answered ' + crm.status);
+    if (!sent) return Response.json(NOT_SENT, { status: 502 });
+    if (cvMissing) return Response.json(CV_NOT_SENT, { status: 502 });
+    return Response.json(RECEIVED, { status: 200 });
 
   } catch (error) {
     console.error('Apply function error:', error.message);

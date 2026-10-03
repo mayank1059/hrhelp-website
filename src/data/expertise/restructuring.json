@@ -1,0 +1,194 @@
+{
+  "slug": "restructuring",
+  "seo": {
+    "title": "Restructuring and Redundancy Support Netherlands",
+    "description": "Restructuring in the Netherlands? HRhelp guides employers through works council advice, collective redundancy, UWV permits and settlements. Book a free call.",
+    "h1": "Restructuring and Redundancy Support in the Netherlands"
+  },
+  "updated": "2026-10-03",
+  "intro": "A restructuring in the Netherlands, whether you are reorganising, downsizing or closing a site, follows a strict sequence of works council, UWV and trade union obligations. HRhelp manages the whole process, from legal compliance to staff communication, so your decisions are well founded and your people treated with respect.",
+  "situation": {
+    "eyebrow": "The challenge",
+    "heading": "Why restructuring in the Netherlands needs careful planning",
+    "paragraphs": [
+      "In many countries a restructuring is mainly a business decision. In the Netherlands it is also a legal process with fixed steps: works council advice while the plan can still change, set dismissal routes, and extra duties towards the UWV and trade unions for collective dismissals.",
+      "The reflection principle decides who leaves within interchangeable positions, and dismissed employees are entitled to the statutory transition payment. Skipping or rushing a step can delay or even block the implementation, while clear and honest communication keeps trust intact among the people who stay."
+    ],
+    "keyFacts": [
+      {"value": "20+", "label": "contracts ended in one work area within 3 months trigger a collective dismissal notification"},
+      {"value": "1 month", "label": "waiting period after that notification before contracts can be ended, unless the unions agree"},
+      {"value": "50+", "label": "people working in a company means the employer must set up a works council"},
+      {"value": "1/3", "label": "of a monthly salary per year of service is the basis of the statutory transition payment"}
+    ]
+  },
+  "deepDive": [
+    {
+      "eyebrow": "Works council",
+      "heading": "Works council advice on a reorganisation",
+      "paragraphs": [
+        "Under article 25 of the Works Councils Act (WOR), the works council has a right to advise (adviesrecht) on proposed decisions such as closing all or an important part of the business, substantially reducing its activities or making an important change to the organisation. You must submit the proposal in writing while the advice can still significantly influence it, so before head office announces or commits to the plan.",
+        "The request explains the reasons, the expected consequences for staff and your proposed measures, and the works council advises after at least one consultation meeting. If you decide against the advice, you must suspend implementation for one month, during which the works council can appeal to the Enterprise Chamber (Ondernemingskamer). Employers with 10 to 49 people and no works council must still consult staff on decisions that may cost at least a quarter of them their jobs."
+      ]
+    },
+    {
+      "eyebrow": "Collective dismissal",
+      "heading": "Collective redundancy in the Netherlands: the WMCO",
+      "paragraphs": [
+        "The Collective Dismissal Notification Act (WMCO) applies when you intend to end the contracts of 20 or more employees in one work area within three months. The six work areas each group one or more provinces, and the count is per employing entity. Settlements at your initiative count, as do UWV and court dismissals; terminations for reasons relating to the individual, during probation or through expiry of a fixed-term contract do not.",
+        "You notify the relevant trade unions and the UWV in writing and consult the unions on avoiding or reducing the dismissals and softening their impact. Until one month after the notification, you cannot give notice, have a contract dissolved or conclude a settlement at your initiative, unless the unions declare in writing that they were consulted and agree. If you skip these steps, employees can ask the subdistrict court to annul the termination. The notification covers:"
+      ],
+      "bullets": [
+        "The reasons for the intended dismissals",
+        "Numbers by position, age and gender",
+        "The timing and the selection criteria",
+        "How any severance is calculated",
+        "How the contracts will be ended"
+      ]
+    },
+    {
+      "eyebrow": "Dismissal routes",
+      "heading": "UWV dismissal permit, settlement agreement or court",
+      "paragraphs": [
+        "Many employers first offer affected employees a settlement agreement (vaststellingsovereenkomst). It must be in writing, and the employee may cancel it within 14 days, or three weeks if the agreement omits this right. If the initiative is yours and there is no urgent cause, the employee normally remains eligible for unemployment benefit (WW). The subdistrict court (kantonrechter) handles specific cases, such as after a refused UWV permit or for a fixed-term contract without an early termination clause.",
+        "Without the employee's agreement, you need a UWV permit, or approval from a dismissal committee if your CAO provides one. You must show that positions will disappear over at least the next 26 weeks for efficient operations, or because the business closes. The procedure usually takes around four weeks once the file is complete, and that time is deducted from the notice period, leaving at least one month. A complete file usually contains:"
+      ],
+      "bullets": [
+        "Financial figures and forecasts that support the business case",
+        "Organisation charts before and after the change",
+        "Reflection calculations per category of interchangeable positions",
+        "Evidence of redeployment efforts, including vacancies in the group",
+        "The request for advice and the works council's advice"
+      ]
+    },
+    {
+      "eyebrow": "Selection",
+      "heading": "The reflection principle and the duty to redeploy",
+      "paragraphs": [
+        "Before selecting permanent staff, you end the work of agency and on-call workers, employees past state pension age and, with some exceptions, fixed-term employees in the affected positions. The reflection principle (afspiegelingsbeginsel) then applies per category of interchangeable positions: employees are divided into five age groups (15 to 24, 25 to 34, 35 to 44, 45 to 54 and 55 plus), job losses are spread in proportion to group size, and within each group the employee with the shortest service goes first.",
+        "A simple example: you have 20 interchangeable customer service roles and must remove five. Eight employees are aged 25 to 34, eight are 35 to 44 and four are 45 to 54, so the reductions are split two, two and one, each time selecting those with the shortest service. Before dismissing anyone, look for a suitable vacancy, now or within the notice period, across your company and group, with training where reasonable, and document that search."
+      ]
+    }
+  ],
+  "timeline": {
+    "eyebrow": "Timeline",
+    "heading": "A typical Dutch restructuring timeline",
+    "intro": "Every restructuring is different, but most follow this sequence. Timings are indicative and depend on your size and the number of employees affected.",
+    "rows": [
+      {"when": "Weeks 1 to 3", "what": "Business case, check of contracts, CAO and thresholds, request for advice and communication plan", "who": "Management, HR, HRhelp"},
+      {"when": "Week 3", "what": "Request for advice submitted and staff informed; UWV and unions notified if 20 or more contracts will end", "who": "Management, works council, unions"},
+      {"when": "Weeks 3 to 8", "what": "Consultation meetings, works council advice and any social plan negotiations", "who": "Management, works council, unions"},
+      {"when": "After the advice", "what": "Final decision in writing; one-month suspension if it departs from the advice", "who": "Management, works council"},
+      {"when": "Following weeks", "what": "Selection, redeployment talks and settlement offers", "who": "HR, managers, employees"},
+      {"when": "About 4 weeks", "what": "UWV procedure for employees without a settlement; the permit must be used within four weeks", "who": "Employer, UWV"},
+      {"when": "1 to 4 months", "what": "Notice period, final pay and transition payment, then support for the remaining team", "who": "Employer, managers"}
+    ]
+  },
+  "approach": {
+    "eyebrow": "How we work",
+    "heading": "A structured route from first plan to implementation",
+    "steps": [
+      {"title": "Assess and plan", "text": "We review your business case, headcount, contracts and any applicable CAO, then determine which legal steps apply, whether the collective dismissal rules are triggered and what timeline is realistic.", "timing": "Week 1 to 2"},
+      {"title": "Works council and unions", "text": "We prepare the request for advice with the rationale, consequences for staff and proposed measures, handle any collective dismissal notification and support social plan negotiations.", "timing": "Week 2 to 8"},
+      {"title": "Selection and redeployment", "text": "We apply the reflection principle per category of interchangeable positions and document the search for redeployment, so your selection is clear and can be explained to the UWV or a court.", "timing": "Parallel to consultation"},
+      {"title": "Dismissal route", "text": "Depending on your situation, we prepare UWV permit applications, draft settlement agreements or combine both, and calculate transition payments and notice periods so every offer is correct and complete.", "timing": "After advice or agreement"},
+      {"title": "Communication and aftercare", "text": "We prepare announcements, individual conversations and Q&A material for managers, then support managers and the remaining team after implementation so the organisation can rebuild trust.", "timing": "Throughout and after"}
+    ]
+  },
+  "included": {
+    "eyebrow": "What's included",
+    "heading": "Everything a compliant restructuring requires",
+    "items": [
+      {"title": "Process plan and timeline", "text": "A step-by-step plan with legal requirements, decision moments and owners, so management knows what happens when and who is responsible."},
+      {"title": "Works council request for advice", "text": "A complete, well-reasoned request for advice under the Works Councils Act, plus support in consultation meetings."},
+      {"title": "Collective dismissal notification", "text": "Preparation and submission of the notification to the UWV and the relevant trade unions, with the required information on the affected employees."},
+      {"title": "UWV applications and settlements", "text": "Well-documented UWV permit applications, or settlement agreements that are fair, legally sound and clear for the employees who sign them."},
+      {"title": "Selection and social plan support", "text": "Correct application of the reflection principle, documented redeployment efforts and support in drafting or negotiating a social plan."},
+      {"title": "Communication with staff", "text": "Announcement scripts, guidance for managers on difficult conversations and written information, so everyone hears consistent, honest and respectful messages."}
+    ]
+  },
+  "helpWith": {
+    "eyebrow": "How HRhelp can help",
+    "heading": "Solutions and services for a restructuring",
+    "intro": "Restructuring support can stand alone or be part of wider HR support. These solutions and services fit most often.",
+    "solutions": [
+      {"slug": "hr-reset", "why": "Restructuring support, from works council involvement to dismissal procedures and social plans, combined with change management and updated contracts and policies for the organisation that remains."},
+      {"slug": "hr-sos", "why": "Guidance on the same business day when a dismissal cannot wait, with settlement agreements, UWV permits and court procedures handled, and employment lawyers coordinated when a case needs one."}
+    ],
+    "services": [
+      {"slug": "temporary-hr-solutions", "why": "A senior consultant for a scoped reorganisation programme, covering selection, the permission route, consultation, settlement negotiations and payment calculations, at a fixed project fee with a clean handover."},
+      {"slug": "labor-law-advice-international-employer", "why": "Practical counsel on the case in front of you: routes compared on timeline and cost in writing, then settlement drafting or UWV filings, with a Dutch employment lawyer brought in when needed."}
+    ]
+  },
+  "mistakes": {
+    "eyebrow": "Common pitfalls",
+    "heading": "Mistakes that derail a Dutch restructuring",
+    "items": [
+      {"title": "Asking for advice too late", "text": "Presenting the plan as final, for example in a global press release, before the works council advises turns its advice into a formality. The decision can then be challenged, and the UWV will not assess applications where required advice was skipped."},
+      {"title": "Miscounting for the collective dismissal rules", "text": "Settlements at your initiative count towards the threshold of 20, and spreading reductions over waves does not help if 20 or more fall within any three-month period. A missed notification lets employees ask the court to annul their termination."},
+      {"title": "Selecting on performance or salary", "text": "Choosing the weakest performers or the most expensive employees is not allowed. The reflection principle decides within each category of interchangeable positions, and only a CAO can allow a limited exception for above-average performers, under strict conditions."},
+      {"title": "Inconsistent communication", "text": "When managers improvise, rumours fill the gap and trust erodes among the people you want to keep. Prepare one core message, a Q&A and individual conversations so every employee hears the same facts in the right order."}
+    ]
+  },
+  "forWho": {
+    "eyebrow": "Who it's for",
+    "heading": "Who we support with restructuring",
+    "items": [
+      "International companies reorganising their Dutch entity",
+      "Employers closing or relocating a site in the Netherlands",
+      "Organisations facing a collective dismissal of 20 or more employees",
+      "Companies with a works council that need a solid request for advice",
+      "Foreign headquarters without in-house knowledge of Dutch dismissal law",
+      "Smaller employers making their first redundancies"
+    ]
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "heading": "Clear, fixed pricing per project",
+    "text": "Every restructuring is different, so we start with a conversation about your plans, headcount and timeline. We then agree a fixed price for the project upfront, with a clear description of what is included, so you know where you stand before we begin."
+  },
+  "glossary": {
+    "eyebrow": "Glossary",
+    "heading": "Dutch restructuring terms explained",
+    "items": [
+      {"term": "Adviesrecht (right to advise)", "meaning": "The works council's right to advise on major decisions under article 25 WOR."},
+      {"term": "WMCO (Collective Dismissal Notification Act)", "meaning": "Notification duty for 20 or more dismissals in one work area within three months."},
+      {"term": "Afspiegelingsbeginsel (reflection principle)", "meaning": "Selection by age group and length of service within interchangeable positions."},
+      {"term": "Herplaatsing (redeployment)", "meaning": "Moving an employee to another suitable position instead of dismissal."},
+      {"term": "Transitievergoeding (transition payment)", "meaning": "One third of a monthly salary per year of service, capped at €102,000 gross in 2026 or one annual salary if higher."},
+      {"term": "Vaststellingsovereenkomst (settlement agreement)", "meaning": "Written termination by mutual consent; the employee can cancel within 14 days."},
+      {"term": "Sociaal plan (social plan)", "meaning": "Agreed extras for affected staff, such as severance, outplacement or training budgets."},
+      {"term": "CAO (collective labour agreement)", "meaning": "Sector or company agreement that may set notice periods, selection rules or a social plan."}
+    ]
+  },
+  "faq": [
+    {"q": "When does the works council need to be involved in a restructuring?", "a": "A works council has the right to advise on proposed decisions such as a reorganisation, a substantial staff reduction or a site closure (article 25 WOR). Ask for its advice in writing while it can still influence the decision. If you then decide against the advice, you must wait one month before implementing it, unless the works council waives this."},
+    {"q": "What counts as a collective dismissal in the Netherlands?", "a": "The collective dismissal rules apply when you intend to end the contracts of 20 or more employees in one work area within three months, including settlements at your initiative. You must notify the UWV and the relevant trade unions and consult the unions. Contracts cannot be ended until one month after notification, unless the unions declare in writing that they were consulted and agree."},
+    {"q": "Do I need UWV permission to dismiss employees for business reasons?", "a": "Yes, unless the employee agrees to the termination. Dismissal for business-economic reasons requires a UWV permit, or approval from a CAO dismissal committee where one exists, backed by a substantiated business case and proof that redeployment was considered. Many restructurings combine permits with settlement agreements, and the subdistrict court handles specific cases, such as fixed-term contracts without an early termination clause."},
+    {"q": "How do you decide which employees are made redundant?", "a": "Selection follows the reflection principle. Employees in each category of interchangeable roles are divided into five age groups, job losses are spread across the groups in proportion to their size, and within each group the employee with the shortest service goes first. Agency and on-call workers in the same roles generally have to go before permanent staff."},
+    {"q": "How much redundancy pay is due in the Netherlands?", "a": "Employees dismissed at the employer's initiative are entitled to the statutory transition payment: one third of a monthly salary per year of service, pro rata from day one, including holiday allowance and certain other pay elements. In 2026 the maximum is €102,000 gross, or one annual salary if higher. A social plan or CAO may add to it, and settlements often pay at least this amount."},
+    {"q": "Can employees who are ill, pregnant or on the works council be made redundant?", "a": "Sick employees are protected for the first two years of illness, unless it began after the UWV received the application or the whole business closes. Pregnant employees are protected during pregnancy, maternity leave and six weeks after returning, with narrow closure exceptions that never apply during the leave. Works council members lose protection in a business-economic dismissal once they have held the affected position for at least 26 weeks."},
+    {"q": "What notice periods apply?", "a": "The employer's statutory notice period depends on length of service: one month below five years, two months from five years, three from ten and four from fifteen. Only a CAO can shorten it, and notice normally runs to the end of a month. After a UWV permit, the procedure time is deducted, but at least one month must remain."},
+    {"q": "Is a social plan mandatory?", "a": "No, a social plan is not required by law, but it is common in larger restructurings and some CAOs require one. It is usually negotiated with unions or the works council and can include extra severance, outplacement, training budgets and hardship arrangements. Under strict conditions, a CAO can replace the transition payment with an equivalent arrangement."}
+  ],
+  "related": [
+    {"title": "Restructuring & Redundancy in the Netherlands", "href": "/guides/restructuring-redundancy-netherlands/", "kind": "Guide"},
+    {"title": "Works Council Requirements in the Netherlands", "href": "/guides/works-council-requirements-netherlands/", "kind": "Guide"},
+    {"title": "Drafting a Settlement Agreement (VSO) in the Netherlands", "href": "/guides/settlement-agreement-netherlands/", "kind": "Guide"},
+    {"title": "How to Dismiss an Employee in the Netherlands", "href": "/guides/dismissing-employee-netherlands-procedure/", "kind": "Guide"},
+    {"title": "Planning Redundancies in the Netherlands? Here Is What Employers Must Know", "href": "/blog/planning-redundancies-in-the-netherlands-here-is-what-employers-must-know/", "kind": "Blog"}
+  ],
+  "reviewNotes": [
+    "KEYWORDS: primary 'restructuring in the Netherlands'. Secondary: redundancy Netherlands (redundancies), collective redundancy / collective dismissal Netherlands, works council Netherlands, reorganisation Netherlands, UWV dismissal permit, redundancy pay (transition payment), reflection principle, settlement agreement. GSC evidence (16 months to 28 Sep 2026): 'restructuring company' 190 impressions, position 33.3; 'redundancies' 172, 8.7; 'restructuring' 67, 26.2; 'redundancy netherlands' 26, 13.5; 'works council' 25, 30.2; 'works council netherlands' 24, 8.3; 'redundancy' 20, 34.5; 'work council netherlands' 14, 5.5; 'redundancy payments in the netherlands' 13, 20.6; 'restructuring advice' 8, 20.5; misspellings of 'redundancies' about 22 combined; no clicks on any of these. The old URL /resources/expertise/restructuring/ had 483 impressions, 2 clicks, average position about 32.",
+    "SEO title deliberately differs from the guide title 'Restructuring & Redundancy in the Netherlands', so the two pages do not compete with identical titles: this page carries the service intent ('support'), the guide the informational intent.",
+    "Transition payment cap stated as EUR 102,000 gross, or one annual salary if higher, from 1 January 2026: confirmed in art. 7:673(2) BW as currently in force (wetten.overheid.nl) and on Rijksoverheid. The amount is indexed every 1 January, so update the FAQ and glossary in January 2027.",
+    "Corrected: the one-month WMCO waiting period now refers to ending contracts (notice, court dissolution or a settlement at the employer's initiative, art. 5a WMCO), not to the UWV handling permit applications as the previous key fact and FAQ said. Separately, the UWV does not process permit applications until the notification is complete and the employer confirms the unions and works council were consulted (art. 6 WMCO).",
+    "Works council members: the page says their dismissal protection does not apply in a business-economic dismissal once they have held the affected position for at least 26 weeks (art. 7:670a(3)(c) BW, as applied in the UWV implementation rules, July 2025). Pregnancy and sickness bans and their closure exceptions follow art. 7:670 and 7:670a BW. Please confirm you are comfortable stating this.",
+    "WMCO work areas are the six regions of art. 26 Ontslagregeling, each grouping one or more provinces; the page says 'work area' rather than 'UWV work area'. Settlements at the employer's initiative count towards the 20 (art. 3 and 5a WMCO; UWV rules section 5.3.5), which settles the open question in the previous notes.",
+    "'Around four weeks once the file is complete' for the UWV procedure is the UWV's own estimate (Uitvoeringsregels ontslag BE, July 2025, section 4.2.3); actual times vary.",
+    "Reflection principle: flexible workers ended first per art. 7:671a(5) BW and art. 11(2) and 17 Ontslagregeling, with the 26-week nuance for fixed-term contracts summarised as 'with some exceptions'. Age bands as on the UWV form (15 to 24 up to 55 plus). The example (20 roles, five cuts, groups of 8, 8 and 4 split 2, 2 and 1) is illustrative, not a client case.",
+    "Smaller employers (10 to 49 people, no works council): art. 35b(5) and 35c WOR summarised as 'must still consult staff'. Settlements: 'normally remains eligible for unemployment benefit' assumes employer initiative and no urgent cause; WW starts later if the end date ignores the notice period. 'Settlements often pay at least this amount' is practice, not law.",
+    "Key fact '50+ people working in a company means the employer must set up a works council' follows art. 2 WOR; confirm you are happy to state it.",
+    "Approach step timings and timeline durations are indicative; adjust to how you run projects.",
+    "Structure changes: the FAQ 'How long does a restructuring take?' is now covered by the timeline section, and notice periods, protected employees and the social plan have their own questions. The Service and Solution cards moved from related reading to the new helpWith section; related titles now match the current page titles. The HR Reset card shows its tagline from solutions.js, 'Modernise your existing HR'."
+  ]
+}

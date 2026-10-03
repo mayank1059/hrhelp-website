@@ -1,0 +1,64 @@
+---
+// Close of a blog post or guide: legal disclaimer, share row and a short "about the author" box.
+import ShareLinks from './ShareLinks.astro';
+interface Props { title: string; author?: string }
+const { title, author = 'HRHelp Team' } = Astro.props;
+---
+<div class="ae">
+  <p class="ae-disclaimer">This article is general information, not legal advice. Dutch employment law changes regularly; <a href="/contact/">contact us</a> for advice on your situation.</p>
+  <ShareLinks title={title} tone="light" class="ae-share">
+    <span class="ae-share-label">Share this article</span>
+  </ShareLinks>
+  <div class="ae-author">
+    <span class="ae-avatar"><img src="/favicon.svg" alt="" width="40" height="40" loading="lazy" /></span>
+    <div class="ae-author-text">
+      <p class="ae-author-name">Written by the {author}</p>
+      <p class="ae-author-bio">Founded in 2019 to humanize Dutch HR for international companies. <a href="/about/">About HRhelp</a></p>
+    </div>
+  </div>
+</div>
+
+<style>
+.ae {
+  max-width: 50rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(15, 37, 72, 0.14);
+  display: flex; flex-direction: column; gap: 1.75rem;
+}
+.ae-disclaimer { font-size: 0.88rem !important; line-height: 1.6; color: var(--gray-500); margin: 0; }
+.ae-disclaimer a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.ae-disclaimer a:hover { color: var(--navy); }
+.ae-share-label {
+  font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: #44546d;
+}
+.ae-author {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: #f6f7f9;
+  border: 1px solid rgba(15, 37, 72, 0.08);
+  border-radius: 12px;
+}
+.ae-avatar {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #fff; border: 1px solid rgba(15, 37, 72, 0.1);
+}
+.ae-avatar img { width: 40px; height: 40px; display: block; }
+.ae-author-name { font-size: 1rem !important; font-weight: 700; color: var(--navy); margin: 0 0 0.2rem; line-height: 1.4; }
+.ae-author-bio { font-size: 0.92rem !important; color: var(--gray-600); line-height: 1.6; margin: 0; }
+.ae-author-bio a {
+  color: var(--navy); font-weight: 600; white-space: nowrap;
+  text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px;
+}
+.ae-author-bio a:hover { text-decoration-thickness: 2px; }
+@media (max-width: 768px) {
+  .ae { margin-top: 2.25rem; }
+  .ae-author { align-items: flex-start; padding: 1rem; }
+  .ae-avatar { width: 48px; height: 48px; }
+  .ae-avatar img { width: 34px; height: 34px; }
+}
+</style>

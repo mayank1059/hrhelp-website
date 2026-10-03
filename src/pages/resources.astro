@@ -1,94 +1,558 @@
 ---
+// Resource Centre hub: one page that shows everything under Resources (employer
+// guides, articles, case studies, FAQ, the free 2026 guide and the explainer video).
+// Every count is computed from the same data the target pages use.
 import Layout from '../components/Layout.astro';
-import { getResourceHighlights, getResourceCaseStudies } from '../lib/wordpress';
+import PageHero from '../components/PageHero.astro';
+import PostCard from '../components/PostCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import LineIcon from '../components/LineIcon.astro';
+import { settlersData, teamsData, sosData } from '../data/pseo/guides.js';
+import { verticalPhotos } from '../lib/guidePhotos';
+import { coreExpertise } from '../data/expertiseLinks.js';
+import { getBlogPosts, getCaseStudies, getFAQGroups, clip } from '../lib/wordpress';
 
-const highlights = await getResourceHighlights();
-const caseStudies = await getResourceCaseStudies();
+const SITE = 'https://www.hrhelp.nl';
+const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+
+// ---------- Employer guides (client-approved guides only; all of them on staging) ----------
+type Guide = { slug: string; title: string };
+const COUNTRY_PREFIX = 'starting-business-netherlands-';
+const isCountryGuide = (g: Guide) => g.slug.startsWith(COUNTRY_PREFIX);
+// Link text in the collection cards: the whole page is about the Netherlands
+const shortTitle = (t: string) => t.replace(/ in the Netherlands$/, '');
+
+// Example links per collection: the most-read guides first (Search Console),
+// topped up in the collection's own order when one is not published.
+const pickExamples = (guides: Guide[], preferred: string[], n = 4) => {
+  const pool = guides.filter((g) => !isCountryGuide(g));
+  const chosen = preferred
+    .map((slug) => pool.find((g) => g.slug === slug))
+    .filter((g): g is Guide => Boolean(g));
+  for (const g of pool) {
+    if (chosen.length >= n) break;
+    if (!chosen.includes(g)) chosen.push(g);
+  }
+  return chosen.slice(0, n);
+};
+
+const collections = [
+  {
+    id: 'hr-settlers',
+    label: 'HR Settlers',
+    focus: 'Starting and hiring',
+    desc: 'Set up your Dutch entity, register as an employer and hire your first people, visas included.',
+    guides: settlersData as Guide[],
+    preferred: ['work-permits-visa-sponsorship-netherlands', 'hiring-first-employee-netherlands', 'netherlands-bv-vs-branch-office', '30-percent-ruling-application-2026'],
+  },
+  {
+    id: 'hr-teams',
+    label: 'HR Teams',
+    focus: 'Managing your team',
+    desc: 'Contracts, payroll, leave, sickness and works councils: the everyday HR of a Dutch team.',
+    guides: teamsData as Guide[],
+    preferred: ['dutch-sick-leave-management', 'dutch-employment-contracts-guide', 'dutch-parental-leave-policies', 'works-council-requirements-netherlands'],
+  },
+  {
+    id: 'hr-sos',
+    label: 'HR S.O.S.',
+    focus: 'Urgent issues',
+    desc: 'Dismissals, disputes and investigations: situations where you must act fast and get it right.',
+    guides: sosData as Guide[],
+    preferred: ['dismissing-employee-netherlands-procedure', 'settlement-agreement-netherlands', 'emergency-dismissal-netherlands', 'handling-workplace-conflict-netherlands'],
+  },
+]
+  .map((c) => ({ ...c, count: c.guides.length, examples: pickExamples(c.guides, c.preferred), photo: verticalPhotos[c.id] }))
+  .filter((c) => c.count > 0);
+const guideCount = collections.reduce((n, c) => n + c.count, 0);
+
+// "Starting a business in the Netherlands as a <country> company" guides, as country chips
+const countryNames: Record<string, string> = {
+  us: 'United States', uk: 'United Kingdom', german: 'Germany', french: 'France', indian: 'India',
+  chinese: 'China', japanese: 'Japan', singapore: 'Singapore', canadian: 'Canada', australian: 'Australia',
+};
+const countryGuides = collections
+  .flatMap((c) => c.guides)
+  .filter(isCountryGuide)
+  .map((g) => {
+    const key = g.slug.slice(COUNTRY_PREFIX.length).replace(/-company$/, '');
+    return { slug: g.slug, name: countryNames[key] ?? g.title.replace(/^.* as an? (.+?) Company$/, '$1') };
+  })
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+// ---------- Articles (WordPress) ----------
+const blogFallbackImage = '/images/sections/team-meeting.jpg';
+const posts = (await getBlogPosts())
+  .map((p) => ({ ...p, ts: Date.parse(p.date) || 0 }))
+  .sort((a, b) => b.ts - a.ts);
+const postCount = posts.length;
+const latestPosts = posts.slice(0, 4);
+
+// ---------- Case studies (WordPress): same card content as before, each card to its own page ----------
+const caseStudies = (await getCaseStudies()).map((cs) => ({
+  slug: cs.slug,
+  tag: cs.tag,
+  title: cs.title,
+  desc: clip(cs.intro, 120),
+  icon: cs.icon,
+}));
+// Line icons for the case-study icon names LineIcon does not have (others fall back to LineIcon)
+const caseIcons: Record<string, string> = {
+  health_and_safety: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8.5" x2="12" y2="14.5"/><line x1="9" y1="11.5" x2="15" y2="11.5"/>',
+  domain_disabled: '<path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1"/>',
+  school: '<path d="M22 9 12 4 2 9l10 5 10-5z"/><path d="M6 11.2V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.8"/>',
+};
+
+// ---------- FAQ highlights (WordPress, same answers as /resources/faq/) ----------
+// Not picked until their WordPress answers are updated: employer costs (still calls pensions
+// mandatory) and how quickly we start ("within 24 hours"; the site now says one business day).
+const faqItems = (await getFAQGroups()).flatMap((g) => g.items).filter((i) => i.q && i.a);
+const FAQ_PICKS = [
+  'How long does it take to hire an employee in the Netherlands?',
+  'How does sick leave work under Dutch law?',
+  'Can you help with the 30% ruling for expats?',
+  'What does a typical engagement look like?',
+  'Do you support companies outside the Netherlands?',
+];
+const norm = (s: string) => s.trim().toLowerCase();
+const faqHighlights = FAQ_PICKS
+  .map((q) => faqItems.find((i) => norm(i.q) === norm(q)))
+  .filter((i): i is (typeof faqItems)[number] => Boolean(i));
+for (const i of faqItems) {
+  if (faqHighlights.length >= 5) break;
+  if (!faqHighlights.includes(i)) faqHighlights.push(i);
+}
+
+// ---------- Core expertise (hands-on help) ----------
+const expertise = Object.entries(coreExpertise).map(([slug, e]) => ({ slug, ...e }));
+
+// ---------- Page meta, jump links, structured data ----------
+const pageTitle = 'HR Resources for Employers in the Netherlands';
+const pageDescription = `Free resources for international employers in the Netherlands: ${guideCount} HR guides, articles on Dutch employment law, case studies, FAQs and a 2026 HR rules guide.`;
+
+// Inline line icons (Feather-style, 24px grid) for the jump links
+const icons: Record<string, string> = {
+  book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+  briefcase: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>',
+  download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+  play: '<circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>',
+  help: '<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+};
+// In page order
+const jumpLinks = [
+  { href: '#guides', label: 'Employer guides', icon: 'book', count: guideCount },
+  { href: '#articles', label: 'Articles', icon: 'file', count: postCount },
+  { href: '#case-studies', label: 'Case studies', icon: 'briefcase', count: caseStudies.length },
+  { href: '#free-guide', label: 'Free 2026 guide', icon: 'download' },
+  { href: '#video', label: 'Video', icon: 'play' },
+  { href: '#faq', label: 'FAQ', icon: 'help' },
+];
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": pageTitle,
+  "description": pageDescription,
+  "url": `${SITE}/resources/`,
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE },
+      { "@type": "ListItem", "position": 2, "name": "Resources", "item": `${SITE}/resources/` }
+    ]
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      { name: 'Employer guides', path: '/guides/' },
+      { name: 'HR blog', path: '/blog/' },
+      { name: 'Client case studies', path: '/resources/case-studies/' },
+      { name: 'Frequently asked questions', path: '/resources/faq/' },
+    ].map((item, i) => ({ "@type": "ListItem", "position": i + 1, "name": item.name, "url": `${SITE}${item.path}` }))
+  }
+};
 ---
 
-<Layout title="Resources & Insights" description="Case studies, key services, and HR insights from HRHelp.nl — practical resources for international employers in the Netherlands.">
+<Layout title={pageTitle} description={pageDescription} schema={collectionSchema}>
 
 <!-- ===== HERO ===== -->
-<section class="res-hero">
-  <div class="res-hero-mesh"></div>
-  <div class="container" style="position: relative; z-index: 2; text-align: center;">
-    <span class="eyebrow-badge" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);">
-      Resources & Insights
-    </span>
-    <h1>Learn From Our <span style="color: var(--orange);">Experience</span></h1>
-    <p class="res-hero-sub">Case studies, expertise areas, and practical HR insights from our work across the Netherlands.</p>
+<PageHero
+  variant="archive"
+  eyebrow="Resource Centre"
+  title={pageTitle}
+  subtitle={`Everything we publish for international employers in the Netherlands, in one place: ${plural(guideCount, 'free employer guide')}, ${plural(postCount, 'article')}, client case studies, quick answers and a free guide to the 2026 HR rules.`}
+/>
+
+<!-- ===== JUMP LINKS ===== -->
+<nav class="rh-jump" aria-label="On this page">
+  <div class="container rh-jump-inner">
+    <span class="rh-jump-label">On this page</span>
+    <ul class="rh-jump-list">
+      {jumpLinks.map((j) => (
+        <li>
+          <a href={j.href} class="rh-chip">
+            <svg class="rh-chip-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={icons[j.icon]} />
+            {j.label}
+            {j.count !== undefined && <span class="rh-chip-count">{j.count}</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== EMPLOYER GUIDES ===== -->
+<section id="guides" class="rh-section rh-guides" aria-labelledby="guides-title">
+  <div class="container">
+    <div class="rh-head">
+      <div>
+        <span class="eyebrow">Employer guides</span>
+        <h2 id="guides-title">Guides to employing people in the Netherlands</h2>
+        <p>{plural(guideCount, 'free guide')} on Dutch employment law, company setup and HR compliance, grouped by the situation you are in.</p>
+      </div>
+      <a href="/guides/" class="btn btn-secondary">Browse all {plural(guideCount, 'guide')} <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="rh-col-grid">
+      {collections.map((c) => (
+        <div class="rh-col-card">
+          {c.photo && (
+            <img class="rh-col-img" src={c.photo.src} alt="" width={c.photo.width} height={c.photo.height} loading="lazy" decoding="async" />
+          )}
+          <div class="rh-col-body">
+            <div class="rh-col-top">
+              <span class="rh-col-focus">{c.focus}</span>
+              <span class="rh-col-count">{plural(c.count, 'guide')}</span>
+            </div>
+            <h3 class="rh-col-title"><a href={`/guides/${c.id}/`}>{c.label}</a></h3>
+            <p class="rh-col-desc">{c.desc}</p>
+            <ul class="rh-col-links">
+              {c.examples.map((g) => (
+                <li>
+                  <a href={`/guides/${g.slug}/`}>
+                    <span>{shortTitle(g.title)}</span>
+                    <svg class="rh-col-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a href={`/guides/${c.id}/`} class="rh-more-link">All {plural(c.count, `${c.label} guide`)} <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {countryGuides.length > 0 && (
+      <div class="rh-countries">
+        <div class="rh-countries-text">
+          <h3>Starting a business from your country</h3>
+          <p>Company setup, registration and hiring, explained for companies coming to the Netherlands from {plural(countryGuides.length, 'country', 'countries')}.</p>
+        </div>
+        <ul class="rh-country-list">
+          {countryGuides.map((g) => (
+            <li><a href={`/guides/${g.slug}/`} class="rh-chip rh-chip--country">{g.name}</a></li>
+          ))}
+        </ul>
+      </div>
+    )}
   </div>
 </section>
 
-<!-- ===== KEY SERVICE HIGHLIGHTS ===== -->
-<section class="res-highlights">
+<!-- ===== LATEST ARTICLES ===== -->
+<section id="articles" class="rh-section rh-articles" aria-labelledby="articles-title">
   <div class="container">
-    <div class="section-header" data-animate="fade-up">
-      <span class="eyebrow">What Sets Us Apart</span>
-      <h2>Key Service Highlights</h2>
-      <p>Three areas where we consistently deliver measurable outcomes for our clients.</p>
+    <div class="rh-head">
+      <div>
+        <span class="eyebrow">Articles</span>
+        <h2 id="articles-title">Latest articles</h2>
+        <p>{plural(postCount, 'article')} on Dutch employment law, HR practice and leading international teams.</p>
+      </div>
+      <a href="/blog/" class="btn btn-secondary">All {plural(postCount, 'article')} <span aria-hidden="true">→</span></a>
     </div>
-    <div class="res-hl-grid">
-      {highlights.map((hl, i) => (
-        <a href={hl.href} class="res-hl-card" data-animate="fade-up" data-delay={i * 100}>
-          <div class="res-hl-img">
-            <img src={hl.image} alt={hl.title} />
-            <span class="res-hl-stat">{hl.stat}</span>
-          </div>
-          <div class="res-hl-body">
-            <div class="res-hl-icon">
-              <span class="material-symbols-outlined">{hl.icon}</span>
-            </div>
-            <h3>{hl.title}</h3>
-            <p>{hl.desc}</p>
-            <span class="res-hl-link">Learn More →</span>
-          </div>
-        </a>
+    <div class="rh-post-grid">
+      {latestPosts.map((post) => (
+        <PostCard
+          href={`/blog/${post.slug}/`}
+          image={post.image || blogFallbackImage}
+          alt=""
+          width={800}
+          height={450}
+          title={post.title}
+          heading="h3"
+          date={post.date}
+          datetime={post.ts ? new Date(post.ts).toISOString().slice(0, 10) : undefined}
+          readTime={post.readTime}
+          tags={post.tags}
+        />
       ))}
     </div>
   </div>
 </section>
 
 <!-- ===== CASE STUDIES ===== -->
-<section class="res-cases">
+<section id="case-studies" class="rh-section rh-cases" aria-labelledby="cases-title">
   <div class="container">
-    <div class="section-header" data-animate="fade-up">
-      <span class="eyebrow">Real Results</span>
-      <h2>Client Case Studies</h2>
-      <p>Authentic engagements with measurable outcomes — see how we work.</p>
+    <div class="rh-head">
+      <div>
+        <span class="eyebrow">Case studies</span>
+        <h2 id="cases-title">Client Case Studies</h2>
+        <p>Real engagements with measurable outcomes. See how we work.</p>
+      </div>
+      <a href="/resources/case-studies/" class="btn btn-secondary">All case studies <span aria-hidden="true">→</span></a>
     </div>
-    <div class="res-cs-grid">
-      {caseStudies.map((cs, i) => (
-        <a href="/resources/case-studies" class="res-cs-card" data-animate="fade-up" data-delay={i * 100}>
-          <span class="res-cs-tag">{cs.tag}</span>
-          <div class="res-cs-icon">
-            <span class="material-symbols-outlined">{cs.icon}</span>
+    <div class="rh-cs-grid">
+      {caseStudies.map((cs) => (
+        <a href={`/resources/case-studies/${cs.slug}/`} class="rh-cs-card">
+          <div class="rh-cs-top">
+            {caseIcons[cs.icon]
+              ? <svg class="line-ico rh-cs-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={caseIcons[cs.icon]} />
+              : <LineIcon name={cs.icon} class="rh-cs-icon" />}
+            <span class="rh-cs-tag">{cs.tag}</span>
           </div>
           <h3>{cs.title}</h3>
           <p>{cs.desc}</p>
-          <span class="res-cs-link">Read Case Study →</span>
+          <span class="rh-cs-link">Read Case Study <span aria-hidden="true">→</span></span>
         </a>
       ))}
     </div>
   </div>
 </section>
 
-<!-- ===== FAQ & MORE ===== -->
-<section class="res-more">
+<!-- ===== FREE 2026 GUIDE (same form and endpoint as the homepage and footer) ===== -->
+<section id="free-guide" class="rh-wp" aria-labelledby="free-guide-title">
   <div class="container">
-    <div class="res-more-grid">
-      <a href="/resources/faq" class="res-more-card" data-animate="fade-up">
-        <span class="material-symbols-outlined" style="font-size: 40px; color: var(--orange);">help</span>
-        <h3>FAQ</h3>
-        <p>Answers to common questions about Dutch HR, employment law, and working with HRHelp.</p>
-        <span class="res-more-link">View FAQ →</span>
-      </a>
-      <a href="/contact" class="res-more-card" data-animate="fade-up" data-delay="100">
-        <span class="material-symbols-outlined" style="font-size: 40px; color: var(--orange);">calendar_month</span>
-        <h3>Free Consultation</h3>
-        <p>Book a no-obligation consultation to discuss your HR challenges with our experts.</p>
-        <span class="res-more-link">Book Now →</span>
-      </a>
+    <div class="rh-wp-grid">
+      <div class="rh-wp-visual">
+        <picture>
+          <source srcset="/images/whitepaper/whitepaper-photo.webp" type="image/webp" />
+          <img src="/images/whitepaper/whitepaper-photo.jpg" alt="A printed copy of the HR Rules &amp; Regulations 2026 guide on a wooden desk" width="640" height="640" loading="lazy" decoding="async" />
+        </picture>
+      </div>
+      <div class="rh-wp-content">
+        <span class="rh-wp-badge">Free download · PDF</span>
+        <h2 id="free-guide-title">The Most Important HR Rules &amp; Regulations in 2026</h2>
+        <p class="rh-wp-intro">A short guide to the Dutch employment rules international employers need to know in 2026, from the first contract to a dismissal.</p>
+        <p class="rh-wp-inside">What's inside</p>
+        <ul class="rh-wp-list">
+          <li>Employment contracts and the chain rule</li>
+          <li>Working time, holidays and statutory leave</li>
+          <li>Minimum wage, holiday allowance and pensions</li>
+          <li>Sickness and reintegration duties</li>
+          <li>Dismissal routes and the transition payment</li>
+          <li>Works councils, privacy and CAOs</li>
+        </ul>
+        <form id="resources-wp-form" class="rh-wp-form">
+          <div class="rh-wp-fields">
+            <input type="text" name="name" placeholder="Your full name" aria-label="Your full name" autocomplete="name" required />
+            <input type="email" name="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required />
+          </div>
+          <!-- Honeypot: off-screen and out of the tab order, so only bots fill it.
+               A non-empty url_confirm makes /api/contact drop the submission. -->
+          <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+            <label for="resources-wp-url-confirm">Your website</label>
+            <input type="text" id="resources-wp-url-confirm" name="url_confirm" tabindex="-1" autocomplete="off" />
+          </div>
+          <!-- The opt-in comes before the button, so it is seen before submitting. Optional and
+               unticked: the guide never depends on joining the mailing list. -->
+          <div class="rh-wp-submit">
+            <label class="rh-wp-consent">
+              <input type="checkbox" name="marketing_consent" />
+              <span>Also send me occasional HR updates. You can unsubscribe at any time.</span>
+            </label>
+            <button type="submit" class="btn btn-accent" id="resources-wp-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={icons.download} />
+              Download free guide
+            </button>
+          </div>
+          <div id="resources-wp-status" class="rh-wp-status" role="status" aria-live="polite"></div>
+          <p class="rh-wp-disclaimer">No spam. We respect your privacy.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+(function () {
+  var form = document.getElementById('resources-wp-form');
+  if (!form) return;
+  var PDF = '/downloads/hrhelp-hr-rules-regulations-2026-nl.pdf';
+  // Inline check icon: the self-hosted Inter subset has no check mark character
+  var CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg>';
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = document.getElementById('resources-wp-btn');
+    var status = document.getElementById('resources-wp-status');
+    var params = new URLSearchParams(window.location.search);
+    var data = {
+      name: form.querySelector('[name="name"]').value.trim(),
+      email: form.querySelector('[name="email"]').value.trim(),
+      source: 'Whitepaper Download (Resources)',
+      // Optional opt-in for HR updates; unticked by default.
+      marketing_consent: form.querySelector('[name="marketing_consent"]').checked,
+      url_confirm: form.querySelector('[name="url_confirm"]').value,
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      referrer: document.referrer || ''
+    };
+    // First-touch lead source (utm_*, click ids, referrer host, landing page)
+    if (window.hrhelpAttribution) Object.assign(data, window.hrhelpAttribution());
+
+    // The browser has checked the field; this is the same shape the CRM accepts.
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) {
+      status.className = 'rh-wp-status is-error';
+      status.textContent = 'Please enter a valid email address.';
+      return;
+    }
+
+    // The lead goes to the CRM in the background (keepalive lets it finish even if the
+    // browser opens the PDF in this tab). Whatever it answers, the guide downloads now.
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+      keepalive: true
+    }).catch(function () {});
+
+    var a = document.createElement('a');
+    a.href = PDF;
+    a.download = 'HRHelp-HR-Rules-Regulations-2026-NL.pdf';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    if (typeof gtag === 'function') gtag('event', 'guide_download', { source: 'resources' });
+
+    status.className = 'rh-wp-status is-ok';
+    status.innerHTML = CHECK + ' Your guide is downloading. Not started? <a href="' + PDF + '" target="_blank" rel="noopener">Open the PDF</a>';
+    btn.disabled = true;
+    btn.innerHTML = CHECK + ' Downloaded';
+  });
+})();
+</script>
+
+<!-- ===== VIDEO: click-to-play facade, no mp4 loads until the visitor presses play.
+     Captions are burned into the video itself, so no <track> element is needed. ===== -->
+<section id="video" class="rh-section rh-video" aria-labelledby="video-title">
+  <div class="container">
+    <!-- Desktop: head and points left, video right. Phones: head, video, points (DOM order) -->
+    <div class="rh-video-inner">
+      <div class="rh-video-head">
+        <span class="eyebrow">Video</span>
+        <h2 id="video-title">What HRhelp does, in 60 seconds</h2>
+        <p class="rh-video-note">Who we help, our four solutions and how pricing works. Captions are on, so it works with the sound off.</p>
+      </div>
+      <div class="rh-video-frame">
+        <button type="button" class="rh-video-facade" aria-label="Play video: What is HRhelp (1 minute)" data-src-720="/videos/what-is-hrhelp-720p.mp4" data-src-1080="/videos/what-is-hrhelp-1080p.mp4" data-poster="/videos/what-is-hrhelp-poster.jpg">
+          <picture>
+            <source type="image/webp" srcset="/videos/what-is-hrhelp-poster-960.webp 960w, /videos/what-is-hrhelp-poster.webp 1600w" sizes="(max-width: 1024px) calc(100vw - 2rem), 880px" />
+            <img src="/videos/what-is-hrhelp-poster.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async" />
+          </picture>
+          <span class="rh-video-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+          </span>
+          <span class="rh-video-duration" aria-hidden="true">1:03</span>
+        </button>
+      </div>
+      <div class="rh-video-more">
+        <ul class="rh-video-points">
+          <li><span class="rh-num" aria-hidden="true">01</span>The HR you take on when you hire in the Netherlands</li>
+          <li><span class="rh-num" aria-hidden="true">02</span>Four solutions, from market entry to HR emergencies</li>
+          <li><span class="rh-num" aria-hidden="true">03</span>Senior consultants and a fixed price, agreed upfront</li>
+        </ul>
+        <a href="/solutions/" class="rh-text-link">Explore our solutions <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  // Swap the poster facade for a real <video> on click. The source is picked by viewport width
+  // (720p on small screens, 1080p otherwise) and playback starts with sound, since the click is a user gesture.
+  (function () {
+    var facade = document.querySelector('.rh-video-facade');
+    if (!facade) return;
+    facade.addEventListener('click', function () {
+      var small = window.matchMedia('(max-width: 768px)').matches;
+      var img = facade.querySelector('img');
+      var video = document.createElement('video');
+      video.controls = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.preload = 'none';
+      video.poster = (img && img.currentSrc) || facade.dataset.poster;
+      video.setAttribute('aria-label', 'What is HRhelp? (1 minute video)');
+      var order = small ? ['720', '1080'] : ['1080', '720'];
+      order.forEach(function (q) {
+        var s = document.createElement('source');
+        s.src = facade.getAttribute('data-src-' + q);
+        s.type = 'video/mp4';
+        video.appendChild(s);
+      });
+      var track = function (name) {
+        if (typeof gtag === 'function') gtag('event', name, { video_title: 'What is HRhelp' });
+      };
+      var started = false;
+      video.addEventListener('play', function () {
+        if (!started) { started = true; track('video_start'); }
+      });
+      video.addEventListener('ended', function () { track('video_complete'); });
+      facade.replaceWith(video);
+      video.focus();
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});
+    }, { once: true });
+  })();
+</script>
+
+<!-- ===== FAQ HIGHLIGHTS (no FAQPage JSON-LD here: /resources/faq/ carries it) ===== -->
+<section id="faq" class="rh-section rh-faq" aria-labelledby="faq-title">
+  <div class="container rh-faq-layout">
+    <div class="rh-faq-intro">
+      <span class="eyebrow">FAQ</span>
+      <h2 id="faq-title">Frequently asked questions</h2>
+      <p>Quick answers to the questions international employers ask us most.</p>
+    </div>
+    <div class="rh-faq-list">
+      {faqHighlights.map((item) => (
+        <details class="rh-faq-item">
+          <summary>{item.q}</summary>
+          <div class="rh-faq-answer"><p>{item.a}</p></div>
+        </details>
+      ))}
+    </div>
+    <div class="rh-faq-more">
+      <a href="/resources/faq/" class="btn btn-secondary">See all {plural(faqItems.length, 'question')} <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HANDS-ON HELP + CONSULTATION CTA ===== -->
+<section id="help" class="rh-section rh-help" aria-labelledby="help-title">
+  <div class="container">
+    <div class="rh-head">
+      <div>
+        <span class="eyebrow">Hands-on help</span>
+        <h2 id="help-title">Need hands-on help?</h2>
+        <p>When a guide is not enough, our consultants do the work with you. These are the three areas we are most often brought in for.</p>
+      </div>
+    </div>
+    <div class="rh-help-grid">
+      {expertise.map((e) => (
+        <a href={`/expertise/${e.slug}/`} class="rh-help-card">
+          <span class="rh-help-title">{e.title}</span>
+          <span class="rh-help-line">{e.line}</span>
+          <svg aria-hidden="true" class="rh-help-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      ))}
+    </div>
+    <div class="rh-cta-panel">
+      <CtaBand
+        heading="Free Consultation"
+        text="Book a no-obligation consultation to discuss your HR challenges with our experts."
+        primaryHref="/contact/#book"
+        secondaryLabel="Contact us"
+        secondaryHref="/contact/"
+      />
     </div>
   </div>
 </section>
@@ -96,130 +560,518 @@ const caseStudies = await getResourceCaseStudies();
 </Layout>
 
 <style>
-/* ===== HERO ===== */
-.res-hero {
-  padding: 10rem 0 5rem;
-  background: var(--navy);
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-.res-hero-mesh {
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 30%, rgba(244,121,32,0.12), transparent 40%);
-  z-index: 1;
-}
-.res-hero h1 {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 800; margin-top: 1rem;
-  color: white;
-}
-.res-hero-sub {
-  font-size: 1.15rem;
-  color: rgba(255,255,255,0.7);
-  max-width: 540px;
-  margin: 1rem auto 0;
-  line-height: 1.7;
-}
+/* Resource Centre hub. Site system: header-width .container, navy text with
+   orange-ink accents, pill buttons, 12px radii, hairline borders, muted
+   eyebrows, split ("compact") section heads, no gradients. */
+h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
+.eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; color: #44546d; margin-bottom: 0.5rem; }
 
-/* ===== HIGHLIGHTS ===== */
-.res-highlights { padding: var(--section-padding); background: white; }
-.res-hl-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
-}
-.res-hl-card {
-  text-decoration: none;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  border: 1px solid var(--gray-200);
-  background: white;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.res-hl-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-}
-.res-hl-img { position: relative; height: 200px; overflow: hidden; }
-.res-hl-img img { width: 100%; height: 100%; object-fit: cover; }
-.res-hl-stat {
-  position: absolute; top: 0.75rem; right: 0.75rem;
-  background: rgba(244,121,32,0.9); color: white;
-  font-size: 0.7rem; font-weight: 700;
-  padding: 0.3rem 0.8rem; border-radius: var(--radius-full);
-}
-.res-hl-body { padding: 1.5rem; }
-.res-hl-icon {
-  width: 40px; height: 40px;
-  border-radius: var(--radius-md);
-  background: rgba(244,121,32,0.1);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1rem;
-}
-.res-hl-icon .material-symbols-outlined { font-size: 22px; color: var(--orange); }
-.res-hl-body h3 { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
-.res-hl-body p { font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; }
-.res-hl-link { font-size: 0.85rem; font-weight: 700; color: var(--orange); }
+.rh-section { padding: 4.5rem 0; }
+.rh-guides, .rh-cases, .rh-video, .rh-help { background: var(--white); }
+.rh-articles, .rh-faq { background: var(--cream); }
 
-/* ===== CASE STUDIES ===== */
-.res-cases { padding: var(--section-padding); background: var(--cream); }
-.res-cs-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+/* Split section head: eyebrow + h2 + intro left, action right */
+.rh-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem 3rem;
+  margin-bottom: 2rem;
 }
-.res-cs-card {
-  text-decoration: none;
-  background: white;
-  border-radius: var(--radius-xl);
-  padding: 2rem;
-  border: 1px solid var(--gray-200);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex; flex-direction: column;
-}
-.res-cs-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-}
-.res-cs-tag {
-  font-size: 0.7rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--orange); margin-bottom: 1rem;
-}
-.res-cs-icon {
-  width: 48px; height: 48px;
-  border-radius: var(--radius-md);
-  background: rgba(244,121,32,0.1);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1.25rem;
-}
-.res-cs-icon .material-symbols-outlined { font-size: 24px; color: var(--orange); }
-.res-cs-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
-.res-cs-card p { font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; flex: 1; }
-.res-cs-link { font-size: 0.85rem; font-weight: 700; color: var(--orange); }
+.rh-head h2 { margin: 0; }
+.rh-head p { margin: 0.6rem 0 0; max-width: 40em; font-size: 1rem; line-height: 1.6; color: var(--gray-600); }
+.rh-head > .btn { flex-shrink: 0; }
 
-/* ===== MORE ===== */
-.res-more { padding: 4rem 0 5rem; background: var(--cream); }
-.res-more-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-.res-more-card {
+/* Text link with an orange underline */
+.rh-text-link,
+.rh-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: var(--orange-ink);
+  text-underline-offset: 4px;
+}
+.rh-text-link:hover,
+.rh-more-link:hover { text-decoration-thickness: 2px; }
+
+/* ===== Jump links ===== */
+.rh-jump {
+  background: var(--white);
+  border-bottom: 1px solid rgba(15, 37, 72, 0.08);
+  padding: 1rem 0;
+}
+.rh-jump-inner { display: flex; align-items: center; gap: 0.75rem 1.25rem; }
+.rh-jump-label {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #44546d;
+}
+.rh-jump-list { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0; padding: 0; }
+
+.rh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 40px;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid rgba(15, 37, 72, 0.14);
+  border-radius: var(--radius-full);
+  background: var(--white);
+  color: var(--navy);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.2;
   text-decoration: none;
-  background: white;
-  border-radius: var(--radius-xl);
-  padding: 2.5rem;
-  border: 1px solid var(--gray-200);
+  white-space: nowrap;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.rh-chip:hover { border-color: var(--navy); background: #f6f7f9; }
+.rh-chip-ico { flex-shrink: 0; color: var(--orange-ink); }
+.rh-chip-count {
+  min-width: 1.6rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-full);
+  background: rgba(15, 37, 72, 0.07);
+  color: var(--navy);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.res-more-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-}
-.res-more-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin: 1rem 0 0.5rem; }
-.res-more-card p { font-size: 0.9rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; }
-.res-more-link { font-size: 0.85rem; font-weight: 700; color: var(--orange); }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 992px) {
-  .res-hl-grid, .res-cs-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+/* ===== Employer guides ===== */
+.rh-col-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.rh-col-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid rgba(15, 37, 72, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
 }
-@media (max-width: 576px) {
-  .res-more-grid { grid-template-columns: 1fr; }
+.rh-col-img { width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; background: #e9edf2; }
+.rh-col-body { display: flex; flex-direction: column; flex: 1; padding: 1.35rem 1.5rem 1.5rem; }
+.rh-col-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.6rem; }
+.rh-col-focus { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #44546d; }
+.rh-col-count {
+  flex-shrink: 0;
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: rgba(185, 84, 16, 0.08);
+  color: var(--orange-ink-dark); /* 4.5:1+ on the tint; --orange-ink is 4.3:1 there */
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.rh-col-title { margin: 0 0 0.4rem; }
+.rh-col-title a { color: var(--navy); text-decoration: none; }
+.rh-col-title a:hover { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 4px; }
+/* Two lines reserved, so the link lists line up across the three cards */
+.rh-col-desc { min-height: 3.2em; font-size: 0.92rem; line-height: 1.6; color: var(--gray-600); margin: 0 0 1rem; }
+.rh-col-links {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  border-top: 1px solid rgba(15, 37, 72, 0.1);
+  flex: 1;
+}
+.rh-col-links li { border-bottom: 1px solid rgba(15, 37, 72, 0.1); }
+.rh-col-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0.15rem 0.7rem 0;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--navy);
+  text-decoration: none;
+}
+.rh-col-arrow { flex-shrink: 0; color: var(--gray-400); transition: color var(--transition-fast), transform var(--transition-fast); }
+.rh-col-links a:hover { color: var(--orange-ink); }
+.rh-col-links a:hover .rh-col-arrow { color: var(--orange-ink); transform: translateX(3px); }
+
+/* Country chips */
+.rh-countries {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding: 1.5rem 1.75rem;
+  background: #f6f7f9;
+  border: 1px solid rgba(15, 37, 72, 0.08);
+  border-radius: 12px;
+}
+.rh-countries-text { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1rem; }
+.rh-countries h3 { margin: 0; }
+.rh-countries p { margin: 0; font-size: 0.92rem; line-height: 1.6; color: var(--gray-600); }
+.rh-country-list { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0; padding: 0; }
+.rh-chip--country { font-weight: 500; }
+
+/* ===== Latest articles (same card grid as the homepage) ===== */
+.rh-post-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  --post-card-ratio: 4 / 3;
+}
+.rh-post-grid > :global(.post-card) { border-radius: 12px; }
+
+/* ===== Case studies ===== */
+.rh-cs-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.rh-cs-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: var(--white);
+  border: 1px solid rgba(15, 37, 72, 0.1);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+.rh-cs-card:hover { border-color: rgba(15, 37, 72, 0.28); }
+.rh-cs-top { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.9rem; }
+:global(.rh-cs-icon) { flex-shrink: 0; color: var(--icon-accent); }
+.rh-cs-tag { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; line-height: 1.4; color: #44546d; }
+.rh-cs-card h3 { color: var(--navy); margin: 0 0 0.5rem; }
+.rh-cs-card p { flex: 1; margin: 0 0 1rem; font-size: 0.92rem; line-height: 1.6; color: var(--gray-600); }
+.rh-cs-link { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+.rh-cs-card:hover .rh-cs-link { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+
+/* ===== Free 2026 guide: navy band, real photo (as on the homepage) ===== */
+.rh-wp { padding: 4.5rem 0; background: var(--navy); color: var(--white); }
+.rh-wp-grid { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 4rem; align-items: center; }
+.rh-wp-visual picture { display: block; width: 100%; max-width: 360px; }
+.rh-wp-visual img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22); }
+.rh-wp-badge {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+}
+.rh-wp-content h2 { color: var(--white); margin: 0 0 0.75rem; max-width: 22em; }
+.rh-wp-intro { max-width: 560px; margin: 0 0 1.25rem; font-size: 1rem; line-height: 1.65; color: rgba(255, 255, 255, 0.88); }
+.rh-wp-inside { margin: 0 0 0.5rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange-light); }
+.rh-wp-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem 2rem;
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+}
+.rh-wp-list li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+}
+/* Check mark drawn with borders (no icon font) */
+.rh-wp-list li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.3em;
+  width: 0.35rem;
+  height: 0.7rem;
+  border: solid var(--orange-light);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.rh-wp-fields { display: flex; gap: 0.75rem; }
+.rh-wp-fields input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.92rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+.rh-wp-fields input::placeholder { color: rgba(255, 255, 255, 0.6); }
+.rh-wp-fields input:focus { outline: none; border-color: var(--orange); background: rgba(255, 255, 255, 0.12); }
+.rh-wp-submit { display: flex; align-items: center; justify-content: space-between; gap: 0.9rem 1.5rem; margin-top: 0.9rem; }
+.rh-wp-submit .btn { flex-shrink: 0; justify-content: center; white-space: nowrap; padding: 0.85rem 1.5rem; font-size: 0.92rem; font-weight: 700; }
+.rh-wp-submit .btn:disabled { cursor: default; background: #2e7d32; border-color: #2e7d32; }
+.rh-wp-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+  cursor: pointer;
+}
+.rh-wp-consent input { width: 18px; height: 18px; margin: 0.1rem 0 0; flex-shrink: 0; accent-color: var(--orange); }
+.rh-wp-status { display: none; margin-top: 0.75rem; padding: 0.6rem 0.8rem; border-radius: 8px; font-size: 0.88rem; line-height: 1.5; }
+.rh-wp-status.is-ok { display: block; background: #e8f5e9; color: #1b5e20; }
+.rh-wp-status.is-error { display: block; background: #fce4ec; color: #b71c1c; }
+.rh-wp-status :global(a) { color: inherit; font-weight: 600; text-decoration: underline; }
+.rh-wp-status :global(svg) { display: inline-block; vertical-align: -3px; margin-right: 0.15rem; }
+.rh-wp-disclaimer { margin: 0.75rem 0 0; font-size: 0.78rem; line-height: 1.5; color: rgba(255, 255, 255, 0.88); }
+.rh-wp :focus-visible { outline-color: var(--orange-light) !important; }
+
+/* ===== Video (click-to-play facade, as on the homepage) ===== */
+.rh-video-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  grid-template-areas: "head frame" "more frame";
+  column-gap: 4rem;
+}
+.rh-video-head { grid-area: head; align-self: end; }
+.rh-video-more { grid-area: more; align-self: start; }
+.rh-video-frame { grid-area: frame; align-self: center; }
+.rh-video-head h2 { margin: 0 0 0.75rem; }
+.rh-video-note { margin: 0; max-width: 34em; font-size: 0.97rem; line-height: 1.6; color: var(--gray-600); }
+.rh-video-points {
+  list-style: none;
+  margin: 1.25rem 0 1.5rem;
+  padding: 0;
+  border-top: 1px solid rgba(15, 37, 72, 0.1);
+}
+.rh-video-points li {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(15, 37, 72, 0.1);
+  font-size: 0.97rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--navy);
+}
+.rh-num { flex-shrink: 0; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; color: var(--orange-ink); }
+.rh-video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(15, 37, 72, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--navy-dark);
+  background-clip: padding-box;
+}
+.rh-video-frame :global(video) { display: block; width: 100%; height: 100%; background: var(--navy-dark); }
+.rh-video-facade {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #eeece8;
+  cursor: pointer;
+}
+.rh-video-facade img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rh-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin: -36px 0 0 -36px;
+  border-radius: 50%;
+  background: var(--orange-ink);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(15, 37, 72, 0.25);
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+.rh-video-play svg { margin-left: 3px; }
+.rh-video-facade:hover .rh-video-play,
+.rh-video-facade:focus-visible .rh-video-play { transform: scale(1.08); background: var(--orange-ink-dark); }
+/* Focus ring drawn above the poster image (an inset outline would sit under it) */
+.rh-video-facade:focus-visible { outline: none !important; }
+.rh-video-facade:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--orange);
+  border-radius: 11px;
+}
+.rh-video-facade:focus-visible .rh-video-play { box-shadow: 0 0 0 3px var(--white), 0 0 0 6px var(--orange-ink); }
+.rh-video-duration {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: rgba(15, 37, 72, 0.85);
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+
+/* ===== FAQ highlights (homepage FAQ style) ===== */
+/* Desktop: intro and "see all" left, questions right. Phones: intro, questions, "see all" (DOM order) */
+.rh-faq-layout {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  grid-template-areas: "intro list" "more list";
+  grid-template-rows: auto 1fr;
+  gap: 1.5rem 4rem;
+  align-items: start;
+}
+.rh-faq-intro { grid-area: intro; }
+.rh-faq-list { grid-area: list; }
+.rh-faq-more { grid-area: more; }
+.rh-faq-intro h2 { margin: 0 0 0.6rem; }
+.rh-faq-intro p { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--gray-600); }
+.rh-faq-list { border-top: 1px solid rgba(15, 37, 72, 0.12); }
+.rh-faq-item { border-bottom: 1px solid rgba(15, 37, 72, 0.12); }
+.rh-faq-item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.05rem 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--navy);
+  cursor: pointer;
+  list-style: none;
+}
+.rh-faq-item summary::-webkit-details-marker { display: none; }
+.rh-faq-item summary::after {
+  content: '+';
+  flex-shrink: 0;
+  width: 1.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--orange-ink);
+}
+.rh-faq-item[open] summary::after { content: '\2212'; }
+.rh-faq-item summary:hover { color: var(--orange-ink); }
+.rh-faq-item summary:focus-visible { outline: 2px solid var(--navy) !important; outline-offset: 4px !important; border-radius: 2px; }
+.rh-faq-answer { padding: 0 3rem 1.15rem 0; }
+.rh-faq-answer p { max-width: 62ch; margin: 0; font-size: 1rem; line-height: 1.7; color: var(--gray-700); }
+/* Smooth open where the browser can animate details */
+@supports selector(::details-content) {
+  .rh-faq-list { interpolate-size: allow-keywords; }
+  .rh-faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 0.25s ease, content-visibility 0.25s allow-discrete;
+  }
+  .rh-faq-item[open]::details-content { block-size: auto; }
+}
+
+/* ===== Hands-on help + CTA ===== */
+.rh-help-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.rh-help-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.15rem 2.75rem 1.2rem 1.25rem;
+  background: var(--white);
+  border: 1px solid rgba(15, 37, 72, 0.1);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+.rh-help-card:hover { border-color: rgba(15, 37, 72, 0.28); }
+.rh-help-title { font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--navy); }
+.rh-help-card:hover .rh-help-title { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+.rh-help-line { font-size: 0.9rem; line-height: 1.5; color: var(--gray-600); }
+.rh-help-arrow { position: absolute; top: 1.25rem; right: 1.1rem; color: var(--gray-400); transition: color 0.2s ease, transform 0.2s ease; }
+.rh-help-card:hover .rh-help-arrow { color: var(--navy); transform: translateX(3px); }
+.rh-cta-panel {
+  margin-top: 1.5rem;
+  padding: 1.5rem 1.75rem;
+  background: #f6f7f9;
+  border: 1px solid rgba(15, 37, 72, 0.08);
+  border-radius: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rh-chip, .rh-video-play, .rh-help-card, .rh-help-arrow, .rh-col-arrow { transition: none; }
+  .rh-faq-item::details-content { transition: none; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1200px) {
+  .rh-post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); --post-card-ratio: 16 / 10; }
+}
+@media (max-width: 1024px) {
+  .rh-video-inner { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "frame" "more"; row-gap: 1.5rem; }
+  .rh-video-points { margin-top: 0; }
+}
+@media (max-width: 992px) {
+  .rh-wp-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .rh-wp-visual picture { max-width: 280px; }
+}
+@media (max-width: 900px) {
+  .rh-head { flex-direction: column; align-items: flex-start; margin-bottom: 1.5rem; }
+  .rh-col-grid, .rh-cs-grid { grid-template-columns: 1fr; }
+  .rh-faq-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "list" "more"; grid-template-rows: auto; }
+  .rh-faq-item summary { font-size: 1rem; padding: 0.95rem 0; }
+  /* Articles: one row that scrolls sideways, the next card peeking in */
+  .rh-post-grid {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 2rem;
+    margin-inline: -2rem;
+    padding: 0 2rem 0.25rem;
+    scrollbar-width: none;
+  }
+  .rh-post-grid::-webkit-scrollbar { display: none; }
+  .rh-post-grid > :global(.post-card) { flex: 0 0 44%; scroll-snap-align: start; --post-card-ratio: 4 / 5; }
+}
+/* Tablets: one card per row, photo on the left instead of a tall full-width photo */
+@media (min-width: 641px) and (max-width: 900px) {
+  .rh-col-card { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+  .rh-col-img { height: 100%; aspect-ratio: auto; }
+}
+@media (max-width: 768px) {
+  .rh-section, .rh-wp { padding: 3rem 0; }
+  .rh-jump { padding: 0.85rem 0; }
+  .rh-jump-inner { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+  .rh-post-grid {
+    scroll-padding-inline: var(--gutter-mobile);
+    margin-inline: calc(-1 * var(--gutter-mobile));
+    padding-inline: var(--gutter-mobile);
+  }
+  .rh-help-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .rh-wp-fields { flex-direction: column; }
+  .rh-wp-submit { flex-direction: column; align-items: stretch; }
+  .rh-wp-list { grid-template-columns: 1fr; }
+  .rh-faq-answer { padding-right: 0; }
+  /* Cards keep a 1rem side padding inside the page gutter */
+  .rh-col-body, .rh-cs-card, .rh-countries, .rh-cta-panel { padding-left: 1rem; padding-right: 1rem; }
+  .rh-help-card { padding-left: 1rem; }
+}
+@media (max-width: 640px) {
+  .rh-head > .btn { width: 100%; justify-content: center; white-space: normal; text-align: center; line-height: 1.35; }
+  .rh-faq-more .btn { width: 100%; justify-content: center; }
+  .rh-post-grid > :global(.post-card) { flex-basis: 78%; --post-card-ratio: 1 / 1; }
+  .rh-chip { min-height: 38px; padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+  .rh-video-play { width: 60px; height: 60px; margin: -30px 0 0 -30px; }
+  .rh-video-play svg { width: 24px; height: 24px; }
+  .rh-video-duration { right: 0.6rem; bottom: 0.6rem; font-size: 0.75rem; }
 }
 </style>

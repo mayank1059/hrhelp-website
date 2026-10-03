@@ -1,5 +1,9 @@
 ---
 import Layout from '../components/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import LineIcon from '../components/LineIcon.astro';
+import OfficeMap from '../components/OfficeMap.astro';
+import { photo } from '../lib/servicePhotos';
 
 const timeline = [
   { 
@@ -10,7 +14,7 @@ const timeline = [
   { 
     year: '2021', 
     title: 'The Network Evolution', 
-    desc: 'Transitioned to a boutique network organization. By collaborating with top-tier specialists across employment law, payroll, and talent strategy, we delivery elite expertise without the overhead of big-box firms.' 
+    desc: 'Transitioned to a boutique network organisation. By collaborating with top-tier specialists across employment law, payroll, and talent strategy, we deliver elite expertise without the overhead of big-box firms.' 
   },
   { 
     year: '2025', 
@@ -21,85 +25,77 @@ const timeline = [
 
 const partners = [
   { icon: 'gavel', title: 'Legal & Compliance', desc: 'Expert Dutch employment law counsel for complex contracts and restructuring.' },
-  { icon: 'payments', title: 'Payroll & Benefits', desc: 'Seamless integration with specialized Dutch payroll providers.' },
+  { icon: 'payments', title: 'Payroll & Benefits', desc: 'Close cooperation with specialized Dutch payroll providers.' },
   { icon: 'psychology', title: 'Talent Strategy', desc: 'Behavioral psychologists and niche headhunters for critical hires.' },
   { icon: 'shield', title: 'Risk Management', desc: 'Insurance and health safety specialists ensuring workplace compliance.' }
 ];
 
+const heroImage = photo('office-meeting');
+// Cornelis's LinkedIn profile URL. The "Connect on LinkedIn" button stays hidden until a real
+// profile URL is filled in here (it used to link to plain https://linkedin.com).
+const founderLinkedIn = '';
+// LineIcon names for the partner cards (Material names kept in the data)
+const iconName: Record<string, string> = { payments: 'euro' };
+
 const stats = [
-  { value: '25+', label: 'Years Experience' },
+  { value: '20+', label: 'Years in HR' },
   { value: '75+', label: 'Clients Served' },
   { value: '100%', label: 'Dutch Compliance' },
-  { value: '24h', label: 'Response Time' }
+  { value: '1 business day', label: 'Response Time' }
 ];
 ---
 
 <Layout title="About Us" description="Founded in 2019 to humanize Dutch HR for international companies. Learn about our founder Cornelis Leerlooijer and our network of specialists.">
 
 <!-- ===== HERO SECTON ===== -->
-<section class="ab2-hero">
-  <div class="ab2-hero-mesh"></div>
-  <div class="container-wide ab2-hero-inner">
-    <div class="ab2-hero-content" data-animate="fade-up">
-      <span class="eyebrow-badge">Our Story</span>
-      <h1>Human Expertise. <br/><span class="text-orange">Strategic Network.</span></h1>
-      <p class="ab2-hero-p">Founded in 2019 on the principle that international businesses deserve more than just "standard" HR. We built a model that combines veteran wisdom with modern agility.</p>
-      
-      <div class="ab2-hero-stats">
-        {stats.map(stat => (
-          <div class="ab2-hero-stat">
-            <span class="ab2-stat-val">{stat.value}</span>
-            <span class="ab2-stat-lbl">{stat.label}</span>
-          </div>
-        ))}
+<PageHero variant="split" eyebrow="Our Story" subtitle={'Founded in 2019 on the principle that international businesses deserve better than "standard" HR. We combine senior experience with the flexibility of a specialist network.'} image={{ ...heroImage, alt: 'Strategic HR planning in Amsterdam' }}>
+  <Fragment slot="title">Human Expertise. <br/><span>Strategic Network.</span></Fragment>
+  <div class="ab2-hero-stats">
+    {stats.map(stat => (
+      <div class="ab2-hero-stat">
+        <span class="ab2-stat-val">{stat.value}</span>
+        <span class="ab2-stat-lbl">{stat.label}</span>
       </div>
-    </div>
-    
-    <div class="ab2-hero-visual" data-animate="fade-left">
-      <div class="ab2-hero-img-card">
-        <img src="/images/founder/about-team-meeting.jpg" alt="Strategic HR planning in Amsterdam" />
-        <div class="ab2-img-label">
-          <span class="material-symbols-outlined">location_on</span>
-          <span>Amsterdam Head Office</span>
-        </div>
-      </div>
-    </div>
+    ))}
   </div>
-</section>
+  <a class="ab2-hero-founder" href="#founder">
+    <img src="/images/home/cornelis-candid-face.jpg" alt="" width="320" height="320" loading="eager" decoding="async" />
+    <span>
+      <strong>Cornelis Leerlooijer</strong>
+      <span>Founder &amp; Managing Director, over two decades in international HR</span>
+    </span>
+  </a>
+  <div class="ab2-img-label" slot="media">
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    <span>Almere Head Office</span>
+  </div>
+</PageHero>
 
 <!-- ===== THE HRHELP APPROACH ===== -->
 <section class="ab2-approach">
   <div class="container">
-    <div class="ab2-approach-header" data-animate="fade-up">
+    <div class="ab2-approach-header">
       <h2>The HRHelp Approach</h2>
-      <p>Our core values aren't just words on a wall. They are the operating system of our business.</p>
+      <p>Our core values shape how we run the business every day.</p>
     </div>
     <div class="ab2-values-grid">
-      <div class="ab2-value-card" data-animate="fade-up">
-        <div class="ab2-value-icon">
-          <span class="material-symbols-outlined">visibility</span>
-        </div>
+      <div class="ab2-value-card">
+        <span class="ab2-value-num" aria-hidden="true">01</span>
         <h3>Transparency</h3>
         <p>No hidden fees, no ghosting. We keep communication channels open and honest at every step of the journey.</p>
       </div>
-      <div class="ab2-value-card" data-animate="fade-up">
-        <div class="ab2-value-icon">
-          <span class="material-symbols-outlined">favorite</span>
-        </div>
+      <div class="ab2-value-card">
+        <span class="ab2-value-num" aria-hidden="true">02</span>
         <h3>Empathy</h3>
         <p>We look beyond the resume. Understanding the human behind the candidate and the culture behind the company.</p>
       </div>
-      <div class="ab2-value-card" data-animate="fade-up">
-        <div class="ab2-value-icon">
-          <span class="material-symbols-outlined">bolt</span>
-        </div>
+      <div class="ab2-value-card">
+        <span class="ab2-value-num" aria-hidden="true">03</span>
         <h3>Speed</h3>
         <p>The business world moves fast, and so do we. Our agile processes are designed to keep pace with rapid growth.</p>
       </div>
-      <div class="ab2-value-card" data-animate="fade-up">
-        <div class="ab2-value-icon">
-          <span class="material-symbols-outlined">psychology</span>
-        </div>
+      <div class="ab2-value-card">
+        <span class="ab2-value-num" aria-hidden="true">04</span>
         <h3>Strategic Insight</h3>
         <p>Data-driven decisions that put people first. We combine analytics with intuition for the perfect match.</p>
       </div>
@@ -110,55 +106,53 @@ const stats = [
 <!-- ===== THE JOURNEY (Timeline) ===== -->
 <section class="ab2-journey section-navy">
   <div class="container">
-    <div class="ab2-section-header" style="text-align: center; margin-bottom: 4rem;">
+    <div class="ab2-section-header">
       <h2 class="text-white">Our Evolution</h2>
       <p class="text-muted">From a vision to a specialized network of experts.</p>
     </div>
-    
-    <div class="ab2-timeline">
-      <div class="ab2-timeline-line"></div>
-      {timeline.map((step, index) => (
-        <div class="ab2-timeline-item" data-animate={index % 2 === 0 ? "fade-right" : "fade-left"}>
-          <div class="ab2-time-box">
-            <span class="ab2-year">{step.year}</span>
-          </div>
+
+    <ol class="ab2-timeline">
+      {timeline.map((step) => (
+        <li class="ab2-timeline-item">
+          <span class="ab2-year">{step.year}</span>
           <div class="ab2-time-content">
             <h3>{step.title}</h3>
             <p>{step.desc}</p>
           </div>
-        </div>
+        </li>
       ))}
-    </div>
+    </ol>
   </div>
 </section>
 
 <!-- ===== FOUNDER SPOTLIGHT ===== -->
-<section class="ab2-founder">
+<section class="ab2-founder" id="founder">
   <div class="container">
     <div class="ab2-founder-inner">
-      <div class="ab2-founder-image" data-animate="fade-right">
-        <img src="/images/founder/cornelis-portrait.jpg" alt="Cornelis Leerlooijer - Founder" />
-        <div class="ab2-founder-badge">
-          <span class="material-symbols-outlined">verified</span>
+      <figure class="ab2-founder-image">
+        <img src="/images/founder/cornelis-portrait.jpg" alt="Cornelis Leerlooijer - Founder" width="1600" height="2143" loading="lazy" decoding="async" />
+        <figcaption class="ab2-founder-badge">
           <span>Founder & Managing Director</span>
-        </div>
-      </div>
-      
-      <div class="ab2-founder-text" data-animate="fade-left">
-        <span class="eyebrow-badge">Meet the Founder</span>
+        </figcaption>
+      </figure>
+
+      <div class="ab2-founder-text">
+        <span class="ab2-eyebrow">Meet the Founder</span>
         <h2>Cornelis Leerlooijer</h2>
-        <p class="ab2-founder-quote">"I saw first-hand how international companies struggled with the rigid nature of Dutch HR. We founded HRHelp.nl to provide a bridge—clear, strategic, and deeply localized support."</p>
-        
+        <p class="ab2-founder-quote">"I saw first-hand how international companies struggled with the rigid nature of Dutch HR. We founded HRHelp.nl to provide a bridge: clear, strategic, and deeply localized support."</p>
+
         <div class="ab2-founder-bio">
-          <p>With over two decades of experience across global HR landscapes, Cornelis built HRHelp.nl as a rejection of the traditional corporate consultancy model. He believes in direct access to senior expertise, radical transparency, and results that move the needle for your business.</p>
+          <p>With over two decades of experience in international HR, Cornelis built HRHelp.nl as an alternative to the traditional corporate consultancy model. He believes in direct access to senior expertise, full transparency, and results that make a real difference to your business.</p>
         </div>
-        
+
+        {founderLinkedIn && (
         <div class="ab2-founder-social">
-          <a href="https://linkedin.com" target="_blank" class="ab2-social-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          <a href={founderLinkedIn} target="_blank" class="ab2-social-btn">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             <span>Connect on LinkedIn</span>
           </a>
         </div>
+        )}
       </div>
     </div>
   </div>
@@ -168,23 +162,26 @@ const stats = [
 <section class="ab2-network section-cream">
   <div class="container">
     <div class="ab2-grid-layout">
-      <div class="ab2-network-text" data-animate="fade-up">
-        <h2>The Best of <span class="text-orange">Both Worlds</span></h2>
+      <div class="ab2-network-text">
+        <h2>The Best of <span>Both Worlds</span></h2>
         <p>We are a <strong>Network Organization</strong>. This means you get the intimacy and dedication of a boutique firm, backed by the comprehensive expertise of a large enterprise.</p>
-        <p>By collaborating with a curated ecosystem of partners, we ensure that every challenge—from complex litigation to hyper-growth hiring—is handled by the absolute best specialist in that specific field.</p>
+        <p>By working with a selected network of partners, we make sure every challenge, from complex litigation to fast-growth hiring, is handled by a specialist in that field.</p>
       </div>
-      
+
       <div class="ab2-partners-grid">
         {partners.map(p => (
-          <div class="ab2-partner-card" data-animate="fade-up">
-            <div class="ab2-partner-icon">
-              <span class="material-symbols-outlined">{p.icon}</span>
-            </div>
+          <div class="ab2-partner-card">
+            <LineIcon name={iconName[p.icon] || p.icon} class="ab2-partner-icon" />
             <h3>{p.title}</h3>
             <p>{p.desc}</p>
           </div>
         ))}
       </div>
+
+      <figure class="ab2-team-photo">
+        <img src="/images/about/cornelis-team.jpg" alt="Cornelis Leerlooijer, founder of HRhelp, with the HRhelp team at the office in Almere" width="1200" height="1490" loading="lazy" decoding="async" />
+        <figcaption>Cornelis and the team, Almere office</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -197,22 +194,22 @@ const stats = [
         <h2>Visit Us</h2>
         <p>Strategic HR guidance at the heart of the Netherlands.</p>
         <div class="ab2-address-item">
-          <span class="material-symbols-outlined">location_on</span>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <div>
             <strong>Oeverwalweg 3</strong>
             <p>1332 CG, Almere, Netherlands</p>
           </div>
         </div>
         <div class="ab2-address-item">
-          <span class="material-symbols-outlined">mail</span>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 6 12 13 2 6"/></svg>
           <p>info@hrhelp.nl</p>
         </div>
         <div class="ab2-cta-btns">
-          <a href="/contact" class="btn btn-primary btn-lg" style="box-shadow: none;">Book a Consultation</a>
+          <a href="/contact/" class="btn btn-primary btn-lg">Book a Consultation</a>
         </div>
       </div>
-      <div class="ab2-cta-photo">
-        <img src="/images/founder/culture-montage.jpg" alt="Collaborative HR culture at our Almere office" />
+      <div class="ab2-cta-map">
+        <OfficeMap variant="panel" />
       </div>
     </div>
   </div>
@@ -221,268 +218,148 @@ const stats = [
 </Layout>
 
 <style>
-/* ===== HERO ===== */
-.ab2-hero {
-  padding: 10rem 0 6rem;
-  background: var(--navy);
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-.ab2-hero-mesh {
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 80% 20%, rgba(244,121,32,0.15), transparent 40%),
-              radial-gradient(circle at 10% 80%, rgba(255,255,255,0.05), transparent 40%);
-  z-index: 1;
-}
-.ab2-hero-inner {
-  display: flex; gap: 5rem; align-items: center; position: relative; z-index: 2;
-}
-.ab2-hero-content { flex: 1; }
-.ab2-hero-content h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
-.text-orange { color: #FF8A3D; }
-.ab2-hero-p { font-size: 1.2rem; line-height: 1.7; color: rgba(255,255,255,0.85); max-width: 540px; }
+/* Same sections and order; calmer treatment matching the service pages:
+   shared light hero, documentary photos, hairline cards, numerals instead of
+   icon tiles, one navy band (Our Evolution), light Visit Us panel. */
+h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
 
+/* ===== HERO extras ===== */
 .ab2-hero-stats {
-  display: flex; gap: 3rem; margin-top: 3.5rem; padding-top: 2.5rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; flex-wrap: wrap; gap: 1.25rem 2.5rem;
+  margin-top: 2.25rem; padding-top: 1.25rem;
+  border-top: 1px solid rgba(15, 37, 72, 0.14);
 }
-.ab2-stat-val { display: block; font-size: 2rem; font-weight: 800; color: var(--orange); line-height: 1; }
-.ab2-stat-lbl { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-top: 0.5rem; display: block; }
+.ab2-stat-val { display: block; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); line-height: 1.1; }
+.ab2-stat-lbl { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #44546d; margin-top: 0.3rem; }
+.ab2-hero-founder {
+  display: inline-flex; align-items: center; gap: 0.85rem;
+  margin-top: 1.75rem; padding: 0.6rem 1.1rem 0.6rem 0.6rem;
+  background: white; border: 1px solid rgba(15, 37, 72, 0.12); border-radius: 999px;
+  text-decoration: none; color: var(--navy); max-width: 100%;
+}
+.ab2-hero-founder:hover { border-color: rgba(15, 37, 72, 0.3); }
+.ab2-hero-founder img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.ab2-hero-founder strong { display: block; font-size: 1rem; line-height: 1.3; }
+.ab2-hero-founder span span { display: block; font-size: 0.85rem; line-height: 1.4; color: var(--gray-600); }
+@media (max-width: 480px) { .ab2-hero-founder { border-radius: 16px; } }
+.ab2-img-label { display: flex; align-items: center; gap: 0.45rem; margin-top: 0.85rem; font-size: 0.88rem; font-weight: 600; color: var(--navy); }
 
-.ab2-hero-visual { flex: 0 0 500px; }
-.ab2-hero-img-card {
-  position: relative; border-radius: var(--radius-xl); overflow: hidden;
-  box-shadow: 0 32px 64px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
-}
-.ab2-hero-img-card img { width: 100%; height: 500px; object-fit: cover; display: block; }
-.ab2-img-label {
-  position: absolute; bottom: 1.5rem; left: 1.5rem;
-  background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
-  padding: 0.75rem 1.25rem; border-radius: var(--radius-md);
-  display: flex; align-items: center; gap: 0.75rem; color: var(--navy); font-weight: 700; font-size: 0.9rem;
-}
-.ab2-img-label span:first-child { color: var(--orange); }
-
-/* ===== APPROACH / VALUES ===== */
-.ab2-approach {
-  padding: 6rem 0;
-  background: var(--gray-50);
-}
-.ab2-approach-header {
-  margin-bottom: 3.5rem;
-}
-.ab2-approach-header h2 {
-  color: var(--navy);
-  margin-bottom: 0.75rem;
-}
-.ab2-approach-header p {
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  max-width: 560px;
-}
-.ab2-values-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
+/* ===== APPROACH ===== */
+.ab2-approach { padding: 5.5rem 0; background: var(--white); }
+.ab2-approach-header { margin-bottom: 2.5rem; }
+.ab2-approach-header h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin-bottom: 0.5rem; }
+.ab2-approach-header p { color: var(--gray-600); }
+.ab2-values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
 .ab2-value-card {
-  text-align: center;
-  padding: 2.5rem 1.5rem;
+  padding: 1.5rem;
   background: white;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--gray-200);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(15, 37, 72, 0.1);
+  border-radius: 10px;
 }
-.ab2-value-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-  border-color: var(--orange);
-}
-.ab2-value-icon {
-  width: 56px; height: 56px;
-  border-radius: var(--radius-md);
-  background: rgba(244,121,32,0.1);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 1.25rem;
-  transition: all 0.3s ease;
-}
-.ab2-value-card:hover .ab2-value-icon {
-  background: var(--orange);
-}
-.ab2-value-icon .material-symbols-outlined {
-  font-size: 26px;
-  color: var(--orange);
-  transition: color 0.3s ease;
-}
-.ab2-value-card:hover .ab2-value-icon .material-symbols-outlined {
-  color: white;
-}
-.ab2-value-card h3 {
-  color: var(--navy);
-  font-size: 1.15rem;
-  margin-bottom: 0.75rem;
-}
-.ab2-value-card p {
-  color: var(--text-secondary);
-  font-size: 0.92rem;
-  line-height: 1.65;
-}
+.ab2-value-num { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; color: var(--gray-500); margin-bottom: 1rem; font-variant-numeric: tabular-nums; }
+.ab2-value-card h3 { font-size: 1.1rem; color: var(--navy); margin-bottom: 0.5rem; }
+.ab2-value-card p { font-size: 0.92rem; line-height: 1.6; color: var(--gray-600); }
 
-/* ===== TIMELINE ===== */
-.ab2-journey { padding: 8rem 0; }
-.ab2-timeline { position: relative; max-width: 900px; margin: 0 auto; }
-.ab2-timeline-line {
-  position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
-  background: rgba(255,255,255,0.1); transform: translateX(-50%);
-}
-.ab2-timeline-item {
-  display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; position: relative;
-}
-.ab2-timeline-item:nth-child(even) { flex-direction: row-reverse; }
-
-.ab2-time-box {
-  width: 45%; display: flex; justify-content: flex-end;
-}
-.ab2-timeline-item:nth-child(even) .ab2-time-box { justify-content: flex-start; }
-
-.ab2-year {
-  background: var(--orange); color: white; padding: 0.5rem 1.5rem; border-radius: 20px;
-  font-weight: 800; font-size: 1.1rem;
-}
-
-.ab2-time-content {
-  width: 45%; background: rgba(255,255,255,0.05); padding: 2rem; border-radius: var(--radius-lg);
-  border: 1px solid rgba(255,255,255,0.1);
-}
-.ab2-time-content h3 { color: white; margin-bottom: 0.75rem; font-size: 1.4rem; }
-.ab2-time-content p { color: rgba(255,255,255,0.6); line-height: 1.6; font-size: 1rem; }
+/* ===== JOURNEY (the page's one navy band) ===== */
+.ab2-journey { padding: 5.5rem 0; }
+.ab2-section-header { margin-bottom: 2.75rem; }
+.ab2-section-header h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin-bottom: 0.5rem; }
+.ab2-section-header p { color: rgba(255, 255, 255, 0.88); }
+.ab2-timeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+.ab2-timeline-item { position: relative; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+.ab2-timeline-item::before { content: ''; position: absolute; top: -1px; left: 0; width: 32px; height: 2px; background: var(--orange); }
+.ab2-year { display: block; font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: white; margin-bottom: 1rem; font-variant-numeric: tabular-nums; }
+.ab2-time-content h3 { font-size: 1.15rem; color: white; margin-bottom: 0.5rem; }
+.ab2-time-content p { font-size: 0.95rem; line-height: 1.7; color: rgba(255, 255, 255, 0.88); }
 
 /* ===== FOUNDER ===== */
-.ab2-founder { padding: 8rem 0; background: var(--cream); }
-.ab2-founder-inner { display: flex; gap: 5rem; align-items: center; }
-.ab2-founder-image { flex: 0 0 450px; position: relative; }
-.ab2-founder-image img {
-  width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: var(--radius-xl);
-  box-shadow: 0 24px 48px rgba(0,0,0,0.15);
-}
-.ab2-founder-badge {
-  position: absolute; top: 2rem; right: -2rem;
-  background: var(--navy); color: white; padding: 0.8rem 1.5rem; border-radius: var(--radius-md);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 0.75rem;
-  font-weight: 700; font-size: 0.9rem;
-}
-.ab2-founder-badge span:first-child { color: var(--orange); font-size: 1.2rem; }
-
-.ab2-founder-text { flex: 1; }
-.ab2-founder-text h2 { font-size: 2.8rem; margin: 1rem 0; }
+.ab2-founder { padding: 5.5rem 0; background: var(--white); }
+.ab2-founder-inner { display: grid; grid-template-columns: 5fr 7fr; gap: 4rem; align-items: center; }
+/* Photo fills the height of the text column (floor 380px) instead of a fixed 4:5 */
+.ab2-founder-image { margin: 0; align-self: stretch; display: flex; flex-direction: column; }
+.ab2-founder-image img { flex: 1 1 0; min-height: 380px; width: 100%; height: auto; object-fit: cover; object-position: 50% 25%; border-radius: 4px; background: #e9edf2; }
+.ab2-founder-badge { margin-top: 0.85rem; font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+.ab2-eyebrow { display: block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #44546d; margin-bottom: 0.75rem; }
+.ab2-founder-text h2 { font-size: clamp(1.8rem, 3.2vw, 2.4rem); margin-bottom: 1.5rem; }
 .ab2-founder-quote {
-  font-size: 1.5rem; font-weight: 600; color: var(--navy); font-style: italic;
-  line-height: 1.4; margin-bottom: 2rem; position: relative; padding-left: 2rem;
+  font-size: 1.2rem; font-weight: 500; line-height: 1.6; color: var(--navy);
+  padding-left: 1.4rem; border-left: 3px solid var(--orange);
+  margin-bottom: 1.5rem;
 }
-.ab2-founder-quote::before {
-  content: '\"'; position: absolute; left: 0; top: 0; color: var(--orange); font-size: 4rem;
-  font-family: serif; line-height: 1; opacity: 0.3;
-}
-.ab2-founder-bio p { font-size: 1.12rem; line-height: 1.8; color: var(--gray-600); margin-bottom: 2rem; }
-
+.ab2-founder-bio p { font-size: 1.02rem; line-height: 1.75; color: var(--gray-600); margin-bottom: 1.5rem; }
 .ab2-social-btn {
-  display: inline-flex; align-items: center; gap: 0.75rem; 
-  padding: 0.75rem 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-full);
-  color: var(--navy); font-weight: 700; text-decoration: none; transition: all 0.3s ease;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.92rem; font-weight: 600; color: var(--navy);
+  text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 4px;
 }
-.ab2-social-btn:hover { background: var(--navy); color: white; border-color: var(--navy); transform: translateY(-3px); }
-.ab2-social-btn img { width: 22px; height: 22px; }
+.ab2-social-btn:hover { color: var(--navy); text-decoration-thickness: 2px; }
 
 /* ===== NETWORK ===== */
-.ab2-network { padding: 8rem 0; }
-.ab2-grid-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: center; }
-.ab2-network-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
-.ab2-network-text p { font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem; color: var(--gray-600); }
+.ab2-network { padding: 5.5rem 0; }
+.ab2-grid-layout { display: grid; grid-template-columns: 1.25fr 0.75fr; grid-template-rows: auto 1fr; gap: 2.5rem 4rem; align-items: start; }
+.ab2-network-text, .ab2-partners-grid { grid-column: 1; }
+.ab2-team-photo { grid-column: 2; grid-row: 1 / span 2; margin: 0; align-self: stretch; display: flex; flex-direction: column; }
+.ab2-team-photo img { display: block; flex: 1 1 0; min-height: 400px; width: 100%; height: auto; object-fit: cover; object-position: 50% 30%; border-radius: 4px; background: #e9edf2; }
+.ab2-team-photo figcaption { margin-top: 0.85rem; font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+.ab2-network-text h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin-bottom: 1.25rem; }
+.ab2-network-text p { font-size: 1.02rem; line-height: 1.75; color: var(--gray-600); margin-bottom: 1rem; }
+.ab2-network-text strong { color: var(--navy); }
+.ab2-partners-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.ab2-partner-card { padding: 1.5rem; background: white; border: 1px solid rgba(15, 37, 72, 0.1); border-radius: 10px; }
+:global(.ab2-partner-icon) { color: var(--icon-accent); margin-bottom: 0.9rem; }
+.ab2-partner-card h3 { font-size: 1.05rem; color: var(--navy); margin-bottom: 0.4rem; }
+.ab2-partner-card p { font-size: 0.9rem; line-height: 1.6; color: var(--gray-600); }
 
-.ab2-partners-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-.ab2-partner-card {
-  background: white; padding: 2rem; border-radius: var(--radius-lg);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s ease;
-}
-.ab2-partner-card:hover { transform: translateY(-5px); }
-.ab2-partner-icon {
-  width: 50px; height: 50px; background: rgba(244,121,32,0.1); color: var(--orange);
-  border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1.25rem;
-}
-.ab2-partner-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
-.ab2-partner-card p { font-size: 0.9rem; line-height: 1.5; color: var(--gray-500); }
-
-/* ===== CTA ADDRESS ===== */
-.ab2-cta-address { padding: 8rem 0; }
+/* ===== VISIT US: light panel ===== */
+.ab2-cta-address { padding: 5.5rem 0; background: var(--white); }
 .ab2-cta-card {
-  background: var(--navy); color: white; border-radius: var(--radius-xl);
-  display: flex; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  background: #f6f7f9;
+  border: 1px solid rgba(15, 37, 72, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
 }
-.ab2-cta-info { flex: 1.2; padding: 5rem; }
-.ab2-cta-info h2 { font-size: 2.5rem; margin-bottom: 1rem; color: white; }
-.ab2-cta-info p { color: rgba(255,255,255,0.7); margin-bottom: 3rem; }
-
-.ab2-address-item { display: flex; gap: 1.25rem; margin-bottom: 2rem; align-items: flex-start; }
-.ab2-address-item span { color: var(--orange); font-size: 24px; }
-.ab2-address-item strong { display: block; font-size: 1.2rem; }
-.ab2-address-item p { margin: 0; font-size: 1rem; }
-
-.ab2-cta-btns { margin-top: 3rem; }
-
-.ab2-cta-photo { flex: 1; }
-.ab2-cta-photo img { width: 100%; height: 100%; object-fit: cover; }
+.ab2-cta-info { padding: 3rem; }
+.ab2-cta-info h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-bottom: 0.5rem; }
+.ab2-cta-info > p { color: var(--gray-600); margin-bottom: 1.75rem; }
+.ab2-address-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; color: var(--gray-700); }
+.ab2-address-item svg { color: var(--icon-accent); flex-shrink: 0; margin-top: 0.2rem; }
+.ab2-address-item strong { color: var(--navy); }
+.ab2-address-item p { color: var(--gray-600); }
+.ab2-cta-btns { margin-top: 1.75rem; }
+.ab2-cta-map { display: flex; flex-direction: column; min-width: 0; background: white; border-left: 1px solid rgba(15, 37, 72, 0.08); }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 1200px) {
-  .ab2-hero-inner { gap: 3rem; }
-  .ab2-hero-visual { flex: 0 0 400px; }
-  .ab2-hero-content h1 { font-size: 3rem; }
-}
-
-@media (max-width: 992px) {
-  .ab2-hero-inner { flex-direction: column; text-align: center; }
-  .ab2-hero-visual { flex: none; width: 100%; max-width: 500px; }
-  .ab2-hero-p { margin: 0 auto; }
-  .ab2-hero-stats { justify-content: center; }
-
+@media (max-width: 1024px) {
   .ab2-values-grid { grid-template-columns: repeat(2, 1fr); }
-
-  .ab2-timeline-line { left: 40px; transform: none; }
-  .ab2-timeline-item { flex-direction: column !important; align-items: flex-start; padding-left: 80px; }
-  .ab2-time-box, .ab2-time-content { width: 100%; justify-content: flex-start !important; }
-  .ab2-time-box { margin-bottom: 1.5rem; }
-
-  .ab2-founder-inner { flex-direction: column; gap: 3rem; }
-  .ab2-founder-image { flex: none; width: 100%; max-width: 450px; }
-  .ab2-founder-badge { right: 0; }
-
-  .ab2-grid-layout { grid-template-columns: 1fr; gap: 3rem; }
-  .ab2-cta-card { flex-direction: column; }
-  .ab2-cta-info { padding: 3rem 2rem; }
-  .ab2-cta-photo { height: 300px; }
+  .ab2-founder-inner, .ab2-grid-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ab2-founder-image { max-width: 420px; }
+  .ab2-network-text, .ab2-partners-grid, .ab2-team-photo { grid-column: auto; grid-row: auto; }
+  .ab2-team-photo { max-width: 420px; }
+  .ab2-founder-image img, .ab2-team-photo img { flex: none; min-height: 0; aspect-ratio: 4 / 3; }
+}
+@media (max-width: 768px) {
+  .ab2-approach, .ab2-journey, .ab2-founder, .ab2-network, .ab2-cta-address { padding: 4rem 0; }
+  .ab2-values-grid, .ab2-partners-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .ab2-timeline { grid-template-columns: 1fr; gap: 2rem; }
+  .ab2-year { font-size: 2rem; }
+  .ab2-hero-stats { gap: 1rem 1.75rem; }
+  .ab2-stat-val { font-size: 1.5rem; }
+  .ab2-founder-quote { font-size: 1.05rem; }
+  .ab2-cta-card { grid-template-columns: 1fr; }
+  .ab2-cta-info { padding: 1.75rem 1.35rem; }
+  .ab2-cta-map { border-left: 0; border-top: 1px solid rgba(15, 37, 72, 0.08); }
+  .ab2-cta-btns .btn { width: 100%; justify-content: center; }
 }
 
-@media (max-width: 576px) {
-  .ab2-hero-content h1 { font-size: 2rem; }
-  .ab2-hero-stats { flex-direction: column; gap: 1rem; }
-  .ab2-partners-grid { grid-template-columns: 1fr; }
-  .ab2-values-grid { grid-template-columns: 1fr; }
-
-  /* Timeline compact */
-  .ab2-timeline-line { left: 20px; }
-  .ab2-timeline-item { padding-left: 50px !important; margin-bottom: 2rem; }
-  .ab2-time-box { margin-bottom: 0.75rem; }
-  .ab2-year { padding: 0.35rem 1rem; font-size: 0.9rem; }
-  .ab2-time-content { padding: 1.25rem; }
-  .ab2-time-content h3 { font-size: 1.1rem !important; margin-bottom: 0.5rem; }
-  .ab2-time-content p { font-size: 0.85rem; }
-
-  /* Founder compact */
-  .ab2-founder-image { max-width: 100%; }
-  .ab2-founder-badge { display: none; }
-  .ab2-cta-info { padding: 2rem 1.25rem; }
-  .ab2-cta-photo { height: 220px; }
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .ab2-cta-info,
+  .ab2-partner-card,
+  .ab2-value-card {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .ab2-founder-quote { padding-left: 1rem; }
 }
 </style>

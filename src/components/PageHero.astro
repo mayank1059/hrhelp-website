@@ -1,0 +1,179 @@
+---
+// One hero for every inner page (the homepage keeps its own navy hero).
+// Variants:
+//   split   - text left, documentary photo right (4:3), stacks on mobile
+//   archive - text only, left-aligned, optional links/search in the default slot;
+//             compact, with the light canal-ring motif on the right
+//   article - breadcrumb, H1 and a meta line, text only
+// The content uses the header's wrapper (--container-wide, 2rem gutter,
+// --gutter-mobile below 768px), not the narrower page .container, so the H1 lines up
+// with the logo and the photo with the header button.
+// Slots: "top" (breadcrumb or back link above the eyebrow), "title" (H1
+// content when it needs inline markup), default (actions, meta, facts under
+// the subtitle), "media" (extra content under the photo, split only).
+interface Props {
+  variant?: 'split' | 'archive' | 'article';
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  image?: { src: string; width: number; height: number; alt: string; position?: string };
+  class?: string;
+}
+const { variant = 'archive', eyebrow, title, subtitle, image, class: className } = Astro.props;
+const hasMedia = variant === 'split' && (image || Astro.slots.has('media'));
+---
+<section class:list={['page-hero', `page-hero--${variant}`, hasMedia && 'page-hero--has-media', className]}>
+  <div class="page-hero-inner">
+    <div class="page-hero-text">
+      <slot name="top" />
+      {eyebrow && <span class="page-hero-eyebrow">{eyebrow}</span>}
+      <slot name="eyebrow" />
+      <h1 class="page-hero-title">{title ? title : <slot name="title" />}</h1>
+      {subtitle && <p class="page-hero-sub">{subtitle}</p>}
+      <slot />
+    </div>
+    {hasMedia && (
+      <div class="page-hero-media">
+        {image && (
+          <img
+            class="page-hero-img"
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            loading="eager"
+            fetchpriority="high"
+            style={image.position ? `object-position: ${image.position};` : undefined}
+          />
+        )}
+        <slot name="media" />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+.page-hero {
+  --hero-pad: clamp(3rem, 2rem + 3vw, 5rem);
+  background: var(--cream);
+  /* 72px clears the fixed site header */
+  padding: calc(72px + var(--hero-pad)) 0 var(--hero-pad);
+  border-bottom: 1px solid rgba(15, 37, 72, 0.07);
+}
+/* Archive (index pages, no photo): more compact, and the canal-ring motif
+   (navy lines at 7%, decorative) fills the right side. Its centre sits
+   ~280px in from the right edge of the header wrapper. */
+.page-hero--archive {
+  --hero-pad: clamp(2.25rem, 1.5rem + 2vw, 3.5rem);
+  background-image: url("/assets/motifs/motif-rings-light.svg");
+  background-repeat: no-repeat;
+  background-size: 1000px auto;
+  background-position: right calc(max(2rem, (100vw - var(--container-wide)) / 2 + 2rem) + 280px - 500px) bottom -1px;
+}
+.page-hero--archive .page-hero-title {
+  font-size: clamp(2rem, 1.4rem + 1.6vw, 2.75rem) !important;
+  line-height: 1.15 !important;
+}
+.page-hero-inner {
+  /* Same wrapper as the site header, so the H1 lines up with the logo and the
+     photo edge with the header button at every width */
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+.page-hero--has-media .page-hero-inner {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(2rem, 1rem + 3vw, 4rem);
+  align-items: center;
+}
+.page-hero-text { max-width: 760px; min-width: 0; }
+
+.page-hero-eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #44546d;
+  margin-bottom: 1rem;
+}
+.page-hero-title {
+  font-size: clamp(2rem, 1.2rem + 2.6vw, 3.25rem) !important;
+  font-weight: 700;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  margin: 0 0 1rem;
+  /* Long titles (articles, case studies) break into even lines. 14.8em is the old 22ch
+     in Inter bold, in em so the line breaks don't move when Inter replaces the fallback font */
+  max-width: 14.8em;
+  text-wrap: balance;
+}
+.page-hero-sub {
+  font-size: 1.125rem !important;
+  line-height: 1.65;
+  color: var(--gray-600);
+  max-width: 620px;
+  margin: 0;
+}
+
+/* Photo fills the height of the text column: floor 280px (short heroes stay near 16:9), cap 480px so
+   text-heavy heroes don't get a giant photo. Slotted extras sit below it. */
+.page-hero-media {
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.page-hero-img {
+  flex: 1 1 0;
+  min-height: 280px;
+  max-height: 480px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: 50% 25%;
+  border-radius: 4px;
+  background: #e9edf2;
+  box-shadow: 0 1px 2px rgba(15, 37, 72, 0.05), 0 10px 30px rgba(15, 37, 72, 0.08);
+}
+
+/* Shared pieces that pages put in the slots */
+.page-hero :global(nav[aria-label="Breadcrumb"]) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray-500);
+  margin: 0 0 1.25rem;
+}
+.page-hero :global(nav[aria-label="Breadcrumb"] a) { color: var(--gray-500); text-decoration: none; }
+.page-hero :global(nav[aria-label="Breadcrumb"] a:hover) { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.page-hero :global(.page-hero-actions) { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+.page-hero :global(.page-hero-meta) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  margin-top: 1.25rem;
+  font-size: 0.88rem;
+  color: var(--gray-600);
+}
+
+@media (max-width: 900px) {
+  .page-hero--has-media .page-hero-inner { grid-template-columns: 1fr; }
+  .page-hero-media { max-width: 560px; }
+  .page-hero-img { flex: none; min-height: 0; max-height: none; aspect-ratio: 4 / 3; }
+}
+@media (max-width: 768px) {
+  /* Phones: the motif sits lower right, behind the end of the text */
+  .page-hero--archive { background-size: 760px auto; background-position: right -330px bottom -1px; }
+  .page-hero-inner { padding-inline: var(--gutter-mobile); }
+  .page-hero :global(.page-hero-actions) { flex-direction: column; align-items: stretch; }
+  .page-hero :global(.page-hero-actions .btn) { justify-content: center; text-align: center; white-space: normal; }
+}
+</style>

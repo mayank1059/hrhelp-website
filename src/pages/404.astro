@@ -9,11 +9,11 @@ import Layout from '../components/Layout.astro';
   <div class="container nf-inner">
     <span class="eyebrow-badge">404</span>
     <h1>This page has moved on.</h1>
-    <p class="nf-p">The page you're looking for doesn't exist (anymore). But the answers you came for probably do — try one of these:</p>
+    <p class="nf-p">The page you're looking for doesn't exist (anymore). But the answers you came for probably do. Try one of these:</p>
     <div class="nf-links">
-      <a href="/guides" class="btn btn-primary btn-lg" style="box-shadow:none;">Browse HR Guides</a>
-      <a href="/blog" class="btn btn-ghost btn-lg">Read the Blog</a>
-      <a href="/contact" class="btn btn-ghost btn-lg">Contact Us</a>
+      <a href="/guides/" class="btn btn-primary btn-lg" style="box-shadow:none;">Browse HR Guides</a>
+      <a href="/blog/" class="btn btn-ghost btn-lg">Read the Blog</a>
+      <a href="/contact/" class="btn btn-ghost btn-lg">Contact Us</a>
     </div>
   </div>
 </section>
@@ -28,13 +28,12 @@ import Layout from '../components/Layout.astro';
 }
 .nf-mesh {
   position: absolute; inset: 0;
-  background: radial-gradient(circle at 60% 20%, rgba(244,121,32,0.12), transparent 50%),
-              radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04), transparent 40%);
+  background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04), transparent 40%);
   z-index: 1;
 }
-.nf-inner { position: relative; z-index: 2; }
+.nf-inner { position: relative; z-index: 2; width: 100%; }
 .nf-hero h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
-.nf-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.75); max-width: 540px; margin: 0 auto 2.5rem; }
+.nf-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255, 255, 255, 0.88); max-width: 540px; margin: 0 auto 2.5rem; }
 .nf-links { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
 @media (max-width: 576px) {
   .nf-hero h1 { font-size: 2.25rem; }

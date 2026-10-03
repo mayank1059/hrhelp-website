@@ -1,0 +1,150 @@
+---
+// Compact list of service page links, reused by the solution pages, the guide
+// cross-link box and the homepage services band.
+interface Props {
+  items?: any[];
+  variant?: 'cards' | 'chips' | 'rows';
+}
+const { items = [], variant = 'cards' } = Astro.props;
+---
+
+{items.length > 0 && variant === 'rows' && (
+  <ul class="sl-rows">
+    {items.map((s: any) => (
+      <li>
+        <a href={`/services/${s.slug}/`} class="sl-row">
+          <span class="sl-name">{s.short || s.name}</span>
+          <svg class="sl-row-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </li>
+    ))}
+  </ul>
+)}
+
+{items.length > 0 && variant !== 'rows' && (
+  <div class:list={['sl-list', variant === 'chips' ? 'sl-chips' : 'sl-cards']}>
+    {items.map((s: any) => (
+      <a href={`/services/${s.slug}/`} class="sl-item">
+        <span class="sl-name">{s.short || s.name}</span>
+        {variant === 'cards' && (s.tagline || s.subtitle) && (
+          <span class="sl-tagline">{s.tagline || s.subtitle}</span>
+        )}
+        {variant === 'cards' && (
+          <svg aria-hidden="true" class="sl-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        )}
+      </a>
+    ))}
+  </div>
+)}
+
+<style>
+  .sl-list { display: flex; }
+
+  /* Rows: full-width list links inside a card */
+  .sl-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--gray-200);
+  }
+  .sl-rows li + li { border-top: 1px solid var(--gray-200); }
+  .sl-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 46px;
+    margin: 0 -0.6rem;
+    padding: 0.6rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+  .sl-rows .sl-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.35;
+    transition: color var(--transition-fast);
+  }
+  .sl-row-arrow {
+    flex-shrink: 0;
+    color: var(--gray-400);
+    transition: color var(--transition-fast), transform var(--transition-fast);
+  }
+  .sl-row:hover { background: rgba(15, 37, 72, 0.04); }
+  .sl-row:hover .sl-name { color: var(--navy); text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+  .sl-row:hover .sl-row-arrow { color: var(--navy); transform: translateX(3px); }
+  .sl-row:focus-visible {
+    outline: 2px solid var(--orange-ink);
+    outline-offset: 2px;
+    background: rgba(15, 37, 72, 0.04);
+  }
+
+  /* Cards: name + one-line tagline */
+  .sl-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.85rem;
+  }
+  .sl-cards .sl-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1rem 2.4rem 1rem 1.1rem;
+    background: var(--white);
+    border: 1px solid rgba(15, 37, 72, 0.1);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: border-color var(--transition-base);
+  }
+  .sl-cards .sl-item:hover {
+    border-color: rgba(15, 37, 72, 0.28);
+  }
+  .sl-cards .sl-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .sl-cards .sl-tagline {
+    font-size: 0.85rem;
+    color: var(--gray-500);
+    line-height: 1.5;
+  }
+  .sl-arrow {
+    position: absolute;
+    top: 1.15rem;
+    right: 1rem;
+    color: var(--gray-300);
+    transition: color var(--transition-base), transform var(--transition-base);
+  }
+  .sl-cards .sl-item:hover .sl-arrow { color: var(--navy); transform: translateX(3px); }
+
+  /* Chips: name only */
+  .sl-chips { flex-wrap: wrap; gap: 0.5rem; }
+  .sl-chips .sl-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.42rem 0.9rem;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all var(--transition-base);
+  }
+  .sl-chips .sl-item:hover { border-color: rgba(15, 37, 72, 0.3); background: var(--cream); }
+  .sl-chips .sl-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .sl-chips .sl-item:hover .sl-name { color: var(--navy); text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .sl-cards .sl-item { padding-left: 1rem; }
+}
+</style>

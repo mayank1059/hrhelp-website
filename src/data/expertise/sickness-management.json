@@ -1,0 +1,256 @@
+{
+  "slug": "sickness-management",
+  "seo": {
+    "title": "Sick Leave Case Management in the Netherlands",
+    "description": "Sick leave case management in the Netherlands: one case manager, every Gatekeeper Act deadline tracked, a complete UWV file. Book a free consultation.",
+    "h1": "Sick Leave Case Management for Employers in the Netherlands"
+  },
+  "updated": "2026-10-03",
+  "intro": "When an employee falls ill in the Netherlands, you carry the cost and the legal responsibility for up to two years. HRhelp's sick leave case management takes each case from the first sick report to return to work, with every deadline tracked and your UWV file kept complete.",
+  "situation": {
+    "eyebrow": "The challenge",
+    "heading": "Why is sick leave in the Netherlands so costly for employers?",
+    "paragraphs": [
+      "Dutch law puts the cost of sickness on the employer, not the state. When an employee cannot work because of illness, you keep paying salary for up to 104 weeks: at least 70%, and often 100% in the first year under a collective labour agreement (CAO) or the employment contract. You are also responsible for getting the employee back to work.",
+      "The Gatekeeper Improvement Act (Wet verbetering poortwachter) prescribes the steps, from the company doctor's problem analysis to the reintegration report, each with its own deadline in the timeline below.",
+      "When the employee applies for a WIA disability benefit, UWV checks those steps and can impose a wage sanction (loonsanctie) of up to 52 extra weeks of salary if your efforts fall short. Privacy rules add a layer: you may not ask about the diagnosis, so your process has to work without it."
+    ],
+    "keyFacts": [
+      { "value": "104 weeks", "label": "Maximum period of continued salary payment during sickness" },
+      { "value": "70%", "label": "Minimum level of continued salary, often topped up to 100% in year 1" },
+      { "value": "Week 6", "label": "Deadline for the company doctor's problem analysis" },
+      { "value": "52 weeks", "label": "Maximum extra salary UWV can impose as a wage sanction" }
+    ]
+  },
+  "deepDive": [
+    {
+      "eyebrow": "The real cost",
+      "heading": "What does a sick employee cost an employer in the Netherlands?",
+      "paragraphs": [
+        "Continued salary is only part of the bill. You often pay for replacement cover too, along with company doctor consultations, any reintegration provider and the time managers spend on the case. Holiday keeps building up during sickness, so a long absence leaves a large balance. If UWV later finds the reintegration efforts insufficient, a wage sanction adds up to a further year of salary.",
+        "Many employers spread the risk with absence insurance (verzuimverzekering), a private policy that reimburses part of the salary and often includes case management. Every employer also pays a Return to Work Fund (Werkhervattingskas) premium covering partial disability benefits (WGA) and sickness benefit for former temporary staff (Ziektewet). You can instead become a self-insurer (eigenrisicodrager, ERD) through the Dutch Tax Administration and carry those benefits and the related reintegration yourself, for up to ten years in the case of WGA."
+      ]
+    },
+    {
+      "eyebrow": "Reintegration",
+      "heading": "How first and second track reintegration works in the Netherlands",
+      "paragraphs": [
+        "Reintegration starts in the first track (eerste spoor): a return to the employee's own job, adapted work or another suitable role in your organisation, often building up hours step by step. Suitable work (passende arbeid) depends on what the company doctor says the employee can do, and an employee who refuses it without good reason can lose the right to salary.",
+        "When a return within your organisation is no longer realistic, the second track (tweede spoor) begins: finding suitable work with another employer, usually through a specialised reintegration provider. UWV expects it to start as soon as that is clear, and the first-year evaluation is the latest point to decide. A bill sent to parliament in 2026 would let small and medium-sized employers, with the employee's consent or UWV's approval, focus fully on the second track from year two. It is planned for 2030 at the earliest and is not law yet."
+      ]
+    },
+    {
+      "eyebrow": "After week 104",
+      "heading": "What happens after two years of long-term sick leave?",
+      "paragraphs": [
+        "If the employee applied for WIA in time and UWV accepts the reintegration report, salary continuation ends after 104 weeks. UWV then decides on the benefit: IVA for employees who are fully and permanently unable to work, WGA for those who can still partly work or may recover, and none below a 35% loss of earning capacity. If UWV finds gaps, it first imposes a wage sanction.",
+        "The dismissal ban ends at the same time as salary continuation. If recovery within 26 weeks is not expected and no suitable work is available in that period, you can apply to UWV for a dismissal permit or agree a termination. The statutory transition payment is then due, but under current rules you can claim compensation for it from UWV. The government plans to restrict and later end that scheme, so check before you act."
+      ]
+    }
+  ],
+  "approach": {
+    "eyebrow": "How we work",
+    "heading": "One case manager from sick report to return to work",
+    "steps": [
+      {
+        "title": "Sick report and first contact",
+        "text": "We open the case on the day the employee reports sick, check that your occupational health service (arbodienst) is notified, and contact the employee about availability, expected duration and practical arrangements, never medical details.",
+        "timing": "Day 1"
+      },
+      {
+        "title": "Problem analysis",
+        "text": "We make sure the company doctor delivers the problem analysis by week six, then translate the advice into plain conclusions about what the employee can and cannot do.",
+        "timing": "Week 6"
+      },
+      {
+        "title": "Plan of action",
+        "text": "With you and the employee, we draft the plan of action (plan van aanpak) by week eight: concrete reintegration goals, adapted work where possible and who does what. We review it at least every six weeks.",
+        "timing": "Week 8"
+      },
+      {
+        "title": "First-year evaluation",
+        "text": "Around week 52, we lead the first-year evaluation (eerstejaarsevaluatie): is a return to own or adapted work realistic, or should the second track (tweede spoor) start, if it has not already?",
+        "timing": "Week 52"
+      },
+      {
+        "title": "Reintegration report and WIA",
+        "text": "If the employee is still unable to work, we compile the reintegration report (re-integratieverslag) so the WIA application can be filed by week 93, with two years of steps documented for UWV.",
+        "timing": "Week 93"
+      }
+    ]
+  },
+  "timeline": {
+    "eyebrow": "Key deadlines",
+    "heading": "The Gatekeeper Act (Wet Poortwachter) timeline, week by week",
+    "intro": "The statutory steps once a longer absence is likely, and who acts at each one.",
+    "rows": [
+      { "when": "Day 1", "what": "The employee reports sick. You record it and notify your occupational health service (arbodienst) as your contract requires.", "who": "Employee and employer" },
+      { "when": "Week 6", "what": "The company doctor (bedrijfsarts) delivers the problem analysis (probleemanalyse), with advice on limitations, possibilities and return to work.", "who": "Company doctor" },
+      { "when": "Week 8", "what": "You and the employee agree the plan of action (plan van aanpak), which names the case manager.", "who": "Employer and employee" },
+      { "when": "At least every 6 weeks", "what": "You evaluate progress with the employee, adjust the plan where needed and record each evaluation.", "who": "Employer and employee" },
+      { "when": "Week 42", "what": "You report the long-term sickness to UWV (the 42nd-week notification).", "who": "Employer" },
+      { "when": "Weeks 46 to 52", "what": "You and the employee complete the first-year evaluation (eerstejaarsevaluatie) and set the goal for year two.", "who": "Employer and employee" },
+      { "when": "Around week 87", "what": "UWV writes to the employee about applying for WIA disability benefit.", "who": "UWV" },
+      { "when": "By week 93", "what": "The employee applies for WIA with the reintegration report (re-integratieverslag) you compiled, including a current assessment by the company doctor.", "who": "Employee and employer" },
+      { "when": "Week 104", "what": "Salary continuation and the dismissal ban end, unless UWV has imposed a wage sanction (loonsanctie) of up to 52 weeks. UWV decides on the WIA benefit.", "who": "Employer and UWV" }
+    ]
+  },
+  "included": {
+    "eyebrow": "What's included",
+    "heading": "Everything your sickness file needs",
+    "items": [
+      {
+        "title": "A dedicated case manager",
+        "text": "One person who knows the case from the first day. Your managers and the employee always know who to call, and nothing gets lost when a file changes hands."
+      },
+      {
+        "title": "Deadline monitoring",
+        "text": "We track every Gatekeeper Act deadline, from the problem analysis to the WIA application, and act before each one falls due, not after UWV asks why it was missed."
+      },
+      {
+        "title": "Reintegration in both tracks",
+        "text": "We work on return to the employee's own or adapted work (eerste spoor) and, where needed, organise and supervise reintegration with another employer (tweede spoor) through a specialised provider."
+      },
+      {
+        "title": "Complete UWV file",
+        "text": "Problem analysis, plan of action, evaluations and correspondence are kept in one complete file, so the reintegration report is ready when UWV assesses your efforts."
+      },
+      {
+        "title": "Privacy-proof process",
+        "text": "We keep medical information with the company doctor and record only what employers are allowed to know. Your managers get clear guidance on what they can and cannot ask."
+      },
+      {
+        "title": "Absence prevention advice",
+        "text": "We look at patterns in short-term and frequent absence and advise on policy, manager conversations and working conditions, so fewer cases turn into long-term sickness."
+      }
+    ]
+  },
+  "mistakes": {
+    "eyebrow": "Common pitfalls",
+    "heading": "Sick leave mistakes international employers often make",
+    "items": [
+      {
+        "title": "Counting sick days",
+        "text": "Head office policies often cap paid sick days. The Netherlands has no such cap: salary continues for up to 104 weeks, and no contract can lower the statutory minimum. A policy that stops pay after a set number of days will not hold."
+      },
+      {
+        "title": "Waiting until week 6",
+        "text": "Week six is the deadline for the problem analysis, not the moment to call the company doctor. With stress, burnout or conflict at work, early involvement matters, so act as soon as a long absence looks likely."
+      },
+      {
+        "title": "Starting the second track too late",
+        "text": "When a return to your organisation is unrealistic, UWV expects the search for work elsewhere to start then, not near the end of year two. A late or token second track is a common reason for a wage sanction."
+      },
+      {
+        "title": "Letting the file go quiet",
+        "text": "UWV judges your efforts on paper. Evaluations never recorded, a plan of action never updated or emails scattered across inboxes all weaken the reintegration report. Keep one complete file from the first day of absence."
+      }
+    ]
+  },
+  "glossary": {
+    "eyebrow": "Glossary",
+    "heading": "Dutch sick leave terms explained",
+    "items": [
+      { "term": "Wet verbetering poortwachter (Gatekeeper Improvement Act)", "meaning": "The 2002 law setting out what employer and employee must do in the first two years of sickness to get the employee back to work." },
+      { "term": "Bedrijfsarts (company doctor)", "meaning": "A registered occupational physician who assesses fitness for work and advises on reintegration. Medical information stays with them; you receive only work-related conclusions." },
+      { "term": "Plan van aanpak (plan of action)", "meaning": "The reintegration plan that employer and employee agree within two weeks of the problem analysis, setting the goal, the activities and who does what." },
+      { "term": "Eerste en tweede spoor (first and second track)", "meaning": "First track: a return to suitable work in your own organisation. Second track: suitable work with another employer, once the first track will not succeed." },
+      { "term": "Re-integratieverslag (reintegration report)", "meaning": "The file submitted with the WIA application, covering the problem analysis, plan of action, all evaluations and a current assessment by the company doctor." },
+      { "term": "Loonsanctie (wage sanction)", "meaning": "An extension of salary continuation by up to 52 weeks, which UWV imposes when reintegration efforts fell short without good reason." },
+      { "term": "Deskundigenoordeel (expert opinion)", "meaning": "An independent UWV opinion that employer or employee can request when they disagree about fitness for work, suitable work or reintegration efforts." },
+      { "term": "Eigenrisicodrager (self-insurer)", "meaning": "An employer that itself carries WGA benefits, sickness benefit for former temporary staff, or both, instead of paying that part of the Return to Work Fund premium." }
+    ]
+  },
+  "forWho": {
+    "eyebrow": "Who it's for",
+    "heading": "Built for international employers in the Netherlands",
+    "items": [
+      "International companies with a Dutch entity and no local HR team",
+      "Employers facing their first long-term sickness case in the Netherlands",
+      "HR teams abroad that need someone who knows Dutch sickness law",
+      "Companies where a sickness case is stuck or a deadline was missed",
+      "Small and mid-sized employers without an in-house case manager",
+      "Organisations that want to reduce frequent short-term absence"
+    ]
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "heading": "Clear monthly pricing per case",
+    "text": "Sick leave case management starts from €250 per month per case. You know your costs in advance, with no hourly surprises. For absence policy, prevention advice or a review of an existing file, we agree a fixed price upfront before any work begins. Get in touch and we will tell you what your situation requires."
+  },
+  "helpWith": {
+    "eyebrow": "Related support",
+    "heading": "How HRhelp supports you beyond a single case",
+    "intro": "Sickness cases rarely stand alone. These solutions and services cover the HR work around them.",
+    "solutions": [
+      { "slug": "hr-teams", "why": "A dedicated HR manager for your Dutch operation, so sickness cases, your absence policy and managers' questions sit with one person who knows your company and team." },
+      { "slug": "hr-sos", "why": "For a sickness case already in trouble: a missed deadline, an employee who will not cooperate, a wage sanction or a dismissal question after 104 weeks. Guidance and a clear action plan on the same business day." }
+    ],
+    "services": [
+      { "slug": "interim-hr-support", "why": "Hands-on absence administration from one day a week: sickness registration, occupational health appointments, reintegration documents and statutory notifications kept current, for a fixed monthly fee." },
+      { "slug": "labor-law-advice-international-employer", "why": "For a long-term absence case that has drifted, or a dismissal after two years of sickness: a file review, your options and their likely cost in writing, with an employment lawyer brought in when needed." }
+    ]
+  },
+  "faq": [
+    {
+      "q": "How much sick pay does an employer pay in the Netherlands?",
+      "a": "By law, at least 70% of salary for up to 104 weeks, and at least the minimum wage in the first year. The 70% is capped at 70% of the maximum daily wage for social insurance, and many CAOs and contracts pay 100% in year one. Up to two unpaid waiting days are allowed only if agreed in writing."
+    },
+    {
+      "q": "Can I ask my employee what illness they have?",
+      "a": "No. You may not ask about or record the diagnosis or symptoms, even if the employee volunteers them. You may record contact details, the expected duration, appointments and work to hand over, and whether an accident or a safety-net provision applies. The company doctor tells you only what the employee can and cannot do."
+    },
+    {
+      "q": "Do employees need a doctor's note when they call in sick?",
+      "a": "No. The Netherlands has no sick note system, and you cannot demand a certificate from the employee's own GP. The employee reports sick under your absence policy. If you doubt whether they are fit for work, ask the company doctor to assess it; you can do so from the first day of absence."
+    },
+    {
+      "q": "Can I dismiss an employee on sick leave in the Netherlands?",
+      "a": "Generally not during the first 104 weeks. Dutch law bans giving notice to a sick employee, with narrow exceptions such as summary dismissal or an illness that began after UWV received your dismissal application. A termination by mutual agreement is possible but carries risks for both sides. After 104 weeks, or later after a wage sanction, a dismissal permit becomes possible."
+    },
+    {
+      "q": "What happens if we miss a Gatekeeper Act deadline?",
+      "a": "UWV reviews your reintegration efforts when the employee applies for WIA. If it finds them insufficient without good reason, it can impose a wage sanction of up to 52 extra weeks of salary. A late plan of action, missing evaluations and a late second track are common causes. Repair gaps quickly: UWV can shorten a sanction once the shortfall is fixed."
+    },
+    {
+      "q": "What can I do if a sick employee does not cooperate?",
+      "a": "Check that your instructions were clear and recorded, then warn the employee in writing. If they still ignore reasonable absence rules, you can suspend salary; if they refuse suitable work or reintegration steps without good reason, you can stop it. When you disagree about fitness for work, either side can ask UWV for an expert opinion (deskundigenoordeel)."
+    },
+    {
+      "q": "How should I handle frequent short-term absence?",
+      "a": "Talk to the employee after each sick report and look for patterns, such as workload, conflict or particular days. Many employers treat three or more reports in 12 months as frequent absence and ask the company doctor to see the employee. Sickness periods less than four weeks apart count as one. Dismissal for frequent absence is possible only exceptionally, through the court."
+    },
+    {
+      "q": "Do we still need an arbodienst if HRhelp manages the case?",
+      "a": "Yes. Every Dutch employer must arrange occupational health support and access to a company doctor, through an arbodienst or a contract with a certified doctor. HRhelp does not replace the company doctor. We work alongside them, make sure their advice is acted on, and manage the process and deadlines around it."
+    }
+  ],
+  "related": [
+    { "title": "Dutch sick leave management guide", "href": "/guides/dutch-sick-leave-management/", "kind": "Guide" },
+    { "title": "What to do when a sick employee is not cooperating", "href": "/guides/sick-employee-not-cooperating/", "kind": "Guide" },
+    { "title": "Two years of salary: what international employers get wrong about sick leave", "href": "/blog/two-years-of-salary-what-international-employers-get-wrong-about-sick-leave-in-the-netherlands/", "kind": "Blog" },
+    { "title": "How to dismiss an employee in the Netherlands", "href": "/guides/dismissing-employee-netherlands-procedure/", "kind": "Guide" },
+    { "title": "Sickness case management", "href": "https://go.hrhelp.nl/sickness-case-management/", "kind": "Service" }
+  ],
+  "reviewNotes": [
+    "KEYWORDS: primary 'sick leave case management Netherlands'. Secondary: 'sick leave Netherlands employer' (obligations), 'long-term sick leave Netherlands', 'Wet Poortwachter / Gatekeeper Act' (including 'wet verbetering poortwachter english'), 'second track reintegration Netherlands', 'sick pay Netherlands', 'wage sanction (loonsanctie)', 'company doctor (bedrijfsarts)'.",
+    "GSC evidence (last 16 months to 28 Sep 2026, average positions): 'sick leave netherlands' 102 impressions, position 20.5; 'netherlands sick leave policy' 31, position 6.8; 'netherlands sick leave' 21, position 22.3; 'long term sick leave netherlands' 17, position 17.8; 'second track reintegration netherlands' 13, position 52.6; 'wet verbetering poortwachter english' 10, position 56, and '... engels' 9, position 29; 'sick pay netherlands', 'netherlands sick pay' and 'sick leave pay netherlands' 19 together, positions 4 to 19; 'dutch sick leave law' 11, position 5.3; 'burnout sick leave netherlands' 7, position 43. The old URL /resources/expertise/sickness-management/ had 114 impressions at position 11.7.",
+    "Targeting: /guides/dutch-sick-leave-management/ already holds most sick-leave traffic (4,035 impressions, position 6.9, 51 clicks; the old /post/ sickness URLs redirect to it) under the title 'Managing Sick Leave in the Netherlands'. So that the two pages do not compete, this page takes the commercial 'case management' angle in its title, H1 and description, and the guide stays informational. Keep the links between the two pages in both directions.",
+    "SEO fields: the title is 45 characters and renders as 'Sick Leave Case Management in the Netherlands | HRHelp.nl' (57); the description is 150 characters. The FAQ heading still reads 'Questions about sickness management', taken from the WordPress title.",
+    "Timeline: day 1 sick report and arbodienst notification; problem analysis by week 6; plan of action by week 8; evaluations at least every 6 weeks; 42nd-week notification to UWV; first-year evaluation in weeks 46 to 52; UWV letter about WIA around week 87; WIA application with the reintegration report by week 93; salary continuation and the dismissal ban end at week 104 unless a wage sanction applies (a sanction also extends the dismissal ban, art. 7:670(1) BW). Please confirm against current UWV practice.",
+    "Salary: at least 70% for up to 104 weeks, at least the minimum wage in year 1, capped at 70% of the maximum daily wage (no amount on the page; one source gives EUR 304.25 a day from 1 January 2026, check before adding it), up to two waiting days only if agreed in writing (art. 7:629(9) BW), and periods less than four weeks apart added together (art. 7:629(10) BW). Confirm the 'often 100% in year 1' phrasing.",
+    "2026 status, to re-check before publishing and every six months: (a) the bill 'Wijziging re-integratieverplichtingen in het tweede ziektejaar' went to parliament in April 2026 with a planned start of 1 January 2030; the page says it is not law yet. (b) Compensation of the transition payment after two years of sickness still applies to all employers. Limiting it to employers with fewer than 25 employees was postponed from 1 July 2026 (now expected 1 January 2027), and the coalition wants to abolish it. The page only says the government plans to restrict and later end the scheme.",
+    "Dismissal: notice ban during the first 104 weeks (art. 7:670 BW), with exceptions for summary dismissal and for illness that began after UWV received the permit application; after 104 weeks, a UWV permit when recovery within 26 weeks is not expected and no suitable work is available (art. 7:669(3)(b) BW). Confirm, including 'termination by mutual agreement carries risks for both sides'.",
+    "Privacy FAQ now follows the Dutch Data Protection Authority list of what an employer may record: contact details, expected duration, appointments and work to hand over, whether a safety-net provision applies and whether an accident is involved. The earlier 'whether the employee can do any work' was removed, because that is the company doctor's assessment. Confirm.",
+    "New FAQs to confirm: no sick-note system, and no GP certificate can be demanded; wage suspension for ignoring absence rules (art. 7:629(6) BW) and wage stop for refusing suitable work or reintegration (art. 7:629(3) BW), after a written warning; 'three or more reports in 12 months' as frequent absence is common practice, not law; dismissal for frequent absence goes through the court (art. 7:669(3)(c) BW). The former 'What is the second track?' FAQ is now covered by the reintegration section and the glossary.",
+    "Self-insurer (ERD) and absence insurance are described in general terms (WGA risk for up to ten years, Ziektewet for former temporary staff, applied for through the Dutch Tax Administration). The page does not claim HRhelp advises on this choice. Confirm the wording.",
+    "WIA outcomes are simplified to IVA, WGA, and no benefit below a 35% loss of earning capacity. Confirm this level of detail.",
+    "Mistakes: 'a late or token second track is a common reason for a wage sanction' is stated as a general observation, not a statistic. Confirm you are comfortable with it.",
+    "Act name: body text uses 'Gatekeeper Improvement Act (Wet verbetering poortwachter)'; the timeline heading uses the short form 'Wet Poortwachter', which is what people search for. Confirm Cornelis is happy with both.",
+    "Second track: confirm HRhelp works with external reintegration providers for tweede spoor, as 'Reintegration in both tracks' states.",
+    "Absence prevention advice: confirm this is offered at a fixed price, as the pricing text states.",
+    "helpWith: the 'why' texts follow each page's own description: HR S.O.S. 'guidance on the same business day' (its page promises a same-business-day response), Interim HR Support 'from one day a week, fixed monthly fee', and Dutch Labour Law Advice 'employment lawyer brought in when needed'. HR Reset was left out to keep the page within the word target; add it back if you want it.",
+    "Related: the HR S.O.S. card was replaced by /guides/dismissing-employee-netherlands-procedure/, because HR S.O.S. now appears under helpWith. https://go.hrhelp.nl/sickness-case-management/ is still external, as there is no on-site sickness case management page in dist; replace it if one is added.",
+    "Sources checked on 3 Oct 2026: business.gov.nl (sick pay), uwv.nl (42nd-week notification, transition payment compensation), AWVN and Salaris Vanmorgen (the 2026 second-track bill, and the postponed compensation change)."
+  ]
+}

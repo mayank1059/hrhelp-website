@@ -1,5 +1,6 @@
 ---
 import Layout from '../../components/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
 
 import { settlersData, teamsData, sosData } from '../../data/pseo/guides.js';
 
@@ -24,33 +25,21 @@ const verticalMeta: Record<string, {
   label: string;
   tagline: string;
   description: string;
-  image: string;
-  color: string;
-  colorBg: string;
 }> = {
   'hr-settlers': {
     label: 'HR Settlers',
     tagline: 'Market Entry & Company Setup',
     description: 'Everything you need to establish your business in the Netherlands',
-    image: '/images/guides/category-hr-settlers.png',
-    color: '#f47920',
-    colorBg: 'rgba(244,121,32,0.08)',
   },
   'hr-teams': {
     label: 'HR Teams',
     tagline: 'Payroll, Compliance & Workforce',
     description: 'In-depth guides on managing your Dutch workforce and HR compliance',
-    image: '/images/guides/category-hr-teams.png',
-    color: '#3b82f6',
-    colorBg: 'rgba(59,130,246,0.08)',
   },
   'hr-sos': {
     label: 'HR S.O.S.',
     tagline: 'Crisis & Employment Law',
     description: 'Urgent guidance for dismissals, disputes, and emergency HR situations',
-    image: '/images/guides/category-hr-sos.png',
-    color: '#dc2626',
-    colorBg: 'rgba(220,38,38,0.08)',
   },
 };
 
@@ -67,7 +56,7 @@ const pages = dataMap[vertical as string] || [];
 const meta = verticalMeta[vertical as string];
 
 if (!meta || pages.length === 0) {
-  return Astro.redirect('/guides');
+  return Astro.redirect('/guides/');
 }
 
 // Get unique topics for sub-filters
@@ -87,28 +76,17 @@ const topics = Array.from(topicCounts.entries())
 >
 
 <!-- ===== HERO ===== -->
-<section class="vg-hero" style={`--accent: ${meta.color};`}>
-  <div class="vg-hero-mesh"></div>
-  <div class="container vg-hero-inner">
-    <a href="/guides" class="vg-back-link">
-      <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
-      All Guides
-    </a>
-    <div class="vg-hero-flex">
-      <div class="vg-hero-text">
-        <span class="vg-hero-badge" style={`background: ${meta.colorBg}; color: ${meta.color};`}>
-          {pages.length} {pages.length === 1 ? 'Guide' : 'Guides'}
-        </span>
-        <h1>{meta.label}</h1>
-        <p class="vg-hero-tagline">{meta.tagline}</p>
-        <p class="vg-hero-desc">{meta.description}</p>
-      </div>
-      <div class="vg-hero-img">
-        <img src={meta.image} alt={meta.label} />
-      </div>
-    </div>
-  </div>
-</section>
+<PageHero variant="archive" title={meta.label}>
+  <a href="/guides/" class="vg-back-link" slot="top">
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    All Guides
+  </a>
+  <span class="vg-hero-badge" slot="eyebrow">
+    {pages.length} {pages.length === 1 ? 'Guide' : 'Guides'}
+  </span>
+  <p class="vg-hero-tagline">{meta.tagline}</p>
+  <p class="vg-hero-desc">{meta.description}</p>
+</PageHero>
 
 <!-- ===== SUB-FILTERS + GRID ===== -->
 <section class="vg-content">
@@ -130,20 +108,20 @@ const topics = Array.from(topicCounts.entries())
     <!-- Grid -->
     <div class="vg-grid" id="vg-grid">
       {pages.map(page => (
-        <a href={`/guides/${page.slug}`} class="vg-card" data-topic={page.topic}>
+        <a href={`/guides/${page.slug}/`} class="vg-card" data-topic={page.topic}>
           <div class="vg-card-top">
-            <span class="vg-card-topic" style={`background: ${meta.colorBg}; color: ${meta.color};`}>
+            <span class="vg-card-topic">
               {page.topic}
             </span>
             <span class="vg-card-time">
-              <span class="material-symbols-outlined" style="font-size:14px;">schedule</span>
+              <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
               {page.readTime}
             </span>
           </div>
-          <h3>{page.title}</h3>
+          <h2 class="as-h3">{page.title}</h2>
           <p>{page.subtitle}</p>
           <div class="vg-card-footer">
-            <span class="vg-card-link" style={`color: ${meta.color};`}>Read Guide →</span>
+            <span class="vg-card-link">Read Guide →</span>
           </div>
         </a>
       ))}
@@ -151,8 +129,7 @@ const topics = Array.from(topicCounts.entries())
 
     <!-- Empty State -->
     <div class="vg-empty" id="vg-empty" style="display:none;">
-      <span class="material-symbols-outlined" style="font-size:48px; color: var(--gray-400);">search_off</span>
-      <h3>No guides match this filter</h3>
+      <h2 class="as-h3">No guides match this filter</h2>
       <p>Try selecting a different topic filter above.</p>
     </div>
   </div>
@@ -160,12 +137,19 @@ const topics = Array.from(topicCounts.entries())
 
 <!-- ===== CTA ===== -->
 <section class="vg-cta">
-  <div class="container" style="text-align:center;">
-    <h2>Need Personalised Guidance?</h2>
-    <p>Our HR specialists can provide tailored advice for your specific situation.</p>
-    <div style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem; flex-wrap:wrap;">
-      <a href="/contact" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
-      <a href="/guides" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,0.3); color:white;">← Back to All Topics</a>
+  <div class="container">
+    <div class="vg-cta-inner">
+      <div>
+        <h2>Need Personalised Guidance?</h2>
+        <p>Our HR specialists can provide tailored advice for your specific situation.</p>
+        <div class="vg-cta-btns">
+          <a href="/contact/" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
+          <a href="/guides/" class="btn btn-secondary btn-lg">← Back to All Topics</a>
+        </div>
+      </div>
+      <div class="vg-cta-photo">
+        <img src="/images/home/cornelis-candid.jpg" alt="Cornelis Leerlooijer, founder of HRHelp" width="962" height="825" loading="lazy" decoding="async" />
+      </div>
     </div>
   </div>
 </section>
@@ -203,188 +187,90 @@ const topics = Array.from(topicCounts.entries())
 </script>
 
 <style>
-/* ===== HERO ===== */
-.vg-hero {
-  padding: 9rem 0 4rem;
-  background: var(--navy);
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-.vg-hero-mesh {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(circle at 20% 50%, rgba(244,121,32,0.08), transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.04), transparent 40%);
-  z-index: 1;
-}
-.vg-hero-inner { position: relative; z-index: 2; }
-.vg-back-link {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  color: rgba(255,255,255,0.6); text-decoration: none;
-  font-size: 0.85rem; font-weight: 600;
-  margin-bottom: 1.5rem;
-  transition: color 0.2s;
-}
-.vg-back-link:hover { color: white; }
-.vg-hero-flex {
-  display: flex; align-items: center; gap: 3rem;
-}
-.vg-hero-text { flex: 1; }
-.vg-hero-badge {
-  display: inline-block;
-  font-size: 0.7rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 1rem;
-}
-.vg-hero h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 800;
-  color: white;
-  margin-bottom: 0.5rem;
-}
-.vg-hero-tagline {
-  font-size: 1.1rem;
-  color: var(--accent, var(--orange));
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-}
-.vg-hero-desc {
-  font-size: 1rem;
-  color: rgba(255,255,255,0.65);
-  line-height: 1.7;
-  max-width: 480px;
-}
-.vg-hero-img {
-  width: 260px; height: 260px;
-  flex-shrink: 0;
-  background: rgba(255,255,255,0.05);
-  border-radius: var(--radius-xl);
-  display: flex; align-items: center; justify-content: center;
-  padding: 1.5rem;
-}
-.vg-hero-img img {
-  max-width: 100%; max-height: 100%;
-  object-fit: contain;
-}
+/* Same sections and order; calmer treatment: light hero with the topic
+   photo, muted labels, hairline cards, quiet filter buttons, light CTA. */
+h1, h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
+.vg-back-link { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.88rem; font-weight: 500; color: var(--gray-600); margin-bottom: 1.25rem; }
+.vg-back-link:hover { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.vg-hero-badge { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: #44546d; margin-bottom: 1rem; }
+.vg-hero-tagline { font-size: 1.2rem !important; font-weight: 600; color: var(--navy); margin-bottom: 0.6rem; }
+.vg-hero-desc { font-size: 1.125rem !important; color: var(--gray-600); line-height: 1.65; max-width: 620px; }
 
-/* ===== FILTERS ===== */
-.vg-content {
-  padding: var(--section-padding);
-  background: var(--cream);
-}
-.vg-filters {
-  display: flex; gap: 0.5rem; flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 3rem;
-}
+.vg-content { padding: 4rem 0 5rem; background: var(--cream); }
+.vg-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
 .vg-filter-btn {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.6rem 1.25rem;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: inherit; font-size: 0.88rem; font-weight: 500;
+  color: var(--gray-700);
   background: white;
-  font-size: 0.85rem; font-weight: 600;
-  color: var(--text-secondary);
+  border: 1px solid rgba(15, 37, 72, 0.14);
+  border-radius: var(--radius-full);
+  padding: 0.5rem 0.9rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
-.vg-filter-btn:hover {
-  border-color: var(--accent, var(--orange));
-  color: var(--accent, var(--orange));
-}
-.vg-filter-btn.active {
-  background: var(--navy);
-  color: white;
-  border-color: var(--navy);
-}
-.vg-filter-count {
-  font-size: 0.7rem;
-  background: rgba(0,0,0,0.06);
-  padding: 0.1rem 0.5rem;
-  border-radius: 20px;
-  font-weight: 700;
-}
-.vg-filter-btn.active .vg-filter-count {
-  background: rgba(255,255,255,0.2);
-  color: white;
-}
+.vg-filter-btn:hover { border-color: rgba(15, 37, 72, 0.4); color: var(--navy); }
+.vg-filter-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+.vg-filter-count { font-size: 0.75rem; font-weight: 600; opacity: 0.75; font-variant-numeric: tabular-nums; }
 
-/* ===== GRID ===== */
-.vg-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
+.vg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .vg-card {
-  text-decoration: none;
+  display: flex; flex-direction: column;
   background: white;
-  border-radius: var(--radius-xl);
-  padding: 1.75rem;
-  border: 1px solid var(--gray-200);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(15, 37, 72, 0.1);
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
 }
-.vg-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-}
-.vg-card-top {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 1rem;
-}
-.vg-card-topic {
-  font-size: 0.65rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  padding: 0.25rem 0.7rem;
-  border-radius: var(--radius-full);
-}
-.vg-card-time {
-  display: inline-flex; align-items: center; gap: 0.25rem;
-  font-size: 0.75rem; color: var(--text-secondary);
-}
-.vg-card h3 {
-  font-size: 1.05rem; font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 0.5rem;
-  line-height: 1.3;
-}
-.vg-card p {
-  font-size: 0.85rem; line-height: 1.6;
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-  flex: 1;
-}
-.vg-card-footer { margin-top: auto; }
-.vg-card-link { font-size: 0.85rem; font-weight: 700; }
+.vg-card:hover { border-color: rgba(15, 37, 72, 0.28); }
+.vg-card-top { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.9rem; }
+.vg-card-topic { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #44546d; }
+.vg-card-time { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; color: var(--gray-500); white-space: nowrap; }
+.vg-card h2 { font-size: 1.08rem; line-height: 1.35; color: var(--navy); margin-bottom: 0.5rem; }
+.vg-card p { font-size: 0.9rem; line-height: 1.6; color: var(--gray-600); margin-bottom: 1rem; flex: 1; }
+.vg-card-link { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+.vg-card:hover .vg-card-link { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+.vg-empty { text-align: center; padding: 3rem 1rem; color: var(--gray-600); }
+.vg-empty h2 { margin-bottom: 0.5rem; }
 
-/* Empty */
-.vg-empty { text-align: center; padding: 4rem 2rem; }
-.vg-empty h3 { color: var(--navy); margin: 1rem 0 0.5rem; }
-.vg-empty p { color: var(--text-secondary); }
-
-/* CTA */
-.vg-cta {
-  padding: 5rem 0;
-  background: var(--navy);
-  color: white;
+.vg-cta { padding: 5rem 0 5.5rem; background: white; }
+.vg-cta-inner {
+  display: grid; grid-template-columns: minmax(0, 1fr) 22rem; gap: 3rem; align-items: center;
+  background: #f6f7f9; border: 1px solid rgba(15, 37, 72, 0.08); border-radius: 12px; padding: 2.75rem 3rem;
 }
-.vg-cta h2 { color: white; margin-bottom: 0.75rem; }
-.vg-cta p { color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto; }
+.vg-cta h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); color: var(--navy); margin-bottom: 0.9rem; }
+.vg-cta p { color: var(--gray-600); line-height: 1.7; }
+.vg-cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.75rem; }
+/* Photo fills the height of the text column (floor 220px) in a fixed 22rem column, instead of a fixed square */
+.vg-cta-photo { position: relative; align-self: stretch; min-height: 220px; }
+.vg-cta-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 22%; border-radius: 4px; background: #e9edf2; }
 
-/* RESPONSIVE */
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .vg-grid { grid-template-columns: repeat(2, 1fr); }
-  .vg-hero-img { width: 200px; height: 200px; }
+  .vg-cta-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .vg-cta-photo { max-width: 360px; }
+  .vg-cta-photo { min-height: 0; }
+  .vg-cta-photo img { position: static; height: auto; aspect-ratio: 4 / 3; }
 }
 @media (max-width: 768px) {
-  .vg-hero { padding: 7.5rem 0 3rem; }
-  .vg-hero-flex { flex-direction: column; text-align: center; }
-  .vg-hero-desc { margin: 0 auto; }
-  .vg-hero-img { width: 180px; height: 180px; }
-  .vg-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+  .vg-content { padding: 2.5rem 0 4rem; }
+  .vg-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .vg-cta { padding: 3.5rem 0 4rem; }
+  .vg-cta-inner { padding: 1.75rem 1.35rem; }
+  .vg-cta-btns { flex-direction: column; align-items: stretch; }
+  .vg-cta-btns .btn { justify-content: center; }
+}
+
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .vg-cta-inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .vg-card {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>

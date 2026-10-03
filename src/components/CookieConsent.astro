@@ -1,20 +1,23 @@
 ---
 // CookieConsent.astro — GDPR cookie consent banner for Dutch/EU compliance
-// Blocks non-essential scripts (Elfsight chatbot) until user gives consent
+// Records the visitor's cookie choices (functional, analytics, marketing) and passes them to
+// Google Consent Mode v2. Reopened via window.hrhelpCookieSettings() / [data-cookie-settings].
 ---
 
 <!-- Cookie Consent Banner -->
 <div id="cookie-consent" class="cc-banner" role="dialog" aria-label="Cookie consent" aria-modal="false">
   <div class="cc-inner">
     <div class="cc-text">
-      <h3>🍪 We value your privacy</h3>
-      <p>We use cookies to enhance your experience and provide our chatbot support. Essential cookies are always active. You can choose to accept or decline optional cookies.</p>
-      <a href="/privacy" class="cc-link">Privacy Policy</a>
+      <h2 class="as-h3"><span aria-hidden="true">🍪</span> We value your privacy</h2>
+      <!-- Phones get the short copy, so the banner leaves the page itself in view -->
+      <p class="cc-copy-long">We use cookies to enhance your experience. Essential cookies are always active. With your consent we also use analytics (Google Analytics) and marketing (Google Ads) cookies. You can change your choice at any time via "Cookie settings" at the bottom of every page.</p>
+      <p class="cc-copy-short">We use cookies for analytics and ads, only with your consent.</p>
+      <a href="/privacy/" class="cc-link">Privacy Policy</a>
     </div>
     <div class="cc-actions">
       <button id="cc-accept" class="cc-btn cc-btn-accept">Accept All</button>
       <button id="cc-essential" class="cc-btn cc-btn-essential">Essential Only</button>
-      <button id="cc-manage" class="cc-btn cc-btn-manage">Manage</button>
+      <button id="cc-manage" class="cc-btn cc-btn-manage" aria-expanded="false" aria-controls="cc-prefs">Manage</button>
     </div>
   </div>
 
@@ -26,17 +29,37 @@
         <span class="cc-pref-desc">Required for the website to function. Cannot be disabled.</span>
       </div>
       <label class="cc-toggle cc-toggle-locked">
-        <input type="checkbox" checked disabled />
+        <input type="checkbox" checked disabled aria-label="Essential cookies (always on)" />
         <span class="cc-slider"></span>
       </label>
     </div>
     <div class="cc-pref-row">
       <div>
         <strong>Functional Cookies</strong>
-        <span class="cc-pref-desc">Enable chatbot support and enhanced functionality.</span>
+        <span class="cc-pref-desc" id="cc-func-desc">Remembers some of your preferences; no third-party tracking.</span>
       </div>
       <label class="cc-toggle">
-        <input type="checkbox" id="cc-func-toggle" />
+        <input type="checkbox" role="switch" id="cc-func-toggle" aria-label="Functional cookies" aria-describedby="cc-func-desc" />
+        <span class="cc-slider"></span>
+      </label>
+    </div>
+    <div class="cc-pref-row">
+      <div>
+        <strong>Analytics Cookies</strong>
+        <span class="cc-pref-desc" id="cc-analytics-desc">Google Analytics: shows us how visitors use the site (cookies such as _ga).</span>
+      </div>
+      <label class="cc-toggle">
+        <input type="checkbox" role="switch" id="cc-analytics-toggle" aria-label="Analytics cookies" aria-describedby="cc-analytics-desc" />
+        <span class="cc-slider"></span>
+      </label>
+    </div>
+    <div class="cc-pref-row">
+      <div>
+        <strong>Marketing Cookies</strong>
+        <span class="cc-pref-desc" id="cc-marketing-desc">Google Ads: measures the results of our ads (cookies such as _gcl_au) and remembers for up to 90 days how you first found us, including ad click IDs.</span>
+      </div>
+      <label class="cc-toggle">
+        <input type="checkbox" role="switch" id="cc-marketing-toggle" aria-label="Marketing cookies" aria-describedby="cc-marketing-desc" />
         <span class="cc-slider"></span>
       </label>
     </div>
@@ -48,68 +71,135 @@
 
 <script>
   (function() {
+    // Stored as {v: 2, essential, functional, analytics, marketing, timestamp}. Reading (including the
+    // old v1 shape and the 12-month expiry) and the Consent Mode update live in Layout.astro's head.
     const COOKIE_KEY = 'hrhelp_cookie_consent';
+    const VERSION = 2;
     const banner = document.getElementById('cookie-consent');
     const prefs = document.getElementById('cc-prefs');
-    const funcToggle = document.getElementById('cc-func-toggle');
+    const manageBtn = document.getElementById('cc-manage');
+    const toggles = {
+      functional: document.getElementById('cc-func-toggle'),
+      analytics: document.getElementById('cc-analytics-toggle'),
+      marketing: document.getElementById('cc-marketing-toggle'),
+    };
+    let hideTimer = 0;
+    let returnFocus = null;
 
-    // Check if consent was already given
-    const saved = localStorage.getItem(COOKIE_KEY);
-    if (saved) {
-      banner.style.display = 'none';
-      const consent = JSON.parse(saved);
-      if (consent.functional) loadFunctionalScripts();
-      return;
+    function readConsent() {
+      return window.hrhelpReadConsent ? window.hrhelpReadConsent() : null;
     }
 
-    // Show banner
-    banner.style.display = 'block';
+    // Reserve the banner's height at the bottom so keyboard focus is never hidden behind it.
+    function reserveSpace() {
+      document.documentElement.style.scrollPaddingBottom = banner.offsetHeight + 'px';
+    }
 
-    // Accept All
-    document.getElementById('cc-accept').addEventListener('click', function() {
-      saveConsent({ essential: true, functional: true });
-      loadFunctionalScripts();
-      hideBanner();
-    });
+    function setManage(open) {
+      prefs.hidden = !open;
+      manageBtn.setAttribute('aria-expanded', String(open));
+      // The Save bar takes over the bottom padding (it sticks to the sheet's bottom edge)
+      banner.classList.toggle('cc-managing', open);
+      reserveSpace();
+    }
 
-    // Essential Only
-    document.getElementById('cc-essential').addEventListener('click', function() {
-      saveConsent({ essential: true, functional: false });
-      hideBanner();
-    });
+    // Categories that are off: expire the Google cookies already set. gtag puts them on the
+    // parent domain (.hrhelp.nl), so try host-only, this host and the last two labels.
+    function dropCookies(c) {
+      const host = location.hostname;
+      const domains = ['', host, host.split('.').slice(-2).join('.')];
+      document.cookie.split(';').forEach(function(pair) {
+        const name = pair.split('=')[0].trim();
+        const drop = (!c.analytics && /^_ga(_|$)/.test(name)) || (!c.marketing && /^_gcl_/.test(name));
+        if (!drop) return;
+        domains.forEach(function(d) {
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + (d ? '; domain=' + d : '');
+        });
+      });
+    }
 
-    // Manage
-    document.getElementById('cc-manage').addEventListener('click', function() {
-      prefs.hidden = !prefs.hidden;
-    });
-
-    // Save
-    document.getElementById('cc-save').addEventListener('click', function() {
-      const functional = funcToggle.checked;
-      saveConsent({ essential: true, functional: functional });
-      if (functional) loadFunctionalScripts();
-      hideBanner();
-    });
-
-    function saveConsent(consent) {
-      consent.timestamp = new Date().toISOString();
-      localStorage.setItem(COOKIE_KEY, JSON.stringify(consent));
+    function showBanner(manage) {
+      clearTimeout(hideTimer);
+      // Pre-fill the toggles from the stored choice (all off when there is none).
+      const saved = readConsent();
+      Object.keys(toggles).forEach(function(k) { toggles[k].checked = !!(saved && saved[k]); });
+      banner.style.display = 'block';
+      banner.style.opacity = '';
+      banner.style.transform = '';
+      setManage(!!manage);
+      window.addEventListener('resize', reserveSpace);
     }
 
     function hideBanner() {
+      window.removeEventListener('resize', reserveSpace);
+      document.documentElement.style.scrollPaddingBottom = '';
       banner.style.opacity = '0';
       banner.style.transform = 'translateY(100%)';
-      setTimeout(function() { banner.style.display = 'none'; }, 400);
+      hideTimer = setTimeout(function() { banner.style.display = 'none'; }, 400);
+      if (returnFocus && document.contains(returnFocus)) returnFocus.focus();
+      returnFocus = null;
     }
 
-    function loadFunctionalScripts() {
-      // Load Elfsight chatbot only after consent
-      if (!document.querySelector('script[src*="elfsightcdn"]')) {
-        var s = document.createElement('script');
-        s.src = 'https://elfsightcdn.com/platform.js';
-        s.async = true;
-        document.body.appendChild(s);
-      }
+    function saveConsent(choice) {
+      const consent = {
+        v: VERSION,
+        essential: true,
+        functional: !!choice.functional,
+        analytics: !!choice.analytics,
+        marketing: !!choice.marketing,
+        timestamp: new Date().toISOString(),
+      };
+      try { localStorage.setItem(COOKIE_KEY, JSON.stringify(consent)); } catch (e) {}
+      // Tell the Google tags straight away, no reload needed.
+      if (window.hrhelpApplyConsent) window.hrhelpApplyConsent(consent);
+      // Without marketing consent, drop the 90-day lead-source copy (see LeadAttribution.astro).
+      if (!consent.marketing) { try { localStorage.removeItem('hrhelp_attr'); } catch (e) {} }
+      // A withdrawal also removes the cookies set while it was on.
+      dropCookies(consent);
+      hideBanner();
+    }
+
+    document.getElementById('cc-accept').addEventListener('click', function() {
+      saveConsent({ functional: true, analytics: true, marketing: true });
+    });
+
+    document.getElementById('cc-essential').addEventListener('click', function() {
+      saveConsent({ functional: false, analytics: false, marketing: false });
+    });
+
+    manageBtn.addEventListener('click', function() {
+      setManage(prefs.hidden);
+    });
+
+    document.getElementById('cc-save').addEventListener('click', function() {
+      saveConsent({
+        functional: toggles.functional.checked,
+        analytics: toggles.analytics.checked,
+        marketing: toggles.marketing.checked,
+      });
+    });
+
+    // Reopen in Manage mode with the current choices, e.g. from the footer's "Cookie settings" button.
+    window.hrhelpCookieSettings = function() {
+      returnFocus = document.activeElement;
+      showBanner(true);
+      toggles.functional.focus();
+    };
+    document.querySelectorAll('[data-cookie-settings]').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.hrhelpCookieSettings();
+      });
+    });
+
+    // Show the banner unless there is a current choice (no focus change: it must not steal focus on page load).
+    const saved = readConsent();
+    if (saved && saved.current) {
+      banner.style.display = 'none';
+      // Also catches cookies written again by a tab that still had consent when it was withdrawn.
+      dropCookies(saved);
+    } else {
+      showBanner(false);
     }
   })();
 </script>
@@ -125,10 +215,13 @@
     background: rgba(10, 26, 50, 0.97);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(244, 121, 32, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1.5rem;
     transition: opacity 0.4s ease, transform 0.4s ease;
     box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.3);
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow-y: auto;
   }
 
   .cc-inner {
@@ -143,7 +236,7 @@
     flex: 1;
   }
 
-  .cc-text h3 {
+  .cc-text h2 {
     font-size: 1.1rem;
     font-weight: 700;
     color: white;
@@ -152,15 +245,20 @@
 
   .cc-text p {
     font-size: 0.88rem;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.88);
     line-height: 1.5;
     margin: 0 0 0.5rem;
   }
 
+  .cc-copy-short {
+    display: none;
+  }
+
   .cc-link {
     font-size: 0.8rem;
-    color: #F47920;
+    color: var(--orange-light);
     text-decoration: underline;
+    text-decoration-color: var(--orange-light);
     font-weight: 600;
   }
 
@@ -173,7 +271,7 @@
   .cc-btn {
     border: none;
     padding: 0.65rem 1.25rem;
-    border-radius: 8px;
+    border-radius: var(--radius-full);
     font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
@@ -182,12 +280,12 @@
   }
 
   .cc-btn-accept {
-    background: #F47920;
+    background: var(--orange-ink);
     color: white;
   }
 
   .cc-btn-accept:hover {
-    background: #d96a18;
+    background: var(--orange-ink-dark);
     transform: translateY(-1px);
   }
 
@@ -203,7 +301,7 @@
 
   .cc-btn-manage {
     background: transparent;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.88);
     border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
@@ -240,9 +338,17 @@
     color: rgba(255, 255, 255, 0.5);
   }
 
+  /* Save stays in view: when the sheet is taller than the screen, the rows scroll under this bar */
   .cc-pref-actions {
-    padding-top: 0.75rem;
+    position: sticky;
+    bottom: 0;
+    padding: 0.75rem 0 1.5rem;
     text-align: right;
+    background: rgb(10, 26, 50);
+  }
+
+  .cc-banner.cc-managing {
+    padding-bottom: 0;
   }
 
   /* Toggle Switch */
@@ -283,7 +389,13 @@
   }
 
   .cc-toggle input:checked + .cc-slider {
-    background: #F47920;
+    background: var(--orange);
+  }
+
+  /* The real checkbox is visually hidden: show its focus ring on the slider */
+  .cc-toggle input:focus-visible + .cc-slider {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
   }
 
   .cc-toggle input:checked + .cc-slider::before {
@@ -302,13 +414,59 @@
       gap: 1rem;
     }
 
+    /* Accept and Essential side by side with equal weight; Manage as a text link under them */
     .cc-actions {
-      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.5rem;
     }
 
     .cc-btn {
       width: 100%;
       text-align: center;
+    }
+
+    .cc-actions .cc-btn-accept,
+    .cc-actions .cc-btn-essential {
+      flex: 1 1 calc(50% - 0.25rem);
+      min-height: 44px;
+    }
+
+    .cc-actions .cc-btn-manage {
+      width: auto;
+      min-height: 44px;
+      margin: 0 auto;
+      padding: 0 0.75rem;
+      border: 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cc-banner {
+      padding: 1rem;
+    }
+
+    .cc-text h2 {
+      margin-bottom: 0.25rem;
+    }
+
+    .cc-copy-long {
+      display: none;
+    }
+
+    /* The Privacy Policy link runs on straight after the short copy, on the same tight lines */
+    .cc-text {
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .cc-copy-short {
+      display: inline;
+    }
+
+    .cc-pref-actions {
+      padding-bottom: 1rem;
     }
   }
 </style>

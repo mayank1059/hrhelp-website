@@ -2,6 +2,9 @@
 import Layout from '../../../components/Layout.astro';
 import { getCaseStudies, getCaseStudy } from '../../../lib/wordpress';
 import type { CaseStudy } from '../../../lib/wordpress';
+import PageHero from '../../../components/PageHero.astro';
+import LineIcon from '../../../components/LineIcon.astro';
+import { resourcePhoto } from '../../../lib/resourcePhotos';
 
 export async function getStaticPaths() {
   const caseStudies = await getCaseStudies();
@@ -12,7 +15,11 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const cs = await getCaseStudy(slug as string);
-if (!cs) return Astro.redirect('/resources/case-studies');
+if (!cs) return Astro.redirect('/resources/case-studies/');
+
+const featureImage = resourcePhoto(cs.image);
+const illusImage = resourcePhoto(cs.illustration);
+const ctaImage = { src: '/images/home/cornelis-candid.jpg', width: 962, height: 825 };
 
 const caseStudySchema = {
   "@context": "https://schema.org",
@@ -26,76 +33,56 @@ const caseStudySchema = {
     "name": "HRHelp.nl",
     "logo": { "@type": "ImageObject", "url": "https://www.hrhelp.nl/favicon.svg" }
   },
-  "mainEntityOfPage": `https://www.hrhelp.nl/resources/case-studies/${slug}`
+  "mainEntityOfPage": `https://www.hrhelp.nl/resources/case-studies/${slug}/`
 };
 ---
 
 <Layout title={`${cs.title} | Case Study`} description={cs.intro.slice(0, 160)} schema={caseStudySchema}>
 
-<!-- ===== HERO — Premium Split ===== -->
-<section class="csd-hero">
-  <div class="csd-hero-mesh"></div>
-  <div class="container-wide csd-hero-inner">
-    <div class="csd-hero-text" data-animate="fade-right">
-      <div class="hero-chip-wrap">
-        <span class="eyebrow-badge">
-          <span class="material-symbols-outlined" style="font-size:16px;">{cs.icon}</span>
-          {cs.tag}
-        </span>
-      </div>
-      <h1>{cs.title}</h1>
-      <p class="csd-hero-desc">{cs.intro}</p>
-      <div class="csd-hero-actions">
-        <a href="/contact" class="btn btn-primary btn-lg">Book a Consultation</a>
-        <a href="#csd-approach" class="btn btn-secondary btn-lg">Our Approach</a>
-      </div>
-    </div>
-    <div class="csd-hero-visual" data-animate="fade-left">
-      <div class="csd-hero-photo-wrap">
-        <div class="csd-hero-glass-frame"></div>
-        <img src={cs.image} alt={cs.title} class="csd-hero-img" />
-        <div class="hero-floating-card card-tl" data-float>
-          <div class="floating-icon"><span class="material-symbols-outlined">{cs.floatCards.tl.icon}</span></div>
-          <div class="floating-content">
-            <span class="floating-label">{cs.floatCards.tl.label}</span>
-            <span class="floating-value">{cs.floatCards.tl.value}</span>
-          </div>
-        </div>
-        <div class="hero-floating-card card-br" data-float-reverse>
-          <div class="floating-icon icon-orange"><span class="material-symbols-outlined">{cs.floatCards.br.icon}</span></div>
-          <div class="floating-content">
-            <span class="floating-label">{cs.floatCards.br.label}</span>
-            <span class="floating-value">{cs.floatCards.br.value}</span>
-          </div>
-        </div>
-        <div class="hero-status-pill">
-          <span class="status-dot"></span>
-          <span>Client Engagement</span>
-        </div>
-      </div>
-    </div>
+<!-- ===== HERO ===== -->
+<PageHero variant="split" title={cs.title} subtitle={cs.intro} image={{ ...featureImage, alt: cs.title }}>
+  <span class="csd-eyebrow" slot="eyebrow">
+    <LineIcon name={cs.icon} size={16} />
+    {cs.tag}
+  </span>
+  <div class="page-hero-actions">
+    <a href="/contact/" class="btn btn-primary btn-lg">Book a Consultation</a>
+    <a href="#csd-approach" class="btn btn-secondary btn-lg">Our Approach</a>
   </div>
-</section>
+  <ul class="csd-hero-facts">
+    <li>
+      <span class="floating-label">{cs.floatCards.tl.label}</span>
+      <strong class="floating-value">{cs.floatCards.tl.value}</strong>
+    </li>
+    <li>
+      <span class="floating-label">{cs.floatCards.br.label}</span>
+      <strong class="floating-value">{cs.floatCards.br.value}</strong>
+    </li>
+    <li class="csd-fact-note">
+      <span>Client Engagement</span>
+    </li>
+  </ul>
+</PageHero>
 
 <!-- ===== WHAT WE DID ===== -->
 <section class="csd-what section-white" id="csd-approach">
   <div class="container">
     <div class="csd-what-inner">
-      <div class="csd-what-content" data-animate="fade-up">
+      <div class="csd-what-content">
         <span class="eyebrow">What We Did</span>
         <h2>Our Approach</h2>
         <p class="csd-what-intro">{cs.context}</p>
         <ul class="csd-checklist">
           {cs.items.map((item: string) => (
             <li>
-              <span class="material-symbols-outlined" style="font-size:18px; color: var(--orange); flex-shrink:0;">check_circle</span>
+              <LineIcon name="check" size={18} />
               <span>{item}</span>
             </li>
           ))}
         </ul>
       </div>
-      <div class="csd-what-illus" data-animate="fade-left">
-        <img src={cs.illustration} alt={`${cs.title} illustration`} />
+      <div class="csd-what-illus">
+        <img src={illusImage.src} alt={`${cs.title} illustration`} width={illusImage.width} height={illusImage.height} loading="lazy" decoding="async" />
       </div>
     </div>
   </div>
@@ -104,11 +91,11 @@ const caseStudySchema = {
 <!-- ===== OUTCOME ===== -->
 <section class="csd-outcome section-cream">
   <div class="container">
-    <div class="section-header" data-animate="fade-up">
+    <div class="section-header csd-head">
       <span class="eyebrow">Results</span>
       <h2>The Outcome</h2>
     </div>
-    <div class="csd-outcome-card" data-animate="fade-up">
+    <div class="csd-outcome-card">
       <p>{cs.outcome}</p>
       {cs.stats.length > 0 && (
         <div class="csd-outcome-stats">
@@ -126,12 +113,19 @@ const caseStudySchema = {
 
 <!-- ===== CTA ===== -->
 <section class="csd-cta">
-  <div class="container" style="text-align: center;">
-    <h2>Ready to See Similar Results?</h2>
-    <p>Every engagement starts with understanding your unique challenge.</p>
-    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
-      <a href="/contact" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
-      <a href="/resources/case-studies" class="btn btn-ghost btn-lg" style="border-color: rgba(255,255,255,0.3); color: white;">View All Case Studies</a>
+  <div class="container">
+    <div class="csd-cta-inner">
+      <div>
+        <h2>Ready to See Similar Results?</h2>
+        <p>Every engagement starts with understanding your unique challenge.</p>
+        <div class="csd-cta-btns">
+          <a href="/contact/" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
+          <a href="/resources/case-studies/" class="btn btn-secondary btn-lg">View All Case Studies</a>
+        </div>
+      </div>
+      <div class="csd-cta-photo">
+        <img src={ctaImage.src} alt="Cornelis Leerlooijer, founder of HRHelp" width={ctaImage.width} height={ctaImage.height} loading="lazy" decoding="async" />
+      </div>
     </div>
   </div>
 </section>
@@ -139,160 +133,85 @@ const caseStudySchema = {
 </Layout>
 
 <style>
-/* ===== HERO — Premium Split ===== */
-.csd-hero {
-  padding: 10rem 0 6rem;
-  background: var(--cream);
-  position: relative; overflow: hidden;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-.csd-hero-mesh {
-  position: absolute; inset: 0; z-index: 0;
-  background:
-    radial-gradient(at 10% 20%, rgba(244,121,32,0.05) 0px, transparent 50%),
-    radial-gradient(at 90% 10%, rgba(13,31,56,0.04) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(244,121,32,0.03) 0px, transparent 50%);
-  filter: blur(100px);
-}
-.csd-hero-inner {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: 1.1fr 0.9fr;
-  gap: 5rem; align-items: center;
-}
-.csd-hero-text h1 {
-  font-size: clamp(2.4rem, 5vw, 3.8rem);
-  font-weight: 950; line-height: 1.05;
-  margin: 1.5rem 0; letter-spacing: -0.04em;
-  color: var(--navy);
-}
-.csd-hero-desc {
-  font-size: 1.15rem; color: var(--gray-600);
-  line-height: 1.75; max-width: 540px;
-  margin-bottom: 2.5rem; font-weight: 500;
-}
-.csd-hero-actions { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-.csd-hero-visual { position: relative; display: flex; justify-content: flex-end; }
-.csd-hero-photo-wrap { position: relative; width: 100%; max-width: 540px; }
-.csd-hero-glass-frame {
-  position: absolute; top: 20px; left: 20px; right: -20px; bottom: -20px;
-  border-radius: var(--radius-xl);
-  border: 2px solid rgba(244,121,32,0.15);
-  z-index: 0;
-}
-.csd-hero-img {
-  position: relative; z-index: 1; width: 100%;
-  border-radius: var(--radius-xl);
-  aspect-ratio: 4/3; object-fit: cover;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-}
+/* Same sections and order; calmer treatment: shared split hero (feature photo) with the
+   former floating cards as a quiet facts row, documentary photos, hairline
+   rules, light CTA panel with Cornelis. */
+h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
+.eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; color: #44546d; margin-bottom: 0.75rem; }
+.csd-head { text-align: left; max-width: 760px; margin: 0 0 2rem; }
+.csd-head h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0; }
 
-/* Floating Cards */
-.hero-floating-card {
-  position: absolute; display: flex; align-items: center; gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.5);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  z-index: 10;
+/* HERO extras */
+.csd-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #44546d; margin-bottom: 1rem; }
+.csd-eyebrow :global(svg) { color: var(--icon-accent); }
+.csd-hero-facts {
+  list-style: none; display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 1.25rem 2.5rem;
+  margin: 2.25rem 0 0; padding: 1.1rem 0 0; border-top: 1px solid rgba(15, 37, 72, 0.14); max-width: 620px;
 }
-.card-tl { top: -10px; left: -30px; animation: csd-float 5s ease-in-out infinite; }
-.card-br { bottom: 20px; right: -30px; animation: csd-float 5s ease-in-out 1.2s infinite; }
-.floating-icon {
-  width: 36px; height: 36px; border-radius: 10px;
-  background: rgba(13,31,56,0.08);
-  display: flex; align-items: center; justify-content: center;
-}
-.floating-icon .material-symbols-outlined { font-size: 20px; color: var(--navy); }
-.icon-orange { background: rgba(244,121,32,0.12); }
-.icon-orange .material-symbols-outlined { color: var(--orange); }
-.floating-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-500); display: block; }
-.floating-value { font-size: 1.1rem; font-weight: 800; color: var(--navy); display: block; line-height: 1.2; }
+.floating-label { display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #44546d; margin-bottom: 0.25rem; }
+.floating-value { display: block; font-size: 0.95rem; font-weight: 600; color: var(--navy); line-height: 1.35; }
+.csd-fact-note span { display: block; font-size: 0.88rem; font-weight: 500; color: var(--gray-600); line-height: 1.4; padding-top: 1rem; }
 
-.hero-status-pill {
-  position: absolute; bottom: -15px; left: 50%;
-  transform: translateX(-50%);
-  display: flex; align-items: center; gap: 0.5rem;
-  padding: 0.5rem 1rem; border-radius: 999px;
-  background: white; border: 1px solid var(--gray-200);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  font-size: 0.75rem; font-weight: 600; color: var(--navy);
-  z-index: 10; white-space: nowrap;
-}
-.status-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: #22c55e; animation: csd-pulse 2s infinite;
-}
+/* WHAT WE DID */
+.csd-what { padding: 5.5rem 0; }
+.csd-what-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.csd-what-content h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin-bottom: 1rem; }
+.csd-what-intro { font-size: 1.05rem; line-height: 1.8; color: var(--gray-600); margin-bottom: 1.5rem; }
+.csd-checklist { list-style: none; padding: 0; margin: 0; }
+.csd-checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.7rem 0; border-top: 1px solid rgba(15, 37, 72, 0.1); font-size: 0.98rem; line-height: 1.6; color: var(--gray-700); }
+.csd-checklist li :global(svg) { color: var(--orange-ink); flex-shrink: 0; margin-top: 0.15rem; }
+/* Photo fills the height of the text column (floor 360px) instead of a fixed 4:5 */
+.csd-what-illus { position: relative; align-self: stretch; min-height: 360px; }
+.csd-what-illus img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; border-radius: 4px; background: #e9edf2; }
 
-@keyframes csd-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-@keyframes csd-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
+/* OUTCOME */
+.csd-outcome { padding: 5.5rem 0; }
+.csd-outcome-card { max-width: 860px; padding-left: 1.5rem; border-left: 3px solid var(--orange); }
+.csd-outcome-card > p { font-size: 1.15rem; line-height: 1.75; color: var(--navy); font-weight: 500; }
+.csd-outcome-stats { display: flex; flex-wrap: wrap; gap: 1.25rem 3rem; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid rgba(15, 37, 72, 0.14); }
+.csd-stat-val { display: block; font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); line-height: 1.1; }
+.csd-stat-lbl { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #44546d; margin-top: 0.3rem; }
 
-/* ===== WHAT WE DID ===== */
-.csd-what { padding: var(--section-padding); }
-.csd-what-inner { display: flex; gap: 4rem; align-items: center; }
-.csd-what-content { flex: 1; }
-.csd-what-content h2 { margin: 0.5rem 0 1rem; }
-.csd-what-intro { color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; }
-.csd-checklist { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
-.csd-checklist li {
-  display: flex; align-items: flex-start; gap: 0.75rem;
-  font-size: 0.95rem; line-height: 1.6; color: var(--navy);
-  background: var(--cream); padding: 1rem 1.25rem; border-radius: var(--radius-md);
+/* CTA */
+.csd-cta { padding: 5.5rem 0; }
+.csd-cta-inner {
+  display: grid; grid-template-columns: minmax(0, 1fr) 22rem; gap: 3rem; align-items: center;
+  background: #f6f7f9; border: 1px solid rgba(15, 37, 72, 0.08); border-radius: 12px; padding: 2.75rem 3rem;
 }
-.csd-what-illus { flex: 0 0 380px; }
-.csd-what-illus img { width: 100%; object-fit: contain; }
-
-.csd-outcome { padding: var(--section-padding); }
-.csd-outcome-card {
-  max-width: 800px; margin: 0 auto;
-  background: white; padding: 2.5rem; border-radius: var(--radius-xl);
-  border: 1px solid var(--gray-200); border-left: 4px solid var(--orange);
-}
-.csd-outcome-card p { font-size: 1rem; line-height: 1.8; color: var(--navy); }
-.csd-outcome-stats { display: flex; gap: 2.5rem; margin-top: 2rem; flex-wrap: wrap; }
-.csd-stat { display: flex; flex-direction: column; gap: 0.2rem; }
-.csd-stat-val { font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1; }
-.csd-stat-lbl { font-size: 0.8rem; color: var(--gray-500); }
-
-.csd-cta { padding: 5rem 0; background: var(--navy); color: white; }
-.csd-cta h2 { margin-bottom: 0.75rem; color: white; }
-.csd-cta p { color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto; }
+.csd-cta h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); color: var(--navy); margin-bottom: 0.9rem; }
+.csd-cta p { color: var(--gray-600); line-height: 1.7; }
+.csd-cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.75rem; }
+/* Photo fills the height of the text column (floor 220px) in a fixed 22rem column, instead of a fixed square */
+.csd-cta-photo { position: relative; align-self: stretch; min-height: 220px; }
+.csd-cta-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 22%; border-radius: 4px; background: #e9edf2; }
 
 @media (max-width: 1024px) {
-  .csd-hero-inner { grid-template-columns: 1fr; text-align: center; }
-  .csd-hero-visual { justify-content: center; }
-  .csd-hero-photo-wrap { max-width: 400px; margin: 0 auto; }
-  .csd-hero-desc { margin: 0 auto 2.5rem; }
-  .csd-hero-actions { justify-content: center; }
-  .hero-floating-card { display: none; }
-  .hero-status-pill { display: none; }
-  .csd-hero-glass-frame { display: none; }
+  .csd-what-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .csd-what-illus { max-width: 480px; min-height: 0; }
+  .csd-what-illus img { position: static; height: auto; aspect-ratio: 4 / 3; }
+  .csd-cta-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .csd-cta-photo { max-width: 360px; }
+  .csd-cta-photo { min-height: 0; }
+  .csd-cta-photo img { position: static; height: auto; aspect-ratio: 4 / 3; }
 }
-
 @media (max-width: 768px) {
-  .csd-hero { padding: 7.5rem 0 3.5rem; }
-  .csd-hero-inner { gap: 2rem; }
-  .csd-hero-img { aspect-ratio: 16/9; }
-  .csd-hero-actions { flex-direction: column; align-items: stretch; }
-  .csd-hero-actions .btn { text-align: center; }
-
-  .csd-what-inner { flex-direction: column; gap: 2rem; }
-  .csd-what-illus { flex: none; width: 100%; max-width: 320px; margin: 0 auto; }
-
-  .csd-outcome-card { padding: 1.5rem; }
-  .csd-outcome-stats { flex-direction: column; gap: 1.25rem; }
-
-  .csd-cta { padding: 3.5rem 0; }
+  .csd-what { padding: 4rem 0; }
+  .csd-outcome, .csd-cta { padding: 4rem 0; }
+  .csd-hero-facts { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .csd-hero-facts li.csd-fact-note { grid-column: 1 / -1; }
+  .csd-fact-note span { padding-top: 0; }
+  .csd-outcome-card { padding-left: 1.1rem; }
+  .csd-cta-inner { padding: 1.75rem 1.35rem; }
+  .csd-cta-btns { flex-direction: column; align-items: stretch; }
+  .csd-cta-btns .btn { justify-content: center; }
 }
 
-@media (max-width: 480px) {
-  .csd-hero { padding: 7rem 0 2.5rem; }
-  .csd-hero-photo-wrap { max-width: 100%; }
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .csd-cta-inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .csd-outcome-card { padding-left: 1rem; }
 }
+</style>

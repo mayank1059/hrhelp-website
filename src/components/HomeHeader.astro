@@ -1,27 +1,28 @@
 ---
 // HomeHeader.astro — Homepage-specific header with dark navy styling + mega menus
+import MenuIcon from './MenuIcon.astro';
 const currentPath = Astro.url.pathname;
 
 const solutions = [
   {
     slug: 'hr-settlers', name: 'HR Settlers',
     tagline: 'Enter the Dutch market with confidence',
-    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
+    icon: 'location_on'
   },
   {
     slug: 'hr-teams', name: 'HR Teams',
     tagline: 'Your outsourced HR department',
-    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
+    icon: 'groups'
   },
   {
     slug: 'hr-reset', name: 'HR Reset',
-    tagline: 'Modernize your existing HR',
-    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>'
+    tagline: 'Modernise your existing HR',
+    icon: 'cycle'
   },
   {
     slug: 'hr-sos', name: 'HR S.O.S.',
     tagline: 'Urgent HR crisis support',
-    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>'
+    icon: 'sos'
   }
 ];
 
@@ -41,41 +42,51 @@ import { getFeaturedArticles } from '../lib/wordpress';
 const featuredArticles = await getFeaturedArticles();
 
 const resourceLinks = [
-  { label: 'HR Guides', icon: 'menu_book', href: '/guides' },
-  { label: 'Our Expertise', icon: 'star', href: '/resources/expertise' },
-  { label: 'Case Studies', icon: 'trending_up', href: '/resources/case-studies' },
-  { label: 'Blog', icon: 'article', href: '/blog' },
-  { label: 'FAQ', icon: 'help', href: '/resources/faq' },
+  { label: 'HR Guides', icon: 'menu_book', href: '/guides/' },
+  { label: 'Case Studies', icon: 'trending_up', href: '/resources/case-studies/' },
+  { label: 'Blog', icon: 'article', href: '/blog/' },
+  { label: 'FAQ', icon: 'help', href: '/resources/faq/' },
 ];
 
 const navLinks = [
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'About', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+];
+
+// Service mega menu columns — same source as the /services index (staging-gated).
+import { serviceGroups } from '../data/pseo/service-groups.js';
+
+// Core expertise: the three areas HRhelp is most often brought in for (top of the HR Services menu)
+const coreExpertise = [
+  { label: 'Sickness Management', href: '/expertise/sickness-management/' },
+  { label: 'Restructuring', href: '/expertise/restructuring/' },
+  { label: 'Leadership Training', href: '/expertise/leadership-training/' },
 ];
 ---
 
 <header class="home-header" id="site-header">
   <div class="home-header-inner">
-    <!-- Logo (white version for dark bg) -->
+    <!-- Logo: white over the navy hero, navy once the header turns white on scroll -->
     <a href="/" class="home-header-logo">
-      <img src="/images/logo-white.png" alt="HRHelp" class="logo-img" />
+      <img src="/images/logo-white.png" alt="HRHelp" class="logo-img logo-on-dark" width="1280" height="310" />
+      <img src="/images/logo.png" alt="HRHelp" class="logo-img logo-on-light" width="1280" height="310" />
     </a>
 
     <!-- Navigation with Mega Menus -->
-    <nav class="home-header-nav">
+    <nav class="home-header-nav" aria-label="Main">
       <!-- Solutions (mega menu) -->
       <div class="hh-nav-item hh-has-mega">
-        <a href="/solutions" class:list={['home-nav-link', { active: currentPath.startsWith('/solutions') }]}>
+        <a href="/solutions/" aria-expanded="false" aria-controls="hh-mega-solutions" class:list={['home-nav-link', { active: currentPath.startsWith('/solutions') }]}>
           Solutions
-          <svg class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg aria-hidden="true" class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
-        <div class="hh-mega-panel hh-mega-solutions">
+        <div class="hh-mega-panel hh-mega-solutions" id="hh-mega-solutions">
           <div class="hh-mega-inner">
             <div class="hh-mega-label">Our Solutions</div>
             <div class="hh-mega-sol-grid">
               {solutions.map(s => (
-                <a href={`/solutions/${s.slug}`} class="hh-mega-sol-card">
-                  <div class="hh-mega-sol-icon" set:html={s.icon} />
+                <a href={`/solutions/${s.slug}/`} class="hh-mega-sol-card">
+                  <span class="hh-ico" aria-hidden="true"><MenuIcon name={s.icon} /></span>
                   <div class="hh-mega-sol-text">
                     <span class="hh-mega-sol-name">{s.name}</span>
                     <span class="hh-mega-sol-tagline">{s.tagline}</span>
@@ -84,14 +95,48 @@ const navLinks = [
               ))}
             </div>
             <div class="hh-mega-footer">
-              <a href="/solutions" class="hh-mega-footer-link">
+              <a href="/solutions/" class="hh-mega-footer-link">
                 View All Solutions
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
-              <a href="/contact" class="hh-mega-footer-cta">
-                Free Consultation
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <a href="/contact/" class="home-cta-btn btn-primary">Book Consultation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HR Services (mega menu) -->
+      <div class="hh-nav-item hh-has-mega">
+        <a href="/services/" aria-expanded="false" aria-controls="hh-mega-services" class:list={['home-nav-link', { active: currentPath.startsWith('/services') || currentPath.startsWith('/expertise') }]}>
+          HR Services
+          <svg aria-hidden="true" class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="hh-mega-panel hh-mega-services" id="hh-mega-services">
+          <div class="hh-mega-inner">
+            <div class="hh-mega-core">
+              <div class="hh-mega-label hh-mega-svc-label">Core expertise</div>
+              <div class="hh-mega-core-grid">
+                {coreExpertise.map(c => (
+                  <a href={c.href} class="hh-mega-svc-item">{c.label}</a>
+                ))}
+              </div>
+            </div>
+            <div class="hh-mega-svc-grid">
+              {serviceGroups.map(g => (
+                <div class="hh-mega-svc-col">
+                  <div class="hh-mega-label hh-mega-svc-label">{g.label}</div>
+                  {g.items.map(s => (
+                    <a href={`/services/${s.slug}/`} class="hh-mega-svc-item">{s.short}</a>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div class="hh-mega-footer">
+              <a href="/services/" class="hh-mega-footer-link">
+                View all HR services
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
+              <a href="/contact/" class="home-cta-btn btn-primary">Book Consultation</a>
             </div>
           </div>
         </div>
@@ -99,25 +144,25 @@ const navLinks = [
 
       <!-- Industries (mega menu) -->
       <div class="hh-nav-item hh-has-mega">
-        <a href="/industries" class:list={['home-nav-link', { active: currentPath.startsWith('/industries') }]}>
+        <a href="/industries/" aria-expanded="false" aria-controls="hh-mega-industries" class:list={['home-nav-link', { active: currentPath.startsWith('/industries') }]}>
           Industries
-          <svg class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg aria-hidden="true" class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
-        <div class="hh-mega-panel hh-mega-industries">
+        <div class="hh-mega-panel hh-mega-industries" id="hh-mega-industries">
           <div class="hh-mega-inner">
             <div class="hh-mega-label">Industry Expertise</div>
             <div class="hh-mega-ind-grid">
               {industries.map(ind => (
-                <a href={`/industries/${ind.slug}`} class="hh-mega-ind-item">
-                  <span class="hh-mega-ind-icon material-symbols-outlined">{ind.icon}</span>
+                <a href={`/industries/${ind.slug}/`} class="hh-mega-ind-item">
+                  <span class="hh-ico" aria-hidden="true"><MenuIcon name={ind.icon} /></span>
                   <span class="hh-mega-ind-name">{ind.name}</span>
                 </a>
               ))}
             </div>
             <div class="hh-mega-footer">
-              <a href="/industries" class="hh-mega-footer-link">
+              <a href="/industries/" class="hh-mega-footer-link">
                 Explore All Industries
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
           </div>
@@ -126,11 +171,11 @@ const navLinks = [
 
       <!-- Resources (mega menu) -->
       <div class="hh-nav-item hh-has-mega">
-        <a href="/resources" class:list={['home-nav-link', { active: currentPath.startsWith('/resources') }]}>
+        <a href="/resources/" aria-expanded="false" aria-controls="hh-mega-resources" class:list={['home-nav-link', { active: currentPath.startsWith('/resources') }]}>
           Resources
-          <svg class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg aria-hidden="true" class="hh-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
-        <div class="hh-mega-panel hh-mega-resources">
+        <div class="hh-mega-panel hh-mega-resources" id="hh-mega-resources">
           <div class="hh-mega-inner">
             <div class="hh-mega-res-layout">
               <!-- Featured articles -->
@@ -140,7 +185,7 @@ const navLinks = [
                   {featuredArticles.map(article => (
                     <a href={article.href} class="hh-mega-res-card">
                       <div class="hh-mega-res-img">
-                        <img src={article.image} alt={article.title} />
+                        <img src={article.image} alt="" loading="lazy" />
                         <span class="hh-mega-res-cat">{article.category}</span>
                       </div>
                       <span class="hh-mega-res-title">{article.title}</span>
@@ -153,16 +198,16 @@ const navLinks = [
                 <div class="hh-mega-label">Quick Links</div>
                 {resourceLinks.map(link => (
                   <a href={link.href} class="hh-mega-res-link-item">
-                    <span class="material-symbols-outlined hh-mega-res-link-icon">{link.icon}</span>
-                    <span>{link.label}</span>
+                    <span class="hh-ico" aria-hidden="true"><MenuIcon name={link.icon} /></span>
+                    <span class="hh-mega-res-link-label">{link.label}</span>
                   </a>
                 ))}
               </div>
             </div>
             <div class="hh-mega-footer">
-              <a href="/resources" class="hh-mega-footer-link">
-                Visit Resource Center
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <a href="/resources/" class="hh-mega-footer-link">
+                Visit Resource Centre
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
           </div>
@@ -184,11 +229,11 @@ const navLinks = [
 
     <!-- Right side -->
     <div class="home-header-actions">
-      <a href="/contact" class="home-cta-btn">Book Consultation</a>
+      <a href="/contact/" class="home-cta-btn btn-primary">Book Consultation</a>
     </div>
 
     <!-- Mobile hamburger -->
-    <button class="home-mobile-toggle" id="home-mobile-toggle" aria-label="Toggle menu">
+    <button class="home-mobile-toggle" id="home-mobile-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="home-mobile-menu">
       <span></span>
       <span></span>
       <span></span>
@@ -198,21 +243,44 @@ const navLinks = [
 
 <!-- Mobile menu overlay -->
 <div class="home-mobile-menu" id="home-mobile-menu">
-  <nav class="home-mobile-nav">
+  <nav class="home-mobile-nav" aria-label="Mobile">
     <!-- Solutions accordion -->
     <div class="hh-mob-accordion">
       <button class="hh-mob-acc-trigger" aria-expanded="false">
         Solutions
-        <svg class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="hh-mob-acc-content">
         {solutions.map(s => (
-          <a href={`/solutions/${s.slug}`} class="hh-mob-sub-link">
-            <span class="hh-mob-sub-icon" set:html={s.icon} />
-            {s.name}
+          <a href={`/solutions/${s.slug}/`} class="hh-mob-sub-link">
+            <span class="hh-ico" aria-hidden="true"><MenuIcon name={s.icon} /></span>
+            <span class="hh-mob-sub-label">{s.name}</span>
           </a>
         ))}
-        <a href="/solutions" class="hh-mob-sub-all">View All Solutions →</a>
+        <a href="/solutions/" class="hh-mob-sub-all">View All Solutions →</a>
+      </div>
+    </div>
+
+    <!-- HR Services accordion -->
+    <div class="hh-mob-accordion">
+      <button class="hh-mob-acc-trigger" aria-expanded="false">
+        HR Services
+        <svg aria-hidden="true" class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="hh-mob-acc-content">
+        <span class="hh-mob-sub-group">Core expertise</span>
+        {coreExpertise.map(c => (
+          <a href={c.href} class="hh-mob-sub-link"><span class="hh-mob-sub-label">{c.label}</span></a>
+        ))}
+        {serviceGroups.map(g => (
+          <>
+            <span class="hh-mob-sub-group">{g.label}</span>
+            {g.items.map(s => (
+              <a href={`/services/${s.slug}/`} class="hh-mob-sub-link"><span class="hh-mob-sub-label">{s.short}</span></a>
+            ))}
+          </>
+        ))}
+        <a href="/services/" class="hh-mob-sub-all">View all HR services →</a>
       </div>
     </div>
 
@@ -220,16 +288,16 @@ const navLinks = [
     <div class="hh-mob-accordion">
       <button class="hh-mob-acc-trigger" aria-expanded="false">
         Industries
-        <svg class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="hh-mob-acc-content">
         {industries.map(ind => (
-          <a href={`/industries/${ind.slug}`} class="hh-mob-sub-link">
-            <span class="material-symbols-outlined hh-mob-sub-mat-icon">{ind.icon}</span>
-            {ind.name}
+          <a href={`/industries/${ind.slug}/`} class="hh-mob-sub-link">
+            <span class="hh-ico" aria-hidden="true"><MenuIcon name={ind.icon} /></span>
+            <span class="hh-mob-sub-label">{ind.name}</span>
           </a>
         ))}
-        <a href="/industries" class="hh-mob-sub-all">Explore All Industries →</a>
+        <a href="/industries/" class="hh-mob-sub-all">Explore All Industries →</a>
       </div>
     </div>
 
@@ -237,23 +305,23 @@ const navLinks = [
     <div class="hh-mob-accordion">
       <button class="hh-mob-acc-trigger" aria-expanded="false">
         Resources
-        <svg class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" class="hh-mob-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="hh-mob-acc-content">
         {resourceLinks.map(link => (
           <a href={link.href} class="hh-mob-sub-link">
-            <span class="material-symbols-outlined hh-mob-sub-mat-icon">{link.icon}</span>
-            {link.label}
+            <span class="hh-ico" aria-hidden="true"><MenuIcon name={link.icon} /></span>
+            <span class="hh-mob-sub-label">{link.label}</span>
           </a>
         ))}
-        <a href="/resources" class="hh-mob-sub-all">Visit Resource Center →</a>
+        <a href="/resources/" class="hh-mob-sub-all">Visit Resource Centre →</a>
       </div>
     </div>
 
-    <a href="/about" class:list={['home-mobile-link', { active: currentPath.startsWith('/about') }]}>About</a>
-    <a href="/contact" class:list={['home-mobile-link', { active: currentPath.startsWith('/contact') }]}>Contact</a>
+    <a href="/about/" class:list={['home-mobile-link', { active: currentPath.startsWith('/about') }]}>About</a>
+    <a href="/contact/" class:list={['home-mobile-link', { active: currentPath.startsWith('/contact') }]}>Contact</a>
 
-    <a href="/contact" class="home-cta-btn" style="margin-top: 1rem; width: 100%; text-align: center;">
+    <a href="/contact/" class="home-cta-btn btn-primary" style="margin-top: 1rem; width: 100%; justify-content: center;">
       Book Consultation
     </a>
   </nav>
@@ -271,15 +339,14 @@ const navLinks = [
     z-index: 1000;
     background: transparent;
     border-bottom: 1px solid transparent;
-    transition: all 0.4s ease;
+    transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
   }
 
+  /* Scrolled: the same solid white header as the inner pages (Header.astro) */
   .home-header.scrolled {
-    background: rgba(26, 58, 110, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    background: var(--white);
+    border-bottom-color: rgba(15, 43, 70, 0.08);
+    box-shadow: 0 2px 12px rgba(15, 43, 70, 0.06);
   }
 
   .home-header-inner {
@@ -290,6 +357,11 @@ const navLinks = [
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  /* Same mobile gutter as the page heroes (PageHero) */
+  @media (max-width: 768px) {
+    .home-header-inner { padding: 0 var(--gutter-mobile); }
   }
 
   /* ── Logo ── */
@@ -304,7 +376,15 @@ const navLinks = [
     height: 38px;
     width: auto;
     display: block;
+    grid-area: 1 / 1;
+    transition: opacity 180ms ease, visibility 180ms ease;
   }
+
+  /* Both logos share one grid cell; only one is visible (and exposed) at a time */
+  .home-header-logo { display: grid; }
+  .home-header .logo-on-light,
+  .home-header.scrolled .logo-on-dark { opacity: 0; visibility: hidden; }
+  .home-header.scrolled .logo-on-light { opacity: 1; visibility: visible; }
 
   /* ═══════════════════════════════════════
      NAVIGATION
@@ -325,7 +405,7 @@ const navLinks = [
     gap: 4px;
     font-size: 0.88rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.9);
     padding: 0.5rem 0.9rem;
     border-radius: var(--radius-sm);
     transition: all 0.2s ease;
@@ -339,9 +419,14 @@ const navLinks = [
     background: rgba(255, 255, 255, 0.08);
   }
 
+  /* Active section: same underline state as the menu items (light orange on navy) */
   .home-nav-link.active {
-    color: var(--orange);
+    color: var(--white);
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--orange-light);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
   }
 
   .hh-chevron {
@@ -379,10 +464,27 @@ const navLinks = [
     transform: translateX(-50%) translateY(0);
   }
 
+  /* Escape closes a panel even while hovered or focused */
+  .hh-nav-item.hh-has-mega.mega-dismissed .hh-mega-panel {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: none;
+  }
+
+  /* links inside transition "all", which would keep them visible (and focusable) for a moment */
+  .hh-nav-item.hh-has-mega.mega-dismissed .hh-mega-panel * {
+    transition: none;
+  }
+
+  .home-nav-link[aria-expanded="true"] .hh-chevron {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+
+  /* Opaque: a translucent panel let the hero headline show through */
   .hh-mega-inner {
-    background: rgba(10, 25, 50, 0.95);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background: rgb(10, 25, 50);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -394,7 +496,7 @@ const navLinks = [
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.8px;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.88);
     padding: 1.25rem 1.5rem 0.75rem;
   }
 
@@ -413,31 +515,95 @@ const navLinks = [
     gap: 6px;
     font-size: 0.82rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.88);
     text-decoration: none;
     transition: color 0.2s ease;
   }
 
-  .hh-mega-footer-link:hover {
-    color: var(--orange);
+  /* One hover/active state in every menu: title colour stays, orange underline
+     (--orange-light on navy here, --orange-ink once the header turns white) */
+  .hh-mega-footer-link:hover,
+  .hh-mega-svc-item:hover,
+  .hh-mega-sol-card:hover .hh-mega-sol-name,
+  .hh-mega-ind-item:hover .hh-mega-ind-name,
+  .hh-mega-res-card:hover .hh-mega-res-title,
+  .hh-mega-res-link-item:hover .hh-mega-res-link-label,
+  .hh-mob-sub-link:hover .hh-mob-sub-label,
+  .home-mobile-link:hover,
+  .home-mobile-link.active {
+    color: var(--white);
+    text-decoration: underline;
+    text-decoration-color: var(--orange-light);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 
-  .hh-mega-footer-cta {
-    display: inline-flex;
+  /* Plain line icon, no box: fixed 24px column so the titles line up */
+  .hh-ico {
+    display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--white);
-    background: var(--orange);
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-full);
+    width: 24px;
+    min-width: 24px;
+    color: var(--icon-accent);
+  }
+
+  /* Line icons on navy use the light orange */
+  .hh-mega-inner,
+  .home-mobile-menu {
+    --icon-accent: var(--orange-light);
+  }
+
+  /* ═══════════════════════════════════════
+     HR SERVICES MEGA MENU
+     ═══════════════════════════════════════ */
+  .hh-mega-services {
+    width: 700px;
+  }
+
+  .hh-mega-svc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding: 0 0.75rem 0.75rem;
+  }
+
+  /* Core expertise row above the service columns, same item style, hairline below */
+  .hh-mega-core {
+    padding: 0 0.75rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .hh-mega-core-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .hh-mega-svc-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hh-mega-svc-label {
+    padding: 1.25rem 0.75rem 0.5rem;
+  }
+
+  .hh-mega-svc-item {
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.35;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
     text-decoration: none;
     transition: all 0.2s ease;
   }
 
-  .hh-mega-footer-cta:hover {
-    background: #ff9a4d;
+
+  /* Keep the wide panel inside the viewport on narrow desktops */
+  @media (max-width: 1100px) {
+    .hh-mega-services { width: 520px; }
+    .hh-mega-svc-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* ═══════════════════════════════════════
@@ -464,25 +630,8 @@ const navLinks = [
     transition: all 0.2s ease;
   }
 
-  .hh-mega-sol-card:hover {
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  .hh-mega-sol-icon {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--orange), #ff9a4d);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-  }
-
-  .hh-mega-sol-icon svg {
-    width: 20px;
-    height: 20px;
+  .hh-mega-sol-card .hh-ico {
+    height: 20px; /* centre the icon on the first line of the title */
   }
 
   .hh-mega-sol-text {
@@ -500,13 +649,10 @@ const navLinks = [
 
   .hh-mega-sol-tagline {
     font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.65);
     line-height: 1.4;
   }
 
-  .hh-mega-sol-card:hover .hh-mega-sol-name {
-    color: var(--orange);
-  }
 
   /* ═══════════════════════════════════════
      INDUSTRIES MEGA MENU
@@ -532,39 +678,14 @@ const navLinks = [
     transition: all 0.2s ease;
   }
 
-  .hh-mega-ind-item:hover {
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  .hh-mega-ind-icon {
-    width: 34px;
-    height: 34px;
-    min-width: 34px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px !important;
-    color: var(--orange);
-    transition: all 0.2s ease;
-  }
-
-  .hh-mega-ind-item:hover .hh-mega-ind-icon {
-    background: var(--orange);
-    color: var(--white);
-  }
 
   .hh-mega-ind-name {
     font-size: 0.84rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.88);
     line-height: 1.3;
   }
 
-  .hh-mega-ind-item:hover .hh-mega-ind-name {
-    color: var(--orange);
-  }
 
   /* ═══════════════════════════════════════
      RESOURCES MEGA MENU
@@ -601,9 +722,6 @@ const navLinks = [
     padding: 0.4rem;
   }
 
-  .hh-mega-res-card:hover {
-    background: rgba(255, 255, 255, 0.06);
-  }
 
   .hh-mega-res-img {
     position: relative;
@@ -634,7 +752,7 @@ const navLinks = [
     text-transform: uppercase;
     letter-spacing: 0.8px;
     color: var(--white);
-    background: var(--orange);
+    background: var(--navy);
     padding: 2px 8px;
     border-radius: var(--radius-full);
   }
@@ -650,9 +768,6 @@ const navLinks = [
     overflow: hidden;
   }
 
-  .hh-mega-res-card:hover .hh-mega-res-title {
-    color: var(--orange);
-  }
 
   .hh-mega-res-links {
     min-width: 190px;
@@ -670,31 +785,10 @@ const navLinks = [
     margin: 0 0.5rem;
   }
 
-  .hh-mega-res-link-item:hover {
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  .hh-mega-res-link-icon {
-    font-size: 20px !important;
-    color: var(--orange);
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(244, 121, 32, 0.15);
-    border-radius: 6px;
-  }
-
-  .hh-mega-res-link-item span:not(.material-symbols-outlined) {
+  .hh-mega-res-link-label {
     font-size: 0.84rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.75);
-  }
-
-  .hh-mega-res-link-item:hover span:not(.material-symbols-outlined) {
-    color: var(--orange);
+    color: rgba(255, 255, 255, 0.88);
   }
 
   /* ═══════════════════════════════════════
@@ -715,8 +809,8 @@ const navLinks = [
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--white);
-    background: var(--orange);
-    border: 2px solid var(--orange);
+    background: var(--orange-ink);
+    border: 2px solid var(--orange-ink);
     border-radius: var(--radius-full);
     text-decoration: none;
     transition: all 0.25s ease;
@@ -725,9 +819,9 @@ const navLinks = [
   }
 
   .home-cta-btn:hover {
-    background: transparent;
-    color: var(--orange);
-    border-color: var(--orange);
+    background: var(--orange-ink-dark);
+    border-color: var(--orange-ink-dark);
+    transform: none;
   }
 
   /* ═══════════════════════════════════════
@@ -824,7 +918,7 @@ const navLinks = [
 
   .hh-mob-acc-trigger[aria-expanded="true"] .hh-mob-acc-chevron {
     transform: rotate(180deg);
-    color: var(--orange);
+    color: var(--orange-light);
   }
 
   .hh-mob-acc-content {
@@ -842,43 +936,28 @@ const navLinks = [
     gap: 0.65rem;
     padding: 0.6rem 0.5rem;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.88);
     font-size: 0.92rem;
     font-weight: 500;
     border-radius: var(--radius-sm);
     transition: all 0.2s ease;
   }
 
-  .hh-mob-sub-link:hover {
-    color: var(--orange);
-    background: rgba(255, 255, 255, 0.05);
-  }
 
-  .hh-mob-sub-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    color: var(--orange);
-  }
-
-  .hh-mob-sub-icon svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .hh-mob-sub-mat-icon {
-    font-size: 20px !important;
-    color: var(--orange);
-    width: 28px;
-    text-align: center;
+  .hh-mob-sub-group {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: rgba(255, 255, 255, 0.35);
+    padding: 0.75rem 0.5rem 0.25rem;
   }
 
   .hh-mob-sub-all {
     display: block;
     padding: 0.6rem 0.5rem;
-    color: var(--orange);
+    color: var(--orange-light);
     font-weight: 600;
     font-size: 0.85rem;
     text-decoration: none;
@@ -888,16 +967,86 @@ const navLinks = [
   .home-mobile-link {
     font-size: 1.05rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.88);
     padding: 1rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     transition: color 0.2s ease;
     text-decoration: none;
   }
 
-  .home-mobile-link:hover,
-  .home-mobile-link.active {
-    color: var(--orange);
+
+  /* ═══════════════════════════════════════
+     SCROLLED — light theme, mirrors Header.astro
+     ═══════════════════════════════════════ */
+  .home-header.scrolled .home-nav-link { color: var(--gray-800); }
+  .home-header.scrolled .home-nav-link:hover { color: var(--navy); background: var(--gray-50); }
+  .home-header.scrolled .home-nav-link.active { color: var(--navy); text-decoration-color: var(--orange-ink); }
+
+  .home-header.scrolled .home-mobile-toggle span { background: var(--navy); }
+
+  /* Mega panels */
+  .home-header.scrolled .hh-mega-inner {
+    background: var(--white);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: var(--gray-200);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 0 4px 20px rgba(0, 0, 0, 0.06);
+  }
+  .home-header.scrolled .hh-mega-label { color: var(--gray-500); }
+  .home-header.scrolled .hh-mega-footer { background: var(--gray-50); border-top-color: var(--gray-100); }
+  .home-header.scrolled .hh-mega-footer-link { color: var(--navy); }
+  .home-header.scrolled .hh-mega-inner { --icon-accent: var(--orange-ink); }
+
+  .home-header.scrolled .hh-mega-svc-item { color: var(--navy); }
+  .home-header.scrolled .hh-mega-core { border-bottom-color: var(--gray-100); }
+  .home-header.scrolled .hh-mega-sol-name { color: var(--navy); }
+  .home-header.scrolled .hh-mega-sol-tagline { color: var(--gray-500); }
+  .home-header.scrolled .hh-mega-ind-name { color: var(--navy); }
+  .home-header.scrolled .hh-mega-res-featured { border-right-color: var(--gray-100); }
+  .home-header.scrolled .hh-mega-res-img { background: var(--gray-100); }
+  .home-header.scrolled .hh-mega-res-title { color: var(--navy); }
+  .home-header.scrolled .hh-mega-res-link-label { color: var(--navy); }
+
+  /* Hover/active on white: navy text, orange-ink underline (as in Header.astro) */
+  .home-header.scrolled .hh-mega-footer-link:hover,
+  .home-header.scrolled .hh-mega-svc-item:hover,
+  .home-header.scrolled .hh-mega-sol-card:hover .hh-mega-sol-name,
+  .home-header.scrolled .hh-mega-ind-item:hover .hh-mega-ind-name,
+  .home-header.scrolled .hh-mega-res-card:hover .hh-mega-res-title,
+  .home-header.scrolled .hh-mega-res-link-item:hover .hh-mega-res-link-label,
+  .home-header.scrolled ~ .home-mobile-menu .hh-mob-sub-link:hover .hh-mob-sub-label,
+  .home-header.scrolled ~ .home-mobile-menu .home-mobile-link:hover,
+  .home-header.scrolled ~ .home-mobile-menu .home-mobile-link.active {
+    color: var(--navy);
+    text-decoration-color: var(--orange-ink);
+  }
+
+  /* Mobile menu (sibling of the header) */
+  .home-header.scrolled ~ .home-mobile-menu {
+    background: var(--white);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    --icon-accent: var(--orange-ink);
+  }
+  .home-header.scrolled ~ .home-mobile-menu .hh-mob-accordion { border-bottom-color: var(--gray-100); }
+  .home-header.scrolled ~ .home-mobile-menu .hh-mob-acc-trigger { color: var(--navy); }
+  .home-header.scrolled ~ .home-mobile-menu .hh-mob-acc-chevron { color: var(--gray-400); }
+  .home-header.scrolled ~ .home-mobile-menu .hh-mob-acc-trigger[aria-expanded="true"] .hh-mob-acc-chevron { color: var(--orange-ink); }
+  .home-header.scrolled ~ .home-mobile-menu .hh-mob-sub-link { color: var(--navy); }
+  .home-header.scrolled ~ .home-mobile-menu .hh-mob-sub-all { color: var(--orange-ink); }
+  .home-header.scrolled ~ .home-mobile-menu .hh-mob-sub-group { color: var(--gray-400); }
+  .home-header.scrolled ~ .home-mobile-menu .home-mobile-link { color: var(--navy); border-bottom-color: var(--gray-100); }
+
+  /* Focus ring: light orange on navy (top of page), the global orange-ink on white once scrolled */
+  .home-header:not(.scrolled) :focus-visible,
+  .home-header:not(.scrolled) ~ .home-mobile-menu :focus-visible {
+    outline-color: var(--orange-light) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-header,
+    .home-header-logo .logo-img,
+    .home-nav-link { transition: none; }
   }
 
   /* ═══════════════════════════════════════
@@ -916,10 +1065,14 @@ const navLinks = [
     .home-mobile-menu {
       display: block;
       pointer-events: none;
+      visibility: hidden;
     }
 
     .home-mobile-menu.open {
       pointer-events: all;
+      visibility: visible;
+      /* become visible at once so focus can move into the menu */
+      transition-property: opacity, transform;
     }
   }
 </style>
@@ -927,21 +1080,75 @@ const navLinks = [
 <script>
   // Scroll effect
   const header = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 10) {
-      header?.classList.add('scrolled');
-    } else {
-      header?.classList.remove('scrolled');
-    }
-  });
+  // The homepage always opens at the top of the hero. Without this, browsers
+  // (Brave, Chrome) restore the previous scroll position on reload, the page
+  // opens a few pixels down and the header starts in its white state.
+  // Links to a section (#hash) keep their normal jump.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+
+  // White header as soon as the page is scrolled.
+  const syncScrolled = () => header?.classList.toggle('scrolled', window.scrollY > 10);
+  syncScrolled();
+  window.addEventListener('scroll', syncScrolled, { passive: true });
 
   // Mobile toggle
   const toggle = document.getElementById('home-mobile-toggle');
   const menu = document.getElementById('home-mobile-menu');
+  const setMenu = (open: boolean) => {
+    toggle?.classList.toggle('open', open);
+    menu?.classList.toggle('open', open);
+    toggle?.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
   toggle?.addEventListener('click', () => {
-    toggle.classList.toggle('open');
-    menu?.classList.toggle('open');
-    document.body.style.overflow = menu?.classList.contains('open') ? 'hidden' : '';
+    const open = !menu?.classList.contains('open');
+    setMenu(open);
+    if (open) (menu?.querySelector('a, button') as HTMLElement | null)?.focus();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('open')) {
+      setMenu(false);
+      toggle?.focus();
+    }
+  });
+  // Keep Tab inside the open menu: after its last link, go back to the toggle
+  menu?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || e.shiftKey) return;
+    const links = menu.querySelectorAll('a, button');
+    if (document.activeElement === links[links.length - 1]) {
+      e.preventDefault();
+      toggle?.focus();
+    }
+  });
+
+  // Mega menus: expose open state on the trigger, Escape closes and returns focus
+  document.querySelectorAll('.hh-nav-item.hh-has-mega').forEach((item) => {
+    const trigger = item.querySelector('.home-nav-link') as HTMLElement | null;
+    if (!trigger) return;
+    const isOpen = () => !item.classList.contains('mega-dismissed') && (item.matches(':hover') || item.matches(':focus-within'));
+    const sync = () => requestAnimationFrame(() => trigger.setAttribute('aria-expanded', String(isOpen())));
+    item.addEventListener('mouseenter', () => { item.classList.remove('mega-dismissed'); sync(); });
+    item.addEventListener('mouseleave', () => { item.classList.remove('mega-dismissed'); sync(); });
+    item.addEventListener('focusin', sync);
+    item.addEventListener('focusout', (e) => {
+      if (!item.contains((e as FocusEvent).relatedTarget as Node)) item.classList.remove('mega-dismissed');
+      sync();
+    });
+    item.addEventListener('keydown', (e) => {
+      const key = (e as KeyboardEvent).key;
+      if (key === 'Escape' && isOpen()) {
+        e.preventDefault();
+        item.classList.add('mega-dismissed');
+        void (item as HTMLElement).offsetHeight; // apply the hidden state before the next Tab
+        trigger.focus();
+        sync();
+      } else if (key === 'ArrowDown' && document.activeElement === trigger) {
+        e.preventDefault();
+        item.classList.remove('mega-dismissed');
+        sync();
+      }
+    });
   });
 
   // Mobile accordions

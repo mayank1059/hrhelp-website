@@ -181,7 +181,7 @@
         "desc": "Start speed, pricing and how interim differs from the alternatives."
       }
     },
-    "parentService": "/solutions/hr-teams",
+    "parentService": "/solutions/hr-teams/",
     "parentServiceName": "HR Teams"
   },
   {
@@ -366,7 +366,7 @@
         "desc": "Model comparison, pricing, coverage between days and what comes next."
       }
     },
-    "parentService": "/solutions/hr-teams",
+    "parentService": "/solutions/hr-teams/",
     "parentServiceName": "HR Teams"
   },
   {
@@ -551,7 +551,7 @@
         "desc": "How temporary differs from interim and what we do and do not take over."
       }
     },
-    "parentService": "/solutions/hr-teams",
+    "parentService": "/solutions/hr-teams/",
     "parentServiceName": "HR Teams"
   },
   {
@@ -559,7 +559,7 @@
     "name": "HR Recruitment in the Netherlands",
     "title": "HR Recruitment in the Netherlands",
     "metaDescription": "We find HR professionals for your Dutch entity and set the employment up correctly. Advisory-led search, fixed fee rather than a percentage of salary.",
-    "parentService": "/solutions/hr-settlers",
+    "parentService": "/solutions/hr-settlers/",
     "parentServiceName": "HR Settlers",
     "tagline": "HR hires found, assessed and contracted",
     "hero": "We find HR and people professionals for your Dutch entity, and we build the offer, contract and onboarding once you have chosen one. Advisory-led search on a fixed fee, not a percentage of the salary.",
@@ -744,7 +744,7 @@
     "name": "Interim HR Advisor",
     "title": "Interim HR Advisor in the Netherlands",
     "metaDescription": "Senior Dutch HR and employment law counsel on call, without a permanent hire. One named consultant, fixed monthly fee, start within five working days.",
-    "parentService": "/solutions/hr-teams",
+    "parentService": "/solutions/hr-teams/",
     "parentServiceName": "HR Teams",
     "tagline": "Senior Dutch HR counsel on call",
     "hero": "An interim HR advisor gives you senior Dutch HR and employment law counsel on call, without adding a permanent role to your structure. You get one named consultant who knows your entity, your contracts and your open cases, and who answers within agreed response times.",
@@ -1106,7 +1106,7 @@
         "desc": "Scope, presence, pricing and how the mandate ends."
       }
     },
-    "parentService": "/solutions/hr-teams",
+    "parentService": "/solutions/hr-teams/",
     "parentServiceName": "HR Teams"
   },
   {
@@ -1114,7 +1114,7 @@
     "name": "HR Consultancy for Foreign Companies",
     "title": "HR Consultancy for Foreign Companies",
     "metaDescription": "One senior Dutch consultant runs the people side of your Netherlands operation: contracts, policies, cases and head office reporting. Fixed fee, agreed scope.",
-    "parentService": "/solutions/hr-settlers",
+    "parentService": "/solutions/hr-settlers/",
     "parentServiceName": "HR Settlers",
     "tagline": "Your Dutch HR function, one consultant",
     "hero": "One senior Dutch consultant takes on the people side of your Netherlands operation, from contracts and policies to live cases and head office reporting. You get a local HR function without building one.",
@@ -1476,7 +1476,7 @@
         "desc": "Positioning with staff, authority, casework and what the fee covers."
       }
     },
-    "parentService": "/solutions/hr-teams",
+    "parentService": "/solutions/hr-teams/",
     "parentServiceName": "HR Teams"
   },
   {
@@ -1661,7 +1661,7 @@
         "desc": "Minimum commitment, payroll boundaries and escalation."
       }
     },
-    "parentService": "/solutions/hr-teams",
+    "parentService": "/solutions/hr-teams/",
     "parentServiceName": "HR Teams"
   },
   {
@@ -1669,7 +1669,7 @@
     "name": "HR Compliance for a Dutch Entity",
     "title": "Dutch Entity HR Compliance for Foreign Companies",
     "metaDescription": "A fixed-fee compliance baseline for your Dutch entity: contract clause check, CAO and pension determination, rebuilt policies and a threshold roadmap.",
-    "parentService": "/solutions/hr-reset",
+    "parentService": "/solutions/hr-reset/",
     "parentServiceName": "HR Reset",
     "tagline": "A documented compliance baseline, fixed fee",
     "hero": "We check your Dutch entity against the employment obligations it actually carries, then deliver a written baseline and the corrected documents to match. A defined project with a fixed fee and a finish line.",
@@ -1854,7 +1854,7 @@
     "name": "Dutch Labour Law Advice",
     "title": "Dutch Labour Law Advice for International Employers",
     "metaDescription": "Practical HR-side counsel on live Dutch employment cases: dismissal, absence, restructuring and contractor reviews. Same working day response when urgent.",
-    "parentService": "/solutions/hr-sos",
+    "parentService": "/solutions/hr-sos/",
     "parentServiceName": "HR S.O.S.",
     "tagline": "Practical counsel on live employment cases",
     "hero": "When a Dutch employment decision is already in front of you, we set out your options, what each one is likely to cost and how to run it. HR-side counsel from senior consultants, with a Dutch employment lawyer brought in when the matter needs one.",

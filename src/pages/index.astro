@@ -1,5 +1,26 @@
 ---
 import Layout from '../components/Layout.astro';
+import ServiceLinks from '../components/ServiceLinks.astro';
+import PostCard from '../components/PostCard.astro';
+import { serviceGroups } from '../data/pseo/service-groups.js';
+import { getBlogPosts } from '../lib/wordpress';
+
+// Latest from the blog: the 3 newest WordPress posts, each linking to its own article.
+const blogFallbackImage = '/images/sections/team-meeting.jpg';
+const latestPosts = (await getBlogPosts())
+  .map((p) => ({ ...p, ts: Date.parse(p.date) || 0 }))
+  .sort((a, b) => b.ts - a.ts)
+  .slice(0, 4);
+
+// Stroke icons for the specialist services band, keyed by group.icon.
+const svcGroupIcons: Record<string, string> = {
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  user: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/>',
+};
+
+// Five small rating stars for the testimonial cards (decorative; the wrapper carries the label).
+const starsSvg = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg>'.repeat(5);
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
@@ -11,9 +32,9 @@ const localBusinessSchema = {
   "email": "info@hrhelp.nl",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Televisieweg 2",
+    "streetAddress": "Oeverwalweg 3",
     "addressLocality": "Almere",
-    "postalCode": "1322 AC",
+    "postalCode": "1332 CG",
     "addressCountry": "NL"
   },
   "openingHoursSpecification": {
@@ -26,419 +47,203 @@ const localBusinessSchema = {
   "description": "Expert HR consulting for international companies in the Netherlands. Employment law, payroll, compliance, talent acquisition.",
   "knowsAbout": ["Dutch Employment Law", "30% Ruling", "HR Consulting", "Payroll", "Restructuring", "Sickness Management"]
 };
+
+// The homepage explainer video (rendered as its own JSON-LD block, after the existing ones).
+const videoSchema = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "What is HRhelp?",
+  "description": "HRhelp is the HR partner in the Netherlands for international employers, with four solutions for four situations, specialists you can book on their own, senior consultants and fixed prices agreed upfront.",
+  "thumbnailUrl": "https://www.hrhelp.nl/videos/what-is-hrhelp-poster.jpg",
+  "uploadDate": "2026-09-28",
+  "duration": "PT1M3S",
+  "contentUrl": "https://www.hrhelp.nl/videos/what-is-hrhelp-1080p.mp4"
+};
 ---
 
-<Layout title="Your HR Partner in the Netherlands" description="Expert HR consulting for international companies in the Netherlands. Employment law, payroll, compliance, talent acquisition — all handled by Dutch HR experts." homeHeader={true} schema={localBusinessSchema}>
+<Layout title="Your HR Partner in the Netherlands" description="Expert HR consulting for international companies in the Netherlands. Employment law, payroll, compliance, talent acquisition, all handled by Dutch HR experts." homeHeader={true} schema={[localBusinessSchema, videoSchema]}>
 
 <!-- Hero Section -->
 <section class="hero">
-  <div class="hero-bg"></div>
   <div class="hero-content">
-    <div class="hero-panel glass-panel animate-fade-in-up">
-      <span class="eyebrow-badge animate-fade-in-up">Premium HR Consulting</span>
+    <div class="hero-panel animate-fade-in-up">
+      <span class="hero-eyebrow animate-fade-in-up">Premium HR Consulting</span>
       <h1 class="animate-fade-in-up animate-delay-1">Your HR Partner in the <span class="text-orange">Netherlands</span></h1>
-      <p class="hero-desc animate-fade-in-up animate-delay-2">From hiring your first employee to managing a full Dutch workforce — we handle the HR so you can focus on growth.</p>
+      <p class="hero-desc animate-fade-in-up animate-delay-2">From hiring your first employee to managing a full Dutch workforce, we handle the HR so you can focus on growth.</p>
       <div class="hero-buttons animate-fade-in-up animate-delay-3">
-        <a href="/contact#book" class="btn btn-primary btn-lg">
+        <a href="/contact/#book" class="btn btn-primary btn-lg">
           Book a Free Consultation
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <button type="button" class="btn btn-secondary btn-lg" id="hero-wp-btn" style="cursor:pointer; display:inline-flex; align-items:center; gap:0.4rem;">
-          <span class="material-symbols-outlined" style="font-size:18px;">download</span>
-          Download Free Guide
+      </div>
+      <ul class="hero-stats animate-fade-in-up animate-delay-4">
+        <li>
+          <a href="/expertise/leadership-training/">
+            <span class="stat-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg></span>
+            <span class="stat-text">
+            <span class="stat-label">TRAINING</span>
+            <strong>Leadership</strong>
+            </span>
+            <span class="stat-arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+        <li>
+          <a href="/expertise/restructuring/">
+            <span class="stat-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M6 17V9a4 4 0 0 1 4-4h6"/><path d="M6 13h8a4 4 0 0 1 4 4v2"/></svg></span>
+            <span class="stat-text">
+            <span class="stat-label">RESTRUCTURING</span>
+            <strong>Reorganisations</strong>
+            </span>
+            <span class="stat-arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+        <li>
+          <a href="/expertise/sickness-management/">
+            <span class="stat-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/><path d="M3.5 12h4l2-3 3 6 2-3h6"/></svg></span>
+            <span class="stat-text">
+            <span class="stat-label">SICKNESS</span>
+            <strong>Sick leave</strong>
+            </span>
+            <span class="stat-arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="/images/home/hero-cornelis-team.jpg" srcset="/images/home/hero-cornelis-team-720.jpg 720w, /images/home/hero-cornelis-team.jpg 1200w" sizes="(max-width: 900px) calc(100vw - 2rem), min(42vw, 600px)" alt="Cornelis Leerlooijer, founder of HRhelp, talking with his team at the HRhelp office" width="1200" height="1500" fetchpriority="high" loading="eager" />
+  </div>
+</section>
+
+
+<!-- Two core offers: what a visitor can buy, right under the hero -->
+<section class="promises section-cream" aria-labelledby="promises-title">
+  <div class="container">
+    <div class="promises-head">
+      <div>
+        <span class="eyebrow">Where most conversations start</span>
+        <h2 id="promises-title">Two things we are often asked for</h2>
+      </div>
+      <a href="/contact/" class="btn btn-primary">Book a Free Consultation</a>
+    </div>
+    <div class="promises-grid">
+      <article class="promise-card">
+        <div class="promise-kicker">
+          <svg class="promise-ico" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+          <span>Employing people in the Netherlands</span>
+        </div>
+        <h3>Practical guidance on HR in the Netherlands</h3>
+        <p>Clear answers on Dutch employment law and day-to-day HR: contracts, probation, leave, works councils and dismissals. We tell you what applies to your company and what to do next.</p>
+        <div class="promise-actions">
+          <a href="/solutions/hr-teams/" class="btn btn-secondary">See how it works →</a>
+          <a href="/guides/" class="link-arrow">Browse our employer guides</a>
+        </div>
+      </article>
+      <article class="promise-card">
+        <div class="promise-kicker">
+          <svg class="promise-ico" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span>Sick employees</span>
+        </div>
+        <h3>Sickness management in the Netherlands</h3>
+        <p>We guide each sickness case from the first sick report to return to work, meet every deadline of the Gatekeeper Act (Wet Poortwachter) and keep the UWV file complete. From €250 per month.</p>
+        <div class="promise-actions">
+          <a href="https://go.hrhelp.nl/sickness-case-management/" class="btn btn-secondary">See how it works →</a>
+          <a href="/guides/dutch-sick-leave-management/" class="link-arrow">Employer guide to Dutch sick leave</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Explainer video: click-to-play facade. Nothing (no mp4) loads until the visitor clicks play.
+     Captions are burned into the video itself, so no <track> element is needed. -->
+<section class="home-video section-white" aria-label="Video: What is HRhelp?">
+  <div class="container">
+    <div class="home-video-inner">
+      <div class="home-video-head">
+        <div>
+          <p class="eyebrow">In 60 seconds</p>
+          <p class="home-video-lead">What HRhelp does, in one minute</p>
+        </div>
+        <p class="home-video-note">Who we help, our four solutions and how pricing works. Captions are on, so it works with the sound off.</p>
+        <ul class="home-video-points">
+          <li><span class="hv-num" aria-hidden="true">01</span>The HR you take on when you hire in the Netherlands</li>
+          <li><span class="hv-num" aria-hidden="true">02</span>Four solutions, from market entry to HR emergencies</li>
+          <li><span class="hv-num" aria-hidden="true">03</span>Senior consultants and a fixed price, agreed upfront</li>
+        </ul>
+        <div class="home-video-actions">
+          <a href="/contact/#book" class="btn btn-primary">Book a Free Consultation</a>
+          <a href="/solutions/" class="home-video-link">Explore our solutions <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+      <div class="home-video-frame">
+        <button type="button" class="home-video-facade" aria-label="Play video: What is HRhelp (1 minute)" data-src-720="/videos/what-is-hrhelp-720p.mp4" data-src-1080="/videos/what-is-hrhelp-1080p.mp4" data-poster="/videos/what-is-hrhelp-poster.jpg">
+          <picture>
+            <source type="image/webp" srcset="/videos/what-is-hrhelp-poster-960.webp 960w, /videos/what-is-hrhelp-poster.webp 1600w" sizes="(max-width: 1024px) calc(100vw - 2rem), 880px" />
+            <img src="/videos/what-is-hrhelp-poster.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async" />
+          </picture>
+          <span class="home-video-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+          </span>
+          <span class="home-video-duration" aria-hidden="true">1:03</span>
         </button>
       </div>
-      <div class="hero-trust animate-fade-in-up animate-delay-4">
-        <div class="trust-logos">
-          <div class="trust-logo-circle">
-            <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="white" font-weight="800" font-size="10" font-family="Inter, Arial, sans-serif">LG</text></svg>
-          </div>
-          <div class="trust-logo-circle">
-            <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="white" font-weight="700" font-size="7" font-family="Inter, Arial, sans-serif">LIME</text></svg>
-          </div>
-          <div class="trust-logo-circle">
-            <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="white" font-weight="800" font-size="5.5" font-family="Inter, Arial, sans-serif">SANDVIK</text></svg>
-          </div>
-          <div class="trust-logo-circle trust-logo-more">+5</div>
-        </div>
-        <div>
-          <strong>Trusted by 75+</strong>
-          <span>International Companies</span>
-        </div>
-      </div>
-    </div>
-    <div class="hero-badges">
-      <a href="/resources/expertise/leadership-training" class="hero-badge" style="text-decoration:none;">
-        <div class="badge-icon badge-green">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>
-        </div>
-        <div>
-          <span class="badge-label">TRAINING</span>
-          <strong>Leadership Development</strong>
-        </div>
-      </a>
-      <a href="/resources/expertise/restructuring" class="hero-badge hero-badge-bottom" style="text-decoration:none;">
-        <div class="badge-icon badge-blue">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="11" x2="19" y2="17"/></svg>
-        </div>
-        <div>
-          <span class="badge-label">RESULT</span>
-          <strong>50% Restructuring Savings</strong>
-        </div>
-      </a>
-      <a href="/resources/expertise/sickness-management" class="hero-badge hero-badge-third" style="text-decoration:none;">
-        <div class="badge-icon" style="background: rgba(34,197,94,0.15); color: #22c55e;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </div>
-        <div>
-          <span class="badge-label">IMPACT</span>
-          <strong>€500K Saved on Absence</strong>
-        </div>
-      </a>
     </div>
   </div>
 </section>
 
-<!-- Client Logos Section -->
-<section class="client-logos">
-  <div class="container">
-    <p class="logos-label">Trusted by teams at leading organizations worldwide</p>
-    <div class="logos-track">
-      <div class="logos-slide">
-        <!-- Viacom -->
-        <div class="logo-item">
-          <svg viewBox="0 0 140 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="3">VIACOM</text></svg>
-        </div>
-        <!-- Lime -->
-        <div class="logo-item">
-          <svg viewBox="0 0 90 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="24">Lime</text></svg>
-        </div>
-        <!-- LG -->
-        <div class="logo-item">
-          <svg viewBox="0 0 50 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="24" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="26">LG</text></svg>
-        </div>
-        <!-- Gate Gourmet -->
-        <div class="logo-item">
-          <svg viewBox="0 0 180 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="22" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="18" letter-spacing="1">GateGourmet</text></svg>
-        </div>
-        <!-- Harman -->
-        <div class="logo-item">
-          <svg viewBox="0 0 140 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="2">HARMAN</text></svg>
-        </div>
-        <!-- C.H. Robinson -->
-        <div class="logo-item">
-          <svg viewBox="0 0 200 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="20" letter-spacing="1">C.H. ROBINSON</text></svg>
-        </div>
-        <!-- Sandvik -->
-        <div class="logo-item">
-          <svg viewBox="0 0 140 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="23" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="2">SANDVIK</text></svg>
-        </div>
-        <!-- China Eastern -->
-        <div class="logo-item">
-          <svg viewBox="0 0 200 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><text x="0" y="22" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="17" letter-spacing="1">CHINA EASTERN</text></svg>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<script is:inline>
+  // Swap the poster facade for a real <video> on click. The source is picked by viewport width
+  // (720p on small screens, 1080p otherwise) and playback starts with sound, since the click is a user gesture.
+  (function () {
+    var facade = document.querySelector('.home-video-facade');
+    if (!facade) return;
+    facade.addEventListener('click', function () {
+      var small = window.matchMedia('(max-width: 768px)').matches;
+      var img = facade.querySelector('img');
+      var video = document.createElement('video');
+      video.controls = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.preload = 'none';
+      video.poster = (img && img.currentSrc) || facade.dataset.poster;
+      video.setAttribute('aria-label', 'What is HRhelp? (1 minute video)');
+      var order = small ? ['720', '1080'] : ['1080', '720'];
+      order.forEach(function (q) {
+        var s = document.createElement('source');
+        s.src = facade.getAttribute('data-src-' + q);
+        s.type = 'video/mp4';
+        video.appendChild(s);
+      });
+      var track = function (name) {
+        if (typeof gtag === 'function') gtag('event', name, { video_title: 'What is HRhelp' });
+      };
+      var started = false;
+      video.addEventListener('play', function () {
+        if (!started) { started = true; track('video_start'); }
+      });
+      video.addEventListener('ended', function () { track('video_complete'); });
+      facade.replaceWith(video);
+      video.focus();
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});
+    }, { once: true });
+  })();
+</script>
 
-<!-- What We Handle Section -->
-<section class="what-we-handle section-navy">
+<!-- Founder: a face and a voice early on the page -->
+<section class="founder-note section-white motif-map">
   <div class="container">
-    <div class="handle-header">
+    <figure class="founder-note-inner">
+      <img src="/images/home/cornelis-candid-face.jpg" alt="Cornelis Leerlooijer, founder of HRHelp" class="founder-note-photo" width="320" height="320" loading="lazy" decoding="async" />
       <div>
-        <span class="eyebrow" style="color: var(--orange);">What We Handle</span>
-        <h2>Every Aspect of Dutch HR, Covered</h2>
+        <blockquote class="founder-note-quote">“I saw first-hand how international companies struggled with the rigid nature of Dutch HR. We founded HRHelp.nl to provide a bridge: clear, strategic, and deeply localized support.”</blockquote>
+        <figcaption class="founder-note-cap">
+          <span><strong>Cornelis Leerlooijer</strong>, founder</span>
+          <a href="/about/" class="link-arrow">More about Cornelis and HRHelp →</a>
+        </figcaption>
       </div>
-      <p>From day-to-day compliance to complex employment law — we take it all off your plate.</p>
-    </div>
-    <div class="handle-carousel">
-      <div class="handle-track">
-
-        <div class="handle-card">
-          <div class="handle-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          </div>
-          <h4>Sickness Management</h4>
-          <p>Navigate the Dutch 2-year sick leave obligation, Wet Poortwachter compliance, and reintegration processes.</p>
-        </div>
-
-        <div class="handle-card">
-          <div class="handle-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v4M12 19v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M1 12h4M19 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-          </div>
-          <h4>30% Ruling</h4>
-          <p>Maximize tax benefits for expat employees with specialized application processing and eligibility assessment.</p>
-        </div>
-
-        <div class="handle-card">
-          <div class="handle-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </div>
-          <h4>Employment Contracts</h4>
-          <p>Ironclad agreements fully compliant with Dutch law and Collective Labour Agreements (CAO).</p>
-        </div>
-
-        <div class="handle-card">
-          <div class="handle-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          </div>
-          <h4>HR Policies</h4>
-          <p>Employee handbooks, leave policies, remote work agreements, and workplace regulations tailored to NL law.</p>
-        </div>
-
-        <div class="handle-card">
-          <div class="handle-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          </div>
-          <h4>Training & Development</h4>
-          <p>Compliance training, cultural integration workshops, and management development programs.</p>
-        </div>
-
-        <div class="handle-card">
-          <div class="handle-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          </div>
-          <h4>Payroll Management</h4>
-          <p>End-to-end Dutch payroll, tax withholding, holiday allowance, pension contributions, and year-end reporting.</p>
-        </div>
-
-        <div class="handle-card">
-          <div class="handle-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-          </div>
-          <h4>Dismissal Procedures</h4>
-          <p>UWV and court-based dismissals, settlement agreements (vaststellingsovereenkomst), and transition payments.</p>
-        </div>
-
-        <div class="handle-card">
-          <div class="handle-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
-          </div>
-          <h4>Compliance Audits</h4>
-          <p>Full HR compliance review against Dutch employment law, GDPR, and industry-specific regulations.</p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Services Section -->
-<section class="services section-white">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow">Our Solutions</span>
-      <h2>Tailored HR Support for<br/>Every Stage of Your Journey</h2>
-      <p>From market entry to full HR outsourcing, we have you covered.</p>
-    </div>
-    <div class="services-grid">
-      <a href="/solutions/hr-settlers" class="service-card-v2">
-        <div class="sv2-illus-wrap sv2-illus-navy">
-          <img src="/images/illus-settlers.png" alt="HR Settlers" class="sv2-illus" />
-        </div>
-        <div class="sv2-content">
-          <h3>HR Settlers</h3>
-          <span class="sv2-badge">Market Entry</span>
-          <p>Complete HR setup for companies opening their first Netherlands office — from entity registration to your first hire.</p>
-          <span class="sv2-link">Learn More →</span>
-        </div>
-      </a>
-
-      <a href="/solutions/hr-teams" class="service-card-v2">
-        <div class="sv2-illus-wrap sv2-illus-blue">
-          <img src="/images/illus-teams.png" alt="HR Teams" class="sv2-illus" />
-        </div>
-        <div class="sv2-content">
-          <h3>HR Teams</h3>
-          <span class="sv2-badge">Outsourced HR</span>
-          <p>Your dedicated HR department. From employee relations and policy development to strategic HR planning.</p>
-          <span class="sv2-link">Learn More →</span>
-        </div>
-      </a>
-
-      <a href="/solutions/hr-reset" class="service-card-v2">
-        <div class="sv2-illus-wrap sv2-illus-orange">
-          <img src="/images/illus-reset.png" alt="HR Reset" class="sv2-illus" />
-        </div>
-        <div class="sv2-content">
-          <h3>HR Reset</h3>
-          <span class="sv2-badge">Transformation</span>
-          <p>Audit and modernize your existing HR. Fix compliance gaps, update contracts, and optimize your processes.</p>
-          <span class="sv2-link">Learn More →</span>
-        </div>
-      </a>
-
-      <a href="/solutions/hr-sos" class="service-card-v2">
-        <div class="sv2-illus-wrap sv2-illus-red">
-          <img src="/images/illus-sos.png" alt="HR S.O.S." class="sv2-illus" />
-        </div>
-        <div class="sv2-content">
-          <h3>HR S.O.S.</h3>
-          <span class="sv2-badge sv2-badge-red">Urgent Support</span>
-          <p>Same-day response for HR emergencies — dismissal procedures, workplace conflicts, and legal disputes.</p>
-          <span class="sv2-link">Learn More →</span>
-        </div>
-      </a>
-    </div>
-    <p class="services-cta-text">Not sure which solution fits? <a href="/contact" class="link-arrow">Book a free discovery call →</a></p>
-  </div>
-</section>
-
-<!-- Industries Section -->
-<section class="industries section-navy">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow" style="color: var(--orange);">Industry Expertise</span>
-      <h2>Specialized HR for Your Sector</h2>
-      <p>Deep vertical expertise for the industries that call the Netherlands home.</p>
-    </div>
-    <div class="industries-grid">
-      <a href="/industries/technology" class="industry-card">
-        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-        <h4>Technology & Startups</h4>
-        <p>Seed to scale-up HR. Stock options, tech talent acquisition, rapid growth support.</p>
-      </a>
-      <a href="/industries/life-sciences" class="industry-card">
-        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg></div>
-        <h4>Life Sciences & Pharma</h4>
-        <p>Compliance-focused for regulated industries. R&D tax benefits, clinical workforce.</p>
-      </a>
-      <a href="/industries/finance" class="industry-card">
-        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-        <h4>Finance & Fintech</h4>
-        <p>AFM/DNB compliance, executive compensation, banking-grade HR governance.</p>
-      </a>
-      <a href="/industries/professional-services" class="industry-card">
-        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-        <h4>Professional Services</h4>
-        <p>Consulting, legal, and advisory firms. Partnership structures, billable workforce.</p>
-      </a>
-      <a href="/industries/logistics" class="industry-card">
-        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-        <h4>Logistics & Supply Chain</h4>
-        <p>Distribution centers, shift workers, temporary labor, port operations HR.</p>
-      </a>
-      <a href="/industries/ngo" class="industry-card">
-        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg></div>
-        <h4>NGO & Non-Profit</h4>
-        <p>Non-profit employment rules, volunteer management, grant-funded positions.</p>
-      </a>
-      <a href="/industries/manufacturing" class="industry-card">
-        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M5 20V8l5 4V8l5 4V4l5 4v12"/></svg></div>
-        <h4>Greenfield & Manufacturing</h4>
-        <p>New facility HR setup, production workforce, CLA negotiations, works councils.</p>
-      </a>
-      <a href="/industries/industrial" class="industry-card">
-        <div class="icon-box icon-box-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
-        <h4>Production & Industrial</h4>
-        <p>Health & safety compliance, union relations, blue-collar recruitment.</p>
-      </a>
-    </div>
-    <div class="industries-cta">
-      <a href="/industries" class="btn btn-ghost">See how we've helped companies in your industry →</a>
-    </div>
-  </div>
-</section>
-
-<!-- Process Section -->
-<section class="process section-cream">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow">Our Process</span>
-      <h2>Seamless Integration Roadmap</h2>
-      <p>From first conversation to ongoing partnership, here's how we work.</p>
-    </div>
-    <div class="process-steps">
-      <div class="process-step">
-        <div class="step-number">01</div>
-        <div class="icon-box icon-box-lg">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <h4>Discovery Call</h4>
-        <p>Free 30-minute call to understand your business, timeline, and specific HR needs.</p>
-        <span class="step-time">Day 1</span>
-      </div>
-      <div class="process-connector"></div>
-      <div class="process-step">
-        <div class="step-number">02</div>
-        <div class="icon-box icon-box-lg">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <h4>Custom Proposal</h4>
-        <p>Detailed proposal with scope, timeline, and fixed pricing. No surprises, no hidden fees.</p>
-        <span class="step-time">Within 48 hours</span>
-      </div>
-      <div class="process-connector"></div>
-      <div class="process-step">
-        <div class="step-number">03</div>
-        <div class="icon-box icon-box-lg">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        </div>
-        <h4>Implementation</h4>
-        <p>Dedicated consultant executes your HR solution. Regular updates, full transparency.</p>
-        <span class="step-time">Starts immediately</span>
-      </div>
-      <div class="process-connector"></div>
-      <div class="process-step">
-        <div class="step-number">04</div>
-        <div class="icon-box icon-box-lg">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-        </div>
-        <h4>Ongoing Support</h4>
-        <p>Continuous partnership with quarterly reviews, policy updates, and priority access.</p>
-        <span class="step-time">Ongoing</span>
-      </div>
-    </div>
-    <div class="process-cta">
-      <a href="/contact" class="btn btn-primary btn-lg">Start Your Journey →</a>
-      <span class="process-phone">Or call us directly: <strong>+31 85 760 8188</strong></span>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="testimonials section-navy">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow" style="color: var(--orange);">Client Voices</span>
-      <h2>Trusted by International Companies</h2>
-    </div>
-    <div class="testimonial-grid">
-      <div class="testimonial-card glass-panel">
-        <div class="quote-author">
-          <div class="author-avatar" style="background: linear-gradient(135deg, #0F2B46, #2c6fa0);">SM</div>
-          <div>
-            <strong>Sarah Mitchell</strong>
-            <span>CEO, TechStart GH</span>
-          </div>
-        </div>
-        <div class="quote-stars">★★★★★</div>
-        <p class="quote-text">"HRHelp made our move to Amsterdam seamless. Their knowledge of local laws saved us months of potential delays."</p>
-      </div>
-      <div class="testimonial-card glass-panel">
-        <div class="quote-author">
-          <div class="author-avatar" style="background: linear-gradient(135deg, #0d7377, #14a3a8);">MW</div>
-          <div>
-            <strong>Marcus Weber</strong>
-            <span>HR Director, Global ISR</span>
-          </div>
-        </div>
-        <div class="quote-stars">★★★★★</div>
-        <p class="quote-text">"The cultural onboarding workshops were a game changer for our US team relocating to the Netherlands."</p>
-      </div>
-      <div class="testimonial-card glass-panel">
-        <div class="quote-author">
-          <div class="author-avatar" style="background: linear-gradient(135deg, #6c3483, #a569bd);">LS</div>
-          <div>
-            <strong>Lisa Schmidt</strong>
-            <span>Founder, DataSystems</span>
-          </div>
-        </div>
-        <div class="quote-stars">★★★★★</div>
-        <p class="quote-text">"Professional, efficient, and deeply knowledgeable about the 30% ruling application process."</p>
-      </div>
-    </div>
+    </figure>
   </div>
 </section>
 
@@ -448,41 +253,43 @@ const localBusinessSchema = {
     <div class="wp-cta-grid">
       <!-- Left: Book Cover -->
       <div class="wp-cta-visual">
-        <div class="wp-cta-glow"></div>
-        <img src="/images/whitepaper-cover.png" alt="HR Rules & Regulations 2026 Whitepaper" class="wp-cta-book" />
+        <picture>
+          <source srcset="/images/whitepaper/whitepaper-photo.webp" type="image/webp" />
+          <img src="/images/whitepaper/whitepaper-photo.jpg" alt="A printed copy of the HR Rules &amp; Regulations 2026 guide on a wooden desk" class="wp-cta-book" width="640" height="640" loading="lazy" decoding="async" />
+        </picture>
       </div>
 
       <!-- Right: Content + Form -->
       <div class="wp-cta-content">
         <span class="wp-cta-badge">FREE DOWNLOAD</span>
-        <h2>The Most Important <span class="text-orange">HR Rules &amp; Regulations</span> in 2026</h2>
-        <p>Stay compliant with the latest Dutch employment laws. This comprehensive guide covers everything you need to know — from contract requirements to sickness protocols.</p>
+        <h2>The Most Important HR Rules &amp; Regulations in 2026</h2>
+        <p>Stay compliant with the latest Dutch employment laws. This guide covers what you need to know, from contract requirements to sickness protocols.</p>
         
         <div class="wp-cta-features">
           <div class="wp-cta-feature">
-            <span class="material-symbols-outlined">gavel</span>
+            <span class="material-symbols-outlined" aria-hidden="true">gavel</span>
             <span>2026 Employment Law Updates</span>
           </div>
           <div class="wp-cta-feature">
-            <span class="material-symbols-outlined">description</span>
+            <span class="material-symbols-outlined" aria-hidden="true">description</span>
             <span>Contract & Termination Rules</span>
           </div>
           <div class="wp-cta-feature">
-            <span class="material-symbols-outlined">medical_services</span>
+            <span class="material-symbols-outlined" aria-hidden="true">medical_services</span>
             <span>Sickness & Leave Protocols</span>
           </div>
           <div class="wp-cta-feature">
-            <span class="material-symbols-outlined">euro</span>
+            <span class="material-symbols-outlined" aria-hidden="true">euro</span>
             <span>Salary & Benefits Regulations</span>
           </div>
         </div>
 
         <form id="whitepaper-form" class="wp-cta-form">
           <div class="wp-cta-form-row">
-            <input type="text" name="name" placeholder="Your full name" required />
-            <input type="email" name="email" placeholder="Work email" required />
-            <button type="submit" class="btn btn-primary" id="wp-download-btn">
-              <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+            <input type="text" name="name" placeholder="Your full name" aria-label="Your full name" autocomplete="name" required />
+            <input type="email" name="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required />
+            <button type="submit" class="btn btn-accent" id="wp-download-btn">
+              <span class="material-symbols-outlined" aria-hidden="true" style="font-size:18px;">download</span>
               Download Free Guide
             </button>
           </div>
@@ -492,10 +299,324 @@ const localBusinessSchema = {
             <label for="wp-url-confirm">Your website</label>
             <input type="text" id="wp-url-confirm" name="url_confirm" tabindex="-1" autocomplete="off" />
           </div>
-          <div id="wp-form-status" style="display:none; padding: 0.6rem; border-radius: 8px; margin-top: 0.75rem; font-size: 0.85rem;"></div>
-          <p class="wp-cta-disclaimer">No spam. We respect your privacy. Unsubscribe anytime.</p>
+          <label class="wp-cta-consent">
+            <input type="checkbox" name="marketing_consent" />
+            <span>Also send me occasional HR updates. You can unsubscribe at any time.</span>
+          </label>
+          <div id="wp-form-status" role="status" aria-live="polite" style="display:none; padding: 0.6rem; border-radius: 8px; margin-top: 0.75rem; font-size: 0.85rem;"></div>
+          <p class="wp-cta-disclaimer">No spam. We respect your privacy.</p>
         </form>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- What We Handle Section -->
+<section class="what-we-handle section-white">
+  <div class="container">
+    <div class="handle-header">
+      <div>
+        <span class="eyebrow">What We Handle</span>
+        <h2>Every Aspect of Dutch HR, Covered</h2>
+      </div>
+      <p>From day-to-day compliance to complex employment law, we take it all off your plate.</p>
+    </div>
+    <div class="handle-carousel">
+      <div class="handle-track" tabindex="0" role="region" aria-label="What we handle">
+
+        <div class="handle-card">
+          <svg class="handle-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <h3 class="as-h4">Sickness Management</h3>
+          <p>Navigate the Dutch 2-year sick leave obligation, Wet Poortwachter compliance, and reintegration processes.</p>
+        </div>
+
+        <div class="handle-card">
+          <svg class="handle-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v4M12 19v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M1 12h4M19 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          <h3 class="as-h4">30% Ruling</h3>
+          <p>Maximize tax benefits for expat employees with specialized application processing and eligibility assessment.</p>
+        </div>
+
+        <div class="handle-card">
+          <svg class="handle-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <h3 class="as-h4">Employment Contracts</h3>
+          <p>Ironclad agreements fully compliant with Dutch law and Collective Labour Agreements (CAO).</p>
+        </div>
+
+        <div class="handle-card">
+          <svg class="handle-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <h3 class="as-h4">HR Policies</h3>
+          <p>Employee handbooks, leave policies, remote work agreements, and workplace regulations tailored to NL law.</p>
+        </div>
+
+        <div class="handle-card">
+          <svg class="handle-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <h3 class="as-h4">Training & Development</h3>
+          <p>Compliance training, cultural integration workshops, and management development programs.</p>
+        </div>
+
+        <div class="handle-card">
+          <svg class="handle-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <h3 class="as-h4">Payroll Management</h3>
+          <p>End-to-end Dutch payroll, tax withholding, holiday allowance, pension contributions, and year-end reporting.</p>
+        </div>
+
+        <div class="handle-card">
+          <svg class="handle-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <h3 class="as-h4">Dismissal Procedures</h3>
+          <p>UWV and court-based dismissals, settlement agreements (vaststellingsovereenkomst), and transition payments.</p>
+        </div>
+
+        <div class="handle-card">
+          <svg class="handle-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
+          <h3 class="as-h4">Compliance Audits</h3>
+          <p>Full HR compliance review against Dutch employment law, GDPR, and industry-specific regulations.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="services section-cream">
+  <div class="container">
+    <div class="compact-head">
+      <div>
+        <span class="eyebrow">Our Solutions</span>
+        <h2>HR Support for<br/>Every Stage of Your Business</h2>
+      </div>
+      <div class="compact-head-aside">
+        <p>From market entry to full HR outsourcing.</p>
+        <p class="services-cta-text">Not sure which fits? <a href="/contact/" class="link-arrow">Book a free discovery call →</a></p>
+      </div>
+    </div>
+    <div class="services-grid">
+      <a href="/solutions/hr-settlers/" class="service-card-v2">
+        <div class="sv2-photo">
+          <picture>
+            <source srcset="/images/solutions-illus/style1-final-settlers.webp" type="image/webp" />
+            <img src="/images/solutions-illus/style1-final-settlers.png" alt="Illustration: a professional kneels on a small map of the Netherlands, planting a Dutch flag beside her briefcase" width="800" height="800" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <div class="sv2-content">
+          <h3>HR Settlers</h3>
+          <span class="sv2-badge">Market Entry</span>
+          <p>Complete HR setup for companies opening their first Netherlands office, from entity registration to your first hire.</p>
+          <span class="sv2-link">Learn More →</span>
+        </div>
+      </a>
+
+      <a href="/solutions/hr-teams/" class="service-card-v2">
+        <div class="sv2-photo">
+          <picture>
+            <source srcset="/images/solutions-illus/style1-final-teams.webp" type="image/webp" />
+            <img src="/images/solutions-illus/style1-final-teams.png" alt="Illustration: five colleagues stand together, sharing a laptop and a clipboard" width="800" height="800" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <div class="sv2-content">
+          <h3>HR Teams</h3>
+          <span class="sv2-badge">Outsourced HR</span>
+          <p>Your dedicated HR department. From employee relations and policy development to strategic HR planning.</p>
+          <span class="sv2-link">Learn More →</span>
+        </div>
+      </a>
+
+      <a href="/solutions/hr-reset/" class="service-card-v2">
+        <div class="sv2-photo">
+          <picture>
+            <source srcset="/images/solutions-illus/style1-final-reset.webp" type="image/webp" />
+            <img src="/images/solutions-illus/style1-final-reset.png" alt="Illustration: a person rebuilds a stack of blocks under a circular refresh arrow" width="800" height="800" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <div class="sv2-content">
+          <h3>HR Reset</h3>
+          <span class="sv2-badge">Transformation</span>
+          <p>Audit and modernise your existing HR. Fix compliance gaps, update contracts, and optimise your processes.</p>
+          <span class="sv2-link">Learn More →</span>
+        </div>
+      </a>
+
+      <a href="/solutions/hr-sos/" class="service-card-v2">
+        <div class="sv2-photo">
+          <picture>
+            <source srcset="/images/solutions-illus/style1-final-sos.webp" type="image/webp" />
+            <img src="/images/solutions-illus/style1-final-sos.png" alt="Illustration: a consultant runs to help, carrying a life ring, next to a stopwatch and an exclamation mark" width="800" height="800" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <div class="sv2-content">
+          <h3>HR S.O.S.</h3>
+          <span class="sv2-badge sv2-badge-red">Urgent Support</span>
+          <p>Same-business-day response for HR emergencies: dismissal procedures, workplace conflicts, and legal disputes.</p>
+          <span class="sv2-link">Learn More →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Specialist HR Services: second row of the same block -->
+    {serviceGroups.length > 0 && (
+    <div class="svc-band">
+      <div class="svc-band-header">
+        <span class="eyebrow">Specialist HR Services</span>
+        <h2>Need one specific thing? Book it on its own</h2>
+        <p class="section-desc">Pick a single service with a named consultant and a scope you agree upfront.</p>
+        <div class="svc-band-foot">
+          <a href="/services/" class="btn btn-secondary">View all HR services</a>
+          <a href="/contact/#book" class="link-arrow svc-band-foot-link">Not sure what you need? Book a free consultation →</a>
+        </div>
+      </div>
+      {serviceGroups.map(g => (
+        <div class="svc-band-card">
+          <div class="svc-band-title-row">
+            <svg class="svc-band-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><Fragment set:html={svcGroupIcons[g.icon] || svcGroupIcons.clock} /></svg>
+            <h3 class="svc-band-title">{g.label}</h3>
+          </div>
+          <p class="svc-band-desc">{g.desc}</p>
+          <ServiceLinks items={g.items} variant="chips" />
+        </div>
+      ))}
+    </div>
+    )}
+  </div>
+</section>
+
+<!-- Industries Section -->
+<section class="industries section-navy motif-canal">
+  <div class="container">
+    <div class="compact-head industries-header">
+      <div>
+        <span class="eyebrow">Industry Expertise</span>
+        <h2>Specialized HR for Your Sector</h2>
+        <p>Deep vertical expertise for the industries that call the Netherlands home.</p>
+      </div>
+      <a href="/industries/" class="btn btn-ghost">See how we've helped companies in your industry →</a>
+    </div>
+    <div class="industries-grid">
+      <a href="/industries/technology/" class="industry-card">
+        <svg class="industry-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+        <h3 class="as-h4">Technology & Startups</h3>
+        <p>Stock options, tech hiring, fast growth.</p>
+      </a>
+      <a href="/industries/life-sciences/" class="industry-card">
+        <svg class="industry-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7.5 15h9"/></svg>
+        <h3 class="as-h4">Life Sciences & Pharma</h3>
+        <p>Regulated teams, R&D tax benefits.</p>
+      </a>
+      <a href="/industries/finance/" class="industry-card">
+        <svg class="industry-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        <h3 class="as-h4">Finance & Fintech</h3>
+        <p>AFM/DNB compliance, executive pay.</p>
+      </a>
+      <a href="/industries/professional-services/" class="industry-card">
+        <svg class="industry-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <h3 class="as-h4">Professional Services</h3>
+        <p>Partnerships and billable teams.</p>
+      </a>
+      <a href="/industries/logistics/" class="industry-card">
+        <svg class="industry-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <h3 class="as-h4">Logistics & Supply Chain</h3>
+        <p>Shift work, temporary labor, ports.</p>
+      </a>
+      <a href="/industries/ngo/" class="industry-card">
+        <svg class="industry-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <h3 class="as-h4">NGO & Non-Profit</h3>
+        <p>Volunteers and grant-funded roles.</p>
+      </a>
+      <a href="/industries/manufacturing/" class="industry-card">
+        <svg class="industry-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h20M3 21V11l5 3v-3l5 3v-3l5 3V4h3v17"/></svg>
+        <h3 class="as-h4">Greenfield & Manufacturing</h3>
+        <p>New sites, CLAs, works councils.</p>
+      </a>
+      <a href="/industries/industrial/" class="industry-card">
+        <svg class="industry-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        <h3 class="as-h4">Production & Industrial</h3>
+        <p>Health & safety, blue-collar hiring.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="process section-cream motif-map">
+  <div class="container">
+    <div class="compact-head">
+      <div>
+        <span class="eyebrow">Our Process</span>
+        <h2>How We Get You Started</h2>
+        <p>From first conversation to ongoing partnership, here's how we work.</p>
+      </div>
+    <div class="process-cta">
+      <a href="/contact/" class="btn btn-primary btn-lg">Book a Free Consultation →</a>
+      <span class="process-phone">Or call us directly: <a href="tel:+31857608188">+31 85 760 8188</a></span>
+    </div>
+    </div>
+    <ol class="process-steps">
+      <li class="process-step">
+        <div class="step-meta"><span class="step-number">01</span><span class="step-time">Day 1</span></div>
+        <h3 class="as-h4">Discovery Call</h3>
+        <p>Free 30-minute call to understand your business, timeline, and specific HR needs.</p>
+      </li>
+      <li class="process-step">
+        <div class="step-meta"><span class="step-number">02</span><span class="step-time">Within 48 hours</span></div>
+        <h3 class="as-h4">Custom Proposal</h3>
+        <p>Detailed proposal with scope, timeline, and fixed pricing. No surprises, no hidden fees.</p>
+      </li>
+      <li class="process-step">
+        <div class="step-meta"><span class="step-number">03</span><span class="step-time">Starts immediately</span></div>
+        <h3 class="as-h4">Implementation</h3>
+        <p>Dedicated consultant executes your HR solution. Regular updates, full transparency.</p>
+      </li>
+      <li class="process-step">
+        <div class="step-meta"><span class="step-number">04</span><span class="step-time">Ongoing</span></div>
+        <h3 class="as-h4">Ongoing Support</h3>
+        <p>Continuous partnership with quarterly reviews, policy updates, and priority access.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials section-white">
+  <div class="container">
+    <div class="compact-head">
+      <div>
+        <span class="eyebrow">Client Voices</span>
+        <h2>Trusted by International Companies</h2>
+      </div>
+    </div>
+    <div class="testimonial-grid" tabindex="0" role="region" aria-label="Client testimonials">
+      <figure class="testimonial-card">
+        <div class="quote-stars" role="img" aria-label="Rated 5 out of 5"><Fragment set:html={starsSvg} /></div>
+        <blockquote class="quote-text">“HRHelp made our move to Amsterdam seamless. Their knowledge of local laws saved us months of potential delays.”</blockquote>
+        <figcaption class="quote-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #0F2B46, #2c6fa0);">SM</div>
+          <div>
+            <strong>Sarah Mitchell</strong>
+            <span>CEO, TechStart GH</span>
+          </div>
+        </figcaption>
+      </figure>
+      <figure class="testimonial-card">
+        <div class="quote-stars" role="img" aria-label="Rated 5 out of 5"><Fragment set:html={starsSvg} /></div>
+        <blockquote class="quote-text">“The cultural onboarding workshops were a game changer for our US team relocating to the Netherlands.”</blockquote>
+        <figcaption class="quote-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #0d7377, #14a3a8);">MW</div>
+          <div>
+            <strong>Marcus Weber</strong>
+            <span>HR Director, Global ISR</span>
+          </div>
+        </figcaption>
+      </figure>
+      <figure class="testimonial-card">
+        <div class="quote-stars" role="img" aria-label="Rated 5 out of 5"><Fragment set:html={starsSvg} /></div>
+        <blockquote class="quote-text">“Professional, efficient, and deeply knowledgeable about the 30% ruling application process.”</blockquote>
+        <figcaption class="quote-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #6c3483, #a569bd);">LS</div>
+          <div>
+            <strong>Lisa Schmidt</strong>
+            <span>Founder, DataSystems</span>
+          </div>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -509,68 +630,56 @@ const localBusinessSchema = {
     e.preventDefault();
     var btn = document.getElementById('wp-download-btn');
     var status = document.getElementById('wp-form-status');
-    var originalHTML = btn.innerHTML;
-
-    btn.disabled = true;
-    btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px;">hourglass_top</span> Sending...';
-    btn.style.opacity = '0.7';
-    status.style.display = 'none';
 
     var params = new URLSearchParams(window.location.search);
     var data = {
       name: form.querySelector('[name="name"]').value.trim(),
       email: form.querySelector('[name="email"]').value.trim(),
       source: 'Whitepaper Download',
+      // Optional opt-in for HR updates; unticked by default.
+      marketing_consent: form.querySelector('[name="marketing_consent"]').checked,
       url_confirm: form.querySelector('[name="url_confirm"]').value,
       utm_source: params.get('utm_source') || '',
       utm_medium: params.get('utm_medium') || '',
       utm_campaign: params.get('utm_campaign') || '',
       referrer: document.referrer || ''
     };
+    // First-touch lead source (utm_*, click ids, referrer host, landing page)
+    if (window.hrhelpAttribution) Object.assign(data, window.hrhelpAttribution());
 
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(result) {
-      if (result.success) {
-        status.style.display = 'block';
-        status.style.background = '#e8f5e9';
-        status.style.color = '#2e7d32';
-        status.textContent = '✓ Downloading your guide now!';
-        
-        // Trigger download
-        var link = document.createElement('a');
-        link.href = '/downloads/hrhelp-hr-rules-regulations-2026-nl.pdf';
-        link.download = 'HRHelp-HR-Rules-Regulations-2026-NL.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Change button to success state
-        btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px;">check_circle</span> Downloaded!';
-        btn.style.background = '#2e7d32';
-      } else {
-        status.style.display = 'block';
-        status.style.background = '#fce4ec';
-        status.style.color = '#c62828';
-        status.textContent = '✗ ' + (result.message || 'Please check your details.');
-        btn.disabled = false;
-        btn.innerHTML = originalHTML;
-        btn.style.opacity = '1';
-      }
-    })
-    .catch(function() {
+    // The browser has checked the field; this is the same shape the CRM accepts.
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) {
       status.style.display = 'block';
       status.style.background = '#fce4ec';
       status.style.color = '#c62828';
-      status.textContent = '✗ Network error. Please try again.';
-      btn.disabled = false;
-      btn.innerHTML = originalHTML;
-      btn.style.opacity = '1';
-    });
+      status.textContent = '✗ Please enter a valid email address.';
+      return;
+    }
+
+    // The lead goes to the CRM in the background. keepalive lets the request finish even
+    // if the browser opens the PDF in this tab. Whatever it answers, the guide is theirs.
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+      keepalive: true
+    }).catch(function() {});
+
+    var link = document.createElement('a');
+    link.href = '/downloads/hrhelp-hr-rules-regulations-2026-nl.pdf';
+    link.download = 'HRHelp-HR-Rules-Regulations-2026-NL.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    if (typeof gtag === 'function') gtag('event', 'guide_download', { source: 'homepage' });
+
+    status.style.display = 'block';
+    status.style.background = '#e8f5e9';
+    status.style.color = '#2e7d32';
+    status.textContent = '✓ Downloading your guide now!';
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true" style="font-size:18px;">check_circle</span> Downloaded!';
+    btn.style.background = '#2e7d32';
   });
 })();
 </script>
@@ -581,7 +690,7 @@ const localBusinessSchema = {
     <div class="about-grid">
       <div class="about-image-area">
         <div class="about-img-placeholder">
-          <img src="/images/founder/team-mentorship.jpg" alt="Cornelis Leerlooijer mentoring a team member" class="about-founder-img" />
+          <img src="/images/home/cornelis-whiteboard.jpg" alt="Cornelis Leerlooijer, founder of HRhelp, explaining an onboarding plan to two clients at the HRhelp office" class="about-founder-img" width="1200" height="1490" loading="lazy" decoding="async" />
         </div>
       </div>
       <div class="about-content">
@@ -589,14 +698,14 @@ const localBusinessSchema = {
         <h2>Your Dedicated Dutch HR Partner</h2>
         <p>Founded by experienced HR professionals, HRHelp was built on a simple premise: international companies entering the Netherlands deserve expert HR support without the complexity.</p>
         <ul class="about-features">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 15+ years Dutch employment law expertise</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Worked with 75+ international companies</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Native Dutch, fluent English & German</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Personalized approach, not a call center</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Fixed pricing, no surprises</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Based in Amsterdam, serving globally</li>
+          <li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange-ink)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 20+ years of Dutch HR experience</li>
+          <li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange-ink)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Worked with 75+ international companies</li>
+          <li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange-ink)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Native Dutch, fluent English & German</li>
+          <li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange-ink)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Personalized approach, not a call center</li>
+          <li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange-ink)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Fixed pricing, no surprises</li>
+          <li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange-ink)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Based in Almere, working across the Netherlands</li>
         </ul>
-        <a href="/about" class="btn btn-primary">Meet Our Team →</a>
+        <a href="/about/" class="btn btn-secondary">Meet Our Team →</a>
       </div>
     </div>
   </div>
@@ -605,96 +714,50 @@ const localBusinessSchema = {
 <!-- Blog / Insights Section -->
 <section class="blog-section section-white">
   <div class="container">
-    <div class="section-header">
-      <span class="eyebrow">Insights & Resources</span>
-      <h2>Latest from Our Blog</h2>
-      <p>Stay informed on Dutch employment law, HR best practices, and market insights.</p>
+    <div class="compact-head">
+      <div>
+        <span class="eyebrow">Insights & Resources</span>
+        <h2>Latest from Our Blog</h2>
+        <p>Stay informed on Dutch employment law, HR best practices, and market insights.</p>
+      </div>
+      <a href="/blog/" class="btn btn-secondary">View all articles →</a>
     </div>
     <div class="blog-grid">
-
-      <a href="/resources" class="blog-card">
-        <div class="blog-card-img" style="background-image: url('/images/sections/team-meeting.png');">
-          <span class="blog-tag">Recruitment</span>
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-date">January 2026</span>
-          <h3>Recruitment in the Netherlands: A Guide for International Companies</h3>
-          <p>Everything you need to know about hiring in the Dutch market — from sourcing to onboarding your first local team members.</p>
-        </div>
-      </a>
-
-      <a href="/resources" class="blog-card">
-        <div class="blog-card-img" style="background-image: url('/images/dutch-business.jpg');">
-          <span class="blog-tag">Culture</span>
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-date">December 2025</span>
-          <h3>Business Culture in the Netherlands: What You Need to Know</h3>
-          <p>Dutch directness, flat hierarchies, and consensus-driven decision making — a cultural primer for international managers.</p>
-        </div>
-      </a>
-
-      <a href="/resources" class="blog-card">
-        <div class="blog-card-img" style="background-image: url('/images/sections/tech-office.png');">
-          <span class="blog-tag">Legislation</span>
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-date">November 2025</span>
-          <h3>Key HR Changes in the Netherlands for 2026</h3>
-          <p>New minimum wage updates, pension reforms, and changes to the Balanced Labour Market Act that affect your workforce.</p>
-        </div>
-      </a>
-
-      <a href="/resources" class="blog-card">
-        <div class="blog-card-img" style="background-image: url('/images/remote-worker.jpg');">
-          <span class="blog-tag">Talent</span>
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-date">October 2025</span>
-          <h3>Why the Netherlands Is So Attractive to International Talent</h3>
-          <p>High quality of life, the 30% ruling, and a thriving expat ecosystem — why top talent chooses Holland.</p>
-        </div>
-      </a>
-
-      <a href="/resources" class="blog-card">
-        <div class="blog-card-img" style="background-image: url('/images/sections/dutch-office.png');">
-          <span class="blog-tag">Compliance</span>
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-date">September 2025</span>
-          <h3>Absenteeism and Rules in the Netherlands</h3>
-          <p>Understanding your obligations under the Wet Poortwachter, reintegration requirements, and sick leave tracking.</p>
-        </div>
-      </a>
-
-      <a href="/resources" class="blog-card">
-        <div class="blog-card-img" style="background-image: url('/images/blog-meeting.png');">
-          <span class="blog-tag">Sickness</span>
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-date">August 2025</span>
-          <h3>Managing Sickness Cases in the Netherlands: A Guide for International Managers</h3>
-          <p>The Dutch 2-year sick leave obligation, Arbo service coordination, and how to manage long-term absence.</p>
-        </div>
-      </a>
-
-    </div>
-    <div class="blog-cta">
-      <a href="/resources" class="btn btn-secondary btn-lg">View All Articles →</a>
+      {latestPosts.map((post) => (
+        <PostCard
+          href={`/blog/${post.slug}/`}
+          image={post.image || blogFallbackImage}
+          alt=""
+          width={800}
+          height={450}
+          title={post.title}
+          heading="h3"
+          date={post.date}
+          datetime={post.ts ? new Date(post.ts).toISOString().slice(0, 10) : undefined}
+          readTime={post.readTime}
+          tags={post.tags}
+        />
+      ))}
     </div>
   </div>
 </section>
 
 <!-- FAQ Section -->
 <section class="faq section-white">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow">FAQ</span>
-      <h2>Frequently Asked Questions</h2>
-      <p>Quick answers about HR in the Netherlands.</p>
+  <div class="container faq-layout">
+    <div class="faq-intro">
+      <div class="section-header">
+        <span class="eyebrow">FAQ</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Quick answers about HR in the Netherlands.</p>
+      </div>
+      <div class="faq-cta">
+        <span>Still have a question?</span>
+        <a href="/contact/" class="btn btn-secondary">Contact us →</a>
+      </div>
     </div>
     <div class="faq-list">
-      <details class="faq-item" open>
+      <details class="faq-item">
         <summary>How long does it take to hire an employee in the Netherlands?</summary>
         <div class="faq-answer">
           <p>Typically 2-4 weeks for the administrative setup, though this varies based on the employee's nationality and visa requirements. For EU citizens, the process is faster. For non-EU citizens requiring a Highly Skilled Migrant visa, allow 4-6 weeks.</p>
@@ -709,13 +772,13 @@ const localBusinessSchema = {
       <details class="faq-item">
         <summary>Do I need a Dutch entity to hire employees?</summary>
         <div class="faq-answer">
-          <p>Yes, to directly employ someone in the Netherlands, you generally need a Dutch legal entity (B.V.). However, alternatives exist such as using an Employer of Record (EOR) service, which allows you to hire without entity setup.</p>
+          <p>Not necessarily. A Dutch B.V. is the most common route, but a foreign company can also employ staff in the Netherlands through a registered Dutch branch, or hire without its own entity through an Employer of Record (EOR) or a payroll provider.</p>
         </div>
       </details>
       <details class="faq-item">
         <summary>What are the mandatory employer costs in the Netherlands?</summary>
         <div class="faq-answer">
-          <p>Beyond gross salary, expect approximately 20-30% additional costs: social insurance contributions (~15-20%), mandatory pension contributions (varies by industry), 8% holiday allowance (vakantiegeld), and sick leave insurance.</p>
+          <p>Beyond gross salary, expect approximately 20-30% additional costs: social insurance contributions (~15-20%), 8% holiday allowance (vakantiegeld), sick leave insurance and, where applicable, pension contributions. A pension scheme is only mandatory if a sector pension fund or a collective labour agreement (CAO) applies to your company; otherwise it is not legally required, though it is common.</p>
         </div>
       </details>
       <details class="faq-item">
@@ -727,196 +790,66 @@ const localBusinessSchema = {
       <details class="faq-item">
         <summary>Can you help with urgent dismissal situations?</summary>
         <div class="faq-answer">
-          <p>Absolutely — that's our HR S.O.S. service. Dutch dismissal law is complex and heavily favors employees. We provide same-day guidance and complete legal support throughout the process.</p>
+          <p>Yes, that's our HR S.O.S. service. Dutch dismissal law is complex and heavily favors employees. We provide guidance on the same business day and complete legal support throughout the process.</p>
         </div>
       </details>
     </div>
-    <div class="faq-cta">
-      <span>Still have questions?</span>
-      <a href="/contact#book" class="btn btn-primary">Book a Free Consultation →</a>
-    </div>
   </div>
 </section>
-
-<!-- Whitepaper Download Modal -->
-<div id="wp-modal" class="wp-modal-overlay" style="display:none;">
-  <div class="wp-modal">
-    <button class="wp-modal-close" id="wp-modal-close" aria-label="Close">&times;</button>
-    <div class="wp-modal-grid">
-      <div class="wp-modal-img">
-        <img src="/images/whitepaper-cover.png" alt="HR Rules & Regulations 2026" />
-      </div>
-      <div class="wp-modal-body">
-        <span class="wp-cta-badge">FREE DOWNLOAD</span>
-        <h3>Get the 2026 HR Rules &amp; Regulations Guide</h3>
-        <p>Enter your details and the download starts right away.</p>
-        <form id="wp-modal-form">
-          <div class="wp-modal-field">
-            <input type="text" name="name" placeholder="Your full name" required />
-          </div>
-          <div class="wp-modal-field">
-            <input type="email" name="email" placeholder="Work email" required />
-          </div>
-          <!-- Honeypot: off-screen and out of the tab order, so only bots fill it.
-               A non-empty url_confirm makes /api/contact drop the submission. -->
-          <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
-            <label for="wp-modal-url-confirm">Your website</label>
-            <input type="text" id="wp-modal-url-confirm" name="url_confirm" tabindex="-1" autocomplete="off" />
-          </div>
-          <div id="wp-modal-status" style="display:none; padding: 0.6rem; border-radius: 8px; font-size: 0.85rem;"></div>
-          <button type="submit" class="btn btn-primary" id="wp-modal-submit" style="width:100%; display:flex; align-items:center; justify-content:center; gap:0.4rem;">
-            <span class="material-symbols-outlined" style="font-size:18px;">download</span>
-            Download Now
-          </button>
-          <p style="font-size:0.72rem; color:var(--gray-400); margin-top:0.75rem; text-align:center;">No spam. Unsubscribe anytime.</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script is:inline>
-(function() {
-  var modal = document.getElementById('wp-modal');
-  var openBtn = document.getElementById('hero-wp-btn');
-  var closeBtn = document.getElementById('wp-modal-close');
-  if (!modal || !openBtn) return;
-
-  openBtn.addEventListener('click', function() {
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    setTimeout(function() { modal.classList.add('wp-modal-active'); }, 10);
-  });
-
-  function closeModal() {
-    modal.classList.remove('wp-modal-active');
-    setTimeout(function() {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }, 300);
-  }
-
-  closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) closeModal();
-  });
-
-  // Modal form submit
-  var form = document.getElementById('wp-modal-form');
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var btn = document.getElementById('wp-modal-submit');
-    var status = document.getElementById('wp-modal-status');
-    var origHTML = btn.innerHTML;
-
-    btn.disabled = true;
-    btn.innerHTML = 'Sending...';
-    btn.style.opacity = '0.7';
-    status.style.display = 'none';
-
-    var params = new URLSearchParams(window.location.search);
-    var data = {
-      name: form.querySelector('[name="name"]').value.trim(),
-      email: form.querySelector('[name="email"]').value.trim(),
-      source: 'Whitepaper Download (Hero)',
-      url_confirm: form.querySelector('[name="url_confirm"]').value,
-      utm_source: params.get('utm_source') || '',
-      utm_medium: params.get('utm_medium') || '',
-      utm_campaign: params.get('utm_campaign') || '',
-      referrer: document.referrer || ''
-    };
-
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(result) {
-      if (result.success) {
-        status.style.display = 'block';
-        status.style.background = '#e8f5e9';
-        status.style.color = '#2e7d32';
-        status.textContent = '✓ Downloading your guide!';
-        var a = document.createElement('a');
-        a.href = '/downloads/hrhelp-hr-rules-regulations-2026-nl.pdf';
-        a.download = 'HRHelp-HR-Rules-Regulations-2026-NL.pdf';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        btn.innerHTML = '✓ Downloaded!';
-        btn.style.background = '#2e7d32';
-        setTimeout(closeModal, 2000);
-      } else {
-        status.style.display = 'block';
-        status.style.background = '#fce4ec';
-        status.style.color = '#c62828';
-        status.textContent = '✗ ' + (result.message || 'Please try again.');
-        btn.disabled = false; btn.innerHTML = origHTML; btn.style.opacity = '1';
-      }
-    })
-    .catch(function() {
-      status.style.display = 'block';
-      status.style.background = '#fce4ec';
-      status.style.color = '#c62828';
-      status.textContent = '✗ Network error. Please try again.';
-      btn.disabled = false; btn.innerHTML = origHTML; btn.style.opacity = '1';
-    });
-  });
-})();
-</script>
 
 </Layout>
 
 <style>
   /* =========================================
-     Shared: Icon Box System
+     Homepage-wide calm-down (scoped to this page)
+     Cards: 10-12px radius, hairline border, one soft shadow.
+     Headings: 700 instead of 800. Eyebrows: muted, not orange.
      ========================================= */
-  .icon-box {
-    width: 48px;
-    height: 48px;
-    background: var(--orange);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  h1, h2, h3, h4 {
+    font-weight: 700;
+    letter-spacing: -0.015em;
   }
-  .icon-box svg { stroke: white; }
-  .icon-box-sm { width: 36px; height: 36px; border-radius: 10px; }
-  .icon-box-lg { width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 0.75rem; }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #44546d;
+    margin-bottom: 0.75rem;
+  }
+  .section-navy .eyebrow { color: rgba(255, 255, 255, 0.88); }
+
+  .section-header p {
+    line-height: 1.7;
+  }
+
+  /* =========================================
+     Shared: Icon Box System (specialist services band)
+     ========================================= */
   .icon-box-red { background: #e53e3e; }
   .text-orange { color: var(--orange); }
 
   /* =========================================
-     Hero Section
+     Hero: text on solid navy, founder photo on the right
      ========================================= */
   .hero {
     position: relative;
     min-height: 100vh;
+    min-height: 100svh; /* full first screen, with the client names on its bottom edge */
     display: flex;
-    align-items: center;
-    padding: 6rem 2rem 4rem;
+    flex-direction: column;
+    justify-content: center;
+    /* No side padding: .hero-content uses the header wrapper, so the text
+       starts at the logo edge */
+    padding: 7.25rem 0 4rem;
+    /* Canal-ring motif (Amsterdam grachtengordel, as a faint line drawing),
+       centred behind the arched photo. Inlined copy of
+       /assets/motifs/motif-hero-rings.svg so it paints with the first frame:
+       on phones Chrome counts this background as the LCP element. */
+    background: var(--navy-dark) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' fill='none' stroke='%23ffffff' stroke-opacity='0.06' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M550 900A250 250 0 0 1 1050 900M541 900A259 259 0 0 1 1059 900M470 900A330 330 0 0 1 1130 900M461 900A339 339 0 0 1 1139 900M390 900A410 410 0 0 1 1210 900M381 900A419 419 0 0 1 1219 900M310 900A490 490 0 0 1 1290 900M301 900A499 499 0 0 1 1299 900M200 900A600 600 0 0 1 1400 900M40 900A760 760 0 0 1 1560 900M1046 820L1371 715M995 730L1253 506M918 669L1072 365M800 641L800 300M682 669L528 365M605 730L347 506M554 820L229 715'/%3E%3Cpath stroke-width='1' d='M1043 862L1060 859M1038 836L1054 832M1006 766L1021 757M991 745L1004 734M934 694L943 679M912 681L919 666M838 657L841 640M813 654L814 637M736 662L732 646M712 670L706 654M645 709L634 696M626 726L614 714M581 788L566 781M570 812L554 806M1115 817L1132 813M1108 792L1124 787M1054 696L1068 685M1037 677L1050 665M949 610L957 595M926 599L933 584M819 575L820 558M793 574L792 557M685 595L679 579M661 605L654 590M571 668L559 656M553 687L540 676M496 782L480 776M488 806L472 801M1181 760L1197 754M1171 736L1187 729M1091 617L1103 605M1073 599L1084 586M951 523L957 507M927 514L932 498M785 494L784 477M759 496L757 479M621 536L613 520M598 548L590 533M488 640L475 629M472 660L459 650M409 789L393 785M403 814L387 811M1239 691L1254 684M1227 668L1242 660M1116 531L1127 518M1096 514L1106 501M938 434L943 418M913 427L917 411M737 418L735 401M711 422L708 405M546 485L537 471M525 500L515 486M400 625L386 615M385 646L371 637'/%3E%3C/svg%3E") no-repeat;
+    background-size: 1600px auto;
+    background-position: right calc(max(2rem, (100vw - var(--container-wide)) / 2 + 2rem) + min(21vw, 300px) - 800px) bottom 4.75rem;
     overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background-image: url('/images/hero-bg.png');
-    background-size: cover;
-    background-position: 30% center;
-    background-repeat: no-repeat;
-    background-color: var(--navy);
-  }
-
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg,
-      rgba(15, 37, 72, 0.88) 0%,
-      rgba(15, 37, 72, 0.7) 40%,
-      rgba(15, 37, 72, 0.4) 100%);
   }
 
   .hero-content {
@@ -925,744 +858,1134 @@ const localBusinessSchema = {
     max-width: var(--container-wide);
     margin: 0 auto;
     padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
     width: 100%;
   }
 
   .hero-panel {
-    padding: 3rem;
-    border-radius: var(--radius-xl);
-    background: rgba(255,255,255,0.07);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255,255,255,0.12);
+    width: 52%;
+    max-width: 600px;
   }
 
-  .hero-panel .eyebrow-badge {
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.88);
     margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--orange);
+    flex-shrink: 0;
   }
 
   .hero-panel h1 {
     color: var(--white);
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2.25rem, 4.2vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
     margin-bottom: 1.25rem;
-    line-height: 1.1;
   }
 
   .hero-desc {
-    color: rgba(255,255,255,0.7);
-    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 1.1rem;
     line-height: 1.7;
+    max-width: 34em;
     margin-bottom: 2rem;
   }
 
   .hero-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.75rem;
   }
   .hero-buttons .btn {
     white-space: nowrap;
     flex-shrink: 0;
   }
 
-  .hero-trust {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
+  /* Core areas: three small frosted-glass cards with an icon */
+  .hero-stats {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0 0 1.5rem;
   }
-
-  .trust-logos {
-    display: flex;
-  }
-
-  .trust-logo-circle {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    margin-left: -8px;
-    overflow: hidden;
-  }
-
-  .trust-logo-circle:first-child { margin-left: 0; }
-
-  .trust-logo-circle svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  .trust-logo-more {
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--white);
-    background: var(--orange);
-    border-color: rgba(244, 121, 32, 0.4);
-  }
-
-  .hero-trust strong {
-    display: block;
-    color: var(--white);
-    font-size: 0.9rem;
-  }
-
-  .hero-trust span {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.5);
-  }
-
-  /* Floating badges */
-  .hero-badges {
+  .hero-stats a {
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 1.5rem;
-    padding-right: 2rem;
+    align-items: flex-start;
+    gap: 0.7rem;
+    height: 100%;
+    padding: 0.9rem 1rem 0.95rem;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    backdrop-filter: blur(10px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 24px rgba(5, 15, 35, 0.2);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), transform 0.2s ease;
   }
-
-  .hero-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: var(--radius-lg);
-    padding: 1rem 1.5rem;
-    opacity: 0;
-    animation: fadeInUp 0.6s ease forwards 0.3s, float 5s ease-in-out 1s infinite;
+  .hero-stats a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
   }
-
-  .hero-badge-bottom {
-    animation: fadeInUp 0.6s ease forwards 0.5s, float 5s ease-in-out 1.2s infinite;
-    margin-right: 3rem;
-  }
-
-  .hero-badge-third {
-    animation: fadeInUp 0.6s ease forwards 0.7s, float 5s ease-in-out 1.5s infinite;
-    margin-left: 2rem;
-  }
-
-  .badge-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .stat-ico {
     flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: rgba(244, 121, 32, 0.14);
+    color: var(--orange-light);
   }
-
-  .badge-green { background: rgba(72, 187, 120, 0.2); color: #48bb78; }
-  .badge-green svg { stroke: #48bb78; }
-  .badge-blue { background: rgba(66, 153, 225, 0.2); color: #4299e1; }
-  .badge-blue svg { stroke: #4299e1; }
-
-  .badge-label {
+  .stat-text { display: block; min-width: 0; padding-right: 0.75rem; }
+  .stat-label {
     display: block;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 0.25rem;
   }
-
-  .hero-badge strong {
+  .hero-stats strong {
     display: block;
+    white-space: nowrap;
     color: var(--white);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.35;
   }
+  .stat-arrow {
+    position: absolute;
+    right: 0.85rem;
+    bottom: 0.75rem;
+    color: var(--orange-light);
+    font-size: 0.9rem;
+    opacity: 0.7;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .hero-stats a:hover .stat-arrow { transform: translateX(3px); opacity: 1; }
+
+  .hero-trust {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .hero-trust strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  /* Starts below the transparent header so the nav always sits on navy. */
+  /* Inset so its right edge lines up with the header button (header
+     wrapper: --container-wide with a 2rem gutter) */
+  .hero-photo {
+    position: absolute;
+    top: 7rem;
+    right: max(2rem, calc((100% - var(--container-wide)) / 2 + 2rem));
+    bottom: 4.75rem; /* the orange block below sits 12px lower */
+    width: 42%;
+    max-width: 600px;
+    border-radius: 4px;
+  }
+  /* Solid orange block offset behind the photo's bottom-left corner */
+  .hero-photo::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    bottom: -12px;
+    width: 62%;
+    height: 55%;
+    background: var(--orange);
+    border-radius: 4px;
+  }
+  .hero-photo img {
+    position: relative;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 25%;
+  }
+  .hero-content { flex: 1; display: flex; align-items: center; }
 
   /* =========================================
-     Client Logos Strip
+     Two core offers (under the hero)
      ========================================= */
-  .client-logos {
-    background: linear-gradient(180deg, #e8edf2 0%, #fff 30%, #fff 70%, #e8edf2 100%);
-    padding: 2.5rem 0;
-    border-top: 1px solid rgba(15, 43, 70, 0.06);
-    border-bottom: 1px solid rgba(15, 43, 70, 0.06);
+  .promises {
+    padding: 2.5rem 0 3.5rem;
   }
-
-  .logos-label {
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(15, 43, 70, 0.4);
+  .promises-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem 2rem;
     margin-bottom: 1.75rem;
   }
-
-  .logos-track {
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  .promises-head .eyebrow { margin-bottom: 0.5rem; }
+  .promises-head h2 {
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+    margin: 0;
   }
-
-  .logos-slide {
+  .promises-head .btn { flex-shrink: 0; }
+  .promises-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .promise-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border: 1px solid rgba(15, 37, 72, 0.1);
+    border-top: 3px solid var(--orange);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
+    padding: 1.75rem 2rem 2rem;
+  }
+  .promise-kicker {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 2.5rem;
-    flex-wrap: nowrap;
-    animation: none;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #44546d;
+    margin-bottom: 0.9rem;
   }
-
-  .logo-item {
-    flex-shrink: 0;
-    height: 22px;
-    color: rgba(15, 43, 70, 0.3);
-    transition: color 0.3s ease, transform 0.3s ease;
-    cursor: default;
+  .promise-ico { color: var(--icon-accent); flex-shrink: 0; }
+  .promise-card h3 {
+    font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+    line-height: 1.3;
+    margin-bottom: 0.65rem;
   }
-
-  .logo-item:hover {
-    color: rgba(15, 43, 70, 0.7);
-    transform: scale(1.05);
+  .promise-card p {
+    font-size: 0.97rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    max-width: 38em;
   }
-
-  .logo-item svg {
-    height: 100%;
-    width: auto;
+  .promise-actions {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
   }
+  .promise-actions .link-arrow { font-size: 0.92rem; }
 
-  @media (max-width: 768px) {
-    .logos-slide {
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      gap: 3rem;
-      animation: scrollLogos 25s linear infinite;
-    }
-
-    .logo-item {
-      height: 22px;
-    }
+  @media (max-width: 900px) {
+    .promises-grid { grid-template-columns: 1fr; }
   }
-
-  @keyframes scrollLogos {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  @media (max-width: 640px) {
+    .promises { padding: 2.5rem 0 2.75rem; }
+    .promises-head { flex-direction: column; align-items: stretch; margin-bottom: 1.25rem; }
+    .promises-head .btn { justify-content: center; }
+    .promise-card { padding: 1.4rem 1rem 1.5rem; }
+    .promise-actions { flex-direction: column; align-items: stretch; }
+    .promise-actions .btn { justify-content: center; }
+    .promise-actions .link-arrow { text-align: center; padding-block: 0.6rem; }
   }
 
   /* =========================================
-     What We Handle (was Why Choose Us)
+     Explainer video (click-to-play facade)
      ========================================= */
-  .what-we-handle {
+  .home-video {
     padding: var(--section-padding);
+    border-bottom: 1px solid rgba(15, 37, 72, 0.08);
+  }
+  /* Header width: text left, video right, vertically centred */
+  .home-video-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 4rem;
+    align-items: center;
+  }
+  .home-video-inner .home-video-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0;
+  }
+  .home-video-points {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    width: 100%;
+    border-top: 1px solid rgba(15, 37, 72, 0.1);
+  }
+  .home-video-points li {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(15, 37, 72, 0.1);
+    font-size: 0.97rem;
+    line-height: 1.5;
+    color: var(--navy);
+    font-weight: 500;
+  }
+  .hv-num {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--orange-ink);
+  }
+  .home-video-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 1rem;
+  }
+  .home-video-link {
+    font-weight: 600;
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-color: var(--orange-ink);
+    text-underline-offset: 4px;
+  }
+  .home-video-link:hover { text-decoration-thickness: 2px; }
+  @media (max-width: 1024px) {
+    .home-video-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+  .home-video-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .home-video-head .eyebrow { margin-bottom: 0.5rem; }
+  .home-video-lead {
+    margin: 0;
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--navy);
+  }
+  .home-video-note {
+    margin: 0;
+    max-width: 34em;
+    font-size: 0.97rem;
+    line-height: 1.6;
+    color: var(--gray-600);
+  }
+  .home-video-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(15, 37, 72, 0.12);
+    border-radius: 12px; /* same as the other content images */
+    overflow: hidden;
+    background: var(--navy-dark);
+    background-clip: padding-box;
+  }
+  .home-video-frame :global(video) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--navy-dark);
+  }
+  .home-video-facade {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: #eeece8;
+    cursor: pointer;
+  }
+  .home-video-facade img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .home-video-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    margin: -36px 0 0 -36px;
+    border-radius: 50%;
+    background: var(--orange-ink);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(15, 37, 72, 0.25);
+    transition: transform var(--transition-fast), background var(--transition-fast);
+  }
+  .home-video-play svg { margin-left: 3px; }
+  .home-video-facade:hover .home-video-play,
+  .home-video-facade:focus-visible .home-video-play {
+    transform: scale(1.08);
+    background: var(--orange-ink-dark);
+  }
+  /* Focus ring drawn above the poster image (an inset outline would sit under it) */
+  .home-video-facade:focus-visible { outline: none; }
+  .home-video-facade:focus-visible::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--orange);
+    border-radius: 3px;
+  }
+  .home-video-facade:focus-visible .home-video-play {
+    box-shadow: 0 0 0 3px var(--white), 0 0 0 6px var(--orange-ink);
+  }
+  .home-video-duration {
+    position: absolute;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    background: rgba(15, 37, 72, 0.85);
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-video-play { transition: none; }
+  }
+  @media (max-width: 768px) {
+    .home-video-head { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 640px) {
+    .home-video { padding: 2.5rem 0 2.25rem; }
+    .home-video-head { margin-bottom: 1.1rem; }
+    .home-video-play { width: 60px; height: 60px; margin: -30px 0 0 -30px; }
+    .home-video-play svg { width: 24px; height: 24px; }
+    .home-video-duration { right: 0.6rem; bottom: 0.6rem; font-size: 0.75rem; }
+  }
+
+  /* =========================================
+     Founder note
+     ========================================= */
+  .founder-note {
+    padding: 3.5rem 0;
+    border-bottom: 1px solid rgba(15, 37, 72, 0.08);
+  }
+  .founder-note-inner {
+    display: grid;
+    grid-template-columns: 112px 1fr;
+    gap: 2rem;
+    align-items: center;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .founder-note-photo {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    background: #e9edf2;
+  }
+  .founder-note-quote {
+    margin: 0 0 0.9rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--navy);
+  }
+  .founder-note-cap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 1.5rem;
+    font-size: 0.95rem;
+    color: var(--gray-600);
+  }
+  .founder-note-cap strong { color: var(--navy); }
+  @media (max-width: 640px) {
+    .founder-note { padding: 2.5rem 0; }
+    .founder-note-inner { grid-template-columns: 1fr; gap: 1.1rem; }
+    .founder-note-photo { width: 88px; height: 88px; }
+    .founder-note-quote { font-size: 1.05rem; }
+    .founder-note-cap { flex-direction: column; align-items: flex-start; }
+    .founder-note-cap .link-arrow { padding-block: 0.6rem; }
+  }
+
+  /* =========================================
+     What We Handle
+     ========================================= */
+  /* =========================================
+     Compacted sections (everything below the whitepaper band):
+     one tighter rhythm, and left-aligned split headers instead of
+     tall centred ones
+     ========================================= */
+  .what-we-handle,
+  .services,
+  .industries,
+  .process,
+  .testimonials,
+  .about-preview,
+  .blog-section,
+  .faq {
+    padding: 3.5rem 0;
+  }
+  @media (max-width: 768px) {
+    .what-we-handle,
+    .services,
+    .industries,
+    .process,
+    .testimonials,
+    .about-preview,
+    .blog-section,
+    .faq {
+      padding: 2.5rem 0;
+    }
+  }
+
+  /* Split header: eyebrow + h2 (+ intro) left, intro or action right */
+  .compact-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem 3rem;
+    margin-bottom: 2rem;
+  }
+  .compact-head .eyebrow { margin-bottom: 0.5rem; }
+  .compact-head h2 { margin: 0; }
+  .compact-head > div > h2 + p {
+    margin: 0.6rem 0 0;
+    max-width: 40em;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .compact-head > .btn { flex-shrink: 0; }
+  .compact-head-aside { max-width: 440px; }
+  .compact-head-aside p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--gray-600);
+  }
+  .compact-head-aside p + p { margin-top: 0.35rem; }
+  @media (max-width: 900px) {
+    .compact-head {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+  }
+  @media (max-width: 640px) {
+    .compact-head > .btn { width: 100%; justify-content: center; white-space: normal; text-align: center; line-height: 1.35; }
   }
 
   .handle-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     gap: 2rem;
   }
 
   .handle-header h2 {
-    color: var(--white);
-    margin-top: 0.5rem;
+    margin-top: 0;
   }
 
   .handle-header p {
-    color: rgba(255,255,255,0.65);
+    color: var(--gray-600);
     max-width: 400px;
+    line-height: 1.7;
     text-align: right;
-  }
-
-  .handle-carousel {
-    overflow: visible;
   }
 
   .handle-track {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
+    gap: 0.75rem;
   }
 
+  /* Icon sits on the title line; the text runs the full card width */
   .handle-card {
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--radius-lg);
-    padding: 1.75rem 1.5rem;
-    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-    cursor: default;
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    column-gap: 0.65rem;
+    row-gap: 0.4rem;
+    align-items: center;
+    align-content: start;
+    background: var(--white);
+    border: 1px solid rgba(15, 37, 72, 0.1);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem 1.15rem;
+    transition: border-color 0.2s ease;
   }
 
   .handle-card:hover {
-    transform: translateY(-4px);
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(244, 121, 32, 0.3);
+    border-color: rgba(15, 37, 72, 0.28);
   }
 
-  .handle-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: rgba(244, 121, 32, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.25rem;
+  .handle-ico {
+    display: block;
+    color: var(--icon-accent);
   }
 
-  .handle-card h4 {
-    color: var(--white);
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  .handle-card h3 {
+    color: var(--navy);
+    font-size: 1.02rem;
+    margin: 0;
   }
 
   .handle-card p {
-    color: rgba(255,255,255,0.55);
+    grid-column: 1 / -1;
+    align-self: start;
+    color: var(--gray-600);
     font-size: 0.88rem;
     line-height: 1.55;
     margin: 0;
   }
 
   @media (max-width: 1024px) {
-    .handle-track {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .handle-track { grid-template-columns: repeat(2, 1fr); }
     .handle-header {
       flex-direction: column;
       align-items: flex-start;
+      gap: 0.75rem;
     }
-    .handle-header p {
-      text-align: left;
-    }
+    .handle-header p { text-align: left; }
   }
 
+  /* Phones: one row that scrolls sideways, the next card peeking in (as the blog row) */
   @media (max-width: 640px) {
+    .handle-header { margin-bottom: 1.25rem; gap: 0.5rem; }
+    .handle-header p { margin: 0; font-size: 1rem; line-height: 1.6; }
     .handle-track {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter-mobile);
+      margin-inline: calc(-1 * var(--gutter-mobile));
+      padding: 0 var(--gutter-mobile) 0.25rem;
+      scrollbar-width: none;
     }
+    .handle-track::-webkit-scrollbar { display: none; }
     .handle-card {
-      min-width: unset;
+      flex: 0 0 78%;
+      scroll-snap-align: start;
+      align-content: start;
     }
   }
 
   /* =========================================
-     Services
+     Solutions
      ========================================= */
-  .services {
-    padding: var(--section-padding);
-  }
-
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
   }
 
+  /* Four solutions in one row: illustration beside the name, text below */
   .service-card-v2 {
-    display: flex;
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: 0.9rem;
     align-items: center;
-    gap: 1.5rem;
-    padding: 1.75rem;
+    padding: 1rem 1.25rem 1.2rem;
     background: var(--white);
-    border-radius: 20px;
+    border-radius: 12px;
     text-decoration: none;
-    box-shadow: 0 2px 12px rgba(15, 43, 70, 0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(15, 43, 70, 0.05);
+    border: 1px solid rgba(15, 37, 72, 0.1);
+    box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .service-card-v2:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 36px rgba(15, 43, 70, 0.1);
+    border-color: rgba(15, 37, 72, 0.22);
+    box-shadow: 0 1px 2px rgba(15, 37, 72, 0.05), 0 8px 24px rgba(15, 37, 72, 0.07);
   }
 
-  .sv2-illus-wrap {
-    flex-shrink: 0;
-    width: 130px;
-    height: 130px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+  /* Transparent line illustrations sit straight on the white card */
+  .sv2-photo {
+    grid-row: 1 / span 2;
+    width: 76px;
+    height: 76px;
   }
 
-  .sv2-illus-navy { background: rgba(15, 43, 70, 0.08); }
-  .sv2-illus-blue { background: rgba(44, 111, 160, 0.08); }
-  .sv2-illus-orange { background: rgba(244, 121, 32, 0.08); }
-  .sv2-illus-red { background: rgba(220, 53, 69, 0.08); }
-
-  .sv2-illus {
-    width: 100px;
-    height: 100px;
+  .sv2-photo img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    border-radius: 12px;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .service-card-v2:hover .sv2-illus {
-    transform: scale(1.12);
-  }
-
-  .sv2-content {
-    flex: 1;
-    min-width: 0;
-  }
+  /* The content wrapper steps aside so its children join the card grid */
+  .sv2-content { display: contents; }
 
   .sv2-content h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
+    grid-column: 2;
+    align-self: end;
+    font-size: 1.2rem;
     color: var(--navy);
-    margin-bottom: 0.4rem;
+    margin: 0 0 0.2rem;
     line-height: 1.3;
   }
 
   .sv2-badge {
-    display: inline-block;
-    background: rgba(244, 121, 32, 0.1);
-    color: var(--orange);
-    font-size: 0.72rem;
-    font-weight: 700;
+    display: block;
+    color: var(--gray-500);
+    font-size: 0.7rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 0.25rem 0.65rem;
-    border-radius: 20px;
-    margin-bottom: 0.6rem;
+    letter-spacing: 0.1em;
+    grid-column: 2;
+    align-self: start;
+    margin: 0;
   }
 
   .sv2-badge-red {
-    background: rgba(220, 53, 69, 0.1);
-    color: #dc3545;
+    color: #b42318;
   }
 
   .sv2-content p {
-    font-size: 0.88rem;
+    grid-column: 1 / -1;
+    align-self: start;
+    font-size: 0.9rem;
     color: var(--gray-600);
     line-height: 1.55;
-    margin-bottom: 0.75rem;
+    margin: 0.75rem 0 0.6rem;
   }
 
   .sv2-link {
-    color: var(--orange);
+    grid-column: 1 / -1;
+    color: var(--navy);
     font-weight: 600;
     font-size: 0.88rem;
-    transition: color 0.2s ease;
   }
 
   .service-card-v2:hover .sv2-link {
-    color: var(--orange-dark);
+    text-decoration: underline;
+    text-decoration-color: var(--orange-ink);
+    text-underline-offset: 3px;
   }
 
-  @media (max-width: 1024px) {
-    .services-grid {
-      grid-template-columns: 1fr;
-    }
+  @media (max-width: 1100px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 640px) {
+    .services-grid { grid-template-columns: 1fr; gap: 0.75rem; }
     .service-card-v2 {
-      flex-direction: column;
-      text-align: center;
-      padding: 1.5rem;
+      grid-template-columns: 60px minmax(0, 1fr);
+      column-gap: 0.85rem;
+      padding: 0.9rem 1rem 1rem;
     }
-    .sv2-illus-wrap {
-      width: 90px;
-      height: 90px;
+    .sv2-photo {
+      width: 60px;
+      height: 60px;
     }
-    .sv2-illus {
-      width: 65px;
-      height: 65px;
-    }
+    .sv2-content p { margin-top: 0.6rem; }
   }
 
+  /* Service chips a touch smaller here, so two fit on a line in the narrow groups */
+  .svc-band :global(.sl-chips .sl-item) { padding: 0.36rem 0.8rem; }
+  .svc-band :global(.sl-chips .sl-name) { font-size: 0.82rem; }
+
   .services-cta-text {
-    text-align: center;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--gray-500);
   }
 
-  .link-arrow {
-    color: var(--orange);
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: color var(--transition-fast);
-  }
-  .link-arrow:hover { color: var(--orange-dark); }
-
-  /* =========================================
-     Industries
-     ========================================= */
-  .industries {
-    padding: var(--section-padding);
-    position: relative;
-    background-image: url('/images/founder/team-collaboration.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  .industries::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg,
-      rgba(15, 37, 72, 0.92) 0%,
-      rgba(15, 37, 72, 0.88) 50%,
-      rgba(15, 37, 72, 0.94) 100%);
-    z-index: 0;
-  }
-
-  .industries > .container {
-    position: relative;
-    z-index: 1;
-  }
-
-  .industries-grid {
+  /* Specialist HR services: the second row of the solutions block, one
+     white panel with the intro on the left and the three groups beside it */
+  .svc-band {
+    --h2-size: clamp(1.35rem, 1.1rem + 0.6vw, 1.55rem);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2.5rem;
+    grid-template-columns: minmax(0, 1.15fr) repeat(3, minmax(0, 1fr));
+    margin-top: 2rem;
+    background: var(--white);
+    border: 1px solid rgba(15, 37, 72, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
   }
-
-  .industry-card {
-    background: rgba(15, 37, 72, 0.85);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--radius-md);
-    padding: 1.75rem;
-    transition: all var(--transition-base);
-    text-decoration: none;
+  .svc-band-header,
+  .svc-band-card {
+    padding: 1.5rem 1.5rem 1.6rem;
+  }
+  .svc-band-card { border-left: 1px solid rgba(15, 37, 72, 0.1); }
+  .svc-band-header .eyebrow { margin-bottom: 0.5rem; }
+  .svc-band-header h2 { margin: 0 0 0.5rem; }
+  .svc-band-header .section-desc {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin: 0 0 1rem;
+  }
+  .svc-band-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+  }
+  .svc-band-ico {
+    display: block;
+    flex-shrink: 0;
+    color: var(--icon-accent);
+  }
+  .svc-band-title {
+    color: var(--navy);
+    margin: 0;
+  }
+  .svc-band-desc {
+    font-size: 0.86rem;
+    color: var(--gray-600);
+    line-height: 1.55;
+    margin-bottom: 0.9rem;
+  }
+  .svc-band-foot {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .svc-band-foot-link {
+    font-size: 0.9rem;
+  }
+  @media (max-width: 1100px) {
+    .svc-band { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .svc-band-header {
+      grid-column: 1 / -1;
+      border-bottom: 1px solid rgba(15, 37, 72, 0.1);
+    }
+    .svc-band-card:nth-child(2) { border-left: 0; }
+  }
+  @media (max-width: 768px) {
+    .svc-band { grid-template-columns: 1fr; margin-top: 1.5rem; }
+    .svc-band-header,
+    .svc-band-card { padding: 1.25rem 1rem; }
+    .svc-band-card { border-left: 0; }
+    .svc-band-card + .svc-band-card { border-top: 1px solid rgba(15, 37, 72, 0.1); }
+    .svc-band-foot .btn { width: 100%; justify-content: center; }
+  }
+
+  .link-arrow {
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: underline;
+    text-decoration-color: var(--orange-ink);
+    text-underline-offset: 3px;
+    transition: color var(--transition-fast);
+  }
+  .link-arrow:hover { color: var(--navy); text-decoration-thickness: 2px; }
+
+  /* =========================================
+     Industries: flat navy, a list with hairlines
+     ========================================= */
+  .industries-header > div > h2 + p { color: rgba(255, 255, 255, 0.88); }
+
+  /* Eight slim tiles in a 4 x 2 grid: icon, name, one line */
+  .industries-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.75rem;
   }
 
+  .industry-card {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    column-gap: 0.75rem;
+    row-gap: 0.2rem;
+    align-items: center;
+    padding: 0.9rem 1rem 0.95rem;
+    /* Subtle frosted glass over the navy canal motif */
+    background: rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    backdrop-filter: blur(10px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 24px rgba(5, 15, 35, 0.18);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast), transform 0.2s ease;
+  }
   .industry-card:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: var(--orange);
-    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
   }
 
-  .industry-card h4 {
+  .industry-ico {
+    display: block;
+    color: var(--icon-accent);
+  }
+
+  .industry-card h3 {
     color: var(--white);
-    font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 600;
+    margin: 0;
+    transition: color var(--transition-fast);
+  }
+
+  .industry-card:hover h3 {
+    text-decoration: underline;
+    text-decoration-color: var(--orange-light);
+    text-underline-offset: 3px;
   }
 
   .industry-card p {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.55);
+    grid-column: 2;
+    margin: 0;
+    font-size: 0.86rem;
+    color: rgba(255, 255, 255, 0.88);
     line-height: 1.5;
   }
 
-  .industries-cta {
-    text-align: center;
+  @media (max-width: 1024px) {
+    .industries-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .industries-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+    .industry-card { padding: 0.75rem 0.9rem 0.8rem; }
   }
 
   /* =========================================
-     Process Steps
+     Process: plain numbered steps
      ========================================= */
-  .process {
-    padding: var(--section-padding);
-  }
-
+  /* One strip of four steps: number + timing, title, one line of text */
   .process-steps {
-    display: flex;
-    align-items: flex-start;
-    gap: 0;
-    margin-bottom: 3rem;
-    position: relative;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    padding: 0;
+    background: var(--white);
+    border: 1px solid rgba(15, 37, 72, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
   }
 
   .process-step {
-    flex: 1;
-    text-align: center;
-    padding: 1.5rem 1rem;
     position: relative;
+    padding: 1.25rem 1.5rem 1.35rem;
+  }
+  .process-step + .process-step { border-left: 1px solid rgba(15, 37, 72, 0.1); }
+
+  .step-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
   }
 
   .step-number {
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--orange);
-    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--orange-ink);
+    font-variant-numeric: tabular-nums;
   }
 
-  .process-step h4 {
-    margin-bottom: 0.5rem;
+  .process-step h3 {
+    margin: 0 0 0.35rem;
     font-size: 1.1rem;
   }
 
   .process-step p {
-    font-size: 0.85rem;
-    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0;
   }
 
   .step-time {
-    display: inline-block;
-    background: rgba(244, 121, 32, 0.1);
-    color: var(--orange);
-    font-size: 0.75rem;
+    color: var(--gray-500);
+    font-size: 0.7rem;
     font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: var(--radius-full);
-  }
-
-  .process-connector {
-    width: 60px;
-    height: 3px;
-    background: rgba(244, 121, 32, 0.15);
-    margin-top: 4.5rem;
-    flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-    border-radius: 3px;
-  }
-
-  .process-connector::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -120%;
-    width: 60%;
-    height: 7px;
-    background: linear-gradient(90deg, transparent 0%, rgba(244, 121, 32, 0.3) 15%, var(--orange) 50%, #ffb347 75%, transparent 100%);
-    border-radius: 1px 4px 4px 1px;
-    clip-path: polygon(0% 40%, 100% 0%, 100% 100%, 0% 60%);
-    animation: glowFlow 2.5s ease-in-out infinite;
-  }
-
-  .process-connector:nth-child(2)::after { animation-delay: 0s; }
-  .process-connector:nth-child(4)::after { animation-delay: 0.8s; }
-  .process-connector:nth-child(6)::after { animation-delay: 1.6s; }
-
-  @keyframes glowFlow {
-    0% { left: -120%; opacity: 0; }
-    15% { opacity: 1; }
-    85% { opacity: 1; }
-    100% { left: 120%; opacity: 0; }
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   .process-cta {
-    text-align: center;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
+    align-items: flex-end;
+    gap: 0.5rem;
   }
 
   .process-phone {
     font-size: 0.9rem;
-    color: var(--gray-500);
+    color: var(--gray-600);
+  }
+  .process-phone a {
+    color: var(--navy);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    text-decoration: underline;
+    text-decoration-color: var(--orange-ink);
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .process-step:nth-child(3) { border-left: 0; }
+    .process-step:nth-child(n+3) { border-top: 1px solid rgba(15, 37, 72, 0.1); }
+    .process-cta { align-items: flex-start; }
+  }
+  /* Phones: a compact numbered list, number in its own narrow column */
+  @media (max-width: 600px) {
+    .process-steps { grid-template-columns: 1fr; }
+    .process-step {
+      display: grid;
+      grid-template-columns: 1.75rem 1fr;
+      column-gap: 0.5rem;
+      padding: 1rem 1rem 1.05rem;
+    }
+    .process-step + .process-step { border-left: 0; border-top: 1px solid rgba(15, 37, 72, 0.1); }
+    .step-meta { display: contents; }
+    .step-number { grid-row: 1 / span 3; line-height: 1.6; }
+    .step-time { grid-column: 2; margin-bottom: 0.2rem; }
+    .process-step h3,
+    .process-step p { grid-column: 2; }
+    .process-cta { align-self: stretch; align-items: stretch; text-align: center; }
+    .process-cta .btn { justify-content: center; }
   }
 
   /* =========================================
-     Testimonials (dark navy)
+     Testimonials (quote-first white cards)
      ========================================= */
-  .testimonials {
-    padding: var(--section-padding);
-  }
-
   .testimonial-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
+    align-items: stretch;
   }
 
   .testimonial-card {
-    padding: 2rem;
-    border-radius: var(--radius-xl);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 1.6rem 1.75rem 1.4rem;
+    background: var(--white);
+    border: 1px solid rgba(15, 37, 72, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
+    overflow: hidden;
+  }
+
+  .testimonial-card::before {
+    content: "\201C";
+    position: absolute;
+    top: 0.25rem;
+    right: 1.5rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 6rem;
+    line-height: 1;
+    color: var(--orange);
+    opacity: 0.14;
+    pointer-events: none;
+  }
+
+  .quote-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 0.85rem;
+  }
+
+  .quote-stars :global(svg) {
+    width: 14px;
+    height: 14px;
+    fill: var(--orange-ink);
+  }
+
+  .quote-text {
+    flex: 1;
+    margin: 0 0 1.1rem;
+    font-size: 1.07rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--navy);
   }
 
   .quote-author {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(15, 43, 70, 0.08);
   }
 
   .author-avatar {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: var(--orange);
     color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.5px;
     flex-shrink: 0;
-    border: 2px solid rgba(255,255,255,0.15);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
 
   .quote-author strong {
     display: block;
-    font-size: 0.9rem;
-    color: var(--white);
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: var(--navy);
   }
 
   .quote-author span {
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.5);
-  }
-
-  .quote-stars {
-    color: var(--orange);
-    font-size: 1rem;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-  }
-
-  .quote-text {
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.7;
-    font-style: italic;
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.825rem;
+    color: var(--gray-500);
   }
 
   /* =========================================
      About Preview
      ========================================= */
-  .about-preview {
-    padding: var(--section-padding);
-  }
-
   .about-grid {
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
-    gap: 4rem;
+    gap: 3.5rem;
     align-items: center;
   }
 
-  .about-img-placeholder {
-    aspect-ratio: 3/4;
-    background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
-    border-radius: var(--radius-xl);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  /* Photo fills the height of the text column (floor 340px, cap 420px), not 4:5 */
+  .about-image-area {
     position: relative;
+    align-self: stretch;
+    min-height: 340px;
+    max-height: 420px;
+  }
+
+  .about-img-placeholder {
+    position: absolute;
+    inset: 0;
+    background: #e9edf2;
+    border-radius: 4px;
     overflow: hidden;
   }
 
@@ -1670,215 +1993,214 @@ const localBusinessSchema = {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: 50% 25%;
   }
 
+  .about-content .eyebrow { margin-bottom: 0.5rem; }
+
   .about-content h2 {
-    margin-bottom: 1rem;
+    margin: 0 0 0.75rem;
   }
 
   .about-content > p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.1rem;
+    font-size: 1rem;
+    line-height: 1.65;
   }
 
+  /* Six short points in two columns */
   .about-features {
     list-style: none;
     padding: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.5rem;
   }
 
   .about-features li {
-    padding: 0.4rem 0;
+    padding: 0.3rem 0;
     font-size: 0.95rem;
     color: var(--gray-700);
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    align-items: flex-start;
+    gap: 0.6rem;
+    line-height: 1.5;
   }
 
   .about-features li svg {
     flex-shrink: 0;
+    margin-top: 0.2em;
   }
 
   /* =========================================
      Blog / Insights
      ========================================= */
-  .blog-section {
-    padding: var(--section-padding);
-  }
-
   .blog-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    --post-card-ratio: 4 / 3; /* four compact cards in one row */
+  }
+  @media (max-width: 1200px) {
+    .blog-grid { grid-template-columns: repeat(2, 1fr); --post-card-ratio: 16 / 10; }
   }
 
-  .blog-card {
-    display: block;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: var(--white);
-    border: 1px solid rgba(15, 43, 70, 0.08);
-    text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .blog-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(15, 43, 70, 0.12);
-  }
-
-  .blog-card-img {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    background-color: var(--navy);
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.4s ease;
-  }
-
-  .blog-card:hover .blog-card-img {
-    transform: scale(1.03);
-  }
-
-  .blog-tag {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: var(--orange);
-    color: white;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    padding: 0.3rem 0.75rem;
-    border-radius: 20px;
-  }
-
-  .blog-card-body {
-    padding: 1.5rem;
-  }
-
-  .blog-date {
-    font-size: 0.78rem;
-    color: rgba(15, 43, 70, 0.45);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  .blog-card-body h3 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.4;
-    margin-bottom: 0.5rem;
-    transition: color 0.3s ease;
-  }
-
-  .blog-card:hover .blog-card-body h3 {
-    color: var(--orange);
-  }
-
-  .blog-card-body p {
-    font-size: 0.88rem;
-    color: rgba(15, 43, 70, 0.6);
-    line-height: 1.55;
-    margin: 0;
-  }
-
-  .blog-cta {
-    text-align: center;
-  }
-
-  @media (max-width: 1024px) {
+  /* Tablet and phone: one row that scrolls sideways, the next card peeking in */
+  @media (max-width: 900px) {
     .blog-grid {
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 2rem;
+      margin-inline: -2rem;
+      padding: 0 2rem 0.25rem;
+      scrollbar-width: none;
+    }
+    .blog-grid::-webkit-scrollbar { display: none; }
+    .blog-grid > :global(.post-card) {
+      flex: 0 0 44%;
+      scroll-snap-align: start;
+      --post-card-ratio: 4 / 5;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .blog-grid {
+      scroll-padding-inline: var(--gutter-mobile);
+      margin-inline: calc(-1 * var(--gutter-mobile));
+      padding-inline: var(--gutter-mobile);
     }
   }
 
   @media (max-width: 640px) {
-    .blog-grid {
-      grid-template-columns: 1fr;
-    }
+    .blog-grid > :global(.post-card) { flex-basis: 78%; --post-card-ratio: 1 / 1; }
   }
 
   /* =========================================
      FAQ
      ========================================= */
-  .faq {
-    padding: var(--section-padding);
+  /* Blog and FAQ are both white: one section gap between them, not two */
+  .blog-section + .faq {
+    padding-top: 0;
   }
 
+  .faq-layout {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .faq-intro {
+    position: sticky;
+    top: calc(72px + 2rem); /* below the fixed header */
+  }
+
+  .faq-intro .section-header {
+    text-align: left;
+    margin: 0 0 1.5rem;
+    max-width: none;
+  }
+  .faq-intro .section-header h2 { margin: 0.25rem 0 0.6rem; }
+  .faq-intro .section-header p { font-size: 1rem; line-height: 1.6; }
+
   .faq-list {
-    max-width: 800px;
-    margin: 0 auto 2.5rem;
+    margin: 0;
+    border-top: 1px solid rgba(15, 37, 72, 0.12);
   }
 
   .faq-item {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-md);
-    margin-bottom: 0.75rem;
-    overflow: hidden;
-    transition: all var(--transition-base);
-  }
-
-  .faq-item[open] {
-    border-color: var(--orange);
-    box-shadow: 0 2px 12px rgba(244, 121, 32, 0.08);
+    border-bottom: 1px solid rgba(15, 37, 72, 0.12);
   }
 
   .faq-item summary {
-    padding: 1.25rem 1.5rem;
+    padding: 1.05rem 0;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.05rem;
+    line-height: 1.45;
     color: var(--navy);
     cursor: pointer;
     list-style: none;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 1.5rem;
   }
 
   .faq-item summary::-webkit-details-marker { display: none; }
 
   .faq-item summary::after {
     content: '+';
-    font-size: 1.4rem;
-    color: var(--orange);
-    font-weight: 300;
-    transition: transform var(--transition-base);
+    flex-shrink: 0;
+    width: 1.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--orange-ink);
   }
 
   .faq-item[open] summary::after {
-    content: '−';
+    content: '\2212';
+  }
+
+  .faq-item summary:hover {
+    color: var(--orange-ink);
+  }
+
+  /* Keyboard focus stays visible, as a navy ring inside the row */
+  .faq-item summary:focus-visible {
+    outline: 2px solid var(--navy) !important;
+    outline-offset: 4px !important;
+    border-radius: 2px;
   }
 
   .faq-answer {
-    padding: 0 1.5rem 1.5rem;
+    padding: 0 3rem 1.15rem 0;
   }
 
   .faq-answer p {
-    font-size: 0.95rem;
+    max-width: 62ch;
+    font-size: 1rem;
     line-height: 1.7;
+    color: var(--gray-700);
+  }
+
+  /* Smooth open where the browser can animate details (no jank elsewhere) */
+  @supports selector(::details-content) {
+    .faq-list { interpolate-size: allow-keywords; }
+    .faq-item::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition: block-size 0.25s ease, content-visibility 0.25s allow-discrete;
+    }
+    .faq-item[open]::details-content { block-size: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item::details-content { transition: none; }
   }
 
   .faq-cta {
-    text-align: center;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    gap: 1rem;
+    gap: 0.75rem 1rem;
   }
 
   .faq-cta span {
     color: var(--gray-500);
     font-size: 0.95rem;
+  }
+
+  @media (max-width: 900px) {
+    .faq-layout { grid-template-columns: 1fr; gap: 1.25rem; }
+    .faq-item summary { font-size: 1rem; padding: 0.95rem 0; }
+    .faq-intro { position: static; }
+    .faq-intro .section-header { margin-bottom: 1.25rem; }
+    .faq-cta { flex-direction: row; align-items: center; }
   }
 
   /* =========================================
@@ -1895,84 +2217,113 @@ const localBusinessSchema = {
     .why-us-header p {
       text-align: left;
     }
-    .testimonial-grid {
-      grid-template-columns: 1fr;
-    }
+    .hero-panel { width: 56%; }
+    .hero-photo { width: 40%; }
   }
 
   @media (max-width: 900px) {
-    .hero-content {
+    .testimonial-grid {
       grid-template-columns: 1fr;
-      gap: 2rem;
-      padding: 0;
+      gap: 0.75rem;
     }
-
-    .hero-badges {
-      display: none;
+    .hero {
+      flex-direction: column;
+      align-items: stretch;
+      min-height: auto;
+      padding: 7rem 2rem 3.5rem;
+      background-size: 1100px auto;
+      background-position: center bottom 6rem;
     }
+    .hero-photo { right: auto; bottom: auto; }
+    .hero-content { padding: 0; }
+    .hero-panel { width: auto; max-width: 640px; }
+    .hero-photo {
+      position: relative;
+      width: calc(100% - 8px);
+      max-width: 632px;
+      top: 0;
+      height: 440px;
+      margin: 2.5rem 0 8px 8px;
+    }
+    .hero-photo img { object-position: 50% 20%; }
+    .hero-photo::before { left: -8px; bottom: -8px; }
 
     .about-grid {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.5rem;
     }
+    .about-image-area { min-height: 0; }
+    .about-img-placeholder {
+      position: static;
+      aspect-ratio: 16/10;
+    }
+    .about-founder-img { object-position: 50% 20%; }
+  }
 
-    .about-image-area {
-      display: none;
-    }
-
-    .process-steps {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .process-connector {
-      width: 2px;
-      height: 30px;
-      margin: 0;
-    }
+  /* Same mobile gutter as the header */
+  @media (max-width: 768px) {
+    .hero { padding-left: var(--gutter-mobile); padding-right: var(--gutter-mobile); }
   }
 
   @media (max-width: 600px) {
-    .hero {
-      padding: 7rem 1rem 2.5rem;
-      min-height: auto;
+    .testimonial-card {
+      padding: 1.25rem 1.5rem 1.15rem;
     }
 
-    .hero-panel {
-      padding: 0;
-      background: none;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      border: none;
-      border-radius: 0;
+    .quote-text {
+      font-size: 1rem;
+    }
+    /* One row that scrolls sideways, the next quote peeking in (as the blog row) */
+    .testimonial-grid {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter-mobile);
+      margin-inline: calc(-1 * var(--gutter-mobile));
+      padding: 0 var(--gutter-mobile) 0.25rem;
+      scrollbar-width: none;
+    }
+    .testimonial-grid::-webkit-scrollbar { display: none; }
+    .testimonial-card { flex: 0 0 84%; scroll-snap-align: start; }
+    .quote-stars { margin-bottom: 0.6rem; }
+    .quote-text { margin-bottom: 0.9rem; }
+    .quote-author { padding-top: 0.85rem; }
+
+    .about-features { grid-template-columns: 1fr; }
+
+    .hero {
+      padding: 6.5rem var(--gutter-mobile) 3rem;
     }
 
     .hero-panel h1 {
-      font-size: 2rem !important;
+      font-size: 2.1rem !important;
       margin-bottom: 1rem;
-      line-height: 1.15 !important;
+      line-height: 1.12 !important;
     }
 
-    .hero-panel .eyebrow-badge {
-      margin-bottom: 1rem;
-    }
+    .hero-eyebrow { margin-bottom: 1rem; }
 
     .hero-desc {
       font-size: 1rem;
-      margin-bottom: 2rem;
-      color: rgba(255,255,255,0.8);
+      margin-bottom: 1.75rem;
     }
 
     .hero-buttons {
       flex-direction: column;
+      align-items: stretch;
       gap: 0.75rem;
+      margin-bottom: 2rem;
     }
+    .hero-buttons .btn { justify-content: center; }
 
-    .hero-trust {
-      justify-content: flex-start;
+    .hero-stats { grid-template-columns: 1fr; gap: 0.5rem; }
+    .hero-stats a { flex-direction: row; align-items: center; padding: 0.75rem 0.9rem; }
+
+    /* Shorter on phones so the two core offers follow sooner */
+    .hero-photo {
+      height: 300px;
       margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255,255,255,0.15);
     }
 
     .services-grid {
@@ -1980,42 +2331,30 @@ const localBusinessSchema = {
     }
   }
 
-/* ===== WHITEPAPER CTA ===== */
+/* ===== WHITEPAPER CTA: calm navy band, real photo, one-colour headline ===== */
 .wp-cta { padding: 5rem 0; background: var(--navy); position: relative; overflow: hidden; }
-.wp-cta::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(244,121,32,0.1) 0%, transparent 50%),
-              radial-gradient(circle at 80% 50%, rgba(59,130,246,0.08) 0%, transparent 50%);
-}
 .wp-cta-grid {
-  display: grid; grid-template-columns: 380px 1fr; gap: 4rem;
+  display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 4rem;
   align-items: center; position: relative; z-index: 1;
 }
-.wp-cta-visual { position: relative; display: flex; justify-content: center; }
-.wp-cta-glow {
-  position: absolute; width: 300px; height: 300px; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(244,121,32,0.25), transparent 70%);
-  filter: blur(40px); z-index: 0;
-}
+.wp-cta-visual { display: flex; justify-content: center; }
+.wp-cta-visual picture { display: block; width: 100%; max-width: 360px; }
 .wp-cta-book {
-  position: relative; z-index: 1; max-width: 320px; width: 100%;
-  border-radius: 12px; box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-  transition: transform 0.4s ease;
+  width: 100%; height: auto; border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
 }
-.wp-cta-book:hover { transform: translateY(-8px) rotate(-1deg); }
 
 .wp-cta-content { color: white; }
 .wp-cta-badge {
-  display: inline-block; background: var(--orange); color: white;
-  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em;
-  padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 1.25rem;
+  display: inline-block; color: rgba(255, 255, 255, 0.88);
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; margin-bottom: 1rem;
 }
 .wp-cta-content h2 {
   font-size: 2.2rem; line-height: 1.2; margin-bottom: 1rem; color: white;
 }
 .wp-cta-content > p {
-  font-size: 1.05rem; color: rgba(255,255,255,0.7); line-height: 1.7;
+  font-size: 1.05rem; color: rgba(255, 255, 255, 0.88); line-height: 1.7;
   margin-bottom: 1.5rem; max-width: 520px;
 }
 .wp-cta-features {
@@ -2027,15 +2366,15 @@ const localBusinessSchema = {
   font-size: 0.88rem; color: rgba(255,255,255,0.85);
 }
 .wp-cta-feature .material-symbols-outlined {
-  font-size: 20px; color: var(--orange);
+  font-size: 20px; color: var(--orange-light);
 }
 
 .wp-cta-form-row {
   display: flex; gap: 0.75rem; align-items: stretch;
 }
 .wp-cta-form-row input {
-  flex: 1; padding: 0.85rem 1rem; border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 10px; background: rgba(255,255,255,0.08); color: white;
+  flex: 1; min-width: 0; padding: 0.85rem 1rem; border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px; background: rgba(255,255,255,0.08); color: white;
   font-size: 0.9rem; font-family: inherit; backdrop-filter: blur(4px);
   transition: border-color 0.2s, background 0.2s;
 }
@@ -2047,72 +2386,39 @@ const localBusinessSchema = {
 .wp-cta-form-row .btn {
   white-space: nowrap; display: flex; align-items: center; gap: 0.4rem;
   padding: 0.85rem 1.5rem; font-size: 0.9rem; font-weight: 700;
-  border-radius: 10px;
 }
 .wp-cta-disclaimer {
-  font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 0.75rem;
+  font-size: 0.78rem; color: rgba(255, 255, 255, 0.88); margin-top: 0.75rem;
 }
+.wp-cta-consent {
+  display: flex; align-items: flex-start; gap: 0.6rem; margin-top: 0.9rem;
+  font-size: 0.85rem; line-height: 1.5; color: rgba(255, 255, 255, 0.88); cursor: pointer;
+}
+.wp-cta-consent input { width: 18px; height: 18px; margin: 0.1rem 0 0; flex-shrink: 0; accent-color: var(--orange); }
 
 @media (max-width: 992px) {
   .wp-cta-grid { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
   .wp-cta-content > p { margin: 0 auto 1.5rem; }
   .wp-cta-features { justify-content: center; }
   .wp-cta-form-row { flex-direction: column; }
-  .wp-cta-book { max-width: 260px; }
+  .wp-cta-consent { justify-content: center; text-align: left; }
+  .wp-cta-visual picture { max-width: 280px; }
 }
 @media (max-width: 576px) {
   .wp-cta-features { grid-template-columns: 1fr; }
   .wp-cta-content h2 { font-size: 1.6rem; }
 }
 
-/* ===== WHITEPAPER MODAL ===== */
-.wp-modal-overlay {
-  position: fixed; inset: 0; z-index: 9999;
-  background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
-  display: flex; align-items: center; justify-content: center;
-  padding: 1.5rem; opacity: 0; transition: opacity 0.3s ease;
-}
-.wp-modal-overlay.wp-modal-active { opacity: 1; }
-.wp-modal {
-  background: white; border-radius: 20px; max-width: 680px; width: 100%;
-  position: relative; overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-  transform: scale(0.9) translateY(20px);
-  transition: transform 0.3s ease;
-}
-.wp-modal-active .wp-modal { transform: scale(1) translateY(0); }
-.wp-modal-close {
-  position: absolute; top: 1rem; right: 1rem; z-index: 2;
-  background: var(--gray-100); border: none; width: 36px; height: 36px;
-  border-radius: 50%; font-size: 1.4rem; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gray-600); transition: background 0.2s;
-}
-.wp-modal-close:hover { background: var(--gray-200); }
-.wp-modal-grid {
-  display: grid; grid-template-columns: 220px 1fr;
-}
-.wp-modal-img {
-  background: var(--navy); display: flex; align-items: center; justify-content: center;
-  padding: 2rem;
-}
-.wp-modal-img img { width: 100%; max-width: 180px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-.wp-modal-body { padding: 2.5rem; }
-.wp-modal-body h3 { font-size: 1.4rem; color: var(--navy); margin: 0.75rem 0 0.5rem; line-height: 1.3; }
-.wp-modal-body > p { font-size: 0.9rem; color: var(--gray-500); margin-bottom: 1.5rem; line-height: 1.6; }
-.wp-modal-field { margin-bottom: 0.75rem; }
-.wp-modal-field input {
-  width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--gray-200);
-  border-radius: 10px; font-size: 0.9rem; font-family: inherit;
-  transition: border-color 0.2s;
-}
-.wp-modal-field input:focus { outline: none; border-color: var(--orange); }
-
-@media (max-width: 640px) {
-  .wp-modal-grid { grid-template-columns: 1fr; }
-  .wp-modal-img { padding: 1.5rem; }
-  .wp-modal-img img { max-width: 120px; }
-  .wp-modal-body { padding: 1.5rem; }
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .handle-card,
+  .service-card-v2,
+  .svc-band-card,
+  .testimonial-card {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .faq-answer { padding-right: 0; }
 }
 </style>
 

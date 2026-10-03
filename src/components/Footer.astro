@@ -1,80 +1,143 @@
 ---
 // Footer.astro — Global footer (same on every page)
+import { serviceLinks } from '../data/pseo/service-groups.js';
 ---
 
 <footer class="site-footer">
-  <!-- Pre-footer CTA -->
+  <!-- Booking band: the footer's primary action -->
   <div class="footer-cta">
     <div class="container">
       <div class="cta-inner">
-        <div class="cta-content">
-          <h3>Your HR Needs, Our Support</h3>
-          <p>Book a free 30-minute discovery call and let's discuss your needs.</p>
+        <div class="cta-person">
+          <!-- Eager (low priority): lazy left the avatar empty on long pages until scrolled near it
+               (and always in full-page captures); /about/ only looked fine because it loads the same file higher up -->
+          <img src="/images/home/cornelis-candid-face.jpg" alt="Cornelis Leerlooijer, founder of HRHelp" class="cta-photo" width="320" height="320" loading="eager" fetchpriority="low" decoding="async" />
+          <div class="cta-content">
+            <h3>Your HR Needs, Our Support</h3>
+            <p>Talk to a senior HR consultant in a free 30-minute consultation.<span class="cta-more"> Fixed pricing, agreed upfront.</span></p>
+          </div>
         </div>
-        <a href="/contact" class="btn btn-secondary btn-lg">
+        <!-- .btn-primary: Layout.astro fires the GA4 cta_click on it -->
+        <a href="/contact/" class="btn btn-primary btn-lg">
           Book Free Consultation
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
   </div>
 
   <!-- Main footer -->
-  <div class="footer-main">
+  <div class="footer-main motif-canal">
     <div class="container">
       <div class="footer-grid">
         <!-- Brand column -->
         <div class="footer-brand">
           <a href="/" class="footer-logo">
-            <img src="/images/logo-white.png" alt="HRHelp" class="logo-img" />
+            <img src="/images/logo-white.png" alt="HRHelp" class="logo-img" width="1280" height="310" />
           </a>
           <p class="footer-tagline">Your Dutch HR partner for international success</p>
-          <div class="footer-social">
-            <a href="#" class="social-link" aria-label="LinkedIn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
-            </a>
-            <a href="#" class="social-link" aria-label="X/Twitter">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
+          <ul class="footer-contact">
+            <li>
+              <a href="tel:+31857608188">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span>+31 85 760 8188</span>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:info@hrhelp.nl">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+                <span>info@hrhelp.nl</span>
+              </a>
+            </li>
+          </ul>
+          <address class="footer-address">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Oeverwalweg 3, 1332 CG Almere<br />KVK 69913919</span>
+          </address>
+          <!--
+            SOCIAL ICONS: hidden until the owner provides the real profile URLs
+            (they linked to "#"). To restore, replace each href="#" with the real
+            URL and paste this block back in place of this comment, then restore
+            the .footer-social / .social-link styles from git history.
+
+            <div class="footer-social">
+              <a href="#" class="social-link" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+              </a>
+              <a href="#" class="social-link" aria-label="X/Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+            </div>
+          -->
+          <!-- Compact whitepaper signup: same /api/contact endpoint and download as the homepage form -->
+          <form id="footer-wp-form" class="footer-wp">
+            <p class="footer-wp-title">Free guide: HR Rules &amp; Regulations 2026</p>
+            <input type="text" name="name" placeholder="Your full name" aria-label="Your full name" autocomplete="name" required />
+            <input type="email" name="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required />
+            <!-- Optional and unticked: the guide never depends on joining the mailing list -->
+            <label class="footer-wp-consent">
+              <input type="checkbox" name="marketing_consent" />
+              <span>Also send me occasional HR updates. You can unsubscribe at any time.</span>
+            </label>
+            <!-- Honeypot: off-screen and out of the tab order, so only bots fill it.
+                 A non-empty url_confirm makes /api/contact drop the submission. -->
+            <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+              <label for="footer-wp-url-confirm">Your website</label>
+              <input type="text" id="footer-wp-url-confirm" name="url_confirm" tabindex="-1" autocomplete="off" />
+            </div>
+            <button type="submit" class="btn btn-accent footer-wp-btn" id="footer-wp-submit">Download free guide</button>
+            <div id="footer-wp-status" class="footer-wp-status" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer">
+          <!-- Solutions column -->
+          <div class="footer-col footer-col-solutions">
+            <h4>Solutions</h4>
+            <ul>
+              <li><a href="/solutions/hr-settlers/">HR Settlers</a></li>
+              <li><a href="/solutions/hr-teams/">HR Teams</a></li>
+              <li><a href="/solutions/hr-reset/">HR Reset</a></li>
+              <li><a href="/solutions/hr-sos/">HR S.O.S.</a></li>
+              <li><a href="/solutions/">All Solutions</a></li>
+            </ul>
           </div>
 
-        </div>
+          <!-- HR Services column: every visible service page -->
+          <div class="footer-col footer-col-services">
+            <h4>HR Services</h4>
+            <ul>
+              <li><a href="/services/#core-expertise">Core expertise</a></li>
+              {serviceLinks.map((s: any) => (
+                <li><a href={`/services/${s.slug}/`}>{s.short || s.name}</a></li>
+              ))}
+              <li><a href="/services/">All HR Services</a></li>
+            </ul>
+          </div>
 
-        <!-- Solutions column -->
-        <div class="footer-col">
-          <h4>Solutions</h4>
-          <ul>
-            <li><a href="/solutions/hr-settlers">HR Settlers</a></li>
-            <li><a href="/solutions/hr-teams">HR Teams</a></li>
-            <li><a href="/solutions/hr-reset">HR Reset</a></li>
-            <li><a href="/solutions/hr-sos">HR S.O.S.</a></li>
-            <li><a href="/solutions">All Solutions</a></li>
-            <li><a href="/services">HR Services</a></li>
-          </ul>
-        </div>
+          <!-- Resources column -->
+          <div class="footer-col footer-col-resources">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/guides/">Employer Guides</a></li>
+              <li><a href="/resources/faq/">FAQ</a></li>
+              <li><a href="/resources/case-studies/">Case Studies</a></li>
+            </ul>
+          </div>
 
-        <!-- Resources column -->
-        <div class="footer-col">
-          <h4>Resources</h4>
-          <ul>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/resources/expertise">Our Expertise</a></li>
-            <li><a href="/resources/faq">FAQ</a></li>
-            <li><a href="/resources/case-studies">Case Studies</a></li>
-          </ul>
-        </div>
-
-        <!-- Company column -->
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/careers">Careers</a></li>
-            <li><a href="/about/partners">Partners</a></li>
-            <li><a href="/privacy">Privacy Policy</a></li>
-          </ul>
-        </div>
+          <!-- Company column -->
+          <div class="footer-col footer-col-company">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="/about/">About Us</a></li>
+              <li><a href="/contact/">Contact</a></li>
+              <li><a href="/careers/">Careers</a></li>
+              <li><a href="/about/partners/">Partners</a></li>
+              <li><a href="/privacy/">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </nav>
       </div>
     </div>
   </div>
@@ -83,21 +146,71 @@
   <div class="footer-bottom">
     <div class="container">
       <div class="footer-bottom-inner">
-        <span>© 2026 HRHelp.nl B.V. — All rights reserved</span>
+        <span>© 2026 HRHelp.nl B.V. · All rights reserved</span>
         <span class="footer-legal">
-          <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms of Service</a>
+          <a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Service</a> · <button type="button" class="footer-cookie-btn" data-cookie-settings>Cookie settings</button>
         </span>
       </div>
     </div>
   </div>
 </footer>
 
+<script is:inline>
+(function() {
+  var form = document.getElementById('footer-wp-form');
+  if (!form) return;
+  var PDF = '/downloads/hrhelp-hr-rules-regulations-2026-nl.pdf';
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('footer-wp-submit');
+    var status = document.getElementById('footer-wp-status');
+    var params = new URLSearchParams(window.location.search);
+    var data = {
+      name: form.querySelector('[name="name"]').value.trim(),
+      email: form.querySelector('[name="email"]').value.trim(),
+      source: 'Whitepaper Download (Footer)',
+      // Newsletter only with this optional opt-in
+      marketing_consent: form.querySelector('[name="marketing_consent"]').checked,
+      url_confirm: form.querySelector('[name="url_confirm"]').value,
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      referrer: document.referrer || ''
+    };
+    // First-touch lead source (utm_*, click ids, referrer host, landing page)
+    if (window.hrhelpAttribution) Object.assign(data, window.hrhelpAttribution());
+
+    // The browser has already checked the name and email: the guide downloads now, and the
+    // lead goes to /api/contact in the background, so a failed request never withholds it.
+    var a = document.createElement('a');
+    a.href = PDF;
+    a.download = 'HRHelp-HR-Rules-Regulations-2026-NL.pdf';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    if (typeof gtag === 'function') gtag('event', 'guide_download', { source: 'footer' });
+    btn.disabled = true;
+    btn.innerHTML = '✓ Downloaded!';
+    status.style.display = 'block';
+    status.innerHTML = '✓ Your guide is downloading. Not started? <a href="' + PDF + '" target="_blank" rel="noopener">Open the PDF</a>';
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+      keepalive: true
+    }).catch(function() {});
+  });
+})();
+</script>
+
 <style>
-  /* Pre-footer CTA */
+  /* Pre-footer CTA: a quiet strip on the footer navy instead of a full
+     orange band (the pages above already end with a CTA panel) */
   .footer-cta {
-    background: var(--orange);
-    padding: 3rem 2rem;
+    background: var(--navy);
+    padding: 2.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
+  /* globals.css gives .footer-cta a navy focus ring for the old orange band */
+  .footer-cta :global(:focus-visible) { outline-color: var(--orange-light) !important; }
 
   .cta-inner {
     display: flex;
@@ -108,49 +221,66 @@
     margin: 0 auto;
   }
 
+  .cta-person {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .cta-photo {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: var(--navy-light);
+  }
+
   .cta-content h3 {
     font-family: var(--font-heading);
     color: var(--white);
-    font-size: 1.6rem;
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
     margin-bottom: 0.35rem;
   }
 
   .cta-content p {
-    color: rgba(255,255,255,0.85);
+    color: rgba(255, 255, 255, 0.88);
     font-size: 1rem;
   }
 
-  .footer-cta .btn-secondary {
-    background: var(--white);
-    color: var(--orange);
-    border-color: var(--white);
+  .footer-cta .btn {
     white-space: nowrap;
-    font-weight: 700;
-  }
-
-  .footer-cta .btn-secondary:hover {
-    background: var(--navy);
-    color: var(--white);
-    border-color: var(--navy);
   }
 
   /* Main footer */
+  /* background-color only, so the .motif-canal image from globals.css stays */
   .footer-main {
-    background: var(--navy);
-    padding: 4rem 2rem 3rem;
+    background-color: var(--navy);
+    padding: 3.5rem 0 3rem;
   }
 
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: 1.35fr repeat(4, 1fr);
+    gap: 2.5rem;
     max-width: var(--container-max);
     margin: 0 auto;
   }
 
+  /* The nav spans the three link columns and reuses the parent tracks */
+  .footer-nav {
+    grid-column: span 4;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
   /* Brand */
   .footer-logo {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
@@ -164,38 +294,136 @@
   }
 
   .footer-tagline {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.88);
     font-size: 0.95rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     line-height: 1.6;
   }
 
-  .footer-social {
-    display: flex;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+  /* Contact rows: 44px tall tap targets */
+  .footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
-  .social-link {
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-sm);
-    background: rgba(255,255,255,0.1);
-    display: flex;
+  .footer-contact a {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    color: rgba(255,255,255,0.6);
-    transition: all var(--transition-fast);
+    gap: 0.65rem;
+    min-height: 44px;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+    transition: color var(--transition-fast);
   }
 
-  .social-link:hover {
-    background: var(--orange);
+  .footer-contact svg {
+    flex-shrink: 0;
+    color: var(--icon-accent);
+  }
+
+  .footer-contact a:hover {
     color: var(--white);
   }
 
-  .footer-amsterdam {
-    color: rgba(255,255,255,0.4);
+  .footer-address {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin: 0.35rem 0 0;
+    font-style: normal;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .footer-address svg {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: var(--icon-accent);
+  }
+
+  /* Compact whitepaper signup */
+  .footer-wp {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    max-width: 340px;
+  }
+
+  .footer-wp-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.4;
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-wp input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--white);
+    font-size: 0.9rem;
+    font-family: inherit;
+  }
+
+  .footer-wp input::placeholder { color: rgba(255, 255, 255, 0.88); }
+
+  .footer-wp input:focus { border-color: var(--orange-light); }
+
+  /* Optional newsletter opt-in (unticked); the whole line toggles it */
+  .footer-wp-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.2rem 0;
     font-size: 0.85rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.88);
+    cursor: pointer;
+  }
+
+  .footer-wp .footer-wp-consent input {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    min-height: 0;
+    margin: 0.1rem 0 0;
+    padding: 0;
+    accent-color: var(--orange-ink);
+    cursor: pointer;
+  }
+
+  /* The site-wide orange-ink ring is too faint on the navy footer */
+  .footer-wp .footer-wp-consent input:focus-visible { outline-color: var(--orange-light) !important; }
+
+  .footer-wp-btn {
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .footer-wp-status {
+    display: none;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* Added by the script, so outside the scoped markup */
+  .footer-wp-status :global(a) {
+    color: var(--white);
+    text-decoration: underline;
+    text-decoration-color: var(--orange-light);
+    text-underline-offset: 3px;
   }
 
   /* Columns */
@@ -219,19 +447,22 @@
   }
 
   .footer-col a {
-    color: rgba(255,255,255,0.55);
+    color: rgba(255, 255, 255, 0.88);
     font-size: 0.9rem;
     transition: color var(--transition-fast);
   }
 
   .footer-col a:hover {
-    color: var(--orange);
+    color: var(--white);
+    text-decoration: underline;
+    text-decoration-color: var(--orange-light);
+    text-underline-offset: 3px;
   }
 
   /* Bottom bar */
   .footer-bottom {
     background: var(--navy-dark);
-    padding: 1.25rem 2rem;
+    padding: 1.25rem 0;
   }
 
   .footer-bottom-inner {
@@ -242,44 +473,235 @@
     justify-content: space-between;
     gap: 1rem;
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255, 255, 255, 0.88);
+    /* The fixed chat button sits in the bottom-right corner (24px in, 60px wide): keep the
+       right-aligned legal links, "Cookie settings" included, at least 96px from the viewport
+       edge. Up to the 1400px container that is 80px on top of the gutter; wider screens'
+       side margins take over. */
+    padding-right: max(0px, calc(80px - max(0px, (100vw - var(--container-max)) / 2)));
   }
 
 
   .footer-legal a {
-    color: rgba(255,255,255,0.35);
+    color: rgba(255, 255, 255, 0.88);
     transition: color var(--transition-fast);
   }
 
   .footer-legal a:hover {
-    color: var(--orange);
+    color: var(--white);
+    text-decoration: underline;
+    text-decoration-color: var(--orange-light);
+    text-underline-offset: 3px;
+  }
+
+  /* "Cookie settings" reopens the cookie banner (CookieConsent.astro); styled like the links beside it */
+  .footer-cookie-btn {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: rgba(255, 255, 255, 0.88);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-cookie-btn:hover {
+    color: var(--white);
+    text-decoration: underline;
+    text-decoration-color: var(--orange-light);
+    text-underline-offset: 3px;
   }
 
   /* Responsive */
   @media (max-width: 900px) {
     .cta-inner {
       flex-direction: column;
-      text-align: center;
+      align-items: flex-start;
     }
 
     .footer-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 2rem;
     }
 
-    .footer-brand {
-      grid-column: 1 / -1;
+    .footer-nav {
+      grid-column: auto;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
     }
   }
 
-  @media (max-width: 550px) {
+  @media (min-width: 901px) and (max-width: 1180px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-nav {
+      grid-column: auto;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  /* Mobile: one 16px gutter (the .container), compact blocks, links in a
+     two-column grid with 44px rows */
+  @media (max-width: 767.98px) {
+    .footer-cta,
+    .footer-main,
+    .footer-bottom {
+      padding-inline: 0;
+    }
+
+    .footer-cta {
+      padding-block: 1.75rem;
+    }
+
+    .cta-inner {
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+
+    .cta-person {
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .cta-photo {
+      width: 56px;
+      height: 56px;
+    }
+
+    .cta-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .cta-content p {
+      font-size: 0.95rem;
+    }
+
+    .footer-cta .btn {
+      justify-content: center;
+      padding-block: 0.95rem;
+    }
+
+    .footer-main {
+      padding-block: 1.75rem 1.5rem;
+    }
+
     .footer-grid {
-      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .footer-brand {
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* 44px tap target around the 30px logo */
+    .footer-logo {
+      min-height: 44px;
+      margin: -7px 0 0.25rem;
+    }
+
+    .footer-logo .logo-img {
+      height: 30px;
+    }
+
+    .footer-tagline {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    /* Phone | email side by side, on the same two columns as the links */
+    .footer-contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1rem;
+    }
+
+    .footer-contact a {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .footer-nav {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1rem;
+      row-gap: 1.25rem;
+    }
+
+    /* Mobile order: Solutions | Company, then Resources full width in two
+       columns (markup and desktop order stay Solutions, Resources, Company) */
+    .footer-col-company {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .footer-col-resources {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .footer-col-services {
+      grid-column: 1 / -1;
+      grid-row: 3;
+    }
+
+    .footer-col-resources ul,
+    .footer-col-services ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1rem;
+    }
+
+    .footer-wp {
+      max-width: none;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+    }
+
+    /* Muted small caps labels */
+    .footer-col h4 {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.88);
+      margin-bottom: 0.1rem;
+    }
+
+    .footer-col li {
+      margin: 0;
+    }
+
+    /* 13px + 18px + 13px = 44px rows */
+    .footer-col a {
+      display: block;
+      padding-block: 13px;
+      line-height: 18px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .footer-bottom {
+      padding-block: 0.75rem 5.5rem; /* room for the fixed chat button */
     }
 
     .footer-bottom-inner {
       flex-direction: column;
-      text-align: center;
+      align-items: flex-start;
+      gap: 0;
+      padding-right: 0; /* stacked on the left; the bottom padding above clears the chat button */
+    }
+
+    .footer-bottom-inner > span:first-child {
+      padding-top: 0.5rem;
+    }
+
+    .footer-legal a,
+    .footer-cookie-btn {
+      display: inline-block;
+      padding-block: 13px;
+      line-height: 18px;
     }
   }
 </style>

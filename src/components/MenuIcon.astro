@@ -1,0 +1,23 @@
+---
+// Line icon for the header menus: LineIcon, plus the few menu icons LineIcon
+// does not have (same 24px grid, stroke and --icon-accent colour).
+import LineIcon from './LineIcon.astro';
+
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+const { name, size = 22, class: className = '' } = Astro.props;
+
+const extra: Record<string, string> = {
+  sos: '<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',
+  star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  article: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/>',
+  help: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+};
+const body = extra[name];
+---
+{body
+  ? <svg class={`line-ico ${className}`.trim()} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={body} />
+  : <LineIcon name={name} size={size} class={className} />}

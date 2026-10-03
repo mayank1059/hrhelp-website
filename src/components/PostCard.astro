@@ -1,0 +1,175 @@
+---
+// Blog post card: the featured image fills the card, a navy scrim at the bottom
+// carries the title and meta in white, and the post's real WordPress categories
+// sit as small pills top-left. The whole card is one link.
+// Heading level and class are passed in so each page keeps its document outline.
+interface Props {
+  href: string;
+  image: string;
+  alt: string;
+  title: string;
+  heading?: 'h2' | 'h3';
+  headingClass?: string;
+  date?: string;
+  datetime?: string;
+  readTime?: string;
+  /** Optional summary under the title (used on /blog/ only), clamped to 2 lines. */
+  excerpt?: string;
+  tags?: string[];
+  width?: number;
+  height?: number;
+  loading?: 'eager' | 'lazy';
+}
+
+const {
+  href, image, alt, title,
+  heading = 'h3', headingClass, date, datetime, readTime, excerpt,
+  tags = [], width = 1024, height = 576, loading = 'lazy',
+} = Astro.props;
+const Heading = heading;
+const pills = tags.slice(0, 2);
+---
+
+<a href={href} class="post-card">
+  <img class="post-card-img" src={image} alt={alt} width={width} height={height} loading={loading} decoding="async" />
+  {pills.length > 0 && (
+    <div class="post-card-tags">
+      {pills.map((t, i) => <span class:list={['post-card-tag', { 'is-primary': i === 0 }]}>{t}</span>)}
+    </div>
+  )}
+  <div class="post-card-body">
+    <Heading class:list={['post-card-title', headingClass]}>{title}</Heading>
+    {excerpt && <p class="post-card-excerpt">{excerpt}</p>}
+    {(date || readTime) && (
+      <p class="post-card-meta">
+        {date && (datetime ? <time datetime={datetime}>{date}</time> : <span>{date}</span>)}
+        {date && readTime && <span aria-hidden="true"> · </span>}
+        {readTime && <span>{readTime}</span>}
+      </p>
+    )}
+  </div>
+</a>
+
+<style>
+.post-card {
+  position: relative;
+  display: block;
+  aspect-ratio: var(--post-card-ratio, 4 / 5);
+  overflow: hidden;
+  border-radius: 4px;
+  background: #1a3a6e;
+  color: #fff;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.post-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* Scrim for text contrast only: solid-ish navy behind the text, fading out
+   above it. Worst case (white photo) the text still sits on >=0.72 navy. */
+.post-card-body {
+  position: absolute;
+  inset: auto 0 0 0;
+  --scrim-fade: 4.5rem;
+  padding: var(--scrim-fade) 1.25rem 1.25rem;
+  background: linear-gradient(
+    to top,
+    rgba(10, 25, 50, 0.88) 0%,
+    rgba(10, 25, 50, 0.72) calc(100% - var(--scrim-fade)),
+    rgba(10, 25, 50, 0) 100%
+  );
+}
+
+.post-card-title {
+  /* Card titles are small labels, not section headings: shrink the locked
+     heading scale locally (the lock in globals.css reads these variables) */
+  --h2-size: 1.0625rem; --h2-weight: 600; --h2-lh: 1.35; --h2-ls: 0;
+  --h3-size: 1.0625rem; --h3-weight: 600; --h3-lh: 1.35; --h3-ls: 0;
+  --h4-size: 1.0625rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: #fff;
+  margin: 0 0 0.5rem;
+  text-wrap: balance;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.post-card-excerpt {
+  margin: 0 0 0.6rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.post-card-meta {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.post-card-tags {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.post-card-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(10, 25, 50, 0.78);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+}
+
+.post-card-tag.is-primary {
+  background: var(--orange-ink);
+}
+
+.post-card:hover .post-card-img,
+.post-card:focus-visible .post-card-img {
+  transform: scale(1.03);
+}
+
+.post-card:hover .post-card-title,
+.post-card:focus-visible .post-card-title {
+  text-decoration-color: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card-img { transition: none; }
+  .post-card:hover .post-card-img,
+  .post-card:focus-visible .post-card-img { transform: none; }
+}
+
+@media (max-width: 768px) {
+  .post-card-body { --scrim-fade: 3rem; padding: var(--scrim-fade) 1rem 1rem; }
+  .post-card-tags { top: 0.75rem; left: 0.75rem; right: 0.75rem; }
+}
+</style>

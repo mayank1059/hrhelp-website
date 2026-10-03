@@ -1,0 +1,101 @@
+---
+// Click-to-load Google Maps for the Almere office. Nothing from Google loads
+// until the visitor presses "Show map" (no cookies before consent); the
+// "Open in Google Maps" link is always there as a plain fallback.
+// Variants:
+//   panel  - fills the height of its parent (About "Visit Us" card, right side)
+//   inline - fixed 16:10 box with its own radius (Contact, under the address)
+interface Props {
+  variant?: 'panel' | 'inline';
+  class?: string;
+}
+const { variant = 'inline', class: className } = Astro.props;
+const embed = 'https://www.google.com/maps?q=HRhelp,+Oeverwalweg+3,+1332+CG+Almere&output=embed';
+const external = 'https://www.google.com/maps/search/?api=1&query=HRhelp+Oeverwalweg+3+1332+CG+Almere';
+---
+<div class:list={['om', `om--${variant}`, className]}>
+  <div class="om-frame" data-om-frame data-src={embed}>
+    <div class="om-placeholder">
+      <svg class="om-streets" aria-hidden="true" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M-10 250C80 238 150 214 232 206S390 214 470 186 560 120 620 104" stroke-width="10" stroke-opacity="0.05" />
+        <path d="M-10 250C80 238 150 214 232 206S390 214 470 186 560 120 620 104" stroke-width="1.5" />
+        <path d="M110 -10L168 410M-10 118L610 42M300 -10L338 410M-10 342L610 298M470 -10L520 410" stroke-width="1.5" />
+        <path d="M40 -10L70 410M-10 70L610 -6M220 -10L250 410M400 -10L428 410M560 -10L590 410M-10 180L610 120M-10 300L610 250" stroke-width="1" />
+        <path d="M168 118C230 150 300 150 338 128M338 128C380 160 420 176 470 170" stroke-width="1" stroke-dasharray="3 6" />
+      </svg>
+      <div class="om-card">
+        <span class="om-pin" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7.5 7.5 0 0 0-7.5 7.5C4.5 15.1 12 22 12 22s7.5-6.9 7.5-12.5A7.5 7.5 0 0 0 12 2zm0 10.3a2.8 2.8 0 1 1 0-5.6 2.8 2.8 0 0 1 0 5.6z"/></svg>
+        </span>
+        <p class="om-label">HRhelp office</p>
+        <p class="om-address">Oeverwalweg 3<br />1332 CG Almere, Netherlands</p>
+        <button type="button" class="btn btn-accent om-btn" data-om-load>Show map</button>
+        <p class="om-note">Loads Google Maps, which may set cookies.</p>
+      </div>
+    </div>
+  </div>
+  <p class="om-foot">
+    <a href={external} target="_blank" rel="noopener">Open in Google Maps<span class="sr-only"> (opens in a new tab)</span></a>
+  </p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-om-load]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const frame = btn.closest<HTMLElement>('[data-om-frame]');
+      if (!frame || !frame.dataset.src) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = frame.dataset.src;
+      iframe.title = 'HRhelp office on Google Maps';
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      iframe.allowFullscreen = true;
+      iframe.className = 'om-iframe';
+      frame.replaceChildren(iframe);
+      frame.classList.add('is-loaded');
+      iframe.focus();
+    });
+  });
+</script>
+
+<style>
+.om { display: flex; flex-direction: column; min-width: 0; }
+.om-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy-dark);
+  color: white;
+}
+.om--inline .om-frame { aspect-ratio: 16 / 10; border-radius: 12px; }
+.om--panel { height: 100%; }
+.om--panel .om-frame { flex: 1; min-height: 360px; }
+
+.om-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+.om-streets { position: absolute; inset: 0; width: 100%; height: 100%; stroke: white; stroke-opacity: 0.14; }
+.om-streets path[stroke-opacity] { stroke-opacity: 0.08; }
+.om-pin { display: block; width: 34px; margin: 0 auto 0.9rem; color: var(--orange-light); line-height: 0; }
+
+.om-card { position: relative; text-align: center; max-width: 320px; }
+.om-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.88); margin: 0 0 0.5rem; }
+.om-address { font-size: 1.05rem; font-weight: 600; line-height: 1.5; color: white; margin: 0 0 1.25rem; }
+.om-note { font-size: 0.78rem; color: rgba(255, 255, 255, 0.88); margin: 0.75rem 0 0; }
+.om-btn:focus-visible { outline-color: var(--orange-light) !important; }
+
+.om-frame :global(.om-iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.om-foot { margin: 0.75rem 0 0; font-size: 0.92rem; }
+.om--panel .om-foot { margin: 0; padding: 0.85rem 1.25rem; border-top: 1px solid rgba(15, 37, 72, 0.08); }
+.om-foot a {
+  color: var(--navy); font-weight: 600;
+  text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px;
+}
+.om-foot a:hover { color: var(--orange-ink-dark); }
+.om-foot a::after { content: ' \2197'; }
+.om-foot .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 768px) {
+  .om--inline .om-frame { aspect-ratio: 4 / 3; }
+  .om--panel .om-frame { min-height: 300px; }
+  .om--panel .om-foot { padding-inline: 1rem; }
+}
+</style>

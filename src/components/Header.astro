@@ -1,27 +1,28 @@
 ---
 // Header.astro — Global navigation with mega menu for all pages except homepage
+import MenuIcon from './MenuIcon.astro';
 const currentPath = Astro.url.pathname;
 
 const solutions = [
   {
     slug: 'hr-settlers', name: 'HR Settlers',
     tagline: 'Enter the Dutch market with confidence',
-    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
+    icon: 'location_on'
   },
   {
     slug: 'hr-teams', name: 'HR Teams',
     tagline: 'Your outsourced HR department',
-    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
+    icon: 'groups'
   },
   {
     slug: 'hr-reset', name: 'HR Reset',
-    tagline: 'Modernize your existing HR',
-    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>'
+    tagline: 'Modernise your existing HR',
+    icon: 'cycle'
   },
   {
     slug: 'hr-sos', name: 'HR S.O.S.',
     tagline: 'Urgent HR crisis support',
-    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>'
+    icon: 'sos'
   }
 ];
 
@@ -41,16 +42,25 @@ import { getFeaturedArticles } from '../lib/wordpress';
 const featuredArticles = await getFeaturedArticles();
 
 const resourceLinks = [
-  { label: 'HR Guides', icon: 'menu_book', href: '/guides' },
-  { label: 'Our Expertise', icon: 'star', href: '/resources/expertise' },
-  { label: 'Case Studies', icon: 'trending_up', href: '/resources/case-studies' },
-  { label: 'Blog', icon: 'article', href: '/blog' },
-  { label: 'FAQ', icon: 'help', href: '/resources/faq' },
+  { label: 'HR Guides', icon: 'menu_book', href: '/guides/' },
+  { label: 'Case Studies', icon: 'trending_up', href: '/resources/case-studies/' },
+  { label: 'Blog', icon: 'article', href: '/blog/' },
+  { label: 'FAQ', icon: 'help', href: '/resources/faq/' },
 ];
 
 const navLinks = [
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'About', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+];
+
+// Service mega menu columns — same source as the /services index (staging-gated).
+import { serviceGroups } from '../data/pseo/service-groups.js';
+
+// Core expertise: the three areas HRhelp is most often brought in for (top of the HR Services menu)
+const coreExpertise = [
+  { label: 'Sickness Management', href: '/expertise/sickness-management/' },
+  { label: 'Restructuring', href: '/expertise/restructuring/' },
+  { label: 'Leadership Training', href: '/expertise/leadership-training/' },
 ];
 ---
 
@@ -58,24 +68,24 @@ const navLinks = [
   <div class="header-inner">
     <!-- Logo -->
     <a href="/" class="header-logo">
-      <img src="/images/logo.png" alt="HRHelp" class="logo-img" />
+      <img src="/images/logo.png" alt="HRHelp" class="logo-img" width="1280" height="310" />
     </a>
 
     <!-- Navigation with Mega Menus -->
-    <nav class="header-nav" id="header-nav">
+    <nav class="header-nav" id="header-nav" aria-label="Main">
       <!-- Solutions (mega menu) -->
       <div class="nav-item has-mega">
-        <a href="/solutions" class:list={['nav-link', { active: currentPath.startsWith('/solutions') }]}>
+        <a href="/solutions/" aria-expanded="false" aria-controls="mega-solutions" class:list={['nav-link', { active: currentPath.startsWith('/solutions') }]}>
           Solutions
-          <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg aria-hidden="true" class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
-        <div class="mega-panel mega-solutions">
+        <div class="mega-panel mega-solutions" id="mega-solutions">
           <div class="mega-inner">
             <div class="mega-section-label">Our Solutions</div>
             <div class="mega-solutions-grid">
               {solutions.map(s => (
-                <a href={`/solutions/${s.slug}`} class="mega-sol-card">
-                  <div class="mega-sol-icon" set:html={s.icon} />
+                <a href={`/solutions/${s.slug}/`} class="mega-sol-card">
+                  <span class="mega-ico" aria-hidden="true"><MenuIcon name={s.icon} /></span>
                   <div class="mega-sol-text">
                     <span class="mega-sol-name">{s.name}</span>
                     <span class="mega-sol-tagline">{s.tagline}</span>
@@ -84,14 +94,48 @@ const navLinks = [
               ))}
             </div>
             <div class="mega-footer">
-              <a href="/solutions" class="mega-footer-link">
+              <a href="/solutions/" class="mega-footer-link">
                 View All Solutions
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
-              <a href="/contact" class="mega-footer-cta">
-                Free Consultation
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <a href="/contact/" class="btn btn-primary header-cta">Book Consultation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HR Services (mega menu) -->
+      <div class="nav-item has-mega">
+        <a href="/services/" aria-expanded="false" aria-controls="mega-services" class:list={['nav-link', { active: currentPath.startsWith('/services') || currentPath.startsWith('/expertise') }]}>
+          HR Services
+          <svg aria-hidden="true" class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-panel mega-services" id="mega-services">
+          <div class="mega-inner">
+            <div class="mega-core">
+              <div class="mega-section-label mega-svc-label">Core expertise</div>
+              <div class="mega-core-grid">
+                {coreExpertise.map(c => (
+                  <a href={c.href} class="mega-svc-item">{c.label}</a>
+                ))}
+              </div>
+            </div>
+            <div class="mega-services-grid">
+              {serviceGroups.map(g => (
+                <div class="mega-svc-col">
+                  <div class="mega-section-label mega-svc-label">{g.label}</div>
+                  {g.items.map(s => (
+                    <a href={`/services/${s.slug}/`} class="mega-svc-item">{s.short}</a>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div class="mega-footer">
+              <a href="/services/" class="mega-footer-link">
+                View all HR services
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
+              <a href="/contact/" class="btn btn-primary header-cta">Book Consultation</a>
             </div>
           </div>
         </div>
@@ -99,25 +143,25 @@ const navLinks = [
 
       <!-- Industries (mega menu) -->
       <div class="nav-item has-mega">
-        <a href="/industries" class:list={['nav-link', { active: currentPath.startsWith('/industries') }]}>
+        <a href="/industries/" aria-expanded="false" aria-controls="mega-industries" class:list={['nav-link', { active: currentPath.startsWith('/industries') }]}>
           Industries
-          <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg aria-hidden="true" class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
-        <div class="mega-panel mega-industries">
+        <div class="mega-panel mega-industries" id="mega-industries">
           <div class="mega-inner">
             <div class="mega-section-label">Industry Expertise</div>
             <div class="mega-industries-grid">
               {industries.map(ind => (
-                <a href={`/industries/${ind.slug}`} class="mega-ind-item">
-                  <span class="mega-ind-icon material-symbols-outlined">{ind.icon}</span>
+                <a href={`/industries/${ind.slug}/`} class="mega-ind-item">
+                  <span class="mega-ico" aria-hidden="true"><MenuIcon name={ind.icon} /></span>
                   <span class="mega-ind-name">{ind.name}</span>
                 </a>
               ))}
             </div>
             <div class="mega-footer">
-              <a href="/industries" class="mega-footer-link">
+              <a href="/industries/" class="mega-footer-link">
                 Explore All Industries
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
           </div>
@@ -126,11 +170,11 @@ const navLinks = [
 
       <!-- Resources (mega menu) -->
       <div class="nav-item has-mega">
-        <a href="/resources" class:list={['nav-link', { active: currentPath.startsWith('/resources') }]}>
+        <a href="/resources/" aria-expanded="false" aria-controls="mega-resources" class:list={['nav-link', { active: currentPath.startsWith('/resources') }]}>
           Resources
-          <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg aria-hidden="true" class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
-        <div class="mega-panel mega-resources">
+        <div class="mega-panel mega-resources" id="mega-resources">
           <div class="mega-inner">
             <div class="mega-res-layout">
               <!-- Featured articles -->
@@ -140,7 +184,7 @@ const navLinks = [
                   {featuredArticles.map(article => (
                     <a href={article.href} class="mega-res-card">
                       <div class="mega-res-img">
-                        <img src={article.image} alt={article.title} />
+                        <img src={article.image} alt="" loading="lazy" />
                         <span class="mega-res-cat">{article.category}</span>
                       </div>
                       <span class="mega-res-title">{article.title}</span>
@@ -153,16 +197,16 @@ const navLinks = [
                 <div class="mega-section-label">Quick Links</div>
                 {resourceLinks.map(link => (
                   <a href={link.href} class="mega-res-link-item">
-                    <span class="material-symbols-outlined mega-res-link-icon">{link.icon}</span>
-                    <span>{link.label}</span>
+                    <span class="mega-ico" aria-hidden="true"><MenuIcon name={link.icon} /></span>
+                    <span class="mega-res-link-label">{link.label}</span>
                   </a>
                 ))}
               </div>
             </div>
             <div class="mega-footer">
-              <a href="/resources" class="mega-footer-link">
-                Visit Resource Center
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <a href="/resources/" class="mega-footer-link">
+                Visit Resource Centre
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
           </div>
@@ -184,11 +228,11 @@ const navLinks = [
 
     <!-- Right side -->
     <div class="header-actions">
-      <a href="/contact" class="btn btn-primary btn-sm">Free Consultation</a>
+      <a href="/contact/" class="btn btn-primary header-cta">Book Consultation</a>
     </div>
 
     <!-- Mobile hamburger -->
-    <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+    <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span>
       <span></span>
       <span></span>
@@ -198,21 +242,44 @@ const navLinks = [
 
 <!-- Mobile menu overlay -->
 <div class="mobile-menu" id="mobile-menu">
-  <nav class="mobile-nav">
+  <nav class="mobile-nav" aria-label="Mobile">
     <!-- Solutions accordion -->
     <div class="mobile-accordion">
       <button class="mobile-accordion-trigger" aria-expanded="false">
         Solutions
-        <svg class="mobile-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" class="mobile-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="mobile-accordion-content">
         {solutions.map(s => (
-          <a href={`/solutions/${s.slug}`} class="mobile-sub-link">
-            <span class="mobile-sub-icon" set:html={s.icon} />
-            {s.name}
+          <a href={`/solutions/${s.slug}/`} class="mobile-sub-link">
+            <span class="mobile-ico" aria-hidden="true"><MenuIcon name={s.icon} /></span>
+            <span class="mobile-sub-label">{s.name}</span>
           </a>
         ))}
-        <a href="/solutions" class="mobile-sub-all">View All Solutions →</a>
+        <a href="/solutions/" class="mobile-sub-all">View All Solutions →</a>
+      </div>
+    </div>
+
+    <!-- HR Services accordion -->
+    <div class="mobile-accordion">
+      <button class="mobile-accordion-trigger" aria-expanded="false">
+        HR Services
+        <svg aria-hidden="true" class="mobile-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="mobile-accordion-content">
+        <span class="mobile-sub-group">Core expertise</span>
+        {coreExpertise.map(c => (
+          <a href={c.href} class="mobile-sub-link"><span class="mobile-sub-label">{c.label}</span></a>
+        ))}
+        {serviceGroups.map(g => (
+          <>
+            <span class="mobile-sub-group">{g.label}</span>
+            {g.items.map(s => (
+              <a href={`/services/${s.slug}/`} class="mobile-sub-link"><span class="mobile-sub-label">{s.short}</span></a>
+            ))}
+          </>
+        ))}
+        <a href="/services/" class="mobile-sub-all">View all HR services →</a>
       </div>
     </div>
 
@@ -220,16 +287,16 @@ const navLinks = [
     <div class="mobile-accordion">
       <button class="mobile-accordion-trigger" aria-expanded="false">
         Industries
-        <svg class="mobile-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" class="mobile-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="mobile-accordion-content">
         {industries.map(ind => (
-          <a href={`/industries/${ind.slug}`} class="mobile-sub-link">
-            <span class="material-symbols-outlined mobile-sub-mat-icon">{ind.icon}</span>
-            {ind.name}
+          <a href={`/industries/${ind.slug}/`} class="mobile-sub-link">
+            <span class="mobile-ico" aria-hidden="true"><MenuIcon name={ind.icon} /></span>
+            <span class="mobile-sub-label">{ind.name}</span>
           </a>
         ))}
-        <a href="/industries" class="mobile-sub-all">Explore All Industries →</a>
+        <a href="/industries/" class="mobile-sub-all">Explore All Industries →</a>
       </div>
     </div>
 
@@ -237,24 +304,24 @@ const navLinks = [
     <div class="mobile-accordion">
       <button class="mobile-accordion-trigger" aria-expanded="false">
         Resources
-        <svg class="mobile-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" class="mobile-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="mobile-accordion-content">
         {resourceLinks.map(link => (
           <a href={link.href} class="mobile-sub-link">
-            <span class="material-symbols-outlined mobile-sub-mat-icon">{link.icon}</span>
-            {link.label}
+            <span class="mobile-ico" aria-hidden="true"><MenuIcon name={link.icon} /></span>
+            <span class="mobile-sub-label">{link.label}</span>
           </a>
         ))}
-        <a href="/resources" class="mobile-sub-all">Visit Resource Center →</a>
+        <a href="/resources/" class="mobile-sub-all">Visit Resource Centre →</a>
       </div>
     </div>
 
-    <a href="/about" class:list={['mobile-nav-link', { active: currentPath.startsWith('/about') }]}>About</a>
-    <a href="/contact" class:list={['mobile-nav-link', { active: currentPath.startsWith('/contact') }]}>Contact</a>
+    <a href="/about/" class:list={['mobile-nav-link', { active: currentPath.startsWith('/about') }]}>About</a>
+    <a href="/contact/" class:list={['mobile-nav-link', { active: currentPath.startsWith('/contact') }]}>Contact</a>
 
-    <a href="/contact" class="btn btn-primary" style="margin-top: 1rem; width: 100%; justify-content: center;">
-      Free Consultation
+    <a href="/contact/" class="btn btn-primary header-cta" style="margin-top: 1rem; width: 100%; justify-content: center;">
+      Book Consultation
     </a>
   </nav>
 </div>
@@ -269,15 +336,13 @@ const navLinks = [
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    background: var(--white);
+    border-bottom: 1px solid rgba(15, 43, 70, 0.08);
     transition: all var(--transition-base);
   }
 
   .site-header.scrolled {
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 12px rgba(15, 43, 70, 0.06);
   }
 
   .header-inner {
@@ -288,6 +353,11 @@ const navLinks = [
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  /* Same mobile gutter as the page heroes (PageHero) */
+  @media (max-width: 768px) {
+    .header-inner { padding: 0 var(--gutter-mobile); }
   }
 
   /* Logo */
@@ -323,7 +393,7 @@ const navLinks = [
     gap: 4px;
     font-size: 0.88rem;
     font-weight: 500;
-    color: var(--gray-600);
+    color: var(--gray-800);
     padding: 0.5rem 0.9rem;
     border-radius: var(--radius-sm);
     transition: all 0.2s ease;
@@ -337,9 +407,14 @@ const navLinks = [
     background: var(--gray-50);
   }
 
+  /* Active section: navy text, orange-ink underline (same state as the menu items) */
   .nav-link.active {
-    color: var(--orange);
+    color: var(--navy);
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--orange-ink);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
   }
 
   .chevron {
@@ -377,6 +452,24 @@ const navLinks = [
     transform: translateX(-50%) translateY(0);
   }
 
+  /* Escape closes a panel even while hovered or focused */
+  .nav-item.has-mega.mega-dismissed .mega-panel {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: none;
+  }
+
+  /* links inside transition "all", which would keep them visible (and focusable) for a moment */
+  .nav-item.has-mega.mega-dismissed .mega-panel * {
+    transition: none;
+  }
+
+  .nav-link[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+
   .mega-inner {
     background: var(--white);
     border: 1px solid var(--gray-200);
@@ -390,7 +483,7 @@ const navLinks = [
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.8px;
-    color: var(--gray-400);
+    color: var(--gray-500);
     padding: 1.25rem 1.5rem 0.75rem;
   }
 
@@ -414,26 +507,84 @@ const navLinks = [
     transition: color 0.2s ease;
   }
 
-  .mega-footer-link:hover {
-    color: var(--orange);
+  /* One hover/active state in every menu: navy text with an orange-ink underline */
+  .mega-footer-link:hover,
+  .mega-svc-item:hover,
+  .mega-sol-card:hover .mega-sol-name,
+  .mega-ind-item:hover .mega-ind-name,
+  .mega-res-card:hover .mega-res-title,
+  .mega-res-link-item:hover .mega-res-link-label,
+  .mobile-sub-link:hover .mobile-sub-label,
+  .mobile-nav-link:hover,
+  .mobile-nav-link.active {
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-color: var(--orange-ink);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 
-  .mega-footer-cta {
-    display: inline-flex;
+  /* Plain line icon, no box: fixed 24px column so the titles line up */
+  .mega-ico,
+  .mobile-ico {
+    display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--white);
-    background: var(--orange);
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-full);
+    width: 24px;
+    min-width: 24px;
+    color: var(--icon-accent);
+  }
+
+  /* ═══════════════════════════════════════
+     HR SERVICES MEGA MENU
+     ═══════════════════════════════════════ */
+  .mega-services {
+    width: 700px;
+  }
+
+  .mega-services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding: 0 0.75rem 0.75rem;
+  }
+
+  /* Core expertise row above the service columns, same item style, hairline below */
+  .mega-core {
+    padding: 0 0.75rem 0.5rem;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .mega-core-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .mega-svc-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mega-svc-label {
+    padding: 1.25rem 0.75rem 0.5rem;
+  }
+
+  .mega-svc-item {
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.35;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
     text-decoration: none;
     transition: all 0.2s ease;
   }
 
-  .mega-footer-cta:hover {
-    background: var(--navy);
+
+  /* Keep the wide panel inside the viewport on narrow desktops */
+  @media (max-width: 1100px) {
+    .mega-services { width: 520px; }
+    .mega-services-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* ═══════════════════════════════════════
@@ -460,25 +611,8 @@ const navLinks = [
     transition: all 0.2s ease;
   }
 
-  .mega-sol-card:hover {
-    background: var(--gray-50);
-  }
-
-  .mega-sol-icon {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--orange), #ff9a4d);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-  }
-
-  .mega-sol-icon svg {
-    width: 20px;
-    height: 20px;
+  .mega-sol-card .mega-ico {
+    height: 20px; /* centre the icon on the first line of the title */
   }
 
   .mega-sol-text {
@@ -500,9 +634,6 @@ const navLinks = [
     line-height: 1.4;
   }
 
-  .mega-sol-card:hover .mega-sol-name {
-    color: var(--orange);
-  }
 
   /* ═══════════════════════════════════════
      INDUSTRIES MEGA MENU
@@ -528,28 +659,6 @@ const navLinks = [
     transition: all 0.2s ease;
   }
 
-  .mega-ind-item:hover {
-    background: var(--gray-50);
-  }
-
-  .mega-ind-icon {
-    width: 34px;
-    height: 34px;
-    min-width: 34px;
-    border-radius: 8px;
-    background: rgba(15, 43, 70, 0.06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px !important;
-    color: var(--orange);
-    transition: all 0.2s ease;
-  }
-
-  .mega-ind-item:hover .mega-ind-icon {
-    background: var(--navy);
-    color: var(--white);
-  }
 
   .mega-ind-name {
     font-size: 0.84rem;
@@ -558,9 +667,6 @@ const navLinks = [
     line-height: 1.3;
   }
 
-  .mega-ind-item:hover .mega-ind-name {
-    color: var(--orange);
-  }
 
   /* ═══════════════════════════════════════
      RESOURCES MEGA MENU
@@ -597,9 +703,6 @@ const navLinks = [
     padding: 0.4rem;
   }
 
-  .mega-res-card:hover {
-    background: var(--gray-50);
-  }
 
   .mega-res-img {
     position: relative;
@@ -630,7 +733,7 @@ const navLinks = [
     text-transform: uppercase;
     letter-spacing: 0.8px;
     color: var(--white);
-    background: var(--orange);
+    background: var(--navy);
     padding: 2px 8px;
     border-radius: var(--radius-full);
   }
@@ -646,9 +749,6 @@ const navLinks = [
     overflow: hidden;
   }
 
-  .mega-res-card:hover .mega-res-title {
-    color: var(--orange);
-  }
 
   .mega-res-links {
     min-width: 190px;
@@ -666,31 +766,10 @@ const navLinks = [
     margin: 0 0.5rem;
   }
 
-  .mega-res-link-item:hover {
-    background: var(--gray-50);
-  }
-
-  .mega-res-link-icon {
-    font-size: 20px !important;
-    color: var(--orange);
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(244, 121, 32, 0.08);
-    border-radius: 6px;
-  }
-
-  .mega-res-link-item span:not(.material-symbols-outlined) {
+  .mega-res-link-label {
     font-size: 0.84rem;
     font-weight: 500;
     color: var(--navy);
-  }
-
-  .mega-res-link-item:hover span:not(.material-symbols-outlined) {
-    color: var(--orange);
   }
 
   /* ═══════════════════════════════════════
@@ -701,6 +780,20 @@ const navLinks = [
     align-items: center;
     gap: 1.25rem;
     flex-shrink: 0;
+  }
+
+  /* One header CTA site-wide: the same pill as HomeHeader's .home-cta-btn */
+  .btn.header-cta {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.85rem;
+    line-height: inherit;
+    letter-spacing: 0.2px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+
+  .btn.header-cta:hover {
+    transform: none;
   }
 
   /* ═══════════════════════════════════════
@@ -795,7 +888,7 @@ const navLinks = [
 
   .mobile-accordion-trigger[aria-expanded="true"] .mobile-acc-chevron {
     transform: rotate(180deg);
-    color: var(--orange);
+    color: var(--orange-ink);
   }
 
   .mobile-accordion-content {
@@ -813,43 +906,27 @@ const navLinks = [
     gap: 0.65rem;
     padding: 0.6rem 0.5rem;
     text-decoration: none;
-    color: var(--gray-600);
+    color: var(--navy);
     font-size: 0.92rem;
     font-weight: 500;
     border-radius: var(--radius-sm);
     transition: all 0.2s ease;
   }
 
-  .mobile-sub-link:hover {
-    color: var(--orange);
-    background: var(--gray-50);
-  }
-
-  .mobile-sub-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    color: var(--orange);
-  }
-
-  .mobile-sub-icon svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .mobile-sub-mat-icon {
-    font-size: 20px !important;
-    color: var(--orange);
-    width: 28px;
-    text-align: center;
+  .mobile-sub-group {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--gray-400);
+    padding: 0.75rem 0.5rem 0.25rem;
   }
 
   .mobile-sub-all {
     display: block;
     padding: 0.6rem 0.5rem;
-    color: var(--orange);
+    color: var(--orange-ink);
     font-weight: 600;
     font-size: 0.85rem;
     text-decoration: none;
@@ -866,10 +943,6 @@ const navLinks = [
     text-decoration: none;
   }
 
-  .mobile-nav-link:hover,
-  .mobile-nav-link.active {
-    color: var(--orange);
-  }
 
   /* ═══════════════════════════════════════
      RESPONSIVE
@@ -887,10 +960,14 @@ const navLinks = [
     .mobile-menu {
       display: block;
       pointer-events: none;
+      visibility: hidden;
     }
 
     .mobile-menu.open {
       pointer-events: all;
+      visibility: visible;
+      /* become visible at once so focus can move into the menu */
+      transition-property: opacity, transform;
     }
   }
 </style>
@@ -909,10 +986,60 @@ const navLinks = [
   // Mobile toggle
   const toggle = document.getElementById('mobile-toggle');
   const menu = document.getElementById('mobile-menu');
+  const setMenu = (open: boolean) => {
+    toggle?.classList.toggle('open', open);
+    menu?.classList.toggle('open', open);
+    toggle?.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
   toggle?.addEventListener('click', () => {
-    toggle.classList.toggle('open');
-    menu?.classList.toggle('open');
-    document.body.style.overflow = menu?.classList.contains('open') ? 'hidden' : '';
+    const open = !menu?.classList.contains('open');
+    setMenu(open);
+    if (open) (menu?.querySelector('a, button') as HTMLElement | null)?.focus();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('open')) {
+      setMenu(false);
+      toggle?.focus();
+    }
+  });
+  // Keep Tab inside the open menu: after its last link, go back to the toggle
+  menu?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || e.shiftKey) return;
+    const links = menu.querySelectorAll('a, button');
+    if (document.activeElement === links[links.length - 1]) {
+      e.preventDefault();
+      toggle?.focus();
+    }
+  });
+
+  // Mega menus: expose open state on the trigger, Escape closes and returns focus
+  document.querySelectorAll('.nav-item.has-mega').forEach((item) => {
+    const trigger = item.querySelector('.nav-link') as HTMLElement | null;
+    if (!trigger) return;
+    const isOpen = () => !item.classList.contains('mega-dismissed') && (item.matches(':hover') || item.matches(':focus-within'));
+    const sync = () => requestAnimationFrame(() => trigger.setAttribute('aria-expanded', String(isOpen())));
+    item.addEventListener('mouseenter', () => { item.classList.remove('mega-dismissed'); sync(); });
+    item.addEventListener('mouseleave', () => { item.classList.remove('mega-dismissed'); sync(); });
+    item.addEventListener('focusin', sync);
+    item.addEventListener('focusout', (e) => {
+      if (!item.contains((e as FocusEvent).relatedTarget as Node)) item.classList.remove('mega-dismissed');
+      sync();
+    });
+    item.addEventListener('keydown', (e) => {
+      const key = (e as KeyboardEvent).key;
+      if (key === 'Escape' && isOpen()) {
+        e.preventDefault();
+        item.classList.add('mega-dismissed');
+        void (item as HTMLElement).offsetHeight; // apply the hidden state before the next Tab
+        trigger.focus();
+        sync();
+      } else if (key === 'ArrowDown' && document.activeElement === trigger) {
+        e.preventDefault();
+        item.classList.remove('mega-dismissed');
+        sync();
+      }
+    });
   });
 
   // Mobile accordions

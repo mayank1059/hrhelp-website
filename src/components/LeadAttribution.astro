@@ -1,0 +1,50 @@
+---
+// LeadAttribution.astro — remembers how a visitor first arrived (first touch):
+// utm_*, Google Ads / Meta click ids, the referrer's hostname and the landing
+// page. Kept in sessionStorage; copied to localStorage for 90 days only when the
+// visitor accepted marketing cookies in the cookie banner (it holds ad click ids). The contact form and
+// the chatbot read it via window.hrhelpAttribution() and send it with the lead;
+// /api/contact turns it into the "Lead source" label.
+---
+<script is:inline>
+(function () {
+  var KEY = 'hrhelp_attr';
+  var DAYS90 = 90 * 24 * 60 * 60 * 1000;
+  var FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'];
+
+  function get(store) {
+    try {
+      var v = JSON.parse(window[store].getItem(KEY));
+      if (!v || typeof v !== 'object') return null;
+      if (store === 'localStorage' && !(v.ts > Date.now() - DAYS90)) { window[store].removeItem(KEY); return null; }
+      return v;
+    } catch (e) { return null; }
+  }
+  function put(store, v) {
+    try { window[store].setItem(KEY, JSON.stringify(v)); } catch (e) {}
+  }
+  // Marketing consent. window.hrhelpReadConsent (Layout.astro head) reads both stored shapes: the old
+  // {functional} one counts as no marketing consent, as does a choice older than 12 months.
+  function consented() {
+    try { var c = window.hrhelpReadConsent(); return !!(c && c.current && c.marketing); } catch (e) { return false; }
+  }
+
+  var first = get('sessionStorage') || (consented() && get('localStorage'));
+  if (!first) {
+    var params = new URLSearchParams(location.search);
+    var ref = '';
+    try { ref = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : ''; } catch (e) {}
+    if (/(^|\.)hrhelp\.nl$/.test(ref) || ref === location.hostname) ref = '';
+    first = { referrer: ref, landing_page: location.pathname, ts: Date.now() };
+    FIELDS.forEach(function (k) { var v = params.get(k); if (v) first[k] = v.slice(0, 200); });
+  }
+  put('sessionStorage', first);
+  if (consented()) put('localStorage', first);
+
+  window.hrhelpAttribution = function () {
+    var out = { referrer: first.referrer || '', landing_page: first.landing_page || '' };
+    FIELDS.forEach(function (k) { out[k] = first[k] || ''; });
+    return out;
+  };
+})();
+</script>

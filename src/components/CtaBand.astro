@@ -1,0 +1,88 @@
+---
+// Compact "next step" row: the site primary CTA plus an optional secondary link.
+// The primary keeps the .btn-primary class so Layout.astro still fires GA4 cta_click.
+interface Props {
+  heading?: string;
+  text?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  align?: 'left' | 'center';
+}
+const {
+  heading,
+  text,
+  primaryLabel = 'Book a Free Consultation',
+  primaryHref = '/contact/#book',
+  secondaryLabel,
+  secondaryHref,
+  align = 'left',
+} = Astro.props;
+---
+
+<div class:list={['cta-band', align === 'center' && 'cta-band-center']}>
+  {(heading || text) && (
+    <div class="cta-band-text">
+      {heading && <p class="cta-band-heading">{heading}</p>}
+      {text && <p class="cta-band-copy">{text}</p>}
+    </div>
+  )}
+  <div class="cta-band-actions">
+    <a href={primaryHref} class="btn btn-primary">{primaryLabel}</a>
+    {secondaryLabel && secondaryHref && (
+      <a href={secondaryHref} class="cta-band-secondary">
+        {secondaryLabel}
+        <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    )}
+  </div>
+</div>
+
+<style>
+  .cta-band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+  .cta-band-center { justify-content: center; text-align: center; }
+  .cta-band-text { flex: 1 1 260px; }
+  .cta-band-center .cta-band-text { flex: 1 1 100%; }
+  .cta-band-heading {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.4;
+    margin: 0;
+  }
+  .cta-band-copy {
+    font-size: 0.92rem;
+    color: var(--gray-500);
+    line-height: 1.6;
+    margin: 0.3rem 0 0;
+  }
+  .cta-band-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .cta-band-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-decoration: none;
+    transition: color var(--transition-base), gap var(--transition-base);
+  }
+  .cta-band-secondary:hover { color: var(--navy); text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; gap: 0.65rem; }
+
+  @media (max-width: 576px) {
+    .cta-band-actions { width: 100%; }
+    .cta-band-actions .btn { width: 100%; justify-content: center; }
+  }
+</style>

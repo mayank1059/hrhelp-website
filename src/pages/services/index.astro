@@ -1,30 +1,35 @@
 ---
 import Layout from '../../components/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
 import { servicesData } from '../../data/pseo/services.js';
 
-// Group services for a scannable overview
-const groups = [
-  {
-    label: 'Flexible HR Capacity',
-    desc: 'Senior HR capacity exactly when and how long you need it.',
-    slugs: ['interim-hr-solutions', 'fractional-hr-solutions', 'temporary-hr-solutions', 'interim-hr-support'],
-  },
-  {
-    label: 'Embedded HR Roles',
-    desc: 'A named senior professional inside your organisation.',
-    slugs: ['interim-hr-manager', 'fractional-hr-manager', 'interim-hr-advisor'],
-  },
-  {
-    label: 'For Foreign Companies',
-    desc: 'Specialist support for international employers in the Netherlands.',
-    slugs: ['hr-consultancy-foreign-companies', 'hr-compliance-dutch-entity-foreign-company', 'labor-law-advice-international-employer', 'hr-recruitment-netherlands'],
-  },
-].map(g => ({
-  ...g,
-  items: g.slugs.map(s => servicesData.find(e => e.slug === s)).filter(Boolean),
-})).filter(g => g.items.length > 0);
+// Group definitions are shared with the header mega menu and the homepage band.
+import { serviceGroups as groups } from '../../data/pseo/service-groups.js';
+import { photo, photosFor } from '../../lib/servicePhotos';
+import { getExpertiseItems } from '../../lib/wordpress';
+import { resourcePhoto } from '../../lib/resourcePhotos';
 
 const count = servicesData.length;
+
+// Core expertise cards (they replace the old expertise archive page). One-line
+// descriptions without client-specific numbers (the WP taglines quote one client's savings)
+const expertiseLines: Record<string, string> = {
+  'sickness-management': 'Absence policy, Wet Poortwachter compliance and manager coaching that keep sickness under control.',
+  'restructuring': 'Reorganisations, redundancies and site closures, handled correctly with the works council, the UWV and your people.',
+  'leadership-training': 'Hands-on training that helps managers see how culture shapes the way they lead and work together.',
+};
+// Their resource photos (resourcePhotos.ts) are the ones the Interim HR Support and Dutch
+// Labour Law Advice cards below use, so these two cards get photos of their own.
+const expertisePhotos: Record<string, string> = {
+  'leadership-training': 'office-consultation',
+  'restructuring': 'factory-floor',
+};
+const expertise = (await getExpertiseItems()).map(e => ({
+  slug: e.slug,
+  title: e.title,
+  desc: expertiseLines[e.slug] ?? e.subtitle,
+  illustration: expertisePhotos[e.slug] ? photo(expertisePhotos[e.slug], true) : resourcePhoto(e.illustration, true),
+}));
 
 const collectionSchema = {
   "@context": "https://schema.org",
@@ -45,15 +50,38 @@ const collectionSchema = {
 <Layout title="HR Services Netherlands: Interim, Fractional & Compliance" description="Specialist HR services for international companies in the Netherlands. Interim and fractional HR, embedded HR roles, Dutch entity compliance and labour law advice. Fixed pricing." schema={collectionSchema}>
 
 <!-- ===== HERO ===== -->
-<section class="svcs-hero">
-  <div class="svcs-hero-mesh"></div>
-  <div class="container svcs-hero-inner">
-    <span class="eyebrow-badge">Specialist HR Services</span>
-    <h1>Senior Dutch HR expertise,<br/><span class="svcs-orange">shaped to how you need it</span></h1>
-    <p class="svcs-hero-p">Beyond our four core solutions, HRhelp delivers focused services for specific situations: an HR gap to bridge, a part-time HR lead, a compliance baseline, or a live employment-law question. Senior consultants only, fixed pricing always.</p>
-    <div class="svcs-hero-actions">
-      <a href="/contact" class="btn btn-primary btn-lg" style="box-shadow:none;">Book a Free Consultation</a>
-      <a href="/solutions" class="btn btn-ghost btn-lg">Our Core Solutions</a>
+<PageHero variant="archive" eyebrow="Specialist HR Services" subtitle="Beyond our four core solutions, HRhelp delivers focused services for specific situations: an HR gap to bridge, a part-time HR lead, a compliance baseline, or a live employment-law question. Senior consultants only, fixed pricing always.">
+  <Fragment slot="title">Senior Dutch HR expertise,<br/><span>shaped to how you need it</span></Fragment>
+  <div class="page-hero-actions">
+    <a href="/contact/" class="btn btn-primary btn-lg">Book a Free Consultation</a>
+    <a href="/solutions/" class="btn btn-secondary btn-lg">Our Core Solutions</a>
+  </div>
+</PageHero>
+
+<!-- ===== CORE EXPERTISE ===== -->
+<section id="core-expertise" class="svcs-group section-white">
+  <div class="container">
+    <div class="section-header svcs-head">
+      <span class="eyebrow">Core expertise</span>
+      <h2>Where we are most often brought in</h2>
+      <p class="section-desc">Sickness management, restructuring and leadership training: each a complete service, from first assessment to hands-on delivery.</p>
+    </div>
+    <div class="svcs-grid">
+      {expertise.map((e) => (
+        <a href={`/expertise/${e.slug}/`} class="svcs-card">
+          <div class="svcs-card-img">
+            <img src={e.illustration.src} alt="" loading="lazy" decoding="async" width={e.illustration.width} height={e.illustration.height} />
+          </div>
+          <div class="svcs-card-body">
+            <h3>{e.title}</h3>
+            <p class="svcs-card-desc">{e.desc}</p>
+            <span class="svcs-card-link">
+              Learn more
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      ))}
     </div>
   </div>
 </section>
@@ -62,16 +90,18 @@ const collectionSchema = {
 {groups.map((g, gi) => (
   <section class={gi % 2 === 0 ? 'svcs-group section-cream' : 'svcs-group section-white'}>
     <div class="container">
-      <div class="section-header">
+      <div class="section-header svcs-head">
         <span class="eyebrow">{g.label}</span>
         <h2>{g.label}</h2>
         <p class="section-desc">{g.desc}</p>
       </div>
-      <div class="svcs-grid">
-        {g.items.map((s) => (
+      <div class:list={['svcs-grid', g.items.length === 4 && 'svcs-grid-4']}>
+        {g.items.map((s) => {
+          const img = photo(photosFor(s.slug).hero, true);
+          return (
           <a href={`/services/${s.slug}/`} class="svcs-card">
             <div class="svcs-card-img">
-              <img src={`/images/services/inline-${s.slug}.png`} alt={s.name} loading="lazy" />
+              <img src={img.src} alt={s.name} loading="lazy" decoding="async" width={img.width} height={img.height} />
             </div>
             <div class="svcs-card-body">
               <h3>{s.name}</h3>
@@ -79,11 +109,12 @@ const collectionSchema = {
               <p class="svcs-card-desc">{s.hero}</p>
               <span class="svcs-card-link">
                 Explore this service
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </span>
             </div>
           </a>
-        ))}
+          );
+        })}
       </div>
     </div>
   </section>
@@ -94,69 +125,79 @@ const collectionSchema = {
   <div class="container svcs-cta-inner">
     <h2>Not sure which service fits?</h2>
     <p>Describe your situation in a free 30-minute call and a senior consultant will tell you exactly what you need, and what it costs. No obligation.</p>
-    <a href="/contact" class="btn btn-primary btn-lg" style="box-shadow:none;">Talk to a Senior Consultant</a>
+    <a href="/contact/" class="btn btn-primary btn-lg" style="box-shadow:none;">Talk to a Senior Consultant</a>
   </div>
 </section>
 
 </Layout>
 
 <style>
-/* ===== HERO ===== */
-.svcs-hero {
-  padding: 10rem 0 5rem;
-  background: var(--navy);
-  color: white;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
+/* Calmer treatment matching the homepage: shared PageHero, muted eyebrows,
+   700 headings, hairline cards with one soft shadow, documentary photos. */
+h1, h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #44546d;
+  margin-bottom: 0.75rem;
 }
-.svcs-hero-mesh {
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 65% 15%, rgba(244,121,32,0.14), transparent 50%),
-              radial-gradient(circle at 15% 85%, rgba(255,255,255,0.05), transparent 40%);
-  z-index: 1;
-}
-.svcs-hero-inner { position: relative; z-index: 2; }
-.svcs-hero h1 { font-size: 3.4rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
-.svcs-orange { color: var(--orange); }
-.svcs-hero-p { font-size: 1.15rem; line-height: 1.7; color: rgba(255,255,255,0.78); max-width: 660px; margin: 0 auto 2.5rem; }
-.svcs-hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
 /* ===== GROUPS ===== */
 .svcs-group { padding: 5.5rem 0; }
+.svcs-head { text-align: left; max-width: 720px; margin: 0 0 2.5rem; }
+.svcs-head h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin-bottom: 0.6rem; }
+.svcs-head .section-desc { font-size: 1.02rem; line-height: 1.7; color: var(--gray-600); margin: 0; }
 .svcs-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.75rem; margin-top: 2.5rem;
+  gap: 1.25rem;
+}
+/* Groups of four: four across on desktop, 2 x 2 below that, never three plus a lone card */
+.svcs-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1200px) {
+  .svcs-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .svcs-card {
   display: flex; flex-direction: column;
-  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+  background: white;
+  border: 1px solid rgba(15, 37, 72, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
   overflow: hidden; text-decoration: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.svcs-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(15,43,70,0.12); border-color: var(--orange); }
-.svcs-card-img { aspect-ratio: 16/9; overflow: hidden; background: var(--gray-100); }
-.svcs-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
-.svcs-card:hover .svcs-card-img img { transform: scale(1.04); }
-.svcs-card-body { padding: 1.6rem 1.6rem 1.75rem; display: flex; flex-direction: column; flex: 1; }
-.svcs-card-body h3 { font-size: 1.22rem; color: var(--navy); margin-bottom: 0.35rem; }
-.svcs-card-tagline { font-size: 0.85rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 0.8rem; }
-.svcs-card-desc { font-size: 0.95rem; line-height: 1.65; color: var(--gray-500); margin-bottom: 1.25rem; flex: 1; }
+.svcs-card:hover {
+  border-color: rgba(15, 37, 72, 0.22);
+  box-shadow: 0 1px 2px rgba(15, 37, 72, 0.05), 0 8px 24px rgba(15, 37, 72, 0.07);
+}
+.svcs-card-img { aspect-ratio: 16/9; overflow: hidden; background: #e9edf2; }
+.svcs-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.svcs-card-body { padding: 1.4rem 1.5rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
+.svcs-card-body h3 { font-size: 1.15rem; color: var(--navy); margin-bottom: 0.3rem; }
+.svcs-card-tagline { font-size: 0.72rem; font-weight: 600; color: #44546d; text-transform: uppercase; letter-spacing: 0.12em; line-height: 1.5; margin-bottom: 0.7rem; }
+.svcs-card-desc { font-size: 0.92rem; line-height: 1.65; color: var(--gray-600); margin-bottom: 1.1rem; flex: 1; }
 .svcs-card-link {
   display: inline-flex; align-items: center; gap: 0.45rem;
-  font-size: 0.9rem; font-weight: 700; color: var(--navy);
-  transition: color 0.2s ease, gap 0.2s ease;
+  font-size: 0.9rem; font-weight: 600; color: var(--navy);
 }
-.svcs-card:hover .svcs-card-link { color: var(--orange); gap: 0.7rem; }
+.svcs-card:hover .svcs-card-link { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
 
 /* ===== CTA ===== */
-.svcs-cta { padding: 6rem 0; background: var(--cream); text-align: center; }
-.svcs-cta-inner { max-width: 640px; }
-.svcs-cta h2 { font-size: 2.3rem; color: var(--navy); margin-bottom: 1rem; }
-.svcs-cta p { font-size: 1.1rem; line-height: 1.7; color: var(--gray-600); margin-bottom: 2rem; }
+.svcs-cta { padding: 5.5rem 0; background: var(--cream); text-align: center; }
+.svcs-cta-inner > * { max-width: 640px; margin-inline: auto; }
+.svcs-cta h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); color: var(--navy); margin-bottom: 1rem; }
+.svcs-cta p { font-size: 1.05rem; line-height: 1.7; color: var(--gray-600); margin-bottom: 2rem; }
 
 @media (max-width: 576px) {
-  .svcs-hero h1 { font-size: 2.3rem; }
   .svcs-group { padding: 3.5rem 0; }
+  .svcs-grid { grid-template-columns: 1fr; }
+}
+
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .svcs-card-body {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>

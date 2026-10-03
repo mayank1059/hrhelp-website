@@ -4,6 +4,8 @@ import Header from './Header.astro';
 import HomeHeader from './HomeHeader.astro';
 import Footer from './Footer.astro';
 import CookieConsent from './CookieConsent.astro';
+import ChatAssistant from './ChatAssistant.astro';
+import LeadAttribution from './LeadAttribution.astro';
 import '../styles/globals.css';
 
 interface Props {
@@ -17,7 +19,7 @@ interface Props {
 
 const {
   title,
-  description = 'Expert HR consulting for international companies in the Netherlands. Employment law, payroll, compliance, talent acquisition — all handled by Dutch HR experts.',
+  description = 'Expert HR consulting for international companies in the Netherlands. Employment law, payroll, compliance, talent acquisition, all handled by Dutch HR experts.',
   homeHeader = false,
   ogImage = '/images/og-default.png',
   schema,
@@ -43,9 +45,9 @@ const orgSchema = {
   "description": "Expert HR consulting for international companies in the Netherlands",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Televisieweg 2",
+    "streetAddress": "Oeverwalweg 3",
     "addressLocality": "Almere",
-    "postalCode": "1322 AC",
+    "postalCode": "1332 CG",
     "addressCountry": "NL"
   },
   "contactPoint": {
@@ -54,10 +56,9 @@ const orgSchema = {
     "contactType": "customer service",
     "email": "info@hrhelp.nl",
     "availableLanguage": ["English", "Dutch"]
-  },
-  "sameAs": [
-    "https://www.linkedin.com/company/hrhelp-nl"
-  ]
+  }
+  // No "sameAs" until the company's real LinkedIn page URL is confirmed: the one listed
+  // before (https://www.linkedin.com/company/hrhelp-nl) returns 404. Don't guess one.
 };
 
 const websiteSchema = {
@@ -76,17 +77,74 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PMP3P8VTF" is:inline></script>
+  <!-- Marks JS as available; scroll-reveal content stays visible without it -->
+  <script is:inline>document.documentElement.classList.add('js');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js) with Consent Mode v2 (advanced mode): analytics and ad storage stay
+       denied (cookieless pings only) until the visitor chooses in the cookie banner (CookieConsent.astro).
+       gtag() only queues commands in dataLayer; gtag.js (loaded below, never on staging) runs them in order. -->
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+      analytics_storage: 'denied', functionality_storage: 'denied', personalization_storage: 'denied',
+      security_storage: 'granted', wait_for_update: 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+    // Stored choice in localStorage 'hrhelp_cookie_consent'. Version 2: {v, functional, analytics, marketing, timestamp}.
+    // The old shape {essential, functional, timestamp} reads as version 1 with analytics/marketing not chosen.
+    // A choice only counts ("current") while it is version 2 and under 12 months old; otherwise the banner asks again.
+    window.hrhelpReadConsent = function () {
+      try {
+        var c = JSON.parse(localStorage.getItem('hrhelp_cookie_consent'));
+        if (!c || typeof c !== 'object') return null;
+        var v = c.v || 1;
+        return {
+          v: v,
+          functional: c.functional === true,
+          analytics: v >= 2 && c.analytics === true,
+          marketing: v >= 2 && c.marketing === true,
+          current: v === 2 && (Date.parse(c.timestamp) || 0) > Date.now() - 365 * 864e5
+        };
+      } catch (e) { return null; }
+    };
+    window.hrhelpApplyConsent = function (c) {
+      function g(on) { return on ? 'granted' : 'denied'; }
+      gtag('consent', 'update', {
+        analytics_storage: g(c.analytics),
+        ad_storage: g(c.marketing), ad_user_data: g(c.marketing), ad_personalization: g(c.marketing),
+        functionality_storage: g(c.functional)
+      });
+    };
+    (function () { var c = window.hrhelpReadConsent(); if (c && c.current) window.hrhelpApplyConsent(c); })();
     gtag('js', new Date());
     gtag('config', 'G-3PMP3P8VTF');
     gtag('config', 'AW-16843385395');
   </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {!isStaging && (
+    <script is:inline>
+      // gtag.js is loaded once (GA4 ID) for both configs above, after the page has loaded so it
+      // stays off the critical path; everything queued in dataLayer runs, in order, once it arrives.
+      // Google's tag still fetches the Ads destination itself unless both IDs share one Google tag.
+      (function () {
+        function load() {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3PMP3P8VTF';
+          document.head.appendChild(s);
+        }
+        function whenIdle() {
+          if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 1500 });
+          else setTimeout(load, 200);
+        }
+        if (document.readyState === 'complete') whenIdle();
+        else window.addEventListener('load', whenIdle, { once: true });
+      })();
+    </script>
+  )}
   <meta name="description" content={description} />
   <meta name="robots" content={shouldNoindex ? 'noindex, nofollow' : 'index, follow'} />
   <title>{fullTitle}</title>
@@ -94,12 +152,10 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="canonical" href={canonicalUrl} />
+  {!noindex && <link rel="canonical" href={canonicalUrl} />}
 
-  <!-- Preconnect -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <!-- Self-hosted fonts (globals.css): no Google Fonts request. Inter latin is used on every page. -->
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Open Graph -->
   <meta property="og:title" content={fullTitle} />
@@ -124,15 +180,18 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
   ))}
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
   {homeHeader ? <HomeHeader /> : <Header />}
-  <main>
+  <main id="main">
     <slot />
   </main>
   <Footer />
-  <!-- Elfsight chatbot container — script loaded only after cookie consent -->
-  <div class="elfsight-app-b5ddbfcb-a7b8-49e3-aa9d-88aea10f86df" data-elfsight-app-lazy></div>
+  <!-- First-touch lead source for the contact form and the chatbot -->
+  <LeadAttribution />
+  <!-- First-party lead chatbot: no cookies, so no consent gate -->
+  <ChatAssistant />
   <CookieConsent />
-  <!-- Conversion tracking: CTA clicks + Calendly bookings -->
+  <!-- Conversion tracking: CTA clicks -->
   <script is:inline>
     (function () {
       document.addEventListener('click', function (e) {
@@ -144,31 +203,41 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
           });
         }
       }, { passive: true });
-      window.addEventListener('message', function (e) {
-        if (e.data && typeof e.data.event === 'string' && e.data.event === 'calendly.event_scheduled') {
-          if (typeof gtag === 'function') {
-            gtag('event', 'conversion', { 'send_to': 'AW-16843385395/u4MnCPi347gcELPUxt8-' });
-            gtag('event', 'book_consultation', { page_path: location.pathname });
-          }
-        }
-      });
     })();
   </script>
-  <!-- Calendly booking relay: hand the two URIs to the CRM, which fetches the details -->
-  <script is:inline>
+  <!-- Calendly bookings (the /contact "Pick a time" tab): GA4 + Ads conversion,
+       and a relay of the two Calendly API URIs to the CRM, which fetches the details.
+       Leads and Ads conversions only count on the production build. -->
+  <script is:inline define:vars={{ IS_PROD: !isStaging }}>
     (function () {
+      var seen = {};
       window.addEventListener('message', function (e) {
         if (e.origin !== 'https://calendly.com') return;
         if (!e.data || e.data.event !== 'calendly.event_scheduled') return;
         var payload = e.data.payload || {};
         var invitee = payload.invitee || {};
         var event = payload.event || {};
+        var id = invitee.uri || event.uri ||
+          'cal-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+        // One booking, one conversion, even if the embed posts the event twice.
+        if (seen[id]) return;
+        seen[id] = true;
+        if (typeof gtag === 'function') {
+          gtag('event', 'book_consultation', { page_path: location.pathname });
+          if (IS_PROD) {
+            gtag('event', 'generate_lead', { source: 'calendly' });
+            gtag('event', 'conversion', {
+              send_to: 'AW-16843385395/u4MnCPi347gcELPUxt8-',
+              transaction_id: id
+            });
+          }
+        }
         if (!invitee.uri || !event.uri) return;
         fetch('/api/calendly', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ invitee_uri: invitee.uri, event_uri: event.uri }),
-          keepalive: true,
+          keepalive: true
         }).catch(function () {});
       });
     })();

@@ -1,6 +1,8 @@
 ---
 import Layout from '../../../components/Layout.astro';
-import { getJobOpenings, getJobOpening } from '../../../lib/wordpress';
+import PageHero from '../../../components/PageHero.astro';
+import LineIcon from '../../../components/LineIcon.astro';
+import { getJobOpenings, getJobOpening, type JobPlace } from '../../../lib/wordpress';
 
 export async function getStaticPaths() {
     const openings = await getJobOpenings();
@@ -8,9 +10,16 @@ export async function getStaticPaths() {
 }
 
 const { opening } = Astro.props;
-if (!opening) return Astro.redirect('/careers');
+if (!opening) return Astro.redirect('/careers/');
 
-// JobPosting schema for Google for Jobs — this is the canonical single-job page
+// JobPosting schema for Google for Jobs: this is the canonical single-job page.
+// Location: the places named in WordPress (location field, else the job text); the
+// Netherlands when none is named, nothing physical for a fully remote job.
+const places: JobPlace[] = opening.places?.length ? opening.places : opening.remote ? [] : [{ country: 'NL' }];
+const jobLocation = places.map((p) => ({
+  '@type': 'Place',
+  address: { '@type': 'PostalAddress', addressLocality: p.locality, addressRegion: p.region, addressCountry: p.country },
+}));
 const jobSchema = {
   '@context': 'https://schema.org',
   '@type': 'JobPosting',
@@ -22,43 +31,32 @@ const jobSchema = {
     sameAs: 'https://www.hrhelp.nl',
     logo: 'https://www.hrhelp.nl/favicon.svg',
   },
-  jobLocation: {
-    '@type': 'Place',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Televisieweg 2',
-      addressLocality: 'Almere',
-      postalCode: '1322 AC',
-      addressCountry: 'NL',
-    },
-  },
+  jobLocation: jobLocation.length > 1 ? jobLocation : jobLocation[0],
+  ...(opening.remote ? { jobLocationType: 'TELECOMMUTE', applicantLocationRequirements: { '@type': 'Country', name: 'Netherlands' } } : {}),
   employmentType: opening.type === 'Full-Time' ? 'FULL_TIME' : opening.type === 'Part-Time' ? 'PART_TIME' : 'CONTRACTOR',
-  datePosted: new Date().toISOString().split('T')[0],
-  validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-  url: `https://www.hrhelp.nl/careers/apply/${opening.slug}`,
+  // The WordPress publish date. No validThrough: the posts have no closing date, and Google
+  // drops a job whose validThrough has passed while it is still open here.
+  datePosted: opening.datePosted || undefined,
+  url: `https://www.hrhelp.nl/careers/apply/${opening.slug}/`,
   directApply: true,
 };
 ---
 
-<Layout title={`Apply — ${opening.title} | HRHelp Careers`} description={`Apply for ${opening.title} at HRHelp.nl. ${opening.type} position in ${opening.location}.`} schema={jobSchema}>
+<Layout title={`Apply: ${opening.title} | HRHelp Careers`} description={`Apply for ${opening.title} at HRHelp.nl. ${opening.type} position in ${opening.location}.`} schema={jobSchema}>
 
-<section class="apply-hero">
-  <div class="apply-hero-mesh"></div>
-  <div class="container apply-hero-inner">
-    <a href="/careers#openings" class="apply-back">
-      <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
-      Back to Openings
-    </a>
-    <h1>{opening.title}</h1>
-    <div class="apply-hero-meta">
-      <span class="apply-tag">{opening.type}</span>
-      <span class="apply-loc">
-        <span class="material-symbols-outlined" style="font-size: 18px;">location_on</span>
-        {opening.location}
-      </span>
-    </div>
+<PageHero variant="article" title={opening.title}>
+  <a href="/careers/#openings" class="apply-back" slot="top">
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back to Openings
+  </a>
+  <div class="page-hero-meta apply-hero-meta">
+    <span class="apply-tag">{opening.type}</span>
+    <span class="apply-loc">
+      <LineIcon name="location_on" size={16} />
+      {opening.location}
+    </span>
   </div>
-</section>
+</PageHero>
 
 <section class="apply-body">
   <div class="container apply-layout">
@@ -80,7 +78,7 @@ const jobSchema = {
     <div class="apply-form-wrapper">
       <div class="apply-form-card">
         <div class="apply-form-header">
-          <span class="material-symbols-outlined apply-form-icon">description</span>
+          <LineIcon name="description" class="apply-form-icon" />
           <div>
             <h2>Submit Your Application</h2>
             <p>All fields marked with * are required</p>
@@ -111,7 +109,7 @@ const jobSchema = {
             <label for="apply-linkedin">LinkedIn Profile</label>
             <div class="input-icon-wrapper">
               <span class="input-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
               </span>
               <input type="url" id="apply-linkedin" name="linkedin" placeholder="https://linkedin.com/in/your-profile" />
             </div>
@@ -127,18 +125,26 @@ const jobSchema = {
             <div class="file-upload" id="file-upload-zone">
               <input type="file" id="apply-resume" name="resume" accept=".pdf,.doc,.docx" class="file-input" />
               <div class="file-upload-content">
-                <span class="material-symbols-outlined file-upload-icon">upload_file</span>
+                <LineIcon name="edit_document" size={28} class="file-upload-icon" />
                 <p class="file-upload-text">
                   <strong>Click to upload</strong> or drag and drop
                 </p>
                 <p class="file-upload-hint">PDF, DOC, or DOCX (max 5MB)</p>
               </div>
               <div class="file-upload-selected" style="display: none;">
-                <span class="material-symbols-outlined" style="color: var(--orange);">description</span>
+                <LineIcon name="description" size={18} />
                 <span class="file-name"></span>
                 <button type="button" class="file-remove" aria-label="Remove file">×</button>
               </div>
             </div>
+            <p class="file-upload-error" id="apply-resume-error" role="alert" hidden></p>
+          </div>
+
+          <!-- Honeypot: off-screen and out of the tab order, so only bots fill it.
+               A non-empty url_confirm makes /api/apply drop the submission. -->
+          <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+            <label for="apply-url-confirm">Your website</label>
+            <input type="text" id="apply-url-confirm" name="url_confirm" tabindex="-1" autocomplete="off" />
           </div>
 
           <button type="submit" class="btn btn-primary btn-lg apply-submit" id="apply-submit">
@@ -148,22 +154,23 @@ const jobSchema = {
               Submitting...
             </span>
           </button>
+          <p class="apply-privacy">We use your details only to assess your application. See our <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.</p>
         </form>
 
         <!-- Success state -->
         <div class="apply-success" id="apply-success" style="display: none;">
           <div class="success-icon">
-            <span class="material-symbols-outlined">check_circle</span>
+            <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12.5 11 15.5 16 9.5"/></svg>
           </div>
           <h3>Application Submitted!</h3>
           <p>Thank you for applying for <strong>{opening.title}</strong>. Our team will review your application and get back to you shortly.</p>
-          <a href="/careers" class="btn btn-secondary">View Other Openings</a>
+          <a href="/careers/" class="btn btn-secondary">View Other Openings</a>
         </div>
 
         <!-- Error state -->
         <div class="apply-error" id="apply-error" style="display: none;">
           <div class="error-icon">
-            <span class="material-symbols-outlined">error</span>
+            <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="7" x2="12" y2="13"/><line x1="12" y1="16.5" x2="12" y2="16.5"/></svg>
           </div>
           <p id="apply-error-msg">Something went wrong. Please try again.</p>
           <button type="button" class="btn btn-secondary" id="apply-retry">Try Again</button>
@@ -177,6 +184,8 @@ const jobSchema = {
 
 <script>
   const form = document.getElementById('apply-form');
+  // Kept so a retry after a failed submit can put the header (with its icon) back.
+  const headerHTML = document.querySelector('.apply-form-header')?.outerHTML || '';
   const submitBtn = document.getElementById('apply-submit');
   const successEl = document.getElementById('apply-success');
   const errorEl = document.getElementById('apply-error');
@@ -184,11 +193,27 @@ const jobSchema = {
   const retryBtn = document.getElementById('apply-retry');
   const fileInput = document.getElementById('apply-resume');
   const fileZone = document.getElementById('file-upload-zone');
+  const fileError = document.getElementById('apply-resume-error');
+  const MAX_CV_BYTES = 5 * 1024 * 1024;
 
   // File upload UX
   if (fileInput && fileZone) {
     fileInput.addEventListener('change', () => {
       const file = fileInput.files?.[0];
+      if (fileError) fileError.hidden = true;
+      // Over the 5 MB limit: say so now, rather than after a slow upload fails.
+      if (file && file.size > MAX_CV_BYTES) {
+        fileInput.value = '';
+        const content = fileZone.querySelector('.file-upload-content');
+        const selected = fileZone.querySelector('.file-upload-selected');
+        if (content) content.style.display = '';
+        if (selected) selected.style.display = 'none';
+        if (fileError) {
+          fileError.textContent = `That file is ${(file.size / (1024 * 1024)).toFixed(1)} MB. Please choose a CV of 5 MB or less (PDF, DOC or DOCX), or email it to info@hrhelp.nl.`;
+          fileError.hidden = false;
+        }
+        return;
+      }
       if (file) {
         const content = fileZone.querySelector('.file-upload-content');
         const selected = fileZone.querySelector('.file-upload-selected');
@@ -278,62 +303,41 @@ const jobSchema = {
       // Re-add header
       const wrapper = document.querySelector('.apply-form-card');
       if (wrapper && !wrapper.querySelector('.apply-form-header')) {
-        const header = document.createElement('div');
-        header.className = 'apply-form-header';
-        header.innerHTML = `<span class="material-symbols-outlined apply-form-icon">description</span><div><h2>Submit Your Application</h2><p>All fields marked with * are required</p></div>`;
-        wrapper.insertBefore(header, form);
+        const tpl = document.createElement('template');
+        tpl.innerHTML = headerHTML;
+        if (tpl.content.firstElementChild) wrapper.insertBefore(tpl.content.firstElementChild, form);
       }
     });
   }
 </script>
 
 <style>
-/* ===== HERO ===== */
-.apply-hero {
-  padding: 9rem 0 3.5rem;
-  background: var(--navy);
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-.apply-hero-mesh {
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 70% 30%, rgba(244,121,32,0.12), transparent 50%);
-  z-index: 1;
-}
-.apply-hero-inner { position: relative; z-index: 2; }
+/* ===== HERO (PageHero article) ===== */
 .apply-back {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  color: rgba(255,255,255,0.6); font-size: 0.9rem; font-weight: 500;
-  text-decoration: none; margin-bottom: 1.5rem; transition: color 0.2s;
+  color: var(--gray-600); font-size: 0.88rem; font-weight: 500;
+  text-decoration: none; margin-bottom: 1.25rem;
 }
-.apply-back:hover { color: var(--orange); }
-.apply-hero h1 { font-size: 2.8rem; color: white; margin-bottom: 1rem; line-height: 1.15; }
-.apply-hero-meta { display: flex; align-items: center; gap: 1.25rem; }
-.apply-tag {
-  display: inline-block; background: rgba(244,121,32,0.2); color: var(--orange);
-  padding: 0.35rem 1rem; border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 700;
-}
-.apply-loc {
-  display: flex; align-items: center; gap: 0.4rem;
-  color: rgba(255,255,255,0.7); font-size: 0.95rem;
-}
+.apply-back:hover { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.apply-tag { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #44546d; }
+.apply-loc { display: flex; align-items: center; gap: 0.4rem; color: var(--gray-600); font-size: 0.95rem; }
+.apply-loc :global(svg) { color: var(--icon-accent); }
 
 /* ===== BODY LAYOUT ===== */
-.apply-body { padding: 4rem 0 8rem; }
+.apply-body { padding: 4rem 0 5.5rem; }
 .apply-layout {
   display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; align-items: start;
 }
 
 /* ===== JOB DETAILS CARD ===== */
 .apply-details-card {
-  background: white; border-radius: var(--radius-lg);
-  border: 1px solid var(--gray-200); padding: 2.5rem;
-  box-shadow: var(--shadow-sm); position: sticky; top: 100px;
+  background: white; border-radius: 12px;
+  border: 1px solid rgba(15, 37, 72, 0.1); padding: 2.25rem;
+  position: sticky; top: 100px;
 }
 .apply-details-card h2 {
   font-size: 1.4rem; color: var(--navy); margin-bottom: 1.5rem;
-  padding-bottom: 1rem; border-bottom: 2px solid var(--gray-100);
+  padding-bottom: 1rem; border-bottom: 1px solid rgba(15, 37, 72, 0.12);
 }
 .apply-desc-content :global(h2),
 .apply-desc-content :global(h3),
@@ -359,22 +363,18 @@ const jobSchema = {
 
 /* ===== FORM CARD ===== */
 .apply-form-card {
-  background: white; border-radius: var(--radius-lg);
-  border: 1px solid var(--gray-200); padding: 2.5rem;
-  box-shadow: var(--shadow-sm);
+  background: white; border-radius: 12px;
+  border: 1px solid rgba(15, 37, 72, 0.12); padding: 2.25rem;
+  box-shadow: 0 1px 2px rgba(15, 37, 72, 0.04), 0 4px 14px rgba(15, 37, 72, 0.04);
 }
 .apply-form-header {
   display: flex; align-items: flex-start; gap: 1rem;
   margin-bottom: 2rem; padding-bottom: 1.5rem;
-  border-bottom: 2px solid var(--gray-100);
+  border-bottom: 1px solid rgba(15, 37, 72, 0.12);
 }
-.apply-form-icon {
-  font-size: 28px !important; color: var(--orange);
-  padding: 0.6rem; background: rgba(244,121,32,0.1);
-  border-radius: var(--radius-md);
-}
+:global(.apply-form-icon) { color: var(--icon-accent); margin-top: 0.2rem; flex-shrink: 0; }
 .apply-form-header h2 { font-size: 1.3rem; color: var(--navy); margin-bottom: 0.2rem; }
-.apply-form-header p { font-size: 0.85rem; color: var(--gray-400); }
+.apply-form-header p { font-size: 0.85rem; color: var(--gray-500); }
 
 /* Form fields */
 .form-group { margin-bottom: 1.5rem; }
@@ -385,19 +385,19 @@ const jobSchema = {
 .form-group input,
 .form-group textarea {
   width: 100%; padding: 0.75rem 1rem;
-  border: 1.5px solid var(--gray-200); border-radius: var(--radius-md);
+  border: 1px solid rgba(15, 37, 72, 0.22); border-radius: 8px;
   font-size: 0.95rem; color: var(--navy);
   transition: border-color 0.2s, box-shadow 0.2s;
-  background: var(--cream);
+  background: white;
   font-family: inherit;
 }
 .form-group input:focus,
 .form-group textarea:focus {
-  outline: none; border-color: var(--orange);
-  box-shadow: 0 0 0 3px rgba(244,121,32,0.1);
+  outline: none; border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(26, 58, 110, 0.1);
 }
 .form-group input::placeholder,
-.form-group textarea::placeholder { color: var(--gray-300); }
+.form-group textarea::placeholder { color: var(--gray-400); }
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
@@ -411,32 +411,36 @@ const jobSchema = {
 
 /* File upload */
 .file-upload {
-  border: 2px dashed var(--gray-200); border-radius: var(--radius-md);
+  border: 1px dashed rgba(15, 37, 72, 0.3); border-radius: 10px;
   padding: 2rem; text-align: center; cursor: pointer;
-  transition: all 0.2s; position: relative; background: var(--cream);
+  transition: border-color 0.2s, background 0.2s; position: relative; background: #f6f7f9;
 }
 .file-upload:hover, .file-upload.drag-over {
-  border-color: var(--orange); background: rgba(244,121,32,0.03);
+  border-color: var(--navy); background: #f1f3f6;
 }
 .file-input {
   position: absolute; inset: 0; opacity: 0; cursor: pointer;
   width: 100% !important; height: 100% !important;
   padding: 0 !important; border: none !important;
 }
-.file-upload-icon { font-size: 36px !important; color: var(--gray-300); margin-bottom: 0.5rem; }
+:global(.file-upload-icon) { color: var(--gray-500); margin: 0 auto 0.5rem; }
 .file-upload-text { font-size: 0.9rem; color: var(--gray-500); margin-bottom: 0.25rem; }
-.file-upload-text strong { color: var(--orange); }
-.file-upload-hint { font-size: 0.78rem; color: var(--gray-300); }
+.file-upload-text strong { color: var(--navy); }
+.file-upload-hint { font-size: 0.78rem; color: var(--gray-500); }
 .file-upload-selected {
   display: flex; align-items: center; gap: 0.75rem;
   justify-content: center; padding: 0.5rem 0;
 }
+.file-upload-selected :global(svg) { color: inherit; }
 .file-name { font-size: 0.9rem; font-weight: 600; color: var(--navy); }
 .file-remove {
   background: none; border: none; font-size: 1.2rem; color: var(--gray-400);
   cursor: pointer; padding: 0 0.25rem; line-height: 1;
 }
 .file-remove:hover { color: var(--error, #d63638); }
+.file-upload-error { margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.5; color: #c62828; }
+.apply-privacy { margin-top: 1rem; font-size: 0.82rem; line-height: 1.5; color: var(--gray-500); text-align: center; }
+.apply-privacy a { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
 
 /* Submit button */
 .apply-submit {
@@ -457,18 +461,8 @@ const jobSchema = {
 .apply-success, .apply-error {
   text-align: center; padding: 2rem 1rem;
 }
-.success-icon .material-symbols-outlined {
-  font-size: 64px !important; color: #00a32a;
-  animation: successPop 0.4s ease;
-}
-.error-icon .material-symbols-outlined {
-  font-size: 64px !important; color: #d63638;
-}
-@keyframes successPop {
-  0% { transform: scale(0); opacity: 0; }
-  60% { transform: scale(1.2); }
-  100% { transform: scale(1); opacity: 1; }
-}
+.success-icon { color: #1f7a3a; display: flex; justify-content: center; }
+.error-icon { color: #c62828; display: flex; justify-content: center; }
 .apply-success h3 { font-size: 1.5rem; color: var(--navy); margin: 1rem 0 0.75rem; }
 .apply-success p { color: var(--gray-500); line-height: 1.6; margin-bottom: 2rem; max-width: 400px; margin-inline: auto; }
 .apply-error p { color: var(--gray-500); margin: 1rem 0 1.5rem; }
@@ -477,14 +471,19 @@ const jobSchema = {
 @media (max-width: 992px) {
   .apply-layout { grid-template-columns: 1fr; }
   .apply-details-card { position: static; }
-  .apply-hero h1 { font-size: 2.2rem; }
 }
 @media (max-width: 576px) {
-  .apply-hero { padding: 8rem 0 2.5rem; }
-  .apply-hero h1 { font-size: 1.8rem; }
-  .apply-hero-meta { flex-wrap: wrap; }
   .form-row { grid-template-columns: 1fr; }
   .apply-form-card { padding: 1.5rem; }
   .apply-details-card { padding: 1.5rem; }
+}
+
+/* Mobile: cards keep a 1rem side padding inside the page gutter */
+@media (max-width: 768px) {
+  .apply-details-card,
+  .apply-form-card {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>

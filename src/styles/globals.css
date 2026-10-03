@@ -2,8 +2,80 @@
    HRHelp.nl — Global Design System
    ========================================= */
 
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+/* Inter, self-hosted: the variable font (weights 100-900) as served by Google
+   Fonts (v20). latin is preloaded in Layout.astro; latin-ext only downloads when
+   a page contains one of its characters. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Fallback shown until Inter arrives: Arial (or a metric twin; Roboto on
+   Android has the same widths) scaled to Inter's average glyph width on this
+   site's text, with Inter's ascent and descent, so the swap barely moves the
+   text. Bold gets its own face: Arial Bold is much wider than Arial, while
+   Inter Bold is only a little wider than Inter, so it needs less scaling. */
+@font-face {
+  font-family: 'Inter Fallback';
+  font-weight: 100 599;
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Arimo'), local('Roboto Regular'), local('Roboto-Regular');
+  size-adjust: 107%;
+  ascent-override: 90.5%;
+  descent-override: 22.5%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  font-weight: 600 900;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Arimo Bold');
+  size-adjust: 102%;
+  ascent-override: 95%;
+  descent-override: 23.6%;
+  line-gap-override: 0%;
+}
+
+/* Material Symbols Outlined, self-hosted subset with only the icons in use:
+   check_circle, description, download, euro, gavel, hourglass_top, location_on,
+   mail, medical_services. Any other icon name shows as plain text: add it to
+   the list (alphabetical) and download the new font file from
+   https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&icon_names=<list>&display=block
+   font-display: block keeps the ligature words hidden until the font is in, and
+   the 1em width stops the hidden words from taking space (no shift on load). */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+  src: url('/fonts/material-symbols-outlined-subset.woff2') format('woff2');
+}
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  width: 1em;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
 
 :root {
   /* Brand Colors */
@@ -13,6 +85,13 @@
   --orange: #f47920;
   --orange-dark: #d66516;
   --orange-light: #ff9a4d;
+  /* Accessible orange for buttons and small orange text on light backgrounds
+     (white on it 4.84:1, on white 4.84:1). Bright --orange stays for large
+     shapes and anything on navy. */
+  --orange-ink: #b95410;
+  --orange-ink-dark: #9a4509;
+  /* Decorative line icons (LineIcon, card and feature icons). Lighter on navy. */
+  --icon-accent: var(--orange-ink);
   --cream: #f8f7f5;
   --white: #ffffff;
 
@@ -22,21 +101,27 @@
   --gray-200: #e7e5e4;
   --gray-300: #d6d3d1;
   --gray-400: #a8a29e;
-  --gray-500: #78716c;
-  --gray-600: #57534e;
-  --gray-700: #44403c;
+  --gray-500: #5c5752; /* darker for more contrast (was #746e69) */
+  --gray-600: #3f3a36; /* main body grey, darker (was #57534e) */
+  --gray-700: #2f2b28; /* was #44403c */
   --gray-800: #292524;
   --gray-900: #1c1917;
 
   /* Typography */
-  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* Spacing */
-  --section-padding: 6rem 2rem;
+  /* Side padding lives on .container, so sections only pad vertically */
+  --section-padding: 6rem 0;
   --section-padding-sm: 4rem 1.5rem;
-  --container-max: 1200px;
+  /* One content width for header, heroes, sections and footer */
   --container-wide: 1400px;
+  --container-max: var(--container-wide);
+  /* Comfortable line length for running text inside the wide container */
+  --measure: 760px;
+  /* One side gutter below 768px: containers, header, heroes */
+  --gutter-mobile: 1rem;
 
   /* Border Radius */
   --radius-sm: 6px;
@@ -77,6 +162,8 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  /* Keep anchor targets and keyboard focus clear of the 72px fixed header */
+  scroll-padding-top: 88px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -115,20 +202,92 @@ h6 {
   color: var(--navy);
 }
 
+/* 700 like the page and article heroes; the legal pages and the 404 used this default (800) */
 h1 {
   font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+}
+
+/* One heading scale for the whole site. Every h2 renders the same, every h3
+   the same, and so on; colour may still change per background. Responsive
+   through clamp only, no per-page or per-breakpoint overrides. */
+:root {
+  --h2-size: clamp(1.5rem, 1rem + 1.4vw, 2rem); /* 24px phone, 32px desktop */
+  --h2-weight: 700;
+  --h2-lh: 1.2;
+  --h2-ls: -0.015em;
+  --h3-size: clamp(1.125rem, 1.05rem + 0.2vw, 1.25rem); /* 18px phone, ~20px desktop */
+  --h3-weight: 700;
+  --h3-lh: 1.3;
+  --h3-ls: -0.01em;
+  --h4-size: clamp(1rem, 0.95rem + 0.15vw, 1.0625rem); /* 16px phone, 17px desktop */
+  --h4-weight: 600;
+  --h4-lh: 1.35;
+  --h4-ls: 0;
+  --h5-size: 1rem;
+  --h6-size: 0.9375rem;
 }
 
 h2 {
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-size: var(--h2-size);
+  font-weight: var(--h2-weight);
+  line-height: var(--h2-lh);
+  letter-spacing: var(--h2-ls);
 }
 
 h3 {
-  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-size: var(--h3-size);
+  font-weight: var(--h3-weight);
+  line-height: var(--h3-lh);
+  letter-spacing: var(--h3-ls);
 }
 
 h4 {
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-size: var(--h4-size);
+  font-weight: var(--h4-weight);
+  line-height: var(--h4-lh);
+  letter-spacing: var(--h4-ls);
+}
+
+/* Page content: the scale wins over any page or component style (including
+   WordPress article HTML), so a heading level looks identical everywhere.
+   .as-h3 / .as-h4: an h2/h3 kept for the document outline but shown as a card
+   title, which renders exactly like the level below. The footer and cookie
+   banner headings follow the same h2/h3 scale; the footer's small uppercase
+   column labels (h4) are the one deliberate exception. */
+:is(main, .site-footer, #cookie-consent) h2 {
+  font-size: var(--h2-size) !important;
+  font-weight: var(--h2-weight) !important;
+  line-height: var(--h2-lh) !important;
+  letter-spacing: var(--h2-ls) !important;
+  text-wrap: balance;
+}
+
+:is(main, .site-footer, #cookie-consent) :is(h3, h2.as-h3) {
+  font-size: var(--h3-size) !important;
+  font-weight: var(--h3-weight) !important;
+  line-height: var(--h3-lh) !important;
+  letter-spacing: var(--h3-ls) !important;
+}
+
+#main h4,
+#main h3.as-h4.as-h4 {
+  font-size: var(--h4-size) !important;
+  font-weight: var(--h4-weight) !important;
+  line-height: var(--h4-lh) !important;
+  letter-spacing: var(--h4-ls) !important;
+}
+
+main h5,
+main h6 {
+  font-size: var(--h5-size) !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+main h6 {
+  font-size: var(--h6-size) !important;
 }
 
 p {
@@ -141,7 +300,7 @@ p {
    Utility Classes
    ========================================= */
 .container {
-  max-width: var(--container-max);
+  max-width: var(--container-wide);
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -173,7 +332,7 @@ p {
 }
 
 .section-navy p {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 /* Eyebrow/Badge */
@@ -184,14 +343,14 @@ p {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--orange);
+  color: var(--orange-ink);
   margin-bottom: 1rem;
 }
 
 .eyebrow-badge {
   display: inline-block;
   background: rgba(244, 121, 32, 0.1);
-  color: var(--orange);
+  color: var(--orange-ink);
   padding: 0.4rem 1rem;
   border-radius: var(--radius-full);
   font-family: var(--font-body);
@@ -230,7 +389,7 @@ p {
   font-size: 0.95rem;
   font-weight: 600;
   padding: 0.85rem 2rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full); /* one pill shape for every button, as in the header */
   border: 2px solid transparent;
   cursor: pointer;
   transition: all var(--transition-base);
@@ -239,15 +398,15 @@ p {
 }
 
 .btn-primary {
-  background: var(--orange);
+  background: var(--orange-ink);
   color: var(--white);
-  border-color: var(--orange);
+  border-color: var(--orange-ink);
   box-shadow: none;
 }
 
 .btn-primary:hover {
-  background: var(--orange-dark);
-  border-color: var(--orange-dark);
+  background: var(--orange-ink-dark);
+  border-color: var(--orange-ink-dark);
   transform: translateY(-2px);
 }
 
@@ -263,6 +422,19 @@ p {
   box-shadow: var(--shadow-md);
 }
 
+/* Orange action that is not a booking (downloads): same colour as the primary
+   button but without .btn-primary, so GA4 cta_click keeps counting bookings only */
+.btn-accent {
+  background: var(--orange-ink);
+  color: var(--white);
+  border-color: var(--orange-ink);
+}
+.btn-accent:hover {
+  background: var(--orange-ink-dark);
+  border-color: var(--orange-ink-dark);
+  color: var(--white);
+}
+
 .btn-ghost {
   background: transparent;
   color: var(--white);
@@ -271,7 +443,7 @@ p {
 
 .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.88);
 }
 
 .btn-sm {
@@ -427,12 +599,13 @@ p {
    ========================================= */
 @media (max-width: 768px) {
   :root {
-    --section-padding: 3.5rem 1.25rem;
+    /* Sections wrap a .container, which carries the side gutter */
+    --section-padding: 3.5rem 0;
   }
 
   .container,
   .container-wide {
-    padding: 0 1.25rem;
+    padding: 0 var(--gutter-mobile);
   }
 
   p {
@@ -443,20 +616,6 @@ p {
   h1 {
     font-size: 2rem !important;
     line-height: 1.15 !important;
-  }
-
-  h2 {
-    font-size: 1.5rem !important;
-    line-height: 1.2 !important;
-  }
-
-  h3 {
-    font-size: 1.15rem !important;
-  }
-
-  /* Section headers */
-  .section-header h2 {
-    font-size: 1.5rem !important;
   }
 
   .eyebrow-badge {
@@ -557,26 +716,12 @@ p {
     width: 100%;
     text-align: center;
   }
-
-  /* Elfsight floating widget — move up so it doesn't overlap CTAs */
-  .elfsight-app-b5ddbfcb-a7b8-49e3-aa9d-88aea10f86df {
-    z-index: 999;
-  }
 }
 
 /* Small phone — extra tight */
 @media (max-width: 480px) {
   h1 {
     font-size: 1.75rem !important;
-  }
-
-  h2 {
-    font-size: 1.35rem !important;
-  }
-
-  .container,
-  .container-wide {
-    padding: 0 1rem;
   }
 }
 
@@ -597,5 +742,118 @@ p {
   .handle-track,
   .sol2-cards {
     grid-template-columns: 1fr !important;
+  }
+}
+/* =========================================
+   Accessibility
+   ========================================= */
+
+/* Skip link: first focusable element on every page */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10001;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--navy);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* One consistent keyboard focus ring. !important so component and page
+   styles (for example outline: none on form fields) cannot remove it. */
+:focus-visible {
+  outline: 2px solid var(--orange-ink) !important;
+  outline-offset: 2px !important;
+}
+
+/* On orange surfaces the orange ring would disappear: use navy there */
+.footer-cta :focus-visible {
+  outline-color: var(--navy) !important;
+}
+
+/* Scroll-reveal content must be visible without JavaScript */
+html:not(.js) [data-animate] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Respect the reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Decorative line icons default to the accent; explicit class rules win
+   (arrows, chevrons, list checkmarks and form chrome stay as they are) */
+:where(.line-ico) { color: var(--icon-accent); }
+.btn .line-ico { color: inherit; }
+.section-navy,
+footer { --icon-accent: var(--orange-light); }
+
+/* On navy surfaces the accessible dark orange loses contrast (2.3:1):
+   use the bright/light brand orange there instead (4.1 to 5.3:1). */
+.section-navy .eyebrow,
+.section-navy .eyebrow-badge { color: var(--orange-light); }
+.section-navy :focus-visible,
+footer :focus-visible { outline-color: var(--orange-light) !important; }
+
+/* =========================================
+   Background motifs (opacity baked into the SVGs; text contrast unchanged)
+   A "canal": white strokes for navy bands. C "map": orange strokes for light bands.
+   Add .motif-canal / .motif-map to a section, or target by selector below.
+   ========================================= */
+.motif-canal,
+.svc-pricing,
+.sv-pricing {
+  background-image: url("/assets/motifs/motif-A-navy.svg");
+  background-repeat: no-repeat;
+  background-size: min(940px, 66%) auto;
+  background-position: right -24px bottom 0;
+}
+
+.motif-map {
+  background-image: url("/assets/motifs/motif-C-light.svg");
+  background-repeat: no-repeat;
+  background-size: 460px auto;
+  background-position: right -50px bottom -130px;
+}
+
+@media (max-width: 767px) {
+  .motif-canal,
+  .svc-pricing,
+  .sv-pricing {
+    background-size: 620px auto;
+    background-position: right -120px bottom 0;
+  }
+
+  .motif-map {
+    background-size: 300px auto;
+    background-position: right -70px bottom -50px;
   }
 }

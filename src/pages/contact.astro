@@ -1,17 +1,26 @@
 ---
 import Layout from '../components/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import LineIcon from '../components/LineIcon.astro';
+import OfficeMap from '../components/OfficeMap.astro';
+import { HELP_NEEDED, EMPLOYEES_NL, TIMELINE, PREFERRED_CONTACT, QUALITY_IMMIGRATION } from '../lib/enquiry';
+
+const qiUrl = QUALITY_IMMIGRATION('contact');
+// Lead and Ads conversion events only count on the production build.
+const IS_PROD = import.meta.env.PUBLIC_STAGING !== 'true';
+
 
 const channels = [
   { icon: 'mail', title: 'Email Us', value: 'info@hrhelp.nl', href: 'mailto:info@hrhelp.nl', desc: 'For general inquiries, partnerships, and project proposals.' },
   { icon: 'phone_in_talk', title: 'Call Us', value: '+31 85 760 8188', href: 'tel:+31857608188', desc: 'Direct line for urgent HR consultation and immediate support.' },
-  { icon: 'schedule', title: 'Business Hours', value: 'Mon – Fri, 08:30 – 18:00', href: null, desc: 'Central European Time (CET). We respond within 24 hours.' },
+  { icon: 'schedule', title: 'Business Hours', value: 'Mon – Fri, 08:30 – 18:00', href: null, desc: 'Central European Time (CET). We respond within one business day.' },
 ];
 
 const faqs = [
-  { q: 'How quickly can you start supporting our company?', a: 'For urgent needs, we arrange an initial consultation within 24 hours. Full project onboarding typically begins within 5 business days, depending on scope.' },
+  { q: 'How quickly can you start supporting our company?', a: 'For urgent needs, we arrange an initial consultation within one business day. Full project onboarding typically begins within 5 business days, depending on scope.' },
   { q: 'Do you support companies outside the Netherlands?', a: 'Yes. While we specialize in Dutch employment law, our network of partners covers the EU and UK for cross-border employment matters, expat onboarding, and 30% ruling applications.' },
   { q: 'What does a typical engagement look like?', a: 'We offer retainer-based advisory for ongoing support, and fixed-price projects for specific needs like restructuring, compliance audits, or recruitment campaigns. Every engagement starts with a free consultation.' },
-  { q: 'Are you a traditional HR consultancy?', a: 'No. We are a network organization — a boutique firm that collaborates with specialized partners to deliver best-in-class expertise across every HR discipline, from legal to payroll to talent strategy.' },
+  { q: 'Are you a traditional HR consultancy?', a: 'No. We are a network organisation: a boutique firm that works with specialised partners to cover every HR discipline, from legal to payroll to talent strategy.' },
 ];
 
 const contactSchema = {
@@ -26,194 +35,143 @@ const contactSchema = {
     "email": "info@hrhelp.nl",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Televisieweg 2",
+      "streetAddress": "Oeverwalweg 3",
       "addressLocality": "Almere",
-      "postalCode": "1322 AC",
+      "postalCode": "1332 CG",
       "addressCountry": "NL"
     }
   }
 };
 ---
 
-<Layout title="Contact Us" description="Get in touch with HRHelp.nl — specialized HR support for international companies in the Netherlands. Free consultation, Almere office." schema={contactSchema}>
+<Layout title="Contact Us" description="Get in touch with HRHelp.nl for specialized HR support for international companies in the Netherlands. Free consultation, Almere office." schema={contactSchema}>
 
 <!-- ===== HERO ===== -->
-<section class="ct2-hero">
-  <div class="ct2-hero-mesh"></div>
-  <div class="container-wide ct2-hero-inner">
-    <div class="ct2-hero-content" data-animate="fade-up">
-      <span class="eyebrow-badge">Get In Touch</span>
-      <h1>Let's Build Your <br/><span class="text-orange">HR Strategy</span></h1>
-      <p class="ct2-hero-p">Whether you're entering the Dutch market, restructuring your team, or need expert compliance guidance — our senior consultants are ready to help.</p>
-      
-      <div class="ct2-hero-actions">
-        <a href="#book" class="btn btn-primary btn-lg" style="box-shadow:none;">Book Free Consultation</a>
-        <a href="tel:+31857608188" class="btn btn-secondary btn-lg">
-          <span class="material-symbols-outlined" style="font-size:20px;">call</span>
-          +31 85 760 8188
-        </a>
-      </div>
+<PageHero variant="archive" eyebrow="Get In Touch" subtitle="Whether you're entering the Dutch market, restructuring your team, or need expert compliance guidance, our senior consultants are ready to help.">
+  <Fragment slot="title">Let's Build Your <br/><span>HR Strategy</span></Fragment>
+  <div class="page-hero-actions">
+    <a href="#book" class="btn btn-primary btn-lg">Book Free Consultation</a>
+    <a href="tel:+31857608188" class="btn btn-secondary btn-lg">
+      <LineIcon name="call" size={18} />
+      +31 85 760 8188
+    </a>
+  </div>
 
-      <div class="ct2-hero-stats">
-        <div class="ct2-hero-stat">
-          <span class="ct2-stat-val">24h</span>
-          <span class="ct2-stat-lbl">Response Time</span>
-        </div>
-        <div class="ct2-hero-stat">
-          <span class="ct2-stat-val">Free</span>
-          <span class="ct2-stat-lbl">Initial Consult</span>
-        </div>
-        <div class="ct2-hero-stat">
-          <span class="ct2-stat-val">100%</span>
-          <span class="ct2-stat-lbl">Confidential</span>
-        </div>
-        <div class="ct2-hero-stat">
-          <span class="ct2-stat-val">NL</span>
-          <span class="ct2-stat-lbl">Native Experts</span>
-        </div>
-      </div>
+  <div class="ct2-hero-stats">
+    <div class="ct2-hero-stat">
+      <span class="ct2-stat-val">1 business day</span>
+      <span class="ct2-stat-lbl">Response Time</span>
     </div>
-
-    <div class="ct2-hero-visual" data-animate="fade-left">
-      <div class="ct2-hero-img-card">
-        <img src="/images/founder/team-collaboration.jpg" alt="HRHelp.nl team consulting" />
-        <div class="ct2-img-label">
-          <span class="material-symbols-outlined">support_agent</span>
-          <span>Senior HR Consultants</span>
-        </div>
-      </div>
+    <div class="ct2-hero-stat">
+      <span class="ct2-stat-val">Free</span>
+      <span class="ct2-stat-lbl">Initial Consult</span>
+    </div>
+    <div class="ct2-hero-stat">
+      <span class="ct2-stat-val">100%</span>
+      <span class="ct2-stat-lbl">Confidential</span>
+    </div>
+    <div class="ct2-hero-stat">
+      <span class="ct2-stat-val">NL</span>
+      <span class="ct2-stat-lbl">Native Experts</span>
     </div>
   </div>
-</section>
+</PageHero>
 
-<!-- ===== CONTACT CHANNELS ===== -->
-<section class="ct2-channels">
+<!-- ===== ENQUIRY FORM / CALENDLY (two tabs) + SIDEBAR =====
+     id="book" stays on this section: the site-wide "Book a Free Consultation"
+     CTAs link to /contact#book and land on the form tab (default).
+     /contact?book=calendar and /contact#calendar open the "Pick a time" tab.
+     Calendly (third party, sets cookies) only loads once that tab is opened. -->
+<section class="ct2-main" id="book">
   <div class="container">
-    <div class="ct2-channels-grid">
-      {channels.map((ch) => (
-        <div class="ct2-channel-card">
-          <div class="ct2-channel-icon">
-            <span class="material-symbols-outlined">{ch.icon}</span>
-          </div>
-          <h3>{ch.title}</h3>
-          <p class="ct2-channel-desc">{ch.desc}</p>
-          {ch.href ? (
-            <a href={ch.href} class="ct2-channel-value">{ch.value}</a>
-          ) : (
-            <span class="ct2-channel-value">{ch.value}</span>
-          )}
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- ===== BOOK A CONSULTATION (primary action) ===== -->
-<section class="ct2-book" id="book">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow">Fastest Way to Start</span>
-      <h2>Book Your Free 30-Minute Consultation</h2>
-      <p class="section-desc">Pick a time that suits you and speak directly with a senior consultant. You'll leave the call knowing your options and what they cost. Fixed pricing, no obligation.</p>
-    </div>
-    <div class="ct2-book-trust">
-      <span><span class="material-symbols-outlined">schedule</span>30 minutes</span>
-      <span><span class="material-symbols-outlined">videocam</span>Online or by phone</span>
-      <span><span class="material-symbols-outlined">lock</span>100% confidential</span>
-      <span><span class="material-symbols-outlined">euro</span>Fixed pricing, agreed upfront</span>
-    </div>
-    <div class="ct2-book-widget">
-      <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-      <script src="https://assets.calendly.com/assets/external/widget.js" async is:inline></script>
-      <div class="calendly-inline-widget" data-url="https://calendly.com/hrhelp-info/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=f47920" style="min-width:320px;height:700px;"></div>
-    </div>
-    <p class="ct2-book-alt">Prefer to write first? <a href="#contact-form">Send us a message below</a> — we reply within one business day.</p>
-  </div>
-</section>
-
-<!-- ===== CONTACT FORM + INFO ===== -->
-<section class="ct2-form-section" id="contact-form">
-  <div class="container">
-    <div class="ct2-form-layout">
-      <!-- Left: Info -->
-      <div class="ct2-form-info">
-        <h2>Send Us a Message</h2>
-        <p>Tell us about your situation and we'll connect you with the right expert from our network. Every inquiry starts with a free consultation.</p>
-
-        <div class="ct2-info-block">
-          <div class="ct2-info-item">
-            <span class="material-symbols-outlined">location_on</span>
-            <div>
-              <strong>Oeverwalweg 3</strong>
-              <p>1332 CG, Almere, Netherlands</p>
-            </div>
-          </div>
-          <div class="ct2-info-item">
-            <span class="material-symbols-outlined">mail</span>
-            <div>
-              <strong>info@hrhelp.nl</strong>
-              <p>We respond within 24 hours</p>
-            </div>
-          </div>
-          <div class="ct2-info-item">
-            <span class="material-symbols-outlined">phone_in_talk</span>
-            <div>
-              <strong>+31 85 760 8188</strong>
-              <p>Mon – Fri, 08:30 – 18:00 CET</p>
-            </div>
-          </div>
+    <div class="ct2-grid">
+      <div class="ct2-primary">
+        <span class="eyebrow">Fastest Way to Start</span>
+        <h2>Book Your Free <span class="ct2-nowrap">30-Minute</span> Consultation</h2>
+        <p class="ct2-lead">Tell us what you need and a senior consultant replies within one business day, or pick a time for a free 30-minute call straight away. Fixed pricing, no obligation.</p>
+        <div class="ct2-book-trust">
+          <span><LineIcon name="schedule" size={18} />30 minutes</span>
+          <span><LineIcon name="videocam" size={18} />Online or by phone</span>
+          <span><LineIcon name="lock" size={18} />100% confidential</span>
+          <span><LineIcon name="euro" size={18} />Fixed pricing, agreed upfront</span>
         </div>
 
-        <div class="ct2-promise">
-          <span class="material-symbols-outlined">verified</span>
-          <div>
-            <strong>Our Promise</strong>
-            <p>100% confidential. No spam. Direct access to senior consultants.</p>
-          </div>
-        </div>
-      </div>
+        <p class="ct2-jobseeker">
+          <strong>Looking for a job or a work visa?</strong> HRhelp works with employers only. Our partner
+          <a href={qiUrl} target="_blank" rel="noopener">Quality Immigration<span class="ct2-vh"> (opens in a new tab)</span></a>
+          helps individuals with work permits and relocation.
+        </p>
 
-      <!-- Right: Form -->
-      <div class="ct2-form-card">
-        <form id="hrhelp-contact-form">
+        <div class="ct2-switch">
+          <div class="ct2-tabs" role="tablist" aria-label="How would you like to book?">
+            <button type="button" class="ct2-tab" role="tab" id="ct2-tab-form" aria-controls="ct2-panel-form" aria-selected="true">Send a message</button>
+            <button type="button" class="ct2-tab" role="tab" id="ct2-tab-cal" aria-controls="calendar" aria-selected="false" aria-describedby="ct2-cal-note" tabindex="-1">Pick a time</button>
+          </div>
+          <p class="ct2-tab-note" id="ct2-cal-note">Opens Calendly's booking calendar.</p>
+        </div>
+
+        <div class="ct2-panel" role="tabpanel" id="ct2-panel-form" aria-labelledby="ct2-tab-form">
+        <form id="contact-form" class="ct2-form">
+          <fieldset class="ct2-set">
+            <legend>What do you need help with?<span class="ct2-hint">Optional, pick one or more</span></legend>
+            <div class="ct2-chips">
+              {HELP_NEEDED.map((n) => (
+                <label class="ct2-chip"><input type="checkbox" name="needs" value={n} /><span>{n}</span></label>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset class="ct2-set">
+            <legend>Employees in the Netherlands <span class="ct2-opt">(optional)</span></legend>
+            <div class="ct2-chips">
+              {EMPLOYEES_NL.map((n) => (
+                <label class="ct2-chip"><input type="radio" name="employees" value={n} /><span>{n}</span></label>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset class="ct2-set">
+            <legend>When do you need help? <span class="ct2-opt">(optional)</span></legend>
+            <div class="ct2-chips">
+              {TIMELINE.map((n) => (
+                <label class="ct2-chip"><input type="radio" name="timeline" value={n} /><span>{n}</span></label>
+              ))}
+            </div>
+          </fieldset>
+
           <div class="ct2-form-row">
             <div class="ct2-form-group">
-              <label>Full Name *</label>
-              <input type="text" name="name" placeholder="Your name" required />
+              <label for="ct2-company">Company <span class="ct2-opt">(optional)</span></label>
+              <input type="text" id="ct2-company" name="company" autocomplete="organization" maxlength="160" />
             </div>
             <div class="ct2-form-group">
-              <label>Company</label>
-              <input type="text" name="company" placeholder="Your company" />
+              <label for="ct2-name">Full Name *</label>
+              <input type="text" id="ct2-name" name="name" autocomplete="name" maxlength="120" required />
             </div>
           </div>
           <div class="ct2-form-row">
             <div class="ct2-form-group">
-              <label>Email *</label>
-              <input type="email" name="email" placeholder="your@email.com" required />
+              <label for="ct2-email">Work email *</label>
+              <input type="email" id="ct2-email" name="email" autocomplete="email" maxlength="200" required />
             </div>
             <div class="ct2-form-group">
-              <label>Phone</label>
-              <input type="tel" name="phone" placeholder="+31 ..." />
+              <label for="ct2-phone">Phone <span class="ct2-opt">(optional)</span></label>
+              <input type="tel" id="ct2-phone" name="phone" autocomplete="tel" maxlength="40" />
             </div>
           </div>
-          <div class="ct2-form-group">
-            <label>What can we help you with?</label>
-            <div class="ct2-select-wrap">
-              <select name="topic" required>
-                <option value="" disabled selected>Select a topic...</option>
-                <option>HR Compliance & Employment Law</option>
-                <option>Recruitment & Talent Strategy</option>
-                <option>Payroll & Benefits</option>
-                <option>Restructuring & Change Management</option>
-                <option>Expat Services & 30% Ruling</option>
-                <option>General Inquiry</option>
-              </select>
-              <span class="material-symbols-outlined ct2-select-arrow">expand_more</span>
+
+          <fieldset class="ct2-set">
+            <legend>How should we get in touch? <span class="ct2-opt">(optional)</span></legend>
+            <div class="ct2-chips">
+              {PREFERRED_CONTACT.map((n) => (
+                <label class="ct2-chip"><input type="radio" name="preferred_contact" value={n} /><span>{n}</span></label>
+              ))}
             </div>
-          </div>
+          </fieldset>
+
           <div class="ct2-form-group">
-            <label>Your Message</label>
-            <textarea name="message" placeholder="Tell us about your situation..." rows="5"></textarea>
+            <label for="ct2-message">Anything else we should know? <span class="ct2-opt">(optional)</span></label>
+            <textarea id="ct2-message" name="message" placeholder="Tell us about your situation..." rows="4" maxlength="5000"></textarea>
           </div>
           <!-- Honeypot: off-screen and out of the tab order, so only bots fill it.
                A non-empty url_confirm makes /api/contact drop the submission. -->
@@ -221,50 +179,131 @@ const contactSchema = {
             <label for="ct2-url-confirm">Your website</label>
             <input type="text" id="ct2-url-confirm" name="url_confirm" tabindex="-1" autocomplete="off" />
           </div>
-          <div class="ct2-form-footer">
-            <div class="ct2-form-check">
-              <input type="checkbox" id="privacy" name="privacy" required />
-              <label for="privacy">I agree to the <a href="/privacy">Privacy Policy</a></label>
-            </div>
-            <div id="form-status" style="display:none; padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem;"></div>
-            <button type="submit" id="form-submit-btn" class="btn btn-primary btn-lg" style="box-shadow: none; width: 100%;">Send Message</button>
+          <div class="ct2-form-check">
+            <input type="checkbox" id="privacy" name="privacy" required />
+            <label for="privacy">I agree to the <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a></label>
           </div>
+          <div id="form-status" class="ct2-status" role="status" aria-live="polite" hidden></div>
+          <button type="submit" id="form-submit-btn" class="btn btn-primary btn-lg ct2-submit">Send Message</button>
         </form>
+        <div id="ct2-done" class="ct2-done" tabindex="-1" hidden>
+          <LineIcon name="check" size={28} />
+          <div>
+            <p class="ct2-done-title" id="ct2-done-title">Thanks, we have your message.</p>
+            <p>Cornelis or one of the team will get back to you within one business day.</p>
+          </div>
+        </div>
+        </div>
+
+        <div class="ct2-panel" role="tabpanel" id="calendar" aria-labelledby="ct2-tab-cal" tabindex="-1" hidden>
+          <div class="ct2-cal-frame" id="ct2-cal-frame"></div>
+          <p class="ct2-book-fallback">Calendar slow to load? <a href="https://calendly.com/hrhelp-info/30min" target="_blank" rel="noopener">Open the booking calendar</a> in a new tab.</p>
+        </div>
       </div>
 
-<script is:inline>
+      <aside class="ct2-side" aria-label="What happens next and how to reach us">
+        <figure class="ct2-photo">
+          <img src="/images/contact/cornelis-client-meeting.jpg" alt="Cornelis Leerlooijer of HRhelp in a consultation with a client" width="1200" height="1490" loading="eager" decoding="async" />
+        </figure>
+
+        <div class="ct2-next">
+          <h3>What happens next</h3>
+          <ol>
+            <li><span class="ct2-num">1</span><p>We read your answers.</p></li>
+            <li><span class="ct2-num">2</span><p>Cornelis or the team replies within one business day.</p></li>
+            <li><span class="ct2-num">3</span><p>A free 30-minute call, if that is useful.</p></li>
+          </ol>
+        </div>
+
+        <div class="ct2-direct">
+          <h2 class="as-h3 ct2-side-title">Send Us a Message</h2>
+          <p class="ct2-side-desc">Prefer to write or call directly? We respond within one business day.</p>
+          <ul class="ct2-channels">
+            {channels.map((ch) => (
+              <li>
+                <LineIcon name={ch.icon} size={18} />
+                <div>
+                  <h2 class="as-h3 ct2-ch-title">{ch.title}</h2>
+                  {ch.href ? <a href={ch.href}>{ch.value}</a> : <span class="ct2-ch-value">{ch.value}</span>}
+                  <p>{ch.desc}</p>
+                </div>
+              </li>
+            ))}
+            <li>
+              <LineIcon name="location_on" size={18} />
+              <div>
+                <span class="ct2-ch-value">Oeverwalweg 3</span>
+                <p>1332 CG, Almere, Netherlands</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <OfficeMap variant="inline" class="ct2-map" />
+      </aside>
+    </div>
+  </div>
+
+<script is:inline define:vars={{ IS_PROD }}>
 (function() {
-  var form = document.getElementById('hrhelp-contact-form');
+  var form = document.getElementById('contact-form');
   if (!form) return;
+  var needs = form.querySelectorAll('[name="needs"]');
+
+  function checked(name) {
+    var el = form.querySelector('[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
+  function chosenNeeds() {
+    return Array.prototype.filter.call(needs, function(n) { return n.checked; }).map(function(n) { return n.value; });
+  }
+  // At least one help topic: the browser's own validation bubble on the first chip.
+  function syncNeeds() {
+    needs[0].setCustomValidity('');
+  }
+  Array.prototype.forEach.call(needs, function(n) { n.addEventListener('change', syncNeeds); });
+  syncNeeds();
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    syncNeeds();
+    if (!form.reportValidity()) return;
 
     var btn = document.getElementById('form-submit-btn');
     var status = document.getElementById('form-status');
     var originalText = btn.textContent;
-
-    // Disable button and show loading
     btn.disabled = true;
     btn.textContent = 'Sending...';
-    btn.style.opacity = '0.7';
-    status.style.display = 'none';
+    status.hidden = true;
+    var submitId = 'cf-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
 
-    var params = new URLSearchParams(window.location.search);
+    // Same fields as the website chatbot; /api/contact maps both identically
+    // into the CRM lead and the team alert email.
     var data = {
       name: form.querySelector('[name="name"]').value.trim(),
       email: form.querySelector('[name="email"]').value.trim(),
       company: form.querySelector('[name="company"]').value.trim(),
       phone: form.querySelector('[name="phone"]').value.trim(),
-      topic: form.querySelector('[name="topic"]').value,
+      needs: chosenNeeds(),
+      employees: checked('employees'),
+      timeline: checked('timeline'),
+      preferred_contact: checked('preferred_contact'),
       message: form.querySelector('[name="message"]').value.trim(),
+      page: location.pathname,
       source: 'Contact Form',
-      url_confirm: form.querySelector('[name="url_confirm"]').value,
-      utm_source: params.get('utm_source') || '',
-      utm_medium: params.get('utm_medium') || '',
-      utm_campaign: params.get('utm_campaign') || '',
-      referrer: document.referrer || ''
+      url_confirm: form.querySelector('[name="url_confirm"]').value
     };
+    // First-touch lead source (utm_*, click ids, referrer host, landing page)
+    if (window.hrhelpAttribution) Object.assign(data, window.hrhelpAttribution());
+
+    function fail(msg) {
+      if (typeof gtag === 'function') gtag('event', 'lead_error', { source: 'contact_form' });
+      status.hidden = false;
+      status.className = 'ct2-status is-error';
+      status.textContent = msg;
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
 
     fetch('/api/contact', {
       method: 'POST',
@@ -273,43 +312,111 @@ const contactSchema = {
     })
     .then(function(res) { return res.json(); })
     .then(function(result) {
-      if (result.success) {
-        status.style.display = 'block';
-        status.style.background = '#e8f5e9';
-        status.style.color = '#2e7d32';
-        status.textContent = '✓ ' + result.message;
-        // Terminal state: the message is in, so don't re-arm the form.
-        btn.textContent = 'Message sent';
-        btn.style.opacity = '1';
-      } else {
-        status.style.display = 'block';
-        status.style.background = '#fce4ec';
-        status.style.color = '#c62828';
-        status.textContent = '✗ ' + (result.message || 'Something went wrong. Please try again.');
-        btn.disabled = false;
-        btn.textContent = originalText;
-        btn.style.opacity = '1';
+      if (!result.success) {
+        fail(result.message || 'Something went wrong. Please try again or email us at info@hrhelp.nl');
+        return;
       }
+      // Staging builds never count leads or Google Ads conversions. The Ads
+      // conversion is the one Calendly bookings used to fire; transaction_id
+      // lets Google Ads drop a duplicate of the same submit.
+      if (IS_PROD && typeof gtag === 'function') {
+        gtag('event', 'generate_lead', { source: 'contact_form' });
+        gtag('event', 'conversion', {
+          send_to: 'AW-16843385395/u4MnCPi347gcELPUxt8-',
+          transaction_id: submitId
+        });
+      }
+      // Terminal state: the message is in, so swap the form for the confirmation.
+      var done = document.getElementById('ct2-done');
+      document.getElementById('ct2-done-title').textContent = 'Thanks, ' + data.name.split(/\s+/)[0] + '.';
+      form.hidden = true;
+      done.hidden = false;
+      done.focus();
     })
     .catch(function() {
-      status.style.display = 'block';
-      status.style.background = '#fce4ec';
-      status.style.color = '#c62828';
-      status.textContent = '✗ Network error. Please try again or email us directly.';
-      btn.disabled = false;
-      btn.textContent = originalText;
-      btn.style.opacity = '1';
+      fail('Network error. Please try again or email us at info@hrhelp.nl');
     });
   });
 })();
 </script>
-    </div>
-  </div>
+
+<!-- Two-option switch: accessible tabs; Calendly loads only when "Pick a time"
+     is opened. Booking tracking + the CRM relay live in Layout.astro. -->
+<script is:inline>
+(function() {
+  var tabs = [document.getElementById('ct2-tab-form'), document.getElementById('ct2-tab-cal')];
+  if (!tabs[0] || !tabs[1]) return;
+  var CAL_URL = 'https://calendly.com/hrhelp-info/30min?hide_event_type_details=1&primary_color=f47920';
+  var calLoaded = false;
+
+  function loadCalendly() {
+    if (calLoaded) return;
+    calLoaded = true;
+    var frame = document.getElementById('ct2-cal-frame');
+    // Desktop: fixed 700px. Mobile: starts at 700px, then Calendly reports its
+    // page height and sets the frame's height to match (auto height).
+    var resize = window.matchMedia('(max-width: 768px)').matches;
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = 'https://assets.calendly.com/assets/external/widget.css';
+    document.head.appendChild(css);
+    var s = document.createElement('script');
+    s.src = 'https://assets.calendly.com/assets/external/widget.js';
+    s.async = true;
+    s.onload = function() {
+      if (window.Calendly && Calendly.initInlineWidget) {
+        frame.classList.add('calendly-inline-widget');
+        Calendly.initInlineWidget({ url: CAL_URL, parentElement: frame, resize: resize });
+      }
+    };
+    document.head.appendChild(s);
+  }
+
+  function select(i, focus) {
+    tabs.forEach(function(t, j) {
+      var on = i === j;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tabs[i].focus();
+    if (i === 1) loadCalendly();
+  }
+
+  tabs.forEach(function(t, i) {
+    t.addEventListener('click', function() { select(i, false); });
+    t.addEventListener('keydown', function(e) {
+      var n = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      if (n === null) return;
+      e.preventDefault();
+      select(n, true);
+    });
+  });
+
+  // Deep links: /contact?book=calendar or /contact#calendar open the calendar tab.
+  function wantsCalendar() {
+    return location.hash === '#calendar' || new URLSearchParams(location.search).get('book') === 'calendar';
+  }
+  function openFromUrl() {
+    if (!wantsCalendar()) return;
+    select(1, false);
+    document.getElementById('book').scrollIntoView();
+  }
+  openFromUrl();
+  window.addEventListener('hashchange', function() {
+    if (location.hash === '#calendar') openFromUrl();
+  });
+})();
+</script>
 </section>
 
 <!-- ===== FAQ ===== -->
 <section class="ct2-faq">
-  <div class="container" style="max-width: 800px;">
+  <div class="container">
     <div class="ct2-section-header">
       <h2>Frequently Asked Questions</h2>
       <p>Quick answers to common questions about working with us.</p>
@@ -319,7 +426,6 @@ const contactSchema = {
         <details class="ct2-faq-item">
           <summary>
             <span>{faq.q}</span>
-            <span class="material-symbols-outlined ct2-faq-arrow">expand_more</span>
           </summary>
           <p>{faq.a}</p>
         </details>
@@ -331,189 +437,202 @@ const contactSchema = {
 </Layout>
 
 <style>
-/* ===== HERO ===== */
-.ct2-hero {
-  padding: 10rem 0 6rem;
-  background: var(--navy);
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-.ct2-hero-mesh {
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 80% 20%, rgba(244,121,32,0.15), transparent 40%),
-              radial-gradient(circle at 10% 80%, rgba(255,255,255,0.05), transparent 40%);
-  z-index: 1;
-}
-.ct2-hero-inner {
-  display: flex; gap: 5rem; align-items: center; position: relative; z-index: 2;
-}
-.ct2-hero-content { flex: 1; }
-.ct2-hero-content h1 { font-size: 3.5rem; margin: 1.5rem 0; line-height: 1.1; color: white; }
-.ct2-hero-p { font-size: 1.2rem; line-height: 1.7; color: rgba(255,255,255,0.85); max-width: 540px; }
+/* Shared light hero, then one two-column block: the enquiry form (the primary
+   action, same questions as the website chatbot) and a calm sidebar with the
+   photo, next steps, direct contact and the map. Hairlines, 4px radii, no cards. */
+h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
+.eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; color: #44546d; margin-bottom: 0.75rem; }
 
-.ct2-hero-actions {
-  display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem;
-}
-
+/* ===== HERO extras ===== */
 .ct2-hero-stats {
-  display: flex; gap: 3rem; margin-top: 3.5rem; padding-top: 2.5rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; flex-wrap: wrap; gap: 1.25rem 2.5rem;
+  margin-top: 2.25rem; padding-top: 1.25rem;
+  border-top: 1px solid rgba(15, 37, 72, 0.14);
 }
-.ct2-stat-val { display: block; font-size: 2rem; font-weight: 800; color: var(--orange); line-height: 1; }
-.ct2-stat-lbl { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-top: 0.5rem; display: block; }
+.ct2-stat-val { display: block; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); line-height: 1.1; }
+.ct2-stat-lbl { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #44546d; margin-top: 0.3rem; }
 
-.ct2-hero-visual { flex: 0 0 500px; }
-.ct2-hero-img-card {
-  position: relative; border-radius: var(--radius-xl); overflow: hidden;
-  box-shadow: 0 32px 64px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+/* ===== ENQUIRY FORM + SIDEBAR ===== */
+.ct2-main { padding: 5rem 0; background: white; }
+.ct2-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 4rem;
+  align-items: stretch;
 }
-.ct2-hero-img-card img { width: 100%; height: 500px; object-fit: cover; display: block; }
-.ct2-img-label {
-  position: absolute; bottom: 1.5rem; left: 1.5rem;
-  background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
-  padding: 0.75rem 1.25rem; border-radius: var(--radius-md);
-  display: flex; align-items: center; gap: 0.75rem; color: var(--navy); font-weight: 700; font-size: 0.9rem;
+.ct2-primary h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); color: var(--navy); margin: 0 0 0.75rem; }
+/* Keeps "30-Minute" on one line on phones instead of breaking after the hyphen */
+.ct2-nowrap { white-space: nowrap; }
+/* 39.1em is the old 62ch in Inter; ch follows the font, so the line re-wrapped when Inter loaded */
+.ct2-lead { color: var(--gray-600); font-size: 1.05rem; line-height: 1.7; margin: 0 0 1.25rem; max-width: 39.1em; }
+.ct2-book-trust {
+  display: flex; flex-wrap: wrap; gap: 0.6rem 1.75rem;
+  margin: 0 0 2rem; font-size: 0.92rem; color: var(--gray-600);
 }
-.ct2-img-label span:first-child { color: var(--orange); }
+.ct2-book-trust span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.ct2-book-trust :global(svg) { color: var(--icon-accent); }
 
-/* ===== CHANNELS ===== */
-.ct2-channels { padding: 6rem 0; background: white; border-bottom: 1px solid var(--gray-200); }
-.ct2-channels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-.ct2-channel-card {
-  padding: 2.5rem; border-radius: var(--radius-lg); background: var(--cream);
-  border: 1px solid var(--gray-200); transition: all 0.3s ease;
+.ct2-jobseeker {
+  margin: 0 0 2rem; padding: 0.9rem 1rem;
+  border: 1px solid rgba(15, 37, 72, 0.12); border-left: 3px solid var(--orange);
+  border-radius: 4px; font-size: 0.92rem; line-height: 1.6; color: var(--gray-700);
 }
-.ct2-channel-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
-.ct2-channel-icon {
-  width: 52px; height: 52px; border-radius: var(--radius-md);
-  background: rgba(244,121,32,0.1); color: var(--orange);
-  display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+.ct2-jobseeker strong { color: var(--navy); }
+.ct2-jobseeker a, .ct2-form-check a, .ct2-channels a {
+  color: var(--navy); font-weight: 600; text-decoration: underline;
+  text-decoration-color: var(--orange-ink); text-underline-offset: 3px;
 }
-.ct2-channel-icon .material-symbols-outlined { font-size: 26px; }
-.ct2-channel-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--navy); }
-.ct2-channel-desc { font-size: 0.9rem; line-height: 1.6; color: var(--gray-500); margin-bottom: 1.25rem; }
-.ct2-channel-value { color: var(--orange); font-weight: 700; font-size: 1rem; text-decoration: none; }
-a.ct2-channel-value:hover { text-decoration: underline; }
+.ct2-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* ===== FORM SECTION ===== */
-.ct2-form-section { padding: 6rem 0; background: var(--cream); }
-.ct2-form-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem; align-items: flex-start; }
-
-.ct2-form-info h2 { font-size: 2.2rem; margin-bottom: 1rem; }
-.ct2-form-info > p { font-size: 1.1rem; line-height: 1.7; color: var(--gray-600); margin-bottom: 2.5rem; }
-
-.ct2-info-block { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
-.ct2-info-item { display: flex; gap: 1rem; align-items: flex-start; }
-.ct2-info-item > span { color: var(--orange); margin-top: 2px; }
-.ct2-info-item strong { display: block; font-size: 1rem; color: var(--navy); }
-.ct2-info-item p { font-size: 0.88rem; color: var(--gray-500); margin: 0; }
-
-.ct2-promise {
-  display: flex; gap: 1rem; align-items: flex-start;
-  padding: 1.5rem; background: rgba(244,121,32,0.06); border-radius: var(--radius-md);
-  border: 1px solid rgba(244,121,32,0.15);
+/* Two-option switch: pill segmented control (active = navy fill) */
+.ct2-switch { margin: 0 0 2rem; }
+.ct2-tabs { display: inline-flex; flex-wrap: wrap; gap: 0.5rem; }
+.ct2-tab {
+  min-height: 44px; padding: 0.6rem 1.35rem;
+  border: 1px solid var(--navy); border-radius: var(--radius-full);
+  background: white; color: var(--navy);
+  font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; line-height: 1.2;
+  cursor: pointer; transition: background 0.15s ease, color 0.15s ease;
 }
-.ct2-promise > span { color: var(--orange); font-size: 28px; flex-shrink: 0; }
-.ct2-promise strong { display: block; color: var(--navy); margin-bottom: 0.25rem; }
-.ct2-promise p { font-size: 0.9rem; color: var(--gray-600); margin: 0; }
+.ct2-tab:hover { background: rgba(26, 58, 110, 0.06); }
+.ct2-tab[aria-selected="true"] { background: var(--navy); color: white; }
+.ct2-tab:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.ct2-tab-note { margin: 0.6rem 0 0; font-size: 0.85rem; color: var(--gray-500); }
+.ct2-panel[hidden] { display: none; }
+.ct2-panel:focus { outline: none; }
+.ct2-cal-frame {
+  position: relative; height: 700px; min-width: 0;
+  border: 1px solid rgba(15, 37, 72, 0.12); border-radius: 12px; overflow: hidden; background: white;
+  isolation: isolate;
+}
+.ct2-cal-frame :global(iframe) { display: block; }
+.ct2-book-fallback { margin: 1rem 0 0; font-size: 0.92rem; color: var(--gray-600); }
+.ct2-book-fallback a {
+  color: var(--navy); font-weight: 600; text-decoration: underline;
+  text-decoration-color: var(--orange-ink); text-underline-offset: 3px;
+}
 
-/* Form Card */
-.ct2-form-card {
-  background: white; padding: 2.5rem; border-radius: var(--radius-lg);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.08); border: 1px solid var(--gray-200);
+/* Form: sits on the section, no card */
+.ct2-form { display: flex; flex-direction: column; gap: 1.5rem; }
+.ct2-form[hidden], .ct2-status[hidden] { display: none; }
+.ct2-set { border: 0; margin: 0; padding: 0; min-width: 0; }
+.ct2-set legend, .ct2-form-group label {
+  display: block; padding: 0; margin-bottom: 0.6rem;
+  font-size: 0.9rem; font-weight: 600; color: var(--navy);
 }
-.ct2-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
-.ct2-form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
-.ct2-form-row .ct2-form-group { margin-bottom: 0; }
-.ct2-form-group label {
-  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.5px; color: var(--navy);
+.ct2-hint, .ct2-opt { font-weight: 400; color: var(--gray-500); }
+.ct2-hint { margin-left: 0.5rem; }
+.ct2-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ct2-chip { position: relative; display: inline-flex; cursor: pointer; }
+.ct2-chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.ct2-chip span {
+  display: inline-flex; align-items: center; min-height: 44px;
+  padding: 0.55rem 1.1rem; border: 1px solid rgba(15, 37, 72, 0.25);
+  border-radius: var(--radius-full); background: white;
+  font-size: 0.9rem; font-weight: 500; line-height: 1.3; color: var(--navy);
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
+.ct2-chip:hover span { border-color: var(--navy); }
+.ct2-chip input:checked + span { background: var(--navy); border-color: var(--navy); color: white; }
+.ct2-chip input:focus-visible + span { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+.ct2-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.ct2-form-group { display: flex; flex-direction: column; }
 .ct2-form-group input,
-.ct2-form-group textarea,
-.ct2-form-group select {
-  width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--gray-300);
-  border-radius: var(--radius-sm); background: var(--gray-50);
-  font-family: var(--font-body); font-size: 0.95rem; color: var(--gray-800);
+.ct2-form-group textarea {
+  width: 100%; min-height: 48px; padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(15, 37, 72, 0.25); border-radius: 4px; background: white;
+  font-family: var(--font-body); font-size: 1rem; color: var(--gray-800);
   outline: none; transition: border-color 0.2s ease;
 }
 .ct2-form-group input:focus,
-.ct2-form-group textarea:focus,
-.ct2-form-group select:focus {
-  border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,58,110,0.08);
+.ct2-form-group textarea:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26, 58, 110, 0.14); }
+.ct2-form-group textarea { resize: vertical; min-height: 110px; }
+.ct2-form-check { display: flex; align-items: center; gap: 0.6rem; min-height: 44px; }
+.ct2-form-check input { width: 20px; height: 20px; margin: 0; accent-color: var(--navy); flex-shrink: 0; }
+.ct2-form-check label { font-size: 0.92rem; color: var(--gray-600); }
+.ct2-status { padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.92rem; }
+.ct2-status.is-error { background: #fdecee; color: #b71c1c; }
+.ct2-submit { align-self: flex-start; justify-content: center; }
+
+.ct2-done {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1.5rem; border: 1px solid rgba(46, 125, 50, 0.35); border-radius: 4px;
+  background: #f1f8f2; color: var(--gray-700);
 }
-.ct2-form-group textarea { resize: vertical; min-height: 120px; }
-.ct2-select-wrap { position: relative; }
-.ct2-select-wrap select { appearance: none; cursor: pointer; padding-right: 2.5rem; }
-.ct2-select-arrow {
-  position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%);
-  color: var(--gray-500); pointer-events: none; font-size: 22px;
+.ct2-done[hidden] { display: none; }
+.ct2-done :global(svg) { color: #2e7d32; flex-shrink: 0; }
+.ct2-done p { margin: 0; line-height: 1.6; }
+.ct2-done .ct2-done-title { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }
+.ct2-done:focus { outline: none; }
+
+/* Sidebar: the photo takes up whatever height the form column leaves */
+.ct2-side { display: flex; flex-direction: column; gap: 2rem; min-width: 0; }
+/* flex-basis 0 + absolute img: the photo only fills the height left over, so
+   the two columns end together instead of the photo setting the height */
+.ct2-photo { margin: 0; flex: 1 1 0; min-height: 280px; position: relative; }
+.ct2-photo img {
+  position: absolute; inset: 0; display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 25%; border-radius: 4px; background: #e9edf2;
 }
-.ct2-form-footer { margin-top: 0.5rem; }
-.ct2-form-check { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
-.ct2-form-check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--navy); }
-.ct2-form-check label { font-size: 0.85rem; color: var(--gray-500); }
-.ct2-form-check a { text-decoration: underline; color: var(--navy); }
+.ct2-next h3, .ct2-side-title { font-size: 1.15rem; color: var(--navy); margin: 0 0 0.85rem; }
+.ct2-next ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.ct2-next li { display: flex; gap: 0.8rem; align-items: flex-start; }
+.ct2-num {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--navy); color: var(--navy); font-size: 0.8rem; font-weight: 700;
+}
+.ct2-next p { margin: 0.1rem 0 0; font-size: 0.95rem; line-height: 1.5; color: var(--gray-700); }
+
+.ct2-direct { padding-top: 1.75rem; border-top: 1px solid rgba(15, 37, 72, 0.1); }
+.ct2-side-desc { margin: 0 0 1.1rem; font-size: 0.95rem; color: var(--gray-600); }
+.ct2-channels { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+.ct2-channels li { display: flex; gap: 0.8rem; align-items: flex-start; }
+.ct2-channels li > :global(svg) { color: var(--icon-accent); margin-top: 2px; flex-shrink: 0; }
+.ct2-ch-title { color: var(--navy); margin: 0 0 0.2rem; }
+.ct2-ch-value { font-weight: 600; color: var(--navy); }
+.ct2-channels p { margin: 0.15rem 0 0; font-size: 0.87rem; line-height: 1.5; color: var(--gray-600); }
+:global(.ct2-map) { margin: 0; }
 
 /* ===== FAQ ===== */
-.ct2-faq { padding: 6rem 0; background: white; }
-.ct2-section-header { text-align: center; margin-bottom: 3rem; }
-.ct2-section-header p { color: var(--gray-500); margin-top: 0.5rem; }
-.ct2-faq-list { display: flex; flex-direction: column; gap: 1rem; }
-.ct2-faq-item {
-  background: var(--cream); border-radius: var(--radius-md);
-  border: 1px solid var(--gray-200); overflow: hidden;
-}
+.ct2-faq { padding: 5.5rem 0; background: var(--cream); }
+.ct2-section-header { margin-bottom: 2.25rem; }
+.ct2-section-header h2 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); }
+.ct2-section-header p { color: var(--gray-600); margin-top: 0.5rem; }
+/* Hairline-divided rows with a +/− toggle, as on the homepage FAQ */
+.ct2-faq-list { border-top: 1px solid rgba(15, 37, 72, 0.12); }
+.ct2-faq-item { border-bottom: 1px solid rgba(15, 37, 72, 0.12); }
 .ct2-faq-item summary {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1.25rem 1.5rem; cursor: pointer; font-weight: 700;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem;
+  padding: 1.4rem 0; cursor: pointer; font-weight: 600; line-height: 1.45;
   font-size: 1.05rem; color: var(--navy); list-style: none;
 }
 .ct2-faq-item summary::-webkit-details-marker { display: none; }
-.ct2-faq-arrow { transition: transform 0.2s ease; color: var(--gray-400); }
-.ct2-faq-item[open] .ct2-faq-arrow { transform: rotate(180deg); }
-.ct2-faq-item p { padding: 0 1.5rem 1.25rem; font-size: 0.95rem; line-height: 1.7; color: var(--gray-600); }
+.ct2-faq-item summary::after {
+  content: '+'; flex-shrink: 0; width: 1.5rem; text-align: center;
+  font-size: 1.5rem; line-height: 1; font-weight: 400; color: var(--orange-ink);
+}
+.ct2-faq-item[open] summary::after { content: '\2212'; }
+.ct2-faq-item summary:hover { color: var(--orange-ink); }
+.ct2-faq-item summary:focus-visible { outline: 2px solid var(--navy); outline-offset: 4px; border-radius: 2px; }
+.ct2-faq-item p { max-width: var(--measure); padding: 0 3rem 1.5rem 0; font-size: 0.97rem; line-height: 1.7; color: var(--gray-600); }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 1200px) {
-  .ct2-hero-inner { gap: 3rem; }
-  .ct2-hero-visual { flex: 0 0 400px; }
-  .ct2-hero-content h1 { font-size: 3rem; }
-}
-
 @media (max-width: 992px) {
-  .ct2-hero { padding: 8rem 0 4rem; }
-  .ct2-hero-inner { flex-direction: column; text-align: center; }
-  .ct2-hero-visual { flex: none; width: 100%; max-width: 500px; }
-  .ct2-hero-p { margin: 0 auto; }
-  .ct2-hero-actions { justify-content: center; }
-  .ct2-hero-stats { justify-content: center; }
-  .ct2-hero-img-card img { height: 350px; }
-
-  .ct2-channels-grid { grid-template-columns: 1fr; }
-  .ct2-form-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .ct2-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .ct2-photo { flex: none; min-height: 0; }
+  .ct2-photo img { position: static; aspect-ratio: 4 / 3; height: auto; }
 }
-
+@media (max-width: 768px) {
+  .ct2-main, .ct2-faq { padding: 4rem 0; }
+  .ct2-hero-stats { gap: 1rem 1.75rem; }
+  .ct2-stat-val { font-size: 1.5rem; }
+  .ct2-submit { align-self: stretch; }
+  .ct2-faq-item p { padding-right: 0; }
+  .ct2-tabs { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+}
 @media (max-width: 576px) {
-  .ct2-hero-content h1 { font-size: 2.5rem; }
-  .ct2-hero-stats { flex-direction: column; gap: 1.5rem; }
   .ct2-form-row { grid-template-columns: 1fr; }
 }
-
-
-/* ===== BOOKING SECTION ===== */
-.ct2-book { padding: 5.5rem 0 4rem; background: var(--cream); }
-.ct2-book-trust {
-  display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; justify-content: center;
-  margin: 1.75rem 0 2rem; font-size: 0.92rem; color: var(--gray-500);
-}
-.ct2-book-trust span { display: inline-flex; align-items: center; gap: 0.45rem; }
-.ct2-book-trust .material-symbols-outlined { font-size: 19px; color: var(--orange); }
-.ct2-book-widget {
-  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-xl);
-  box-shadow: 0 20px 50px rgba(15,43,70,0.10); padding: 0.5rem; overflow: hidden;
-}
-.ct2-book-alt { text-align: center; margin-top: 1.5rem; font-size: 0.95rem; color: var(--gray-500); }
-.ct2-book-alt a { color: var(--orange); font-weight: 600; }
 </style>

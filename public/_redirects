@@ -1,3 +1,28 @@
+# Core expertise moved out of /resources/ (301): the overview is now the
+# Core expertise section of /services/, the detail pages live at
+# /expertise/<slug>/. One hop to the final URL. These static rules must stay
+# above every splat rule; this block's catch-all is at the end of the file.
+/resources/expertise /services/#core-expertise 301
+/resources/expertise/ /services/#core-expertise 301
+/expertise /services/#core-expertise 301
+/expertise/ /services/#core-expertise 301
+/resources/expertise/sickness-management /expertise/sickness-management/ 301
+/resources/expertise/sickness-management/ /expertise/sickness-management/ 301
+/resources/expertise/restructuring /expertise/restructuring/ 301
+/resources/expertise/restructuring/ /expertise/restructuring/ 301
+/resources/expertise/leadership-training /expertise/leadership-training/ 301
+/resources/expertise/leadership-training/ /expertise/leadership-training/ 301
+
+# Old URLs that still get search traffic (pre-launch check, 4 Oct 2026)
+/terms-and-conditions /terms/ 301
+/terms-and-conditions/ /terms/ 301
+/solution-hr-sos /solutions/hr-sos/ 301
+/solution-hr-sos/ /solutions/hr-sos/ 301
+/blog/planning-redundancies-netherlands-what-employers-must-know /blog/planning-redundancies-in-the-netherlands-here-is-what-employers-must-know/ 301
+/blog/planning-redundancies-netherlands-what-employers-must-know/ /blog/planning-redundancies-in-the-netherlands-here-is-what-employers-must-know/ 301
+/guides/hr-dutch-pension-system-employers /guides/dutch-pension-system-employers/ 301
+/guides/hr-dutch-pension-system-employers/ /guides/dutch-pension-system-employers/ 301
+
 # Legacy Wix-era /post/ URLs -> new content equivalents (301)
 # These old URLs still rank in Google (11k+ impressions) but were soft-404ing
 # to the homepage. Specific rules first, catch-all last.
@@ -16,3 +41,6 @@
 /post/hr-settlers-helps-international-companies-settle-down-across-borders /solutions/hr-settlers/ 301
 /post/3-tips-to-reduce-employee-turnover /blog/ 301
 /post/* /blog/ 301
+
+# Any other old /resources/expertise/ URL (catch-all for the block at the top)
+/resources/expertise/* /expertise/:splat 301

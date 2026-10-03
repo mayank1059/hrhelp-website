@@ -1,0 +1,26 @@
+name: Inactivity alert
+
+# GitHub disables scheduled workflows in a public repository after 60 days without repository
+# activity. deploy.yml's WordPress check would then stop, and WordPress changes would no longer
+# deploy. From day 45 this run fails once a day (failure emails go to whoever last edited the cron),
+# so someone pushes a real commit. It does not keep anything alive by itself.
+on:
+  schedule:
+    - cron: '3 8 * * *'
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+      - name: Fail when main has had no commit for 45 days
+        run: |
+          days=$(( ( $(date +%s) - $(git log -1 --format=%ct) ) / 86400 ))
+          echo "Last commit on main: $days days ago."
+          if [ "$days" -ge 45 ]; then
+            echo "::error::No commit on main for $days days. At 60 days GitHub disables the scheduled WordPress check in deploy.yml and WordPress changes stop deploying. Push a commit, or re-enable the workflow under Actions if it is already disabled."
+            exit 1
+          fi

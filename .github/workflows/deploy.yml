@@ -52,6 +52,8 @@ jobs:
         run: node scripts/wp-changed.mjs
         env:
           PUBLIC_WP_URL: https://admin.hrhelp.nl
+          # Scheduled runs build main's newest commit: also deploy when the live build is another one.
+          EXPECTED_COMMIT: ${{ github.event_name == 'schedule' && github.sha || '' }}
 
   deploy:
     needs: detect

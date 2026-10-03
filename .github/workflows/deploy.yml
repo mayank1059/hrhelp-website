@@ -5,10 +5,14 @@ on:
   push:
     branches: [main]
 
-  # WordPress content: checked every 10 minutes and deployed only when it changed since the
-  # live build. Minutes 7, 17, ... 57 keep clear of the top of the hour, when GitHub delays
-  # scheduled runs most. This replaces the repository_dispatch trigger: the WordPress
-  # plugin's calls no longer start any run.
+  # WordPress content. The WordPress plugin signals GitHub (repository_dispatch) so new posts go
+  # live within minutes. Each signal only runs the quick check below and deploys when the
+  # content really changed since the live build, so a plugin that signals far more often than
+  # content changes (it currently fires about once a minute) no longer redeploys the site.
+  repository_dispatch:
+    types: [wordpress_publish]
+  # Safety net when a signal is missed: the same check every 10 minutes. Minutes 7, 17, ... 57
+  # keep clear of the top of the hour, when GitHub delays scheduled runs most.
   schedule:
     - cron: '7-59/10 * * * *'
 
@@ -22,15 +26,16 @@ on:
 
 # One production deploy at a time. A run that will deploy (push, forced manual run) cancels
 # an older run still in progress, so the newest code and content win and an older run never
-# finishes last. A run that first checks WordPress (schedule, manual run without force) never
-# cancels a deploy in progress: it waits for it, then compares WordPress with what it published.
+# finishes last. A run that first checks WordPress (WordPress signal, schedule, manual run
+# without force) never cancels a deploy in progress: it waits for it, then compares WordPress
+# with what it published.
 concurrency:
   group: deploy-production
   cancel-in-progress: ${{ github.event_name == 'push' || inputs.force == true }}
 
 jobs:
   detect:
-    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.force)
+    if: github.event_name == 'repository_dispatch' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.force)
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
@@ -52,8 +57,9 @@ jobs:
         run: node scripts/wp-changed.mjs
         env:
           PUBLIC_WP_URL: https://admin.hrhelp.nl
-          # Scheduled runs build main's newest commit: also deploy when the live build is another one.
-          EXPECTED_COMMIT: ${{ github.event_name == 'schedule' && github.sha || '' }}
+          # Signal and scheduled runs build main's newest commit: also deploy when the live build
+          # is another one (a push deploy that was cancelled while pending, or failed).
+          EXPECTED_COMMIT: ${{ (github.event_name == 'schedule' || github.event_name == 'repository_dispatch') && github.sha || '' }}
 
   deploy:
     needs: detect

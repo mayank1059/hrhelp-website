@@ -5,7 +5,7 @@
 //   - The live build-info.json does not exist (HTTP 404): changed=true, so a build writes one.
 //   - It cannot be read otherwise (challenge page, 403/5xx, timeout): changed=false, with a
 //     warning, so a blocked check never deploys every 10 minutes.
-//   - Scheduled runs pass EXPECTED_COMMIT (main's newest commit): when the live build is another
+//   - Signal and scheduled runs pass EXPECTED_COMMIT (main's newest commit): when the live build is another
 //     commit (a push deploy that was cancelled while pending, or failed), deploy it.
 // Env: PUBLIC_WP_URL (as for the build); BUILD_INFO_URL to read another build-info.json than
 // production's (for testing).

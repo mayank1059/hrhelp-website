@@ -5,15 +5,62 @@ on:
   push:
     branches: [main]
 
-  # WordPress webhook trigger (fires on publish/update/delete)
-  repository_dispatch:
-    types: [wordpress_publish]
+  # WordPress content: checked every 10 minutes and deployed only when it changed since the
+  # live build. Minutes 7, 17, ... 57 keep clear of the top of the hour, when GitHub delays
+  # scheduled runs most. This replaces the repository_dispatch trigger: the WordPress
+  # plugin's calls no longer start any run.
+  schedule:
+    - cron: '7-59/10 * * * *'
 
-  # Manual trigger from GitHub Actions UI
+  # Manual trigger from GitHub Actions UI: deploys when WordPress changed, or always with "force"
   workflow_dispatch:
+    inputs:
+      force:
+        description: Deploy even if WordPress content has not changed
+        type: boolean
+        default: false
+
+# One production deploy at a time. A run that will deploy (push, forced manual run) cancels
+# an older run still in progress, so the newest code and content win and an older run never
+# finishes last. A run that first checks WordPress (schedule, manual run without force) never
+# cancels a deploy in progress: it waits for it, then compares WordPress with what it published.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: ${{ github.event_name == 'push' || inputs.force == true }}
 
 jobs:
+  detect:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.force)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+
+    steps:
+      - name: Checkout scripts
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Compare WordPress with the live build-info.json
+        id: check
+        run: node scripts/wp-changed.mjs
+        env:
+          PUBLIC_WP_URL: https://admin.hrhelp.nl
+
   deploy:
+    needs: detect
+    # detect is skipped on push and on a forced manual run; !cancelled() stops deploy from
+    # being skipped along with it (always() would also start it in a cancelled run).
+    if: >-
+      !cancelled() &&
+      (github.event_name == 'push' || inputs.force == true ||
+      (needs.detect.result == 'success' && needs.detect.outputs.changed == 'true'))
     runs-on: ubuntu-latest
     timeout-minutes: 10
 

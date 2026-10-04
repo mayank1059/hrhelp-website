@@ -4,13 +4,13 @@
 //
 //  1. The CRM is tried first, with an 8 second timeout.
 //  2. CRM 2xx: the visitor gets success straight away. The CRM sends no email
-//     about a new lead, so a short notification goes to the team (LEAD_ALERT_TO) through
-//     Resend after the response has been sent (context.waitUntil), when
-//     RESEND_API_KEY is set.
+//     about a new lead, so a short notification goes to the team (LEAD_ALERT_TO,
+//     bcc LEAD_ALERT_BCC) through Resend after the response has been sent
+//     (context.waitUntil), when RESEND_API_KEY is set.
 //  3. CRM failure (error, timeout, non-2xx, or no secret): the whole lead is
-//     emailed to the team (LEAD_ALERT_TO) through Resend, and the visitor gets success only
-//     if Resend accepted that email. Otherwise 502 and the "email us" message,
-//     because then nothing anywhere holds their message.
+//     emailed to the team (LEAD_ALERT_TO, bcc LEAD_ALERT_BCC) through Resend, and
+//     the visitor gets success only if Resend accepted that email. Otherwise 502
+//     and the "email us" message, because then nothing anywhere holds their message.
 
 const CRM_ENDPOINT = 'https://client.hrhelp.nl/api/leads/intake';
 const CRM_LEAD_URL = 'https://client.hrhelp.nl/leads/';
@@ -18,10 +18,15 @@ const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 // Resend sender: an address on update.hrhelp.nl, the domain verified in Resend
 // (the root hrhelp.nl is not). Recipients come from the LEAD_ALERT_TO env var
 // (comma-separated) so no personal addresses live in this public repo;
-// info@hrhelp.nl if it is unset.
+// info@hrhelp.nl if it is unset. Blind copies come from LEAD_ALERT_BCC, in the
+// same format, and only when it is set: there is no default.
 const SENDER = 'HRHelp Website Alert <website-alert@update.hrhelp.nl>';
 function teamRecipients(env) {
   const raw = (env && env.LEAD_ALERT_TO) || 'info@hrhelp.nl';
+  return raw.split(',').map((s) => s.trim()).filter(Boolean);
+}
+function teamBcc(env) {
+  const raw = (env && env.LEAD_ALERT_BCC) || '';
   return raw.split(',').map((s) => s.trim()).filter(Boolean);
 }
 const TIMEOUT_MS = 8000;
@@ -226,8 +231,9 @@ function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// One email to the team (LEAD_ALERT_TO) through Resend's email API. Never throws:
-// resolves true only when Resend accepted it (2xx; it answers 200 with an id).
+// One email to the team (LEAD_ALERT_TO, bcc LEAD_ALERT_BCC) through Resend's
+// email API. Never throws: resolves true only when Resend accepted it (2xx; it
+// answers 200 with an id).
 async function sendEmail(env, subject, body, replyTo) {
   const key = env && env.RESEND_API_KEY;
   if (!key) {
@@ -241,6 +247,8 @@ async function sendEmail(env, subject, body, replyTo) {
     text: body,
     html: '<pre style="font: 14px/1.5 Arial, sans-serif; white-space: pre-wrap;">' + escapeHtml(body) + '</pre>',
   };
+  const bcc = teamBcc(env);
+  if (bcc.length) payload.bcc = bcc;
   if (replyTo) payload.reply_to = replyTo;
   const r = await post(RESEND_ENDPOINT, {
     'Authorization': 'Bearer ' + key,

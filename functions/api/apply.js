@@ -3,13 +3,13 @@
 //
 // The CRM files the applicant, stores the CV and notifies the owner itself. On
 // a CRM 2xx this function answers success, and a short alert without the CV
-// goes to the team (LEAD_ALERT_TO) through Resend after the response has been
-// sent (context.waitUntil), when RESEND_API_KEY is set.
+// goes to the team (LEAD_ALERT_TO, bcc LEAD_ALERT_BCC) through Resend after the
+// response has been sent (context.waitUntil), when RESEND_API_KEY is set.
 //
 // When the CRM fails (error, timeout, non-2xx, or no secret), the application is
-// emailed to the team (LEAD_ALERT_TO) through Resend instead, with the CV attached when
-// it is a PDF or Word file of at most 4 MB. The candidate hears
-// "Application received" only when the CRM or that email accepted it:
+// emailed to the team (LEAD_ALERT_TO, bcc LEAD_ALERT_BCC) through Resend instead,
+// with the CV attached when it is a PDF or Word file of at most 4 MB. The candidate
+// hears "Application received" only when the CRM or that email accepted it:
 //  - email accepted with the CV (or no CV was uploaded): success;
 //  - email accepted without the CV (too big, wrong type, or refused by Resend):
 //    an error asking the candidate to email the CV, because nothing holds it;
@@ -24,10 +24,15 @@ const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 // Resend sender: an address on update.hrhelp.nl, the domain verified in Resend
 // (the root hrhelp.nl is not). Recipients come from the LEAD_ALERT_TO env var
 // (comma-separated) so no personal addresses live in this public repo;
-// info@hrhelp.nl if it is unset.
+// info@hrhelp.nl if it is unset. Blind copies come from LEAD_ALERT_BCC, in the
+// same format, and only when it is set: there is no default.
 const SENDER = 'HRHelp Website Alert <website-alert@update.hrhelp.nl>';
 function teamRecipients(env) {
   const raw = (env && env.LEAD_ALERT_TO) || 'info@hrhelp.nl';
+  return raw.split(',').map((s) => s.trim()).filter(Boolean);
+}
+function teamBcc(env) {
+  const raw = (env && env.LEAD_ALERT_BCC) || '';
   return raw.split(',').map((s) => s.trim()).filter(Boolean);
 }
 // The CRM leg carries the CV, so it gets longer than the 8 seconds an email gets.
@@ -120,7 +125,8 @@ function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// One email to the team (LEAD_ALERT_TO) through Resend's email API. Never throws.
+// One email to the team (LEAD_ALERT_TO, bcc LEAD_ALERT_BCC) through Resend's
+// email API. Never throws.
 async function sendEmail(env, subject, body, replyTo, attachment) {
   const payload = {
     from: SENDER,
@@ -129,6 +135,8 @@ async function sendEmail(env, subject, body, replyTo, attachment) {
     text: body,
     html: '<pre style="font: 14px/1.5 Arial, sans-serif; white-space: pre-wrap;">' + escapeHtml(body) + '</pre>',
   };
+  const bcc = teamBcc(env);
+  if (bcc.length) payload.bcc = bcc;
   if (replyTo) payload.reply_to = replyTo;
   if (attachment) payload.attachments = [attachment];
   const r = await post(RESEND_ENDPOINT, {

@@ -3,13 +3,14 @@
 // booking details from Calendly itself.
 //
 // After the relay, still in the background (context.waitUntil), the team
-// (LEAD_ALERT_TO) gets a short alert through Resend, when RESEND_API_KEY is set,
-// but only when the CRM took the booking and had not seen it before (its kind
-// is not skip_duplicate). A failed relay sends no email, only the log line:
-// anyone can POST here, so an email per failure could send the team unlimited
-// mail and use up the Resend quota the CRM's proposals and invoices share. A
-// booking the relay missed is still picked up by the CRM's own Calendly pull,
-// and Calendly emails the host about it itself. The browser gets 204 either way.
+// (LEAD_ALERT_TO, bcc LEAD_ALERT_BCC) gets a short alert through Resend, when
+// RESEND_API_KEY is set, but only when the CRM took the booking and had not
+// seen it before (its kind is not skip_duplicate). A failed relay sends no
+// email, only the log line: anyone can POST here, so an email per failure could
+// send the team unlimited mail and use up the Resend quota the CRM's proposals
+// and invoices share. A booking the relay missed is still picked up by the
+// CRM's own Calendly pull, and Calendly emails the host about it itself. The
+// browser gets 204 either way.
 
 // Exactly api.calendly.com, then at most 200 characters of path from
 // [A-Za-z0-9/_-]: no dots, spaces, newlines, query or fragment. The URIs go into
@@ -21,10 +22,15 @@ const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 // Resend sender: an address on update.hrhelp.nl, the domain verified in Resend
 // (the root hrhelp.nl is not). Recipients come from the LEAD_ALERT_TO env var
 // (comma-separated) so no personal addresses live in this public repo;
-// info@hrhelp.nl if it is unset.
+// info@hrhelp.nl if it is unset. Blind copies come from LEAD_ALERT_BCC, in the
+// same format, and only when it is set: there is no default.
 const SENDER = 'HRHelp Website Alert <website-alert@update.hrhelp.nl>';
 function teamRecipients(env) {
   const raw = (env && env.LEAD_ALERT_TO) || 'info@hrhelp.nl';
+  return raw.split(',').map((s) => s.trim()).filter(Boolean);
+}
+function teamBcc(env) {
+  const raw = (env && env.LEAD_ALERT_BCC) || '';
   return raw.split(',').map((s) => s.trim()).filter(Boolean);
 }
 // The CRM asks Calendly for the booking before it answers, so it gets longer
@@ -101,25 +107,29 @@ function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// One email to the team (LEAD_ALERT_TO) through Resend's email API. Never throws.
+// One email to the team (LEAD_ALERT_TO, bcc LEAD_ALERT_BCC) through Resend's
+// email API. Never throws.
 async function sendEmail(env, subject, body) {
   const key = env && env.RESEND_API_KEY;
   if (!key) {
     console.log('Resend email skipped:', 'RESEND_API_KEY not set');
     return false;
   }
-  const r = await post(RESEND_ENDPOINT, {
-    'Authorization': 'Bearer ' + key,
-    'Content-Type': 'application/json',
-    // Resend refuses any request without a User-Agent (403).
-    'User-Agent': 'hrhelp-website',
-  }, JSON.stringify({
+  const payload = {
     from: SENDER,
     to: teamRecipients(env),
     subject,
     text: body,
     html: '<pre style="font: 14px/1.5 Arial, sans-serif; white-space: pre-wrap;">' + escapeHtml(body) + '</pre>',
-  }), EMAIL_TIMEOUT_MS);
+  };
+  const bcc = teamBcc(env);
+  if (bcc.length) payload.bcc = bcc;
+  const r = await post(RESEND_ENDPOINT, {
+    'Authorization': 'Bearer ' + key,
+    'Content-Type': 'application/json',
+    // Resend refuses any request without a User-Agent (403).
+    'User-Agent': 'hrhelp-website',
+  }, JSON.stringify(payload), EMAIL_TIMEOUT_MS);
   if (!r.ok) logFailure('Resend email', r);
   return r.ok;
 }

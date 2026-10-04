@@ -1,0 +1,82 @@
+---
+// /sitemap/: every page of the site for people, grouped like /llms.txt and built from the same
+// page list (src/lib/sitePages.ts). The XML sitemap for search engines is /sitemap-index.xml.
+import Layout from '../components/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { getSitePages, type SitePage } from '../lib/sitePages';
+
+const site = await getSitePages();
+const { pages } = site;
+
+// Each group: its pages, then sub-lists under a linked heading (guide verticals, case studies,
+// job openings)
+type Group = { title: string; pages: SitePage[]; subgroups?: { hub: SitePage; pages: SitePage[] }[] };
+const groups: Group[] = [
+  { title: 'Services', pages: [pages.services, ...site.services] },
+  { title: 'Solutions', pages: [pages.solutions, ...site.solutions] },
+  { title: 'Core expertise', pages: site.expertise },
+  { title: 'Industries', pages: [pages.industries, ...site.industries] },
+  { title: 'Guides', pages: [pages.guides], subgroups: site.guides },
+  { title: 'Blog', pages: [pages.blog, ...site.blog] },
+  { title: 'Resources', pages: [pages.resources, pages.faq], subgroups: [{ hub: pages.caseStudies, pages: site.caseStudies }] },
+  { title: 'Company', pages: [pages.home, pages.about, pages.partners, pages.contact], subgroups: [{ hub: pages.careers, pages: site.jobs }] },
+  { title: 'Legal', pages: [pages.privacy, pages.terms] },
+];
+---
+
+<Layout title={pages.sitemap.title} description={pages.sitemap.description}>
+
+<PageHero variant="archive" eyebrow="Site Overview" title="Sitemap" subtitle="Every page on HRHelp.nl, grouped by topic." />
+
+<section class="sm-section">
+  <div class="container">
+    {groups.map((g) => (
+      <section class="sm-group">
+        <h2>{g.title}</h2>
+        <ul class="sm-list">
+          {g.pages.map((p) => <li><a href={p.path}>{p.title}</a></li>)}
+        </ul>
+        {g.subgroups && (
+          <div class="sm-subgroups">
+            {g.subgroups.map((sub) => (
+              <div>
+                <h3><a href={sub.hub.path}>{sub.hub.title}</a></h3>
+                {sub.pages.length > 0 && (
+                  <ul class="sm-list">
+                    {sub.pages.map((p) => <li><a href={p.path}>{p.title}</a></li>)}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    ))}
+  </div>
+</section>
+
+</Layout>
+
+<style>
+.sm-section { padding: 3.5rem 0 5rem; background: var(--white); }
+.sm-group + .sm-group { margin-top: 2.25rem; padding-top: 2.25rem; border-top: 1px solid rgba(15, 37, 72, 0.1); }
+.sm-group h2 { margin: 0 0 0.75rem; }
+/* Long lists flow into up to three columns */
+.sm-list { list-style: none; margin: 0; padding: 0; columns: 3 18rem; column-gap: 3rem; }
+.sm-list li { break-inside: avoid; }
+.sm-list a { display: inline-block; padding: 0.3rem 0; font-size: 0.95rem; line-height: 1.45; color: var(--navy); }
+.sm-subgroups h3 { margin: 0 0 0.4rem; }
+.sm-subgroups h3 a { color: var(--navy); }
+.sm-list a:hover,
+.sm-subgroups h3 a:hover { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+/* Sub-lists side by side, each in one column of the same (at most three) columns as .sm-list */
+.sm-subgroups { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(18rem, (100% - 6rem) / 3), 1fr)); gap: 1.75rem 3rem; margin-top: 1.5rem; }
+.sm-subgroups .sm-list { columns: 1; }
+
+@media (max-width: 768px) {
+  .sm-section { padding: 2.5rem 0 3.5rem; }
+  .sm-group + .sm-group { margin-top: 1.75rem; padding-top: 1.75rem; }
+  /* Taller rows: easier to tap */
+  .sm-list a { padding: 0.5rem 0; }
+}
+</style>

@@ -148,7 +148,7 @@ import { serviceLinks } from '../data/pseo/service-groups.js';
       <div class="footer-bottom-inner">
         <span>© 2026 HRHelp.nl B.V. · All rights reserved</span>
         <span class="footer-legal">
-          <a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Service</a> · <button type="button" class="footer-cookie-btn" data-cookie-settings>Cookie settings</button>
+          <a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Service</a> · <button type="button" class="footer-cookie-btn" data-cookie-settings>Cookie settings</button> · <a href="/sitemap/">Sitemap</a> · <a href="/llms.txt">llms.txt</a>
         </span>
       </div>
     </div>
@@ -469,6 +469,8 @@ import { serviceLinks } from '../data/pseo/service-groups.js';
     max-width: var(--container-max);
     margin: 0 auto;
     display: flex;
+    /* Too narrow for one row (about 768-850px): the legal links move under the copyright line */
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;

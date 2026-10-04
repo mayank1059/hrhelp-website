@@ -151,7 +151,7 @@ const STRAIGHT_QUOTES: Record<number, string> = { 8216: "'", 8217: "'", 8220: '"
  * Decode HTML entities from WordPress (e.g. &#8217; → ', &hellip; → …, &amp; → &), in one
  * pass so an escaped entity such as &amp;lt; stays the text "&lt;".
  */
-function decodeHTMLEntities(text: string): string {
+export function decodeHTMLEntities(text: string): string {
     return text.replace(/&(?:#(\d+)|#x([0-9a-f]+)|([a-z][a-z0-9]*));/gi, (entity, dec, hex, name) => {
         if (name) return Object.prototype.hasOwnProperty.call(NAMED_ENTITIES, name) ? NAMED_ENTITIES[name] : entity;
         const code = dec ? parseInt(dec, 10) : parseInt(hex, 16);

@@ -23,6 +23,9 @@
 /guides/hr-dutch-pension-system-employers /guides/dutch-pension-system-employers/ 301
 /guides/hr-dutch-pension-system-employers/ /guides/dutch-pension-system-employers/ 301
 
+# The usual XML sitemap address; the build writes /sitemap-index.xml
+/sitemap.xml /sitemap-index.xml 301
+
 # Legacy Wix-era /post/ URLs -> new content equivalents (301)
 # These old URLs still rank in Google (11k+ impressions) but were soft-404ing
 # to the homepage. Specific rules first, catch-all last.

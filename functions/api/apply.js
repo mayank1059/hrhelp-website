@@ -1,15 +1,17 @@
 // Cloudflare Pages Function: job applications go to the HRhelp CRM at
 // client.hrhelp.nl, and nowhere else. WordPress no longer receives them.
 //
-// The CRM files the applicant, stores the CV and notifies the owner itself, so
-// on a CRM 2xx this function answers success and stops.
+// The CRM files the applicant, stores the CV and notifies the owner itself. On
+// a CRM 2xx this function answers success, and a short alert without the CV
+// goes to the team (LEAD_ALERT_TO) through Resend after the response has been
+// sent (context.waitUntil), when RESEND_API_KEY is set.
 //
 // When the CRM fails (error, timeout, non-2xx, or no secret), the application is
-// emailed to the team (LEAD_ALERT_TO) through Brevo instead, with the CV attached when
-// Brevo can take it (PDF or Word, at most 4 MB). The candidate hears
+// emailed to the team (LEAD_ALERT_TO) through Resend instead, with the CV attached when
+// it is a PDF or Word file of at most 4 MB. The candidate hears
 // "Application received" only when the CRM or that email accepted it:
 //  - email accepted with the CV (or no CV was uploaded): success;
-//  - email accepted without the CV (too big, wrong type, or refused by Brevo):
+//  - email accepted without the CV (too big, wrong type, or refused by Resend):
 //    an error asking the candidate to email the CV, because nothing holds it;
 //  - no email either: 502 and the "email your application" message.
 //
@@ -17,19 +19,21 @@
 // reads `data.success` and `data.message` and nothing else.
 
 const CRM_ENDPOINT = 'https://client.hrhelp.nl/api/applicants/intake';
-const BREVO_ENDPOINT = 'https://api.brevo.com/v3/smtp/email';
-// Brevo sender: the address the old WordPress alerts already used, verified in
-// Brevo. Recipients come from the LEAD_ALERT_TO env var (comma-separated) so no
-// personal addresses live in this public repo; info@hrhelp.nl if it is unset.
-const SENDER = { name: 'HRHelp Website Alert', email: 'website-alert@hrhelp.nl' };
+const CRM_APPLICANT_URL = 'https://client.hrhelp.nl/applicants/';
+const RESEND_ENDPOINT = 'https://api.resend.com/emails';
+// Resend sender: an address on update.hrhelp.nl, the domain verified in Resend
+// (the root hrhelp.nl is not). Recipients come from the LEAD_ALERT_TO env var
+// (comma-separated) so no personal addresses live in this public repo;
+// info@hrhelp.nl if it is unset.
+const SENDER = 'HRHelp Website Alert <website-alert@update.hrhelp.nl>';
 function teamRecipients(env) {
   const raw = (env && env.LEAD_ALERT_TO) || 'info@hrhelp.nl';
-  return raw.split(',').map((s) => s.trim()).filter(Boolean).map((email) => ({ email }));
+  return raw.split(',').map((s) => s.trim()).filter(Boolean);
 }
 // The CRM leg carries the CV, so it gets longer than the 8 seconds an email gets.
 const CRM_TIMEOUT_MS = 15000;
 const EMAIL_TIMEOUT_MS = 8000;
-// Brevo's limit for one attachment, and the types the form offers.
+// The largest CV the email carries, and the types the form offers.
 const MAX_ATTACHMENT_BYTES = 4 * 1024 * 1024;
 const CV_TYPES = /\.(pdf|doc|docx)$/i;
 // The CRM's own check (APPLICANT_EMAIL_SHAPE in its applicant intake).
@@ -116,24 +120,35 @@ function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// One email to the team (LEAD_ALERT_TO) through Brevo's transactional API. Never throws.
+// One email to the team (LEAD_ALERT_TO) through Resend's email API. Never throws.
 async function sendEmail(env, subject, body, replyTo, attachment) {
   const payload = {
-    sender: SENDER,
+    from: SENDER,
     to: teamRecipients(env),
     subject,
-    textContent: body,
-    htmlContent: '<pre style="font: 14px/1.5 Arial, sans-serif; white-space: pre-wrap;">' + escapeHtml(body) + '</pre>',
+    text: body,
+    html: '<pre style="font: 14px/1.5 Arial, sans-serif; white-space: pre-wrap;">' + escapeHtml(body) + '</pre>',
   };
-  if (replyTo) payload.replyTo = replyTo;
-  if (attachment) payload.attachment = [attachment];
-  const r = await post(BREVO_ENDPOINT, {
-    'api-key': env.BREVO_API_KEY,
+  if (replyTo) payload.reply_to = replyTo;
+  if (attachment) payload.attachments = [attachment];
+  const r = await post(RESEND_ENDPOINT, {
+    'Authorization': 'Bearer ' + env.RESEND_API_KEY,
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    // Resend refuses any request without a User-Agent (403).
+    'User-Agent': 'hrhelp-website',
   }, JSON.stringify(payload), EMAIL_TIMEOUT_MS);
-  if (!r.ok) logFailure('Brevo email', r);
+  if (!r.ok) logFailure('Resend email', r);
   return r;
+}
+
+// Replies go straight to the candidate. Only for a plain ASCII address, so an
+// unusual one can never make Resend refuse the email itself.
+function replyToFor(email) {
+  return /^[\x21-\x7e]+$/.test(email) ? email : undefined;
+}
+
+function parseJson(s) {
+  try { return JSON.parse(s); } catch (e) { return null; }
 }
 
 // Base64 in slices, because String.fromCharCode cannot take megabytes at once.
@@ -148,6 +163,30 @@ function toBase64(buffer) {
 
 function megabytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+// The short alert once the CRM has the application. The CV stays in the CRM.
+function alertApplication(env, formData, saved) {
+  const name = field(formData, 'name', 160);
+  const email = field(formData, 'email', 200);
+  const job = field(formData, 'job_title', 160);
+  const resume = formData.get('resume');
+  const cv = resume && typeof resume === 'object' && resume.size > 0 ? resume : null;
+  const link = saved.applicant_id ? CRM_APPLICANT_URL + saved.applicant_id : '';
+  const message = [
+    (saved.merged
+      ? 'A new application from a candidate already in the CRM'
+      : 'A new application is in the CRM') + (link ? ': ' + link : '.'),
+    '',
+    'Vacancy: ' + job + (field(formData, 'job_slug', 160) ? ' (' + field(formData, 'job_slug', 160) + ')' : ''),
+    'Name: ' + name,
+    'Email: ' + email,
+    'Phone: ' + (field(formData, 'phone', 40) || '-'),
+    'CV: ' + (cv ? 'in the CRM (' + cv.name + ')' : 'none uploaded'),
+    '',
+  ].join('\n');
+  const subject = ('[HRHelp] New application: ' + name + ' for ' + job).replace(/\s+/g, ' ');
+  return sendEmail(env, subject, message, replyToFor(email), null);
 }
 
 // The application by email, when the CRM did not take it.
@@ -166,7 +205,7 @@ async function emailApplication(env, formData, reason) {
     cvLine = 'NOT attached: ' + cv.name + ' is not a PDF or Word file. The candidate was asked to email it.';
   } else if (cv) {
     attachment = {
-      name: cv.name.replace(/[^\w.() -]+/g, '_').slice(-100),
+      filename: cv.name.replace(/[^\w.() -]+/g, '_').slice(-100),
       content: toBase64(await cv.arrayBuffer()),
     };
     cvLine = 'attached (' + cv.name + ', ' + megabytes(cv.size) + ')';
@@ -188,14 +227,14 @@ async function emailApplication(env, formData, reason) {
     '',
   ].join('\n');
   const subject = '[HRHelp] Application not saved in CRM: ' + name.replace(/\s+/g, ' ');
-  const replyTo = /^[\x21-\x7e]+$/.test(email) ? { email, name: name.slice(0, 70) } : undefined;
+  const replyTo = replyToFor(email);
 
   let r = await sendEmail(env, subject, message(cvLine), replyTo, attachment);
-  // Brevo refused the email that carried the CV (a 4xx is about the content, for
+  // Resend refused the email that carried the CV (a 4xx is about the content, for
   // example a file it will not take): send the details alone.
   if (!r.ok && attachment && r.status >= 400 && r.status < 500) {
     attachment = null;
-    r = await sendEmail(env, subject, message('NOT attached: Brevo refused the email with ' + cv.name + '. The candidate was asked to email it.'), replyTo, null);
+    r = await sendEmail(env, subject, message('NOT attached: Resend refused the email with ' + cv.name + '. The candidate was asked to email it.'), replyTo, null);
   }
   return { sent: r.ok, cvMissing: Boolean(cv) && !attachment };
 }
@@ -224,10 +263,16 @@ export async function onRequestPost(context) {
     }
 
     const crm = await sendToCrm(context.env, formData);
-    if (crm.ok) return Response.json(RECEIVED, { status: 200 });
+    if (crm.ok) {
+      if (context.env && context.env.RESEND_API_KEY) {
+        const notify = alertApplication(context.env, formData, parseJson(crm.body) || {});
+        if (context.waitUntil) context.waitUntil(notify);
+      }
+      return Response.json(RECEIVED, { status: 200 });
+    }
 
-    if (!(context.env && context.env.BREVO_API_KEY)) {
-      console.log('Brevo email skipped:', 'BREVO_API_KEY not set');
+    if (!(context.env && context.env.RESEND_API_KEY)) {
+      console.log('Resend email skipped:', 'RESEND_API_KEY not set');
       return Response.json(NOT_SENT, { status: 502 });
     }
     const { sent, cvMissing } = await emailApplication(context.env, formData, crm.error || 'the CRM answered ' + crm.status);

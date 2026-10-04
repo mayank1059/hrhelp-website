@@ -5,23 +5,24 @@
 //  1. The CRM is tried first, with an 8 second timeout.
 //  2. CRM 2xx: the visitor gets success straight away. The CRM sends no email
 //     about a new lead, so a short notification goes to the team (LEAD_ALERT_TO) through
-//     Brevo after the response has been sent (context.waitUntil), when
-//     BREVO_API_KEY is set.
+//     Resend after the response has been sent (context.waitUntil), when
+//     RESEND_API_KEY is set.
 //  3. CRM failure (error, timeout, non-2xx, or no secret): the whole lead is
-//     emailed to the team (LEAD_ALERT_TO) through Brevo, and the visitor gets success only
-//     if Brevo accepted that email. Otherwise 502 and the "email us" message,
+//     emailed to the team (LEAD_ALERT_TO) through Resend, and the visitor gets success only
+//     if Resend accepted that email. Otherwise 502 and the "email us" message,
 //     because then nothing anywhere holds their message.
 
 const CRM_ENDPOINT = 'https://client.hrhelp.nl/api/leads/intake';
 const CRM_LEAD_URL = 'https://client.hrhelp.nl/leads/';
-const BREVO_ENDPOINT = 'https://api.brevo.com/v3/smtp/email';
-// Brevo sender: the address the old WordPress alerts already used, verified in
-// Brevo. Recipients come from the LEAD_ALERT_TO env var (comma-separated) so no
-// personal addresses live in this public repo; info@hrhelp.nl if it is unset.
-const SENDER = { name: 'HRHelp Website Alert', email: 'website-alert@hrhelp.nl' };
+const RESEND_ENDPOINT = 'https://api.resend.com/emails';
+// Resend sender: an address on update.hrhelp.nl, the domain verified in Resend
+// (the root hrhelp.nl is not). Recipients come from the LEAD_ALERT_TO env var
+// (comma-separated) so no personal addresses live in this public repo;
+// info@hrhelp.nl if it is unset.
+const SENDER = 'HRHelp Website Alert <website-alert@update.hrhelp.nl>';
 function teamRecipients(env) {
   const raw = (env && env.LEAD_ALERT_TO) || 'info@hrhelp.nl';
-  return raw.split(',').map((s) => s.trim()).filter(Boolean).map((email) => ({ email }));
+  return raw.split(',').map((s) => s.trim()).filter(Boolean);
 }
 const TIMEOUT_MS = 8000;
 
@@ -225,28 +226,29 @@ function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// One email to the team (LEAD_ALERT_TO) through Brevo's transactional API. Never throws:
-// resolves true only when Brevo accepted it (2xx; it answers 201 with a messageId).
+// One email to the team (LEAD_ALERT_TO) through Resend's email API. Never throws:
+// resolves true only when Resend accepted it (2xx; it answers 200 with an id).
 async function sendEmail(env, subject, body, replyTo) {
-  const key = env && env.BREVO_API_KEY;
+  const key = env && env.RESEND_API_KEY;
   if (!key) {
-    console.log('Brevo email skipped:', 'BREVO_API_KEY not set');
+    console.log('Resend email skipped:', 'RESEND_API_KEY not set');
     return false;
   }
   const payload = {
-    sender: SENDER,
+    from: SENDER,
     to: teamRecipients(env),
     subject,
-    textContent: body,
-    htmlContent: '<pre style="font: 14px/1.5 Arial, sans-serif; white-space: pre-wrap;">' + escapeHtml(body) + '</pre>',
+    text: body,
+    html: '<pre style="font: 14px/1.5 Arial, sans-serif; white-space: pre-wrap;">' + escapeHtml(body) + '</pre>',
   };
-  if (replyTo) payload.replyTo = replyTo;
-  const r = await post(BREVO_ENDPOINT, {
-    'api-key': key,
+  if (replyTo) payload.reply_to = replyTo;
+  const r = await post(RESEND_ENDPOINT, {
+    'Authorization': 'Bearer ' + key,
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    // Resend refuses any request without a User-Agent (403).
+    'User-Agent': 'hrhelp-website',
   }, JSON.stringify(payload));
-  if (!r.ok) logFailure('Brevo email', r);
+  if (!r.ok) logFailure('Resend email', r);
   return r.ok;
 }
 
@@ -265,11 +267,9 @@ function leadEmail(lead, intro) {
 }
 
 // Replies go straight to the visitor. Only for a plain ASCII address, so an
-// unusual one can never make Brevo refuse the email itself.
+// unusual one can never make Resend refuse the email itself.
 function replyToFor(lead) {
-  return /^[\x21-\x7e]+$/.test(lead.email)
-    ? { email: lead.email, name: lead.name.slice(0, 70) }
-    : undefined;
+  return /^[\x21-\x7e]+$/.test(lead.email) ? lead.email : undefined;
 }
 
 function parseJson(s) {
@@ -300,7 +300,7 @@ export async function onRequestPost(context) {
     const crm = await sendToCrm(context.env, lead);
 
     if (crm.ok) {
-      if (context.env && context.env.BREVO_API_KEY) {
+      if (context.env && context.env.RESEND_API_KEY) {
         const saved = parseJson(crm.body) || {};
         const link = saved.lead_id ? CRM_LEAD_URL + saved.lead_id : '';
         const intro = (saved.merged

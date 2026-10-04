@@ -141,10 +141,13 @@ async function sendEmail(env, subject, body, replyTo, attachment) {
   return r;
 }
 
-// Replies go straight to the candidate. Only for a plain ASCII address, so an
-// unusual one can never make Resend refuse the email itself.
+// Replies go straight to the candidate. Only for one plain address, so an
+// unusual one (a trailing dot, a comma, a second address, non-ASCII) can never
+// make Resend refuse the email itself: the email then goes without a Reply-To.
 function replyToFor(email) {
-  return /^[\x21-\x7e]+$/.test(email) ? email : undefined;
+  return /^[A-Za-z0-9._%+'-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/.test(email)
+    ? email
+    : undefined;
 }
 
 function parseJson(s) {

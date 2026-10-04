@@ -3,11 +3,18 @@
 // booking details from Calendly itself.
 //
 // After the relay, still in the background (context.waitUntil), the team
-// (LEAD_ALERT_TO) gets an email through Resend, when RESEND_API_KEY is set: a
-// short alert when the CRM took the booking, or the reason and both URIs when
-// it did not, so the booking can still be found. The browser gets 204 either way.
+// (LEAD_ALERT_TO) gets a short alert through Resend, when RESEND_API_KEY is set,
+// but only when the CRM took the booking and had not seen it before (its kind
+// is not skip_duplicate). A failed relay sends no email, only the log line:
+// anyone can POST here, so an email per failure could send the team unlimited
+// mail and use up the Resend quota the CRM's proposals and invoices share. A
+// booking the relay missed is still picked up by the CRM's own Calendly pull,
+// and Calendly emails the host about it itself. The browser gets 204 either way.
 
-const CALENDLY_API_PREFIX = 'https://api.calendly.com/';
+// Exactly api.calendly.com, then at most 200 characters of path from
+// [A-Za-z0-9/_-]: no dots, spaces, newlines, query or fragment. The URIs go into
+// the CRM request and the alert, so nothing else gets through.
+const CALENDLY_URI = /^https:\/\/api\.calendly\.com\/[A-Za-z0-9\/_-]{1,200}$/;
 const CRM_ENDPOINT = 'https://client.hrhelp.nl/api/leads/calendly';
 const CRM_LEAD_URL = 'https://client.hrhelp.nl/leads/';
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
@@ -27,7 +34,7 @@ const CRM_TIMEOUT_MS = 15000;
 const EMAIL_TIMEOUT_MS = 8000;
 
 function isCalendlyUri(value) {
-  return typeof value === 'string' && value.startsWith(CALENDLY_API_PREFIX);
+  return typeof value === 'string' && CALENDLY_URI.test(value);
 }
 
 // POST with a deadline that also covers reading the answer. Never throws:
@@ -121,27 +128,21 @@ function parseJson(s) {
   try { return JSON.parse(s); } catch (e) { return null; }
 }
 
-// The relay, then the email about it. The two URIs are all this function ever
-// knows about a booking, so they go in every email.
+// The relay, then the alert about it: only for a booking the CRM took and had
+// not seen before. The two URIs are all this function ever knows about it.
 async function relayBooking(env, booking) {
   const crm = await sendToCrm(env, booking);
-  const details = 'The website only receives the two Calendly links below; the name, email, time and any answers are in Calendly.\n\n' +
+  if (!crm.ok) return;
+  const saved = parseJson(crm.body) || {};
+  if (saved.kind === 'skip_duplicate') return;
+
+  const intro = 'A new Calendly booking reached the CRM' +
+    (saved.lead_id ? ': ' + CRM_LEAD_URL + saved.lead_id : '.') +
+    (saved.kind ? '\nCRM result: ' + saved.kind : '');
+  await sendEmail(env, '[HRHelp] New booking', intro + '\n\n' +
+    'The website only receives the two Calendly links below; the name, email, time and any answers are in Calendly.\n\n' +
     'Calendly invitee: ' + booking.invitee_uri + '\n' +
-    'Calendly event: ' + booking.event_uri + '\n';
-
-  if (crm.ok) {
-    const saved = parseJson(crm.body) || {};
-    const intro = 'A new Calendly booking reached the CRM' +
-      (saved.lead_id ? ': ' + CRM_LEAD_URL + saved.lead_id : '.') +
-      (saved.kind ? '\nCRM result: ' + saved.kind : '');
-    await sendEmail(env, '[HRHelp] New booking', intro + '\n\n' + details);
-    return;
-  }
-
-  const reason = crm.error || 'the CRM answered ' + crm.status;
-  const intro = 'The website could not pass this Calendly booking to the CRM (' + reason + ').\n' +
-    'Please check the CRM and add the booking by hand if it is missing.';
-  await sendEmail(env, '[HRHelp] Booking not saved in CRM', intro + '\n\n' + details);
+    'Calendly event: ' + booking.event_uri + '\n');
 }
 
 export async function onRequestPost(context) {

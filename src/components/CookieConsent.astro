@@ -10,7 +10,7 @@
     <div class="cc-text">
       <h2 class="as-h3"><span aria-hidden="true">🍪</span> We value your privacy</h2>
       <!-- Phones get the short copy, so the banner leaves the page itself in view -->
-      <p class="cc-copy-long">We use cookies to enhance your experience. Essential cookies are always active. With your consent we also use analytics (Google Analytics) and marketing (Google Ads) cookies. You can change your choice at any time via "Cookie settings" at the bottom of every page.</p>
+      <p class="cc-copy-long">We use cookies to enhance your experience. Essential cookies are always active. With your consent we also use analytics (Google Analytics, Microsoft Clarity) and marketing (Google Ads) cookies. You can change your choice at any time via "Cookie settings" at the bottom of every page.</p>
       <p class="cc-copy-short">We use cookies for analytics and ads, only with your consent.</p>
       <a href="/privacy/" class="cc-link">Privacy Policy</a>
     </div>
@@ -46,7 +46,7 @@
     <div class="cc-pref-row">
       <div>
         <strong>Analytics Cookies</strong>
-        <span class="cc-pref-desc" id="cc-analytics-desc">Google Analytics: shows us how visitors use the site (cookies such as _ga).</span>
+        <span class="cc-pref-desc" id="cc-analytics-desc">Google Analytics and Microsoft Clarity: show us how visitors use the site (cookies such as _ga and _clck).</span>
       </div>
       <label class="cc-toggle">
         <input type="checkbox" role="switch" id="cc-analytics-toggle" aria-label="Analytics cookies" aria-describedby="cc-analytics-desc" />
@@ -110,7 +110,7 @@
       const domains = ['', host, host.split('.').slice(-2).join('.')];
       document.cookie.split(';').forEach(function(pair) {
         const name = pair.split('=')[0].trim();
-        const drop = (!c.analytics && /^_ga(_|$)/.test(name)) || (!c.marketing && /^_gcl_/.test(name));
+        const drop = (!c.analytics && /^(_ga(_|$)|_clck$|_clsk$)/.test(name)) || (!c.marketing && /^_gcl_/.test(name));
         if (!drop) return;
         domains.forEach(function(d) {
           document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + (d ? '; domain=' + d : '');

@@ -3,7 +3,7 @@ import Layout from '../components/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import LineIcon from '../components/LineIcon.astro';
 import OfficeMap from '../components/OfficeMap.astro';
-import { HELP_NEEDED, EMPLOYEES_NL, TIMELINE, PREFERRED_CONTACT, QUALITY_IMMIGRATION } from '../lib/enquiry';
+import { QUALITY_IMMIGRATION } from '../lib/enquiry';
 
 const qiUrl = QUALITY_IMMIGRATION('contact');
 // Lead and Ads conversion events only count on the production build.
@@ -11,8 +11,6 @@ const IS_PROD = import.meta.env.PUBLIC_STAGING !== 'true';
 
 
 const channels = [
-  { icon: 'mail', title: 'Email Us', value: 'info@hrhelp.nl', href: 'mailto:info@hrhelp.nl', desc: 'For general inquiries, partnerships, and project proposals.' },
-  { icon: 'phone_in_talk', title: 'Call Us', value: '+31 85 760 8188', href: 'tel:+31857608188', desc: 'Direct line for urgent HR consultation and immediate support.' },
   { icon: 'schedule', title: 'Business Hours', value: 'Mon – Fri, 08:30 – 18:00', href: null, desc: 'Central European Time (CET). We respond within one business day.' },
 ];
 
@@ -51,10 +49,6 @@ const contactSchema = {
   <Fragment slot="title">Let's Build Your <br/><span>HR Strategy</span></Fragment>
   <div class="page-hero-actions">
     <a href="#book" class="btn btn-primary btn-lg">Book Free Consultation</a>
-    <a href="tel:+31857608188" class="btn btn-secondary btn-lg">
-      <LineIcon name="call" size={18} />
-      +31 85 760 8188
-    </a>
   </div>
 
   <div class="ct2-hero-stats">
@@ -96,82 +90,57 @@ const contactSchema = {
           <span><LineIcon name="euro" size={18} />Fixed pricing, agreed upfront</span>
         </div>
 
-        <p class="ct2-jobseeker">
-          <strong>Looking for a job or a work visa?</strong> HRhelp works with employers only. Our partner
-          <a href={qiUrl} target="_blank" rel="noopener">Quality Immigration<span class="ct2-vh"> (opens in a new tab)</span></a>
-          helps individuals with work permits and relocation.
-        </p>
+        <!-- First choice: employers see the contact options, job seekers only the
+             partner referral. Without JS (no html.js) the choice is skipped and the
+             employer view shows the Calendly link and email address. -->
+        <fieldset class="ct2-set ct2-who">
+          <legend>I'm contacting HRhelp as:</legend>
+          <div class="ct2-chips">
+            <label class="ct2-chip"><input type="radio" name="ct2-who" value="employer" aria-controls="ct2-employer" /><span>A company / employer</span></label>
+            <label class="ct2-chip"><input type="radio" name="ct2-who" value="seeker" aria-controls="ct2-seeker" /><span>A job seeker or employee</span></label>
+          </div>
+        </fieldset>
 
+        <div id="ct2-seeker" class="ct2-seeker" aria-live="polite">
+          <p class="ct2-jobseeker" hidden>
+            <strong>HRhelp works with employers only.</strong> For jobs, work visas or a personal 30% ruling, please contact our partner
+            <a href={qiUrl} target="_blank" rel="noopener">Quality Immigration<span class="ct2-vh"> (opens in a new tab)</span></a>.
+          </p>
+        </div>
+
+        <div id="ct2-employer" class="ct2-employer">
         <div class="ct2-switch">
-          <div class="ct2-tabs" role="tablist" aria-label="How would you like to book?">
-            <button type="button" class="ct2-tab" role="tab" id="ct2-tab-form" aria-controls="ct2-panel-form" aria-selected="true">Send a message</button>
-            <button type="button" class="ct2-tab" role="tab" id="ct2-tab-cal" aria-controls="calendar" aria-selected="false" aria-describedby="ct2-cal-note" tabindex="-1">Pick a time</button>
+          <div class="ct2-tabs" role="tablist" aria-label="How would you like to get in touch?">
+            <button type="button" class="ct2-tab" role="tab" id="ct2-tab-form" aria-controls="ct2-panel-form" aria-selected="true">Send a short message</button>
+            <button type="button" class="ct2-tab" role="tab" id="ct2-tab-cal" aria-controls="calendar" aria-selected="false" aria-describedby="ct2-cal-note" tabindex="-1">Book a free <span class="ct2-nowrap">30-min</span> call</button>
           </div>
           <p class="ct2-tab-note" id="ct2-cal-note">Opens Calendly's booking calendar.</p>
         </div>
 
+        <noscript>
+          <p class="ct2-book-fallback"><a href="https://calendly.com/hrhelp-info/30min" target="_blank" rel="noopener">Book a free 30-min call</a> in Calendly's booking calendar (opens in a new tab).</p>
+        </noscript>
+
         <div class="ct2-panel" role="tabpanel" id="ct2-panel-form" aria-labelledby="ct2-tab-form">
         <form id="contact-form" class="ct2-form">
-          <fieldset class="ct2-set">
-            <legend>What do you need help with?<span class="ct2-hint">Optional, pick one or more</span></legend>
-            <div class="ct2-chips">
-              {HELP_NEEDED.map((n) => (
-                <label class="ct2-chip"><input type="checkbox" name="needs" value={n} /><span>{n}</span></label>
-              ))}
-            </div>
-          </fieldset>
-
-          <fieldset class="ct2-set">
-            <legend>Employees in the Netherlands <span class="ct2-opt">(optional)</span></legend>
-            <div class="ct2-chips">
-              {EMPLOYEES_NL.map((n) => (
-                <label class="ct2-chip"><input type="radio" name="employees" value={n} /><span>{n}</span></label>
-              ))}
-            </div>
-          </fieldset>
-
-          <fieldset class="ct2-set">
-            <legend>When do you need help? <span class="ct2-opt">(optional)</span></legend>
-            <div class="ct2-chips">
-              {TIMELINE.map((n) => (
-                <label class="ct2-chip"><input type="radio" name="timeline" value={n} /><span>{n}</span></label>
-              ))}
-            </div>
-          </fieldset>
-
           <div class="ct2-form-row">
             <div class="ct2-form-group">
-              <label for="ct2-company">Company <span class="ct2-opt">(optional)</span></label>
-              <input type="text" id="ct2-company" name="company" autocomplete="organization" maxlength="160" />
-            </div>
-            <div class="ct2-form-group">
-              <label for="ct2-name">Full Name *</label>
+              <label for="ct2-name">Name *</label>
               <input type="text" id="ct2-name" name="name" autocomplete="name" maxlength="120" required />
             </div>
-          </div>
-          <div class="ct2-form-row">
             <div class="ct2-form-group">
               <label for="ct2-email">Work email *</label>
               <input type="email" id="ct2-email" name="email" autocomplete="email" maxlength="200" required />
-            </div>
-            <div class="ct2-form-group">
-              <label for="ct2-phone">Phone <span class="ct2-opt">(optional)</span></label>
-              <input type="tel" id="ct2-phone" name="phone" autocomplete="tel" maxlength="40" />
+              <p class="ct2-field-hint" id="ct2-email-hint" hidden>Please use your company email if you have one.</p>
             </div>
           </div>
-
-          <fieldset class="ct2-set">
-            <legend>How should we get in touch? <span class="ct2-opt">(optional)</span></legend>
-            <div class="ct2-chips">
-              {PREFERRED_CONTACT.map((n) => (
-                <label class="ct2-chip"><input type="radio" name="preferred_contact" value={n} /><span>{n}</span></label>
-              ))}
-            </div>
-          </fieldset>
-
           <div class="ct2-form-group">
-            <label for="ct2-message">Anything else we should know? <span class="ct2-opt">(optional)</span></label>
-            <textarea id="ct2-message" name="message" placeholder="Tell us about your situation..." rows="4" maxlength="5000"></textarea>
+            <label for="ct2-company">Company name *</label>
+            <input type="text" id="ct2-company" name="company" autocomplete="organization" maxlength="160" required />
+          </div>
+          <div class="ct2-form-group">
+            <label for="ct2-message">Message *</label>
+            <textarea id="ct2-message" name="message" placeholder="A few lines about what you need help with" rows="3" maxlength="1000" required></textarea>
           </div>
           <!-- Honeypot: off-screen and out of the tab order, so only bots fill it.
                A non-empty url_confirm makes /api/contact drop the submission. -->
@@ -199,9 +168,12 @@ const contactSchema = {
           <div class="ct2-cal-frame" id="ct2-cal-frame"></div>
           <p class="ct2-book-fallback">Calendar slow to load? <a href="https://calendly.com/hrhelp-info/30min" target="_blank" rel="noopener">Open the booking calendar</a> in a new tab.</p>
         </div>
+
+        <p class="ct2-email-line">Or email us at <a href="mailto:info@hrhelp.nl">info@hrhelp.nl</a></p>
+        </div>
       </div>
 
-      <aside class="ct2-side" aria-label="What happens next and how to reach us">
+      <aside class="ct2-side" aria-label="What happens next and where to find us">
         <figure class="ct2-photo">
           <img src="/images/contact/cornelis-client-meeting.jpg" alt="Cornelis Leerlooijer of HRhelp in a consultation with a client" width="1200" height="1490" loading="eager" decoding="async" />
         </figure>
@@ -216,8 +188,7 @@ const contactSchema = {
         </div>
 
         <div class="ct2-direct">
-          <h2 class="as-h3 ct2-side-title">Send Us a Message</h2>
-          <p class="ct2-side-desc">Prefer to write or call directly? We respond within one business day.</p>
+          <h2 class="as-h3 ct2-side-title">Our office</h2>
           <ul class="ct2-channels">
             {channels.map((ch) => (
               <li>
@@ -248,25 +219,21 @@ const contactSchema = {
 (function() {
   var form = document.getElementById('contact-form');
   if (!form) return;
-  var needs = form.querySelectorAll('[name="needs"]');
-
-  function checked(name) {
-    var el = form.querySelector('[name="' + name + '"]:checked');
-    return el ? el.value : '';
+  // Soft hint for free-mail addresses; never blocks the submit.
+  var email = document.getElementById('ct2-email');
+  var hint = document.getElementById('ct2-email-hint');
+  var FREE_MAIL = /@(gmail\.com|googlemail\.com|outlook\.com|icloud\.com|me\.com|aol\.com|proton\.me|protonmail\.com|(hotmail|live|yahoo|gmx)\.[a-z.]+)$/i;
+  function syncHint() {
+    var free = FREE_MAIL.test(email.value.trim());
+    hint.hidden = !free;
+    if (free) email.setAttribute('aria-describedby', 'ct2-email-hint');
+    else email.removeAttribute('aria-describedby');
   }
-  function chosenNeeds() {
-    return Array.prototype.filter.call(needs, function(n) { return n.checked; }).map(function(n) { return n.value; });
-  }
-  // At least one help topic: the browser's own validation bubble on the first chip.
-  function syncNeeds() {
-    needs[0].setCustomValidity('');
-  }
-  Array.prototype.forEach.call(needs, function(n) { n.addEventListener('change', syncNeeds); });
-  syncNeeds();
+  email.addEventListener('input', syncHint);
+  email.addEventListener('change', syncHint);
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    syncNeeds();
     if (!form.reportValidity()) return;
 
     var btn = document.getElementById('form-submit-btn');
@@ -277,17 +244,12 @@ const contactSchema = {
     status.hidden = true;
     var submitId = 'cf-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
 
-    // Same fields as the website chatbot; /api/contact maps both identically
-    // into the CRM lead and the team alert email.
+    // /api/contact maps these into the CRM lead and the team alert email
+    // (the chatbot sends the same names plus its structured answers).
     var data = {
       name: form.querySelector('[name="name"]').value.trim(),
       email: form.querySelector('[name="email"]').value.trim(),
       company: form.querySelector('[name="company"]').value.trim(),
-      phone: form.querySelector('[name="phone"]').value.trim(),
-      needs: chosenNeeds(),
-      employees: checked('employees'),
-      timeline: checked('timeline'),
-      preferred_contact: checked('preferred_contact'),
       message: form.querySelector('[name="message"]').value.trim(),
       page: location.pathname,
       source: 'Contact Form',
@@ -340,8 +302,8 @@ const contactSchema = {
 })();
 </script>
 
-<!-- Two-option switch: accessible tabs; Calendly loads only when "Pick a time"
-     is opened. Booking tracking + the CRM relay live in Layout.astro. -->
+<!-- Who-is-contacting choice, then the two-option switch: accessible tabs;
+     Calendly loads only when "Book a free 30-min call" is opened. Booking tracking + the CRM relay live in Layout.astro. -->
 <script is:inline>
 (function() {
   var tabs = [document.getElementById('ct2-tab-form'), document.getElementById('ct2-tab-cal')];
@@ -397,12 +359,29 @@ const contactSchema = {
     });
   });
 
-  // Deep links: /contact?book=calendar or /contact#calendar open the calendar tab.
+  // First choice: employers get the tabs and email address, job seekers only
+  // the partner referral. A choice the browser restored (back button) is kept.
+  var employer = document.getElementById('ct2-employer');
+  var seeker = document.querySelector('#ct2-seeker .ct2-jobseeker');
+  var who = document.querySelectorAll('input[name="ct2-who"]');
+  function showWho(value) {
+    employer.classList.toggle('is-open', value === 'employer');
+    seeker.hidden = value !== 'seeker';
+  }
+  Array.prototype.forEach.call(who, function(r) {
+    r.addEventListener('change', function() { if (r.checked) showWho(r.value); });
+    if (r.checked) showWho(r.value);
+  });
+
+  // Deep links: /contact?book=calendar or /contact#calendar (the chatbot, after
+  // its employer questions) choose "employer" and open the calendar tab.
   function wantsCalendar() {
     return location.hash === '#calendar' || new URLSearchParams(location.search).get('book') === 'calendar';
   }
   function openFromUrl() {
     if (!wantsCalendar()) return;
+    who[0].checked = true;
+    showWho('employer');
     select(1, false);
     document.getElementById('book').scrollIntoView();
   }
@@ -437,9 +416,9 @@ const contactSchema = {
 </Layout>
 
 <style>
-/* Shared light hero, then one two-column block: the enquiry form (the primary
-   action, same questions as the website chatbot) and a calm sidebar with the
-   photo, next steps, direct contact and the map. Hairlines, 4px radii, no cards. */
+/* Shared light hero, then one two-column block: a who-is-contacting choice, then
+   (employers) a short form or Calendly, and a calm sidebar with the
+   photo, next steps, office hours and address, and the map. Hairlines, 4px radii, no cards. */
 h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
 .eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; color: #44546d; margin-bottom: 0.75rem; }
 
@@ -471,6 +450,24 @@ h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
 }
 .ct2-book-trust span { display: inline-flex; align-items: center; gap: 0.45rem; }
 .ct2-book-trust :global(svg) { color: var(--icon-accent); }
+
+/* First choice. Without JS (no html.js) it is skipped: the employer view shows,
+   minus the tabs and form, which need JS (the noscript Calendly link stands in). */
+.ct2-set.ct2-who { display: none; margin-bottom: 2rem; }
+:global(html.js) .ct2-set.ct2-who { display: block; }
+:global(html.js) .ct2-employer { padding-top: 1.75rem; border-top: 1px solid rgba(15, 37, 72, 0.1); }
+.ct2-who legend { font-size: 1rem; }
+:global(html.js) .ct2-employer:not(.is-open) { display: none; }
+:global(html:not(.js)) .ct2-switch,
+:global(html:not(.js)) #ct2-panel-form { display: none; }
+.ct2-jobseeker[hidden] { display: none; }
+.ct2-email-line { margin: 1.5rem 0 0; font-size: 0.92rem; color: var(--gray-600); }
+.ct2-email-line a {
+  color: var(--navy); font-weight: 600; text-decoration: underline;
+  text-decoration-color: var(--orange-ink); text-underline-offset: 3px;
+}
+.ct2-field-hint { margin: 0.45rem 0 0; font-size: 0.85rem; color: var(--orange-ink); }
+.ct2-field-hint[hidden] { display: none; }
 
 .ct2-jobseeker {
   margin: 0 0 2rem; padding: 0.9rem 1rem;
@@ -520,8 +517,6 @@ h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
   display: block; padding: 0; margin-bottom: 0.6rem;
   font-size: 0.9rem; font-weight: 600; color: var(--navy);
 }
-.ct2-hint, .ct2-opt { font-weight: 400; color: var(--gray-500); }
-.ct2-hint { margin-left: 0.5rem; }
 .ct2-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .ct2-chip { position: relative; display: inline-flex; cursor: pointer; }
 .ct2-chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
@@ -586,7 +581,6 @@ h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
 .ct2-next p { margin: 0.1rem 0 0; font-size: 0.95rem; line-height: 1.5; color: var(--gray-700); }
 
 .ct2-direct { padding-top: 1.75rem; border-top: 1px solid rgba(15, 37, 72, 0.1); }
-.ct2-side-desc { margin: 0 0 1.1rem; font-size: 0.95rem; color: var(--gray-600); }
 .ct2-channels { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
 .ct2-channels li { display: flex; gap: 0.8rem; align-items: flex-start; }
 .ct2-channels li > :global(svg) { color: var(--icon-accent); margin-top: 2px; flex-shrink: 0; }
@@ -634,5 +628,6 @@ h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
 }
 @media (max-width: 576px) {
   .ct2-form-row { grid-template-columns: 1fr; }
+  .ct2-who .ct2-chip, .ct2-who .ct2-chip span { width: 100%; }
 }
 </style>

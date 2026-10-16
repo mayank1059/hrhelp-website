@@ -95,9 +95,58 @@ const contactSchema = {
              employer view shows the Calendly link and email address. -->
         <fieldset class="ct2-set ct2-who">
           <legend>I'm contacting HRhelp as:</legend>
-          <div class="ct2-chips">
-            <label class="ct2-chip"><input type="radio" name="ct2-who" value="employer" aria-controls="ct2-employer" /><span>A company / employer</span></label>
-            <label class="ct2-chip"><input type="radio" name="ct2-who" value="seeker" aria-controls="ct2-seeker" /><span>A job seeker or employee</span></label>
+          <div class="ct2-who-cards">
+            <label class="ct2-who-card">
+              <input type="radio" name="ct2-who" value="employer" aria-controls="ct2-employer" />
+              <span class="ct2-who-box">
+                <svg class="ct2-who-art" viewBox="0 0 200 140" aria-hidden="true" focusable="false">
+                  <circle class="il-ring" cx="100" cy="72" r="62" />
+                  <rect class="il-navy" x="62" y="20" width="54" height="100" rx="3" />
+                  <g class="il-window">
+                    <rect x="70" y="30" width="10" height="10" rx="1" /><rect x="84" y="30" width="10" height="10" rx="1" /><rect x="98" y="30" width="10" height="10" rx="1" />
+                    <rect x="70" y="47" width="10" height="10" rx="1" /><rect x="84" y="47" width="10" height="10" rx="1" /><rect x="98" y="47" width="10" height="10" rx="1" />
+                    <rect x="70" y="64" width="10" height="10" rx="1" /><rect x="84" y="64" width="10" height="10" rx="1" /><rect x="98" y="64" width="10" height="10" rx="1" />
+                    <rect x="70" y="81" width="10" height="10" rx="1" /><rect x="98" y="81" width="10" height="10" rx="1" />
+                  </g>
+                  <rect class="il-orange" x="82" y="98" width="14" height="22" rx="1" />
+                  <rect class="il-orange" x="116" y="58" width="34" height="62" rx="3" />
+                  <g class="il-white">
+                    <rect x="123" y="67" width="8" height="8" rx="1" /><rect x="135" y="67" width="8" height="8" rx="1" />
+                    <rect x="123" y="81" width="8" height="8" rx="1" /><rect x="135" y="81" width="8" height="8" rx="1" />
+                    <rect x="123" y="95" width="8" height="8" rx="1" /><rect x="135" y="95" width="8" height="8" rx="1" />
+                  </g>
+                  <circle class="il-skin" cx="44" cy="88" r="8" />
+                  <path class="il-navy" d="M36 87a8 8 0 0 1 16 0c-4-3-8-4-16 0z" />
+                  <path class="il-orange" d="M31 120v-13a11 11 0 0 1 11-11h4a11 11 0 0 1 11 11v13z" />
+                  <circle class="il-skin" cx="164" cy="90" r="8" />
+                  <path class="il-navy" d="M156 90a8 8 0 0 1 16-1c-5-1-10-3-14-6c-1 2-2 4-2 7z" />
+                  <path class="il-navy" d="M151 120v-11a11 11 0 0 1 11-11h4a11 11 0 0 1 11 11v11z" />
+                  <path class="il-orange" d="M161 98l3 9l3-9z" />
+                  <line class="il-ground" x1="26" y1="120" x2="182" y2="120" />
+                </svg>
+                <span class="ct2-who-label">A company / employer</span>
+                <svg class="ct2-who-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="12" /><path d="M7 12.5l3.2 3.2L17 9" /></svg>
+              </span>
+            </label>
+            <label class="ct2-who-card">
+              <input type="radio" name="ct2-who" value="seeker" aria-controls="ct2-seeker" />
+              <span class="ct2-who-box">
+                <svg class="ct2-who-art" viewBox="0 0 200 140" aria-hidden="true" focusable="false">
+                  <circle class="il-ring" cx="100" cy="72" r="62" />
+                  <circle class="il-skin" cx="100" cy="44" r="15" />
+                  <path class="il-navy" d="M85 45a15 15 0 0 1 30-2c-8-2-15-6-19-11c-3 6-7 10-11 13z" />
+                  <rect class="il-skin" x="95" y="56" width="10" height="9" />
+                  <path class="il-navy" d="M70 120v-30a24 24 0 0 1 24-24h12a24 24 0 0 1 24 24v30z" />
+                  <path class="il-orange" d="M93 66l7 22l7-22z" />
+                  <path class="il-handle" d="M136 98v-6h14v6" />
+                  <rect class="il-orange" x="129" y="98" width="28" height="22" rx="3" />
+                  <line class="il-strap" x1="129" y1="107" x2="157" y2="107" />
+                  <line class="il-ground" x1="40" y1="120" x2="166" y2="120" />
+                </svg>
+                <span class="ct2-who-label">A job seeker or employee</span>
+                <svg class="ct2-who-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="12" /><path d="M7 12.5l3.2 3.2L17 9" /></svg>
+              </span>
+            </label>
           </div>
         </fieldset>
 
@@ -457,6 +506,38 @@ h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
 :global(html.js) .ct2-set.ct2-who { display: block; }
 :global(html.js) .ct2-employer { padding-top: 1.75rem; border-top: 1px solid rgba(15, 37, 72, 0.1); }
 .ct2-who legend { font-size: 1rem; }
+/* Two illustrated cards; the radio covers each card so it stays a native,
+   keyboard-operable radio group. Checked: navy border, light tint, check mark. */
+.ct2-who-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; max-width: 34rem; }
+.ct2-who-card { position: relative; display: block; cursor: pointer; }
+.ct2-who-card input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 1; }
+.ct2-who-box {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+  height: 100%; padding: 1rem 0.9rem 1.1rem;
+  border: 1px solid rgba(15, 37, 72, 0.2); border-radius: 12px; background: white;
+  text-align: center; transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.ct2-who-card:hover .ct2-who-box { border-color: var(--navy); }
+.ct2-who-card input:checked + .ct2-who-box {
+  border-color: var(--navy); background: rgba(26, 58, 110, 0.05);
+  box-shadow: inset 0 0 0 1px var(--navy);
+}
+.ct2-who-card input:focus-visible + .ct2-who-box { outline: 3px solid var(--orange); outline-offset: 2px; }
+.ct2-who-art { display: block; width: 100%; max-width: 170px; height: auto; }
+.ct2-who-label { font-size: 0.98rem; font-weight: 600; line-height: 1.3; color: var(--navy); }
+.ct2-who-check { position: absolute; top: 0.6rem; right: 0.6rem; width: 24px; height: 24px; opacity: 0; transition: opacity 0.15s ease; }
+.ct2-who-check circle { fill: var(--navy); }
+.ct2-who-check path { fill: none; stroke: white; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.ct2-who-card input:checked + .ct2-who-box .ct2-who-check { opacity: 1; }
+.il-navy { fill: var(--navy); }
+.il-orange { fill: var(--orange); }
+.il-skin { fill: #f2b48c; }
+.il-window { fill: #dfe6f0; }
+.il-white { fill: white; }
+.il-ring { fill: none; stroke: var(--navy); stroke-width: 1.5; opacity: 0.3; }
+.il-ground, .il-strap { stroke: var(--navy); stroke-width: 2; stroke-linecap: round; }
+.il-strap { stroke-width: 1.5; opacity: 0.5; }
+.il-handle { fill: none; stroke: var(--navy); stroke-width: 3; stroke-linejoin: round; }
 :global(html.js) .ct2-employer:not(.is-open) { display: none; }
 :global(html:not(.js)) .ct2-switch,
 :global(html:not(.js)) #ct2-panel-form { display: none; }
@@ -517,19 +598,6 @@ h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
   display: block; padding: 0; margin-bottom: 0.6rem;
   font-size: 0.9rem; font-weight: 600; color: var(--navy);
 }
-.ct2-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.ct2-chip { position: relative; display: inline-flex; cursor: pointer; }
-.ct2-chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
-.ct2-chip span {
-  display: inline-flex; align-items: center; min-height: 44px;
-  padding: 0.55rem 1.1rem; border: 1px solid rgba(15, 37, 72, 0.25);
-  border-radius: var(--radius-full); background: white;
-  font-size: 0.9rem; font-weight: 500; line-height: 1.3; color: var(--navy);
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
-}
-.ct2-chip:hover span { border-color: var(--navy); }
-.ct2-chip input:checked + span { background: var(--navy); border-color: var(--navy); color: white; }
-.ct2-chip input:focus-visible + span { outline: 3px solid var(--orange); outline-offset: 2px; }
 
 .ct2-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 .ct2-form-group { display: flex; flex-direction: column; }
@@ -628,6 +696,8 @@ h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
 }
 @media (max-width: 576px) {
   .ct2-form-row { grid-template-columns: 1fr; }
-  .ct2-who .ct2-chip, .ct2-who .ct2-chip span { width: 100%; }
+  .ct2-who-cards { gap: 0.75rem; }
+  .ct2-who-box { padding: 0.8rem 0.6rem 0.9rem; }
+  .ct2-who-label { font-size: 0.92rem; }
 }
 </style>

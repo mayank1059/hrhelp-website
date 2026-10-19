@@ -163,7 +163,7 @@ const contactSchema = {
             <button type="button" class="ct2-tab" role="tab" id="ct2-tab-form" aria-controls="ct2-panel-form" aria-selected="true">Send a short message</button>
             <button type="button" class="ct2-tab" role="tab" id="ct2-tab-cal" aria-controls="calendar" aria-selected="false" aria-describedby="ct2-cal-note" tabindex="-1">Book a free <span class="ct2-nowrap">30-min</span> call</button>
           </div>
-          <p class="ct2-tab-note" id="ct2-cal-note">Opens Calendly's booking calendar.</p>
+          <p class="ct2-tab-note" id="ct2-cal-note" hidden>Opens Calendly's booking calendar.</p>
         </div>
 
         <noscript>
@@ -390,6 +390,8 @@ const contactSchema = {
       t.tabIndex = on ? 0 : -1;
       document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
     });
+    // The Calendly note only belongs with the open call tab.
+    document.getElementById('ct2-cal-note').hidden = i !== 1;
     if (focus) tabs[i].focus();
     if (i === 1) loadCalendly();
   }
@@ -576,6 +578,7 @@ h2, h3 { font-weight: 700; letter-spacing: -0.015em; }
 .ct2-tab[aria-selected="true"] { background: var(--navy); color: white; }
 .ct2-tab:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 .ct2-tab-note { margin: 0.6rem 0 0; font-size: 0.85rem; color: var(--gray-500); }
+.ct2-tab-note[hidden] { display: none; }
 .ct2-panel[hidden] { display: none; }
 .ct2-panel:focus { outline: none; }
 .ct2-cal-frame {

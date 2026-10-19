@@ -1,6 +1,7 @@
 ---
 import Layout from '../components/Layout.astro';
 import ServiceLinks from '../components/ServiceLinks.astro';
+import CoreExpertiseLinks from '../components/CoreExpertiseLinks.astro';
 import PostCard from '../components/PostCard.astro';
 import { serviceGroups } from '../data/pseo/service-groups.js';
 import { getBlogPosts } from '../lib/wordpress';
@@ -79,36 +80,40 @@ const videoSchema = {
       </div>
       <ul class="hero-stats animate-fade-in-up animate-delay-4">
         <li>
-          <a href="/expertise/leadership-training/">
-            <span class="stat-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg></span>
+          <a href="/solutions/hr-settlers/">
+            <span class="stat-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22V3"/><path d="M5 4h12l-2 4 2 4H5"/></svg></span>
             <span class="stat-text">
-            <span class="stat-label">TRAINING</span>
-            <strong>Leadership</strong>
+            <span class="stat-label">NEW IN THE NETHERLANDS</span>
+            <strong>Setting up &amp; first hires</strong>
+            <span class="stat-line">Contracts, payroll, 30% ruling</span>
             </span>
             <span class="stat-arrow" aria-hidden="true">&rarr;</span>
           </a>
         </li>
         <li>
-          <a href="/expertise/restructuring/">
-            <span class="stat-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M6 17V9a4 4 0 0 1 4-4h6"/><path d="M6 13h8a4 4 0 0 1 4 4v2"/></svg></span>
+          <a href="/solutions/hr-teams/">
+            <span class="stat-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
             <span class="stat-text">
-            <span class="stat-label">RESTRUCTURING</span>
-            <strong>Reorganisations</strong>
+            <span class="stat-label">GROWING TEAM</span>
+            <strong>HR policies &amp; compliance</strong>
+            <span class="stat-line">Handbook, works council, employment law</span>
             </span>
             <span class="stat-arrow" aria-hidden="true">&rarr;</span>
           </a>
         </li>
         <li>
-          <a href="/expertise/sickness-management/">
-            <span class="stat-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/><path d="M3.5 12h4l2-3 3 6 2-3h6"/></svg></span>
+          <a href="/services/interim-hr-solutions/">
+            <span class="stat-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M2 13h20"/></svg></span>
             <span class="stat-text">
-            <span class="stat-label">SICKNESS</span>
-            <strong>Sick leave</strong>
+            <span class="stat-label">NEED HANDS ON DECK</span>
+            <strong>Interim HR experts</strong>
+            <span class="stat-line">Experienced consultants, placed fast</span>
             </span>
             <span class="stat-arrow" aria-hidden="true">&rarr;</span>
           </a>
         </li>
       </ul>
+      <a href="/services/" class="hero-all-link animate-fade-in-up animate-delay-4">View all services <span aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
   <div class="hero-photo">
@@ -477,6 +482,11 @@ const videoSchema = {
       ))}
     </div>
     )}
+
+    <!-- The three expertise pages (the hero linked to them until it moved to situations) -->
+    <div class="home-cx">
+      <CoreExpertiseLinks slugs={['sickness-management', 'restructuring', 'leadership-training']} />
+    </div>
   </div>
 </section>
 
@@ -914,14 +924,14 @@ const videoSchema = {
     flex-shrink: 0;
   }
 
-  /* Core areas: three small frosted-glass cards with an icon */
+  /* Three situations: small frosted-glass cards with an icon */
   .hero-stats {
     list-style: none;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.75rem;
     padding: 0;
-    margin: 0 0 1.5rem;
+    margin: 0 0 1rem;
   }
   .hero-stats a {
     position: relative;
@@ -966,7 +976,6 @@ const videoSchema = {
   }
   .hero-stats strong {
     display: block;
-    white-space: nowrap;
     color: var(--white);
     font-size: 0.92rem;
     font-weight: 600;
@@ -982,6 +991,28 @@ const videoSchema = {
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
   .hero-stats a:hover .stat-arrow { transform: translateX(3px); opacity: 1; }
+  .stat-line {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.78);
+  }
+  .hero-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: underline;
+    text-decoration-color: var(--orange-light);
+    text-underline-offset: 4px;
+  }
+  .hero-all-link span { color: var(--orange-light); transition: transform 0.2s ease; }
+  .hero-all-link:hover span { transform: translateX(3px); }
+  .hero-all-link:focus-visible { outline: 2px solid var(--orange-light); outline-offset: 3px; border-radius: 2px; }
 
   .hero-trust {
     margin: 0;
@@ -1618,6 +1649,8 @@ const videoSchema = {
 
   /* Specialist HR services: the second row of the solutions block, one
      white panel with the intro on the left and the three groups beside it */
+  .home-cx { margin-top: 2rem; }
+  @media (max-width: 768px) { .home-cx { margin-top: 1.5rem; } }
   .svc-band {
     --h2-size: clamp(1.35rem, 1.1rem + 0.6vw, 1.55rem);
     display: grid;
@@ -2328,7 +2361,7 @@ const videoSchema = {
     }
     .hero-buttons .btn { justify-content: center; }
 
-    .hero-stats { grid-template-columns: 1fr; gap: 0.5rem; }
+    .hero-stats { grid-template-columns: 1fr; gap: 0.5rem; margin-bottom: 0.75rem; }
     .hero-stats a { flex-direction: row; align-items: center; padding: 0.75rem 0.9rem; }
 
     /* Shorter on phones so the two core offers follow sooner */

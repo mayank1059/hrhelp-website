@@ -1,5 +1,5 @@
 // Cloudflare Pages Function: job applications go to the HRhelp CRM at
-// client.hrhelp.nl, and nowhere else. WordPress no longer receives them.
+// hq.hrhelp.nl, and nowhere else. WordPress no longer receives them.
 //
 // The CRM files the applicant, stores the CV and notifies the owner itself. On
 // a CRM 2xx this function answers success, and a short alert without the CV
@@ -18,8 +18,8 @@
 // The response shape is unchanged: the form in src/pages/careers/apply/[slug].astro
 // reads `data.success` and `data.message` and nothing else.
 
-const CRM_ENDPOINT = 'https://client.hrhelp.nl/api/applicants/intake';
-const CRM_APPLICANT_URL = 'https://client.hrhelp.nl/applicants/';
+const CRM_ENDPOINT = 'https://hq.hrhelp.nl/api/applicants/intake';
+const CRM_APPLICANT_URL = 'https://hq.hrhelp.nl/applicants/';
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 // Resend sender: an address on update.hrhelp.nl, the domain verified in Resend
 // (the root hrhelp.nl is not). Recipients come from the LEAD_ALERT_TO env var

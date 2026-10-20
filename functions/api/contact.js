@@ -1,5 +1,5 @@
 // Cloudflare Pages Function: every website lead (contact form, chatbot, guide
-// downloads) goes to the HRhelp CRM at client.hrhelp.nl, and nowhere else.
+// downloads) goes to the HRhelp CRM at hq.hrhelp.nl, and nowhere else.
 // WordPress no longer receives leads: it stays as the blog CMS only.
 //
 //  1. The CRM is tried first, with an 8 second timeout.
@@ -12,8 +12,8 @@
 //     the visitor gets success only if Resend accepted that email. Otherwise 502
 //     and the "email us" message, because then nothing anywhere holds their message.
 
-const CRM_ENDPOINT = 'https://client.hrhelp.nl/api/leads/intake';
-const CRM_LEAD_URL = 'https://client.hrhelp.nl/leads/';
+const CRM_ENDPOINT = 'https://hq.hrhelp.nl/api/leads/intake';
+const CRM_LEAD_URL = 'https://hq.hrhelp.nl/leads/';
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 // Resend sender: an address on update.hrhelp.nl, the domain verified in Resend
 // (the root hrhelp.nl is not). Recipients come from the LEAD_ALERT_TO env var

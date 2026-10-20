@@ -16,8 +16,8 @@
 // [A-Za-z0-9/_-]: no dots, spaces, newlines, query or fragment. The URIs go into
 // the CRM request and the alert, so nothing else gets through.
 const CALENDLY_URI = /^https:\/\/api\.calendly\.com\/[A-Za-z0-9\/_-]{1,200}$/;
-const CRM_ENDPOINT = 'https://client.hrhelp.nl/api/leads/calendly';
-const CRM_LEAD_URL = 'https://client.hrhelp.nl/leads/';
+const CRM_ENDPOINT = 'https://hq.hrhelp.nl/api/leads/calendly';
+const CRM_LEAD_URL = 'https://hq.hrhelp.nl/leads/';
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 // Resend sender: an address on update.hrhelp.nl, the domain verified in Resend
 // (the root hrhelp.nl is not). Recipients come from the LEAD_ALERT_TO env var
@@ -86,7 +86,7 @@ function logFailure(what, r) {
   );
 }
 
-// Copy of the booking into the CRM at client.hrhelp.nl.
+// Copy of the booking into the CRM at hq.hrhelp.nl.
 // Never throws: any failure here must stay invisible to the visitor.
 async function sendToCrm(env, booking) {
   const secret = env && env.HRHELP_LEAD_INTAKE_SECRET;

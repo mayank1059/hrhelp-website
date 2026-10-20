@@ -34,9 +34,10 @@ const isStaging = import.meta.env.PUBLIC_STAGING === 'true';
 const CLARITY_ID = 'wv2t0n1mn6';
 const clarityId = isStaging ? '' : CLARITY_ID;
 
-// Umami: self-hosted, cookieless visitor statistics (no cookies, no personal data), so it loads for
-// every visitor without waiting for consent. Production builds only, and data-domains keeps
-// previews/localhost out. The tracker is served first-party from the CRM host (Caddy -> Umami).
+// Umami: self-hosted, cookieless visitor statistics (no cookies, no browser storage), so it loads for
+// every visitor without waiting for consent. Left out of staging builds (PUBLIC_STAGING=true) only;
+// other builds (dev, previews) include it, and data-domains keeps everything but www.hrhelp.nl
+// out. The tracker is served first-party from the CRM host (Caddy -> Umami).
 const UMAMI_WEBSITE_ID = '6c2ee22b-0c21-4541-aff6-03591c5a81a5';
 const UMAMI_HOST = 'https://client.hrhelp.nl/t';
 const shouldNoindex = noindex || isStaging;
@@ -246,7 +247,7 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
             page_path: location.pathname,
           });
         }
-        if (a) window.hrhelpUmami('cta_click', { cta_text: (a.textContent || '').trim().slice(0, 60) });
+        if (a && window.hrhelpUmami) window.hrhelpUmami('cta_click', { cta_text: (a.textContent || '').trim().slice(0, 60) });
       }, { passive: true });
     })();
   </script>
@@ -267,7 +268,7 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
         // One booking, one conversion, even if the embed posts the event twice.
         if (seen[id]) return;
         seen[id] = true;
-        window.hrhelpUmami('book_consultation', { source: 'calendly' });
+        if (window.hrhelpUmami) window.hrhelpUmami('book_consultation', { source: 'calendly' });
         if (typeof gtag === 'function') {
           gtag('event', 'book_consultation', { page_path: location.pathname });
           if (IS_PROD) {

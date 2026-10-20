@@ -683,7 +683,7 @@ const videoSchema = {
     link.click();
     document.body.removeChild(link);
     if (typeof gtag === 'function') gtag('event', 'guide_download', { source: 'homepage' });
-    window.hrhelpUmami('guide_download', { source: 'homepage' });
+    if (window.hrhelpUmami) window.hrhelpUmami('guide_download', { source: 'homepage' });
 
     status.style.display = 'block';
     status.style.background = '#e8f5e9';

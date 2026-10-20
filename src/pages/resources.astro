@@ -421,7 +421,7 @@ const collectionSchema = {
     a.download = 'HRHelp-HR-Rules-Regulations-2026-NL.pdf';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     if (typeof gtag === 'function') gtag('event', 'guide_download', { source: 'resources' });
-    window.hrhelpUmami('guide_download', { source: 'resources' });
+    if (window.hrhelpUmami) window.hrhelpUmami('guide_download', { source: 'resources' });
 
     status.className = 'rh-wp-status is-ok';
     status.innerHTML = CHECK + ' Your guide is downloading. Not started? <a href="' + PDF + '" target="_blank" rel="noopener">Open the PDF</a>';

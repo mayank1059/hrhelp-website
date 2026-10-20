@@ -331,7 +331,7 @@ const contactSchema = {
       // Staging builds never count leads or Google Ads conversions. The Ads
       // conversion is the one Calendly bookings used to fire; transaction_id
       // lets Google Ads drop a duplicate of the same submit.
-      window.hrhelpUmami('generate_lead', { source: 'contact_form' });
+      if (window.hrhelpUmami) window.hrhelpUmami('generate_lead', { source: 'contact_form' });
       if (IS_PROD && typeof gtag === 'function') {
         gtag('event', 'generate_lead', { source: 'contact_form' });
         gtag('event', 'conversion', {

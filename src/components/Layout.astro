@@ -33,6 +33,12 @@ const isStaging = import.meta.env.PUBLIC_STAGING === 'true';
 // change it; '' turns Clarity off. It only ever loads on production builds, after analytics consent.
 const CLARITY_ID = 'wv2t0n1mn6';
 const clarityId = isStaging ? '' : CLARITY_ID;
+
+// Umami: self-hosted, cookieless visitor statistics (no cookies, no personal data), so it loads for
+// every visitor without waiting for consent. Production builds only, and data-domains keeps
+// previews/localhost out. The tracker is served first-party from the CRM host (Caddy -> Umami).
+const UMAMI_WEBSITE_ID = '6c2ee22b-0c21-4541-aff6-03591c5a81a5';
+const UMAMI_HOST = 'https://client.hrhelp.nl/t';
 const shouldNoindex = noindex || isStaging;
 
 const siteUrl = 'https://www.hrhelp.nl';
@@ -152,7 +158,16 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
     gtag('js', new Date());
     gtag('config', 'G-3PMP3P8VTF');
     gtag('config', 'AW-16843385395');
+    // Conversion events for Umami next to the GA ones; a no-op until (or unless) the tracker has loaded.
+    // Event data must never hold personal data (no names, emails, free text from forms).
+    window.hrhelpUmami = function (name, data) {
+      try { if (window.umami) window.umami.track(name, data); } catch (e) {}
+    };
   </script>
+  {!isStaging && (
+    <script is:inline defer src={`${UMAMI_HOST}/s.js`} data-website-id={UMAMI_WEBSITE_ID}
+      data-host-url={UMAMI_HOST} data-domains="www.hrhelp.nl"></script>
+  )}
   {!isStaging && (
     <script is:inline>
       // gtag.js is loaded once (GA4 ID) for both configs above, after the page has loaded so it
@@ -231,6 +246,7 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
             page_path: location.pathname,
           });
         }
+        if (a) window.hrhelpUmami('cta_click', { cta_text: (a.textContent || '').trim().slice(0, 60) });
       }, { passive: true });
     })();
   </script>
@@ -251,6 +267,7 @@ const allSchemas = [orgSchema, websiteSchema, ...(Array.isArray(schema) ? schema
         // One booking, one conversion, even if the embed posts the event twice.
         if (seen[id]) return;
         seen[id] = true;
+        window.hrhelpUmami('book_consultation', { source: 'calendly' });
         if (typeof gtag === 'function') {
           gtag('event', 'book_consultation', { page_path: location.pathname });
           if (IS_PROD) {

@@ -429,6 +429,7 @@ const AVATAR = (await getImage({ src: portrait, width: 200, format: 'webp' })).s
     // lets Google Ads drop a duplicate of the same submit.
     if (IS_PROD) {
       track('generate_lead', { source: 'chatbot' });
+      if (window.hrhelpUmami) window.hrhelpUmami('generate_lead', { source: 'chatbot' });
       track('conversion', { send_to: 'AW-16843385395/u4MnCPi347gcELPUxt8-', transaction_id: submitId });
     }
     var first = a.name.split(/\s+/)[0];

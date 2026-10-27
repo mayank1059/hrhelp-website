@@ -1,8 +1,8 @@
 ---
 // ChatAssistant.astro — first-party lead chatbot (a guided questionnaire, not AI).
-// Job seekers are pointed to Quality Immigration; employers and HR people answer a
-// few questions and the lead goes through /api/contact (the HRhelp CRM), exactly
-// like the contact form. No cookies and no third-party requests, so no consent gate.
+// Job seekers are pointed to Quality Immigration; employers get a short message form
+// (email and message), HR people answer a few questions, and the lead goes through
+// /api/contact (the HRhelp CRM), exactly like the contact form. No cookies and no third-party requests, so no consent gate.
 import { getImage } from 'astro:assets';
 import portrait from '../../public/images/founder/cornelis-portrait.jpg';
 import { HELP_NEEDED, EMPLOYEES_NL, TIMELINE, QUALITY_IMMIGRATION } from '../lib/enquiry';
@@ -270,7 +270,7 @@ const AVATAR = (await getImage({ src: portrait, width: 200, format: 'webp' })).s
     step("Hi, I'm the HRhelp assistant. What brings you here today?", optionButtons(PATHS, function (p) {
       track('chatbot_path', { path: p.id });
       a.path = p;
-      if (p.id === 'jobseeker') jobseeker(); else needs();
+      if (p.id === 'jobseeker') jobseeker(); else if (p.id === 'employer') message(); else needs();
     }), { answered: 0, instant: !log.childElementCount });
   }
 
@@ -292,6 +292,86 @@ const AVATAR = (await getImage({ src: portrait, width: 200, format: 'webp' })).s
       wrap.appendChild(back);
       c.appendChild(card);
       c.appendChild(wrap);
+    }, { answered: null });
+  }
+
+  // Employers write to Cornelis straight away: email and message, name and company
+  // optional, one Send button. The Calendly link stays as a quiet alternative.
+  function message() {
+    step('Send Cornelis a message. Your email and a few lines are enough.', function (c) {
+      var f = el('form', 'hc-form hc-card hc-mform');
+      f.noValidate = true;
+      var fields = {};
+      function field(key, label, tag, opts) {
+        var id = 'hc-f' + (++uid);
+        var wrap = el('div', 'hc-field');
+        var lab = el('label', null, label);
+        lab.htmlFor = id;
+        var input = el(tag, 'hc-finput');
+        input.id = id;
+        input.name = key;
+        if (opts.type) input.type = opts.type;
+        if (opts.autocomplete) input.autocomplete = opts.autocomplete;
+        if (opts.rows) input.rows = opts.rows;
+        if (opts.required) input.setAttribute('aria-required', 'true');
+        input.maxLength = opts.max;
+        var err = el('p', 'hc-err');
+        err.id = id + '-err';
+        err.hidden = true;
+        input.addEventListener('input', function () {
+          if (err.hidden) return;
+          err.hidden = true;
+          input.removeAttribute('aria-invalid');
+        });
+        wrap.appendChild(lab);
+        wrap.appendChild(input);
+        wrap.appendChild(err);
+        f.appendChild(wrap);
+        fields[key] = { input: input, err: err };
+      }
+      field('email', 'Your email', 'input', { type: 'email', autocomplete: 'email', max: 200, required: true });
+      field('name', 'Name (optional)', 'input', { autocomplete: 'name', max: 120 });
+      field('company', 'Company (optional)', 'input', { autocomplete: 'organization', max: 160 });
+      field('message', 'Your message', 'textarea', { rows: 4, max: 2000, required: true });
+      var send = sendButton('Send message');
+      f.appendChild(send);
+      var alt = el('p', 'hc-mnote', 'Prefer to talk? ');
+      var cal = el('a', null, 'Book a free 30-minute call');
+      cal.href = '/contact/?book=calendar';
+      alt.appendChild(cal);
+      f.appendChild(alt);
+      var priv = el('p', 'hc-mnote', 'We only use your details to reply to you. ');
+      var pl = el('a', null, 'Privacy Policy');
+      pl.href = '/privacy/';
+      pl.target = '_blank';
+      pl.rel = 'noopener';
+      priv.appendChild(pl);
+      f.appendChild(priv);
+      f.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (send.disabled) return;
+        var v = {};
+        Object.keys(fields).forEach(function (k) { v[k] = fields[k].input.value.trim(); });
+        var first = null;
+        function flag(k, text) {
+          var fd = fields[k];
+          fd.err.textContent = text;
+          fd.err.hidden = false;
+          fd.input.setAttribute('aria-invalid', 'true');
+          fd.input.setAttribute('aria-describedby', fd.err.id);
+          if (!first) first = fd.input;
+        }
+        if (!v.email) flag('email', 'Please enter your email address.');
+        else if (!EMAIL_RE.test(v.email)) flag('email', 'That email address looks incomplete. Please check it.');
+        if (!v.message) flag('message', 'Please write a short message.');
+        if (first) { first.focus(); return; }
+        a.email = v.email;
+        a.name = v.name;
+        a.company = v.company;
+        a.notes = v.message;
+        submit(send);
+      });
+      c.appendChild(f);
     }, { answered: null });
   }
 
@@ -432,8 +512,8 @@ const AVATAR = (await getImage({ src: portrait, width: 200, format: 'webp' })).s
       if (window.hrhelpUmami) window.hrhelpUmami('generate_lead', { source: 'chatbot' });
       track('conversion', { send_to: 'AW-16843385395/u4MnCPi347gcELPUxt8-', transaction_id: submitId });
     }
-    var first = a.name.split(/\s+/)[0];
-    step('Thanks, ' + first + '. Cornelis or one of the team will get back to you within one business day.', function (c) {
+    var first = a.name ? a.name.split(/\s+/)[0] : '';
+    step('Thanks' + (first ? ', ' + first : '') + '. Cornelis will reply by email, usually within one working day.', function (c) {
       var card = el('div', 'hc-card');
       var top = el('p', 'hc-card-text');
       var ic = el('span', 'hc-card-ico');
@@ -445,13 +525,13 @@ const AVATAR = (await getImage({ src: portrait, width: 200, format: 'webp' })).s
       card.appendChild(top);
       card.appendChild(link);
       c.appendChild(card);
-    }, { ok: true, answered: STEPS });
+    }, { ok: true, answered: progress.hidden ? null : STEPS });
   }
 
   function failure(btn) {
     track('lead_error', { source: 'chatbot' });
     var p = el('span');
-    p.appendChild(document.createTextNode("Sorry, your answers didn't come through. Please try again, or email us at "));
+    p.appendChild(document.createTextNode("Sorry, your message didn't come through. Please try again, or email us at "));
     var m = el('a', null, 'info@hrhelp.nl');
     m.href = 'mailto:info@hrhelp.nl';
     p.appendChild(m);
@@ -966,6 +1046,30 @@ const AVATAR = (await getImage({ src: portrait, width: 200, format: 'webp' })).s
   .hc-cta-primary:hover { background: var(--orange-ink-dark); color: var(--white); }
   .hc-cta-secondary { border: 1px solid var(--navy); color: var(--navy); background: var(--white); }
   .hc-cta-secondary:hover { background: var(--navy); color: var(--white); }
+
+  /* ---------- Employer message form ---------- */
+  .hc-mform { gap: 0.8rem; }
+  .hc-field label { display: block; margin-bottom: 0.3rem; font-size: 0.85rem; font-weight: 600; line-height: 1.35; color: var(--navy-dark); }
+  .hc-finput {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 10px;
+    font: inherit;
+    font-size: 16px; /* 16px stops iOS zooming into the field */
+    line-height: 1.4;
+    color: var(--gray-900);
+    background: var(--white);
+  }
+  textarea.hc-finput { min-height: 104px; resize: vertical; }
+  .hc-finput:focus { border-color: var(--navy); }
+  .hc-finput[aria-invalid='true'] { border-color: #c62828; }
+  .hc-field .hc-err { margin: 0.35rem 0 0; }
+  .hc-mform .hc-send { width: 100%; }
+  .hc-mnote { margin: 0; font-size: 0.8rem; line-height: 1.4; color: var(--hc-muted); }
+  .hc-mnote a { color: var(--navy); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
 
   /* ---------- Composer (text answers and consent) ---------- */
   .hc-dock {

@@ -143,7 +143,9 @@ function prepare(body) {
   const label = leadSource(body);
   const form = text(body.source, 60);
   return {
-    name: text(body.name, 120),
+    // The chatbot's message form leaves the name optional. The CRM needs a name
+    // or a company, so a lead without a name is filed under its email address.
+    name: text(body.name, 120) || text(body.email, 120),
     email: text(body.email, 200),
     company: text(body.company, 160),
     phone: text(body.phone, 40),
@@ -298,8 +300,8 @@ export async function onRequestPost(context) {
       return Response.json(SUCCESS, { status: 200 });
     }
 
-    if (!text(body.name, 120) || !text(body.email, 200)) {
-      return Response.json({ success: false, message: 'Name and email are required.' }, { status: 400 });
+    if (!text(body.email, 200)) {
+      return Response.json({ success: false, message: 'Email is required.' }, { status: 400 });
     }
     if (!EMAIL_SHAPE.test(text(body.email, 200))) {
       return Response.json({ success: false, message: 'Please enter a valid email address.' }, { status: 400 });

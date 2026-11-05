@@ -1258,5 +1258,497 @@
       "dutch-sick-leave-management"
     ],
     "topic": "Hiring & Employees"
+  },
+  {
+    "slug": "wet-poortwachter-guide",
+    "title": "Wet Poortwachter: The Employer's 104-Week Timeline",
+    "subtitle": "Wet Poortwachter for employers: every deadline from day 1 to week 104, how UWV checks your file, the wage sanction risk and a worked example.",
+    "vertical": "hr-teams",
+    "verticalLabel": "HR Teams Guide",
+    "parentService": "/solutions/hr-teams/",
+    "parentServiceName": "HR Teams",
+    "readTime": "12 min read",
+    "atAGlance": [
+      {
+        "icon": "schedule",
+        "label": "Wage continuation",
+        "value": "104 weeks, min. 70%"
+      },
+      {
+        "icon": "event",
+        "label": "Sick report to UWV",
+        "value": "Week 42"
+      },
+      {
+        "icon": "gavel",
+        "label": "WIA application",
+        "value": "Week 93 at the latest"
+      },
+      {
+        "icon": "warning",
+        "label": "Wage sanction risk",
+        "value": "Up to 52 extra weeks"
+      }
+    ],
+    "content": "<h2>What the Wet Poortwachter Requires</h2><p>The Wet Poortwachter (in full the Wet verbetering poortwachter, in English the Gatekeeper Improvement Act) tells employers what to do, and when, from an employee's first sick day until week 104. It makes employer and employee, not UWV (the Dutch employee insurance agency), jointly responsible for return to work, on top of the duty to keep paying a sick employee for up to two years.</p><p>It applies to every employer with staff on a Dutch employment contract, including a BV with one employee and a head office abroad. There is no qualifying period. Fixed-term staff are covered until their contract ends. For sick pay and absence policy in general, see our guide to <a href=\"/guides/dutch-sick-leave-management/\">managing sick leave in the Netherlands</a>.</p><h3>Wage continuation in brief</h3><ul><li><strong>104 weeks at 70% minimum</strong> (art. 7:629 BW). In the first 52 weeks, never below the statutory minimum wage.</li><li><strong>Cap:</strong> the 70% applies to salary up to the maximum daily wage (maximumdagloon), \u20ac309.91 gross per day since 1 July 2026 (\u20ac304.25 from 1 January 2026). It is adjusted on 1 January and 1 July.</li><li><strong>Top-ups:</strong> collective labour agreements (CAOs) and contracts often pay more. The government says more than half of employees get full pay in the first sick year.</li><li><strong>Waiting days:</strong> you may agree that the first two days of a sickness period are unpaid.</li><li><strong>Repeat absences</strong> less than four weeks apart count as one period, unless the cause is clearly different.</li></ul><h2>Company Doctor, Case Manager and Privacy</h2><p>Every employer must have a written basic contract (basiscontract) with an occupational health service (arbodienst) or a company doctor (bedrijfsarts) under the Working Conditions Act (Arbowet). The contract must, among other things, let the doctor visit every workplace and give employees the right to a second opinion. The law also requires you to use that doctor or arbodienst for the re-integration steps.</p><p>The doctor advises on what the employee can still do. The plan of action must name one person who guides the agreed activities and keeps everyone in contact: the case manager (casemanager). This can be an HR manager or an external case manager.</p><h3>Sick report rules</h3><p>Set written absence rules (verzuimvoorschriften): who the employee calls, by when, and how they stay reachable. You may suspend sick pay while an employee ignores reasonable written rules on the information you need to check the wage claim (art. 7:629 lid 6 BW). Tell them straight away.</p><h3>Privacy: what you may ask</h3><p>Under the GDPR (AVG), the Dutch Data Protection Authority allows you to ask and record only: contact details, expected duration, tasks and appointments that need cover, whether a work accident or a traffic accident caused by someone else is involved, and whether a Ziektewet safety-net scheme (vangnetregeling) applies. You may not ask about or record the nature or cause of the illness, even if the employee volunteers it or consents. The company doctor tells you the expected duration and what the employee can still do.</p><h2>Wet Poortwachter Timeline: Week by Week</h2><p>Diarise these dates from the first sick day. Steps marked \"at the latest\" may come earlier. Employer and employee may depart from the week 6 and week 8 deadlines only for documented reasons.</p><table><thead><tr><th>Week</th><th>What happens</th><th>Who</th><th>Document</th></tr></thead><tbody><tr><td>Day 1</td><td>Employee reports sick. You log the first sick day and notify the arbodienst.</td><td>Employee, employer</td><td>Sick report (ziekmelding)</td></tr><tr><td>Week 6 at the latest</td><td>Company doctor assesses the case and advises.</td><td>Company doctor</td><td>Problem analysis (probleemanalyse)</td></tr><tr><td>Week 8 at the latest</td><td>Plan agreed within 2 weeks of the analysis. Case manager named.</td><td>Employer and employee</td><td>Plan of action (plan van aanpak)</td></tr><tr><td>Every 6 weeks at least</td><td>Progress review, plan adjusted if needed.</td><td>Employer, employee, case manager</td><td>Evaluation (bijstelling)</td></tr><tr><td>Week 42</td><td>Report to UWV by the first working day after 42 weeks.</td><td>Employer</td><td>42nd-week report (42e-weeksmelding)</td></tr><tr><td>Week 52</td><td>Is return in your organisation realistic?</td><td>Employer and employee</td><td>First-year evaluation (eerstejaarsevaluatie)</td></tr><tr><td>Week 58 at the latest</td><td>Track 2 starts within 6 weeks of the first-year evaluation (UWV policy).</td><td>Employer</td><td>Track 2 plan and reports</td></tr><tr><td>Week 88</td><td>UWV sends the employee the WIA letter (by law by week 89). You get a copy.</td><td>UWV</td><td>WIA letter</td></tr><tr><td>Week 91 at the latest</td><td>Doctor's current assessment, final evaluation, re-integration report complete.</td><td>Doctor, employer, employee</td><td>Actueel oordeel, eindevaluatie, RIV</td></tr><tr><td>Week 93 at the latest</td><td>Employee applies for WIA disability benefit.</td><td>Employee</td><td>WIA application with RIV</td></tr><tr><td>Week 98 at the latest</td><td>UWV decides on any wage sanction, if the application was on time.</td><td>UWV</td><td>Sanction decision</td></tr><tr><td>Week 101 onward</td><td>You may request a UWV dismissal permit.</td><td>Employer</td><td>Permit request</td></tr><tr><td>Week 104</td><td>Wage obligation ends, unless there is a sanction or an agreed extension.</td><td>Employer</td><td>WIA decision</td></tr></tbody></table><p>Sources: the <a href=\"https://wetten.overheid.nl/BWBR0013540/\">Regeling procesgang eerste en tweede ziektejaar</a> and UWV's <a href=\"https://www.uwv.nl/en/employers/sickness/a-step-by-step-guide-to-employee-sickness\">step-by-step guide for employers</a>.</p><h2>Track 1, Track 2 and Employee Duties</h2><p><strong>Track 1 (spoor 1)</strong> is return to work with you: the own job, the own job adapted (fewer hours, other tasks), or another suitable job in your organisation. Suitable work (passende arbeid) is any work that fits the employee's strengths and skills, unless it cannot reasonably be asked of them for physical, mental or social reasons (art. 7:658a lid 4 BW). UWV expects you to offer it actively, not just point to vacancies, and to show which roles you checked.</p><p><strong>Track 2 (spoor 2)</strong> is re-integration with another employer, usually through a specialist provider, once it is clear the employee cannot do their own work and you have nothing else suitable. UWV's Werkwijzer Poortwachter, the rulebook its assessors use, says track 2 must start within six weeks of the first-year evaluation, unless a structural return in your organisation is concretely in sight within three months. An adequate track 2 has a person profile, a reasoned search profile and planned progress reports.</p><h3>The expert opinion (deskundigenoordeel)</h3><p>If you disagree on whether the employee can work, whether work is suitable or whether either side is doing enough, either of you can ask UWV for an expert opinion. It costs an employer \u20ac400 per question (\u20ac100 for an employee) and is free when needed for a dismissal for non-cooperation or frequent absence. It is advice, but UWV uses it when it reviews the file. Because of a shortage of insurance doctors, UWV says that in 2026 it issues expert opinions only where there is a conflict or a risk of serious financial problems.</p><h3>What the employee must do</h3><p>A sick employee must follow reasonable instructions, cooperate with the plan of action and do suitable work you offer (art. 7:660a BW). Refusing suitable work, obstructing recovery, refusing to cooperate with the plan or applying for WIA late, without good reason, removes the right to wages for that period (art. 7:629 lid 3 BW). Inform the employee promptly. If cooperation breaks down, use our guide for <a href=\"/guides/sick-employee-not-cooperating/\">a sick employee who does not cooperate</a>.</p><h2>UWV Assessment and the Wage Sanction</h2><p>When the employee applies for WIA, UWV tests the re-integration report (re-integratieverslag, RIV). The question is not whether the employee is back at work, but whether you did enough, on time, and can show it. Structural suitable work that fits the employee's remaining capacity is a satisfactory result, and so, after intensive re-integration, is work earning over 65% of the original wage. Otherwise UWV's labour expert checks your efforts. Points the Werkwijzer tells assessors to check include:</p><ul><li>a file that is incomplete or out of date;</li><li>track 2 started late, or not at all;</li><li>a plan without clear goals, or not adjusted when progress stalled;</li><li>work at too low a level or for too few hours, or months of therapeutic work without wage value;</li><li>suitable work in your own organisation not properly explored.</li></ul><h3>The wage sanction (loonsanctie)</h3><p>If efforts fall short without good reason, UWV extends your duty to pay wages by up to 52 weeks (art. 25 lid 9 WIA). You cannot dismiss the employee during the sanction, and the WIA assessment is put on hold. The decision lists what you must repair. Once you have, for example by completing an adequate track 2, file a shortening request (bekortingsverzoek) in the UWV employer portal. UWV decides within three weeks, and the extra obligation ends six weeks after UWV confirms the repair.</p><h3>Voluntary extension instead of WIA</h3><p>If the employee is close to full recovery near the end of year two, you can jointly ask UWV to extend wage payment (vrijwillige verlenging loondoorbetaling, art. 24 WIA). The WIA application then moves to 11 weeks before the extended period ends, and you cannot dismiss meanwhile. Either side can stop it, after which wages continue for at least 13 weeks. File by week 91.</p><h2>After 104 Weeks: WIA, Dismissal and Special Cases</h2><p>UWV then decides on the WIA benefit:</p><ul><li><strong>Under 35% loss of earning capacity:</strong> no benefit. The employee can still earn more than 65% of the old wage.</li><li><strong>WGA:</strong> the employee can earn 65% or less and may be able to work more in future.</li><li><strong>IVA:</strong> the employee can earn 20% or less and this will almost certainly not change.</li></ul><p>WIA decisions can be late because UWV is short of doctors, but that does not extend your wage obligation. Some employers become own-risk carrier (eigenrisicodrager) for the WGA or Ziektewet: they pay those benefits themselves instead of part of the premium, and for the WGA stay responsible for re-integration for 10 years.</p><h3>The contract after two years</h3><p>Sickness does not end the contract. You may not give notice during the first two years of sickness (opzegverbod, art. 7:670 BW), and that period is extended by any wage sanction, voluntary extension or late WIA application. After that you can end the contract with a <a href=\"/guides/settlement-agreement-netherlands/\">settlement agreement</a> (vaststellingsovereenkomst) or a UWV dismissal permit. For the permit, recovery or adapted work within 26 weeks must be unlikely and you must have no other suitable job within 26 weeks. UWV decides 4 to 8 weeks after a complete request.</p><p>The employee is usually owed a transition payment: one third of a month's salary per year of service. Under current law UWV compensates it, up to the amount owed when the two-year ban ended, if you apply within six months of paying. A bill to abolish this compensation for all employers is in parliament. It is not law, and its start date has already been postponed.</p><h3>Frequent short absences</h3><p>The Poortwachter steps are built for long-term absence. For frequent short absences, involve the company doctor early and agree measures in writing. Dismissal for frequent absence goes through the subdistrict court (kantonrechter): the consequences for the business must be unacceptable, poor working conditions must not be the cause, and the court needs an expert statement from UWV (art. 7:669 lid 3 sub c and 7:671b lid 4 BW).</p><h3>Fixed-term contracts that end during sickness</h3><p>A fixed-term contract still ends on its end date. On the last day of employment you report the sickness to UWV and, if the employee has been sick for 6 weeks or more, have the re-integration report ready, unless you are own-risk carrier for the Ziektewet. UWV then pays Ziektewet benefit. If your re-integration efforts were insufficient, you repay it for the period of the shortfall.</p><h2>Worked Example: Burn-Out at a US-Owned BV</h2><p>Lisa is operations manager at the Amsterdam BV of a US software company, earning \u20ac5,500 gross a month. No CAO applies. Her contract pays 100% in year one and 70% in year two. Her salary is below the cap.</p><ul><li><strong>Week 1.</strong> Lisa calls in sick. Her manager logs the date, expected duration and deadlines needing cover. He does not ask what is wrong. HR notifies the arbodienst and tells head office only \"absent, duration unknown\".</li><li><strong>Week 6.</strong> The problem analysis: no capacity yet, gradual return expected, workload a factor. No diagnosis reaches the employer.</li><li><strong>Week 8.</strong> The plan of action: light tasks two half-days a week from week 10, building to her own role at 32 hours. The HR business partner is case manager. Every review is written up and signed.</li><li><strong>Week 42.</strong> Lisa works 16 hours in adapted tasks. HR files the 42nd-week report.</li><li><strong>Week 52.</strong> Progress has stalled at 20 hours and the doctor no longer expects a return to the full role. HR lists every role in the BV, a labour expert (arbeidsdeskundige) confirms none fits, and a track 2 provider starts in week 56.</li><li><strong>Week 91.</strong> The doctor's current assessment and the final evaluation are signed. Lisa applies for WIA in week 92.</li></ul><p>Had Lisa not worked at all, sick pay would cost about \u20ac66,000 in year one and \u20ac46,200 in year two in gross salary, before holiday allowance, pension and employer contributions. Had the BV waited until week 80 to start track 2, UWV could impose a 52-week wage sanction: roughly another \u20ac46,200 plus provider fees, with dismissal blocked for that year, and no UWV compensation for the transition payment built up in it.</p><h2>Head Office Checklist and Coming Changes</h2><h3>Set up before anyone gets sick</h3><ul><li>Sign a basic contract with an arbodienst or company doctor, preferably one that works in English.</li><li>Put absence rules in English and Dutch in your <a href=\"/guides/employee-handbook-netherlands/\">employee handbook</a>.</li><li>Decide who is case manager and who files with UWV. The UWV employer portal requires eHerkenning.</li><li>Check CAOs and contracts for top-ups. Sickness absence insurance (verzuimverzekering) is optional, but most small and medium employers have it.</li><li>Agree a reporting line to head office that carries no medical data.</li></ul><h3>The dossier UWV wants to see</h3><ol><li>Problem analysis and any updates</li><li>Plan of action and every adjustment, signed</li><li>Six-weekly evaluations and the first-year evaluation</li><li>Track 2 documents: provider plan, progress reports, applications, final report</li><li>Company doctor's current assessment (actueel oordeel)</li><li>Final evaluation (eindevaluatie)</li><li>Your log of contacts, offers and decisions, with dates and hours actually worked</li></ol><p>Medical information goes to UWV directly from the employee. You may not upload it.</p><h3>Announced, not yet law</h3><ul><li>Bill 36 926: small and medium employers (payroll up to 100 times the average premium wage) could focus year two only on track 2, with the employee's consent or UWV permission. Intended start: 1 January 2030.</li><li>A bill approved by the cabinet in July 2026 would make the company doctor's advice leading in UWV's RIV test.</li><li>In September 2026 the minister sent parliament scenarios for shorter or lower sick pay, without making a proposal.</li></ul><h2>How HRhelp Helps</h2><p>Sickness management and Wet Poortwachter compliance are one of our two core services. We act as your case manager in the Netherlands or support your HR team: we set up the arbodienst contract and absence rules, run the calendar to week 104, prepare the plan of action, evaluations, week 42 report and RIV, and flag early when track 2 or an expert opinion is needed. If UWV has imposed a wage sanction, we build the repair plan and the shortening request. Read more about our <a href=\"/expertise/sickness-management/\">sickness management</a> work.</p><p><a href=\"/contact/\">Book a Free Consultation</a></p>",
+    "process": [
+      {
+        "step": "01",
+        "title": "Report and analyse",
+        "desc": "Log the first sick day, notify your arbodienst at once and make sure the company doctor delivers the problem analysis by week 6 at the latest."
+      },
+      {
+        "step": "02",
+        "title": "Plan and review",
+        "desc": "Agree the plan of action within two weeks of the problem analysis, name a case manager and review progress in writing at least every six weeks."
+      },
+      {
+        "step": "03",
+        "title": "Decide on track 2",
+        "desc": "Report to UWV in week 42, hold the first-year evaluation at week 52 and start an adequate track 2 within six weeks if return in-house is unlikely."
+      },
+      {
+        "step": "04",
+        "title": "Close the file",
+        "desc": "Get the company doctor's current assessment, sign the final evaluation by week 91, support the WIA application by week 93 and plan what happens after week 104."
+      }
+    ],
+    "pitfalls": [
+      {
+        "severity": "high",
+        "title": "Starting track 2 too late",
+        "desc": "UWV checks whether track 2 started within six weeks of the first-year evaluation. Waiting for a recovery the company doctor does not expect puts you at risk of a wage sanction."
+      },
+      {
+        "severity": "high",
+        "title": "Gaps in the file",
+        "desc": "Missing evaluations, an outdated plan of action or no current assessment from the company doctor leave UWV unable to see your effort. The result can be up to 52 extra weeks of wages."
+      },
+      {
+        "severity": "high",
+        "title": "Recording medical details",
+        "desc": "Managers may not ask about or record the nature or cause of an illness, even if the employee volunteers it. Keep diagnoses out of emails, HR systems and head-office reports."
+      },
+      {
+        "severity": "medium",
+        "title": "Missing the week 42 report",
+        "desc": "Report the sickness to UWV by the first working day after 42 weeks. A late report can bring a fine of up to \u20ac455 and complicates the WIA process."
+      },
+      {
+        "severity": "medium",
+        "title": "Offering token work",
+        "desc": "Work at too low a level or for too few hours, or months of therapeutic work without wage value, does not count as a satisfactory result. Build hours up on a plan the doctor supports."
+      },
+      {
+        "severity": "low",
+        "title": "Ignoring the extension option",
+        "desc": "If the employee is close to full recovery near week 91, a joint request to extend wage payment can beat a WIA claim and a dismissal. Discuss it before the WIA deadline."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What is the Wet Poortwachter in English?",
+        "a": "It is the Gatekeeper Improvement Act (Wet verbetering poortwachter). It sets the steps employers and sick employees must take in the first two years of sickness: a problem analysis by week 6, a plan of action by week 8, regular evaluations, a report to UWV in week 42, a first-year evaluation, and a re-integration report by week 91 for the WIA application in week 93. UWV checks the file and can make the employer pay up to one extra year of wages if the effort fell short."
+      },
+      {
+        "q": "What happens if an employer misses a Wet Poortwachter deadline?",
+        "a": "It depends on the step. A late week 42 report to UWV can bring a fine of up to \u20ac455. A late problem analysis or plan of action weakens your file, and you may depart from those deadlines only for documented reasons. What counts at the end is whether UWV sees adequate and timely re-integration effort. If it does not, it can impose a wage sanction of up to 52 weeks."
+      },
+      {
+        "q": "How long does a loonsanctie last and can it be shortened?",
+        "a": "A wage sanction (loonsanctie) lasts at most 52 weeks on top of the 104 weeks. UWV's decision says what you must repair. Once you have repaired it, for example by completing an adequate track 2, you file a shortening request (bekortingsverzoek) through the UWV employer portal. UWV decides within three weeks, and the wage obligation ends six weeks after UWV confirms the repair. You cannot dismiss the employee while the sanction runs."
+      },
+      {
+        "q": "Can I dismiss an employee who has been sick for two years?",
+        "a": "Yes, but not automatically. Once the two-year notice ban has ended, you need a dismissal permit from UWV or a settlement agreement with the employee. UWV checks that recovery or adapted work within 26 weeks is unlikely and that you have no other suitable job. You can file from three weeks before the ban ends. The employee is usually owed a transition payment, which UWV currently compensates up to the amount due after two years."
+      },
+      {
+        "q": "Can a sick employee refuse track 2 or suitable work?",
+        "a": "Not without good reason. A sick employee must cooperate with the plan of action and do suitable work the employer offers (art. 7:660a BW). Refusing without good reason means no right to wages for that period (art. 7:629 lid 3 BW), provided you inform the employee promptly. If you disagree about whether the work is suitable, ask UWV for an expert opinion. For a stuck case, see our guide on a sick employee who does not cooperate."
+      },
+      {
+        "q": "What may I ask an employee who calls in sick?",
+        "a": "Only what you need to organise the work and check the wage claim: how to reach them, how long they expect to be off, which tasks and appointments need cover, and whether a work accident or a traffic accident caused by someone else is involved. You may not ask about or record the nature or cause of the illness, even if the employee volunteers it. The company doctor tells you the expected duration and what the employee can still do."
+      },
+      {
+        "q": "Do these rules apply to a small Dutch subsidiary with one employee?",
+        "a": "Yes. Every employer with staff on a Dutch employment contract has the same obligations, whatever its size or wherever the head office is. A bill that would let employers with a payroll of up to about 100 staff focus year two only on track 2 is before parliament, with an intended start of 1 January 2030. It is not law. Until then, most small and medium employers insure the wage cost privately."
+      }
+    ],
+    "relatedSlugs": [
+      "dutch-sick-leave-management",
+      "sick-employee-not-cooperating",
+      "dutch-termination-procedures"
+    ],
+    "topic": "Leave & Working Hours"
+  },
+  {
+    "slug": "transition-payment-rules-netherlands",
+    "title": "Transition Payment Netherlands: 2026 Calculation",
+    "subtitle": "Transition payment in the Netherlands (transitievergoeding) for 2026: who qualifies, how to calculate it, the \u20ac102,000 cap, deductions and UWV refunds.",
+    "vertical": "hr-teams",
+    "verticalLabel": "HR Teams Guide",
+    "parentService": "/solutions/hr-teams/",
+    "parentServiceName": "HR Teams",
+    "readTime": "12 min read",
+    "atAGlance": [
+      {
+        "icon": "calculate",
+        "label": "Formula",
+        "value": "1/3 month per year"
+      },
+      {
+        "icon": "euro",
+        "label": "2026 Cap",
+        "value": "\u20ac102,000 or 1 year's pay"
+      },
+      {
+        "icon": "schedule",
+        "label": "Pay By",
+        "value": "1 month after end date"
+      },
+      {
+        "icon": "event_available",
+        "label": "Entitlement",
+        "value": "From day one"
+      }
+    ],
+    "content": "<h2>Transition Payment in the Netherlands: The Basics</h2><p>The transition payment (transitievergoeding) is the statutory severance payment in the Netherlands. When you end an employee's contract or decide not to renew a fixed-term contract, Dutch law usually requires you to pay it. The rules are in articles 7:673 to 7:673e of the Dutch Civil Code (Burgerlijk Wetboek).</p><p>For a head office abroad, treat it as a fixed cost of ending employment. This guide covers when you owe it, how to calculate it, the 2026 maximum, deductions, payment, tax and the refunds paid by UWV, the Dutch employee insurance agency. For the dismissal routes, see our guide to <a href=\"/guides/dutch-termination-procedures/\">termination procedures in the Netherlands</a>.</p><h2>When You Owe the Transition Payment</h2><p>You owe the transition payment when the employment ends at your initiative. Since 1 January 2020 the right starts on the first day of employment, including the probation period, for permanent, fixed-term and on-call contracts. You owe it when:</p><ul><li>you give notice after UWV has granted a dismissal permit, for example for redundancy or after two years of illness;</li><li>the subdistrict court (kantonrechter) dissolves the contract at your request;</li><li>a fixed-term contract expires and you decide not to renew it;</li><li>the employee resigns, asks the court to end the contract or declines to continue a fixed-term contract because of seriously culpable acts or omissions (ernstig verwijtbaar handelen of nalaten) by you as the employer.</li></ul><h3>When no transition payment is due</h3><ul><li>The employee resigns or turns down your offer to renew a fixed-term contract.</li><li>The contract ends because of seriously culpable acts or omissions by the employee, such as theft. A court can still award it if refusing would be unacceptable.</li><li>The contract ends before the employee turns 18 and they worked 12 hours a week or less on average.</li><li>The contract ends in connection with or after the employee reaching state pension age (AOW-leeftijd) or another statutory or agreed retirement age.</li><li>You are bankrupt (faillissement), have a suspension of payments (surseance van betaling) or are under the debt restructuring scheme for individuals.</li><li>Your collective labour agreement (CAO) replaces it with an equivalent arrangement. This is only allowed for dismissals for business-economic reasons, and the arrangement must help limit unemployment, give reasonable financial compensation, or both.</li></ul><p>A settlement agreement (vaststellingsovereenkomst) ends the contract by mutual consent, so the statutory obligation does not apply. In practice the transition payment is the usual starting point in negotiations, because the employee would receive it through UWV or the court. See our guide to <a href=\"/guides/settlement-agreement-netherlands/\">settlement agreements in the Netherlands</a>.</p><h2>How to Calculate the Transition Payment</h2><h3>The formula</h3><p>The transition payment is one third of the monthly salary for each full year of service, plus a pro rata amount for the rest of the service period, including months and days. The <a href=\"https://www.rijksoverheid.nl/onderwerpen/ontslag/vraag-en-antwoord/hoe-hoog-is-de-transitievergoeding-als-ik-word-ontslagen\">government formula</a> for the remaining part is:</p><p><strong>(gross salary earned over the remaining period \u00f7 gross monthly salary) \u00d7 (1/3 \u00d7 gross monthly salary \u00f7 12)</strong></p><p>For whole months this comes down to: monthly salary \u00d7 months \u00f7 36. It also applies to contracts shorter than a year. Use the contractual gross salary, even if pay was lower because of sickness or leave.</p><h3>The monthly salary basis</h3><p>Monthly salary means more than base pay. The Besluit loonbegrip vergoeding aanzegtermijn en transitievergoeding (the decree defining salary here) and its implementing regulation list what counts. Anything else stays out.</p><table><thead><tr><th>Component</th><th>Counts?</th><th>How to include it</th></tr></thead><tbody><tr><td>Base salary</td><td>Yes</td><td>Gross hourly wage \u00d7 agreed hours per month</td></tr><tr><td>Holiday allowance (vakantiegeld)</td><td>Yes</td><td>12 months' entitlement \u00f7 12</td></tr><tr><td>Fixed 13th month or end-of-year payment</td><td>Yes</td><td>12 months' entitlement \u00f7 12</td></tr><tr><td>Agreed overtime pay and shift allowances</td><td>Yes</td><td>Owed in last 12 months \u00f7 12</td></tr><tr><td>Commission or piece rates</td><td>Yes</td><td>Owed in last 12 months \u00f7 12</td></tr><tr><td>Agreed bonus, profit share or variable year-end payment</td><td>Yes</td><td>Owed in the 3 calendar years before the year of termination \u00f7 36</td></tr><tr><td>Discretionary one-off bonus (gratificatie)</td><td>No</td><td>Not agreed, so excluded</td></tr><tr><td>Employer pension contributions</td><td>No</td><td>Excluded</td></tr><tr><td>Employer health insurance contribution (Zvw)</td><td>No</td><td>Excluded</td></tr><tr><td>Company car, expense allowances</td><td>No</td><td>Excluded</td></tr></tbody></table><p>For shorter employment, the divisor is reduced pro rata. With no agreed or fluctuating hours, use the average hours per month over the last 12 months. For holiday allowance itself, see our guide to <a href=\"/guides/dutch-holiday-allowance-vakantiegeld/\">Dutch holiday allowance</a>.</p><h3>Counting years of service</h3><p>Service runs from the first day of the contract to the legal end date, and can be longer than the current contract suggests:</p><ul><li>Earlier contracts with you count if the gaps between them were 6 months or less.</li><li>Time with another employer counts if that employer must reasonably be seen as your predecessor for the same work (opvolgend werkgeverschap), for example when someone who worked for you through an employment agency is hired directly in the same role.</li><li>Months before age 18 in which the employee worked 12 hours a week or less on average do not count.</li></ul><p>A transition payment you already paid at the end of an earlier contract that counts towards service is deducted.</p><h3>The 2026 maximum</h3><p>For contracts ending in 2026, the transition payment is capped at \u20ac102,000 gross, or one year's pay (12 times the monthly salary basis) if that is higher. The cap is indexed every 1 January to forecast contract wage growth, rounded to the nearest \u20ac1,000. It was \u20ac98,000 in 2025. The 2027 amount had not been published in November 2026; it will apply to contracts ending on or after 1 January 2027.</p><p>A point many employers miss: at one third of a month per year, 36 years of service equals one year's pay. So the cap can only bite after more than 36 years of service, whatever the salary.</p><h2>Worked Example: Transitievergoeding Berekenen</h2><p>Sophie works for the Dutch subsidiary of a US software company. Her contract started on 1 March 2019. After a UWV redundancy permit, it ends on 30 June 2026: 7 years and 4 months of service. Her terms: \u20ac5,000 gross a month, 8% holiday allowance on base salary, a fixed 13th month, and a contractual bonus that paid \u20ac2,500, \u20ac3,000 and \u20ac3,500 in 2023, 2024 and 2025 (\u20ac9,000 in total, \u20ac3,000 a year on average).</p><table><thead><tr><th>Salary component</th><th>Calculation</th><th>Per month</th></tr></thead><tbody><tr><td>Base salary</td><td>Contract</td><td>\u20ac5,000.00</td></tr><tr><td>Holiday allowance</td><td>8% \u00d7 \u20ac60,000 \u00f7 12</td><td>\u20ac400.00</td></tr><tr><td>13th month</td><td>\u20ac5,000 \u00f7 12</td><td>\u20ac416.67</td></tr><tr><td>Bonus 2023 to 2025</td><td>\u20ac9,000 \u00f7 36</td><td>\u20ac250.00</td></tr><tr><td><strong>Monthly salary basis</strong></td><td>Total</td><td><strong>\u20ac6,066.67</strong></td></tr></tbody></table><table><thead><tr><th>Step</th><th>Calculation</th><th>Amount</th></tr></thead><tbody><tr><td>7 full years</td><td>\u20ac6,066.67 \u00d7 1/3 \u00d7 7</td><td>\u20ac14,155.56</td></tr><tr><td>4 remaining months</td><td>\u20ac6,066.67 \u00d7 4 \u00f7 36</td><td>\u20ac674.07</td></tr><tr><td><strong>Transition payment</strong></td><td>Total</td><td><strong>\u20ac14,829.63</strong></td></tr><tr><td>Cap check</td><td>Higher of \u20ac102,000 and \u20ac72,800 (12 \u00d7 \u20ac6,066.67)</td><td>\u20ac102,000, not reached</td></tr></tbody></table><p>Had you used base salary only, the result would be \u20ac5,000 \u00d7 88 \u00f7 36 = \u20ac12,222.22, which is \u20ac2,607.41 too low. Sophie could claim the difference in court, plus statutory interest.</p><h3>When the cap applies</h3><p>Two long-serving employees (monthly salary basis including all components):</p><table><thead><tr><th>Employee</th><th>Formula amount</th><th>Cap</th><th>You pay</th></tr></thead><tbody><tr><td>Pieter: \u20ac12,000 a month, 39 years</td><td>\u20ac156,000.00</td><td>\u20ac144,000 (one year's pay)</td><td>\u20ac144,000</td></tr><tr><td>Anna: \u20ac8,000 a month, 40 years</td><td>\u20ac106,666.67</td><td>\u20ac102,000</td><td>\u20ac102,000</td></tr></tbody></table><p>Pieter is a high earner, so his own annual pay of \u20ac144,000 becomes the cap. Anna's annual pay of \u20ac96,000 is below \u20ac102,000, so the fixed amount applies.</p><h2>Deductions, Payment Deadline and Tax</h2><h3>Costs you may deduct</h3><p>Under the Besluit voorwaarden in mindering brengen kosten op transitievergoeding, you may deduct (in mindering brengen) two kinds of cost:</p><ul><li><strong>Transition costs (transitiekosten):</strong> measures linked to the end of the contract that prevent or shorten unemployment, such as outplacement or retraining for another job.</li><li><strong>Employability costs (inzetbaarheidskosten):</strong> training or other activities during employment that broaden the employee's employability inside or outside your company.</li></ul><p>The conditions are strict. Specify the costs in writing before you incur them, and get the employee's written consent in advance, unless a CAO or similar collective agreement obliges you to make them. The costs must not be wages, must be reasonable for their purpose and must not be recoverable from a third party or the employee. Employability costs must not be for skills used mainly in the current job or for reintegration duties, and must date from the 5 years before the payment fell due unless agreed otherwise in writing.</p><p>Salary during garden leave (vrijstelling van werk) is wages, so you cannot deduct it. One exception: if you agree a notice period longer than the statutory or contractual one and release the employee from work during it, the cost of observing that longer notice period counts as a transition cost.</p><h3>Payment deadline, instalments and interest</h3><ul><li>Pay no later than 1 month after the employment ends, often with the final salary.</li><li>From 1 month after the end date, statutory interest (wettelijke rente) runs on any unpaid amount.</li><li>If paying in one go would have unacceptable consequences for your business, you may spread payment over at most 6 months, starting when interest becomes due. Interest runs on the unpaid part.</li><li>The employee has 3 months after the end date to ask the court for the payment.</li></ul><h3>Tax and payroll</h3><p>The transition payment is a gross amount. For tax it is income from former employment (loon uit vroegere dienstbetrekking): process it through Dutch payroll and withhold wage tax (loonheffing). Settlement amounts above it are taxed the same way. UWV only refunds a transition payment that was calculated and paid gross, with the tax paid to the Dutch Tax Administration (Belastingdienst).</p><h2>UWV Compensation for the Transition Payment</h2><h3>After two years of illness</h3><p>Since 1 April 2020, UWV refunds the transition payment when a contract ends after the employee has been ill for two years (the period in which you continue to pay wages during sickness). In 2026 this applies to employers of every size. The conditions:</p><ul><li>The contract ended after the two-year period because the employee could no longer do the agreed work due to illness, or a fixed-term contract expired while the employee was ill.</li><li>A settlement agreement also qualifies if the contract would otherwise have ended by notice or court dissolution.</li><li>You calculated and paid the transition payment gross.</li><li>You apply within 6 months after paying it in full, through the UWV employer portal using eHerkenning (the Dutch business login).</li></ul><p>UWV refunds what you paid, up to the statutory transition payment, and never more than the transition payment that would have been owed the day after the two-year period ended. Employer contributions and statutory interest are not refunded. You may get less if a wage sanction (loonsanctie) made you pay wages beyond two years. UWV decides within 8 weeks of a complete application. See our guide to <a href=\"/guides/dutch-sick-leave-management/\">sick leave management in the Netherlands</a>, or see the <a href=\"https://www.uwv.nl/nl/ontslag/compensatie-transitievergoeding-langdurige-arbeidsongeschiktheid\">UWV page on compensation</a> (in Dutch).</p><h3>Small business closing on retirement or death</h3><p>Since 1 January 2021, UWV also refunds transition payments when a small business closes because the owner retires or dies. The main conditions:</p><ul><li>On average fewer than 25 employees in the second half of the calendar year before the dismissal request.</li><li>UWV or the court allowed the dismissal of at least one employee because the business is closing.</li><li>The owner has reached state pension age or will within 6 months of the request, or has died and the request was filed within 12 months of the death.</li><li>The business belonged to the same owner for at least the two years before the request.</li><li>You apply within 12 months after the first dismissal request.</li></ul><p>Illness of the owner is not a qualifying reason: only retirement and death are in force.</p><h3>Planned abolition: proposed, not yet law</h3><p>The government wants to abolish both schemes for all employers (bill 36869). A plan to limit the illness scheme to small employers from 1 July 2026 was postponed, then replaced by a June 2026 amendment proposing full abolition from 1 January 2027. The 2027 budget of the Ministry of Social Affairs (September 2026) postponed this by one year, to 1 January 2028. In November 2026 the bill was still before the House of Representatives (Tweede Kamer), with no vote. Until a law passes, the current schemes apply. Under the proposed transitional rule, cases where the two-year illness period ended before the abolition date would still qualify. Check uwv.nl before you count on a refund.</p><h2>Settlements, Fair Compensation and the i-Ground</h2><p>Other amounts can replace the transition payment or come on top:</p><ul><li><strong>Settlement agreement:</strong> no statutory obligation, but the transition payment is the usual floor. Anything above it is a matter of negotiation.</li><li><strong>Fair compensation (billijke vergoeding):</strong> the court can award this on top of the transition payment if the termination results from seriously culpable acts or omissions by you. The law gives no formula; the court sets the amount.</li><li><strong>Cumulation ground (i-ground):</strong> the court can dissolve a contract on a combination of incomplete dismissal grounds, for example poor performance plus a damaged working relationship. It can then award up to 50% of the transition payment extra.</li></ul><p>For the full procedure, see <a href=\"/guides/dismissing-employee-netherlands-procedure/\">how to dismiss an employee in the Netherlands</a>. For collective redundancies, see <a href=\"/guides/restructuring-redundancy-netherlands/\">restructuring and redundancy in the Netherlands</a>.</p><h2>Employer Checklist</h2><ul><li>Before any exit talk, pull the full service history (earlier contracts, agency periods, gaps) and diarise the legal end date.</li><li>Ask payroll for 12 months of pay data and bonus data for the last 3 calendar years.</li><li>Check your CAO for an equivalent arrangement if the dismissal is for business-economic reasons.</li><li>Budget the full formula amount. The cap rarely applies.</li><li>Put the gross transition payment, the calculation, any deducted costs (with the employee's prior written consent attached) and the payment date in the termination letter or settlement agreement.</li><li>Pay through Dutch payroll within 1 month after the end date.</li><li>After long-term illness, diarise the 6-month UWV deadline from the payment date and keep the contract, proof of the end date, payslips, your calculation and proof of payment.</li></ul><h2>How HRhelp Helps</h2><p>We are a Dutch HR consultancy for international companies. Our senior consultants calculate the transition payment line by line from your payroll data, check service history and CAO rules, and draft the termination letter or settlement terms with you. When a long-term sick employee leaves, we help you prepare the UWV compensation application and track the deadline. For larger changes, see our <a href=\"/expertise/restructuring/\">restructuring expertise</a> and <a href=\"/services/labor-law-advice-international-employer/\">labour law advice for international employers</a>.</p><p><a href=\"/contact/\">Book a Free Consultation</a></p>",
+    "process": [
+      {
+        "step": "01",
+        "title": "Map the Service History",
+        "desc": "Confirm the start date, earlier contracts with gaps of 6 months or less, agency periods and the legal end date. Keep the documents on file."
+      },
+      {
+        "step": "02",
+        "title": "Build the Salary Basis",
+        "desc": "Collect 12 months of payroll data and bonus data for 3 calendar years. Add holiday allowance, a fixed 13th month, agreed overtime and shift pay, and variable pay divided by 36."
+      },
+      {
+        "step": "03",
+        "title": "Calculate and Check the Cap",
+        "desc": "Apply one third of a month per year plus the pro rata remainder. Compare with \u20ac102,000 or one year's pay, and deduct only costs agreed in writing beforehand."
+      },
+      {
+        "step": "04",
+        "title": "Pay, Document and Claim",
+        "desc": "Pay gross through Dutch payroll within 1 month of the end date. After two years of illness, apply to UWV within 6 months of paying in full."
+      }
+    ],
+    "pitfalls": [
+      {
+        "severity": "high",
+        "title": "Using Base Salary Only",
+        "desc": "Leaving out holiday allowance, a fixed 13th month, agreed overtime or contractual bonuses understates the payment. The employee can claim the shortfall in court within 3 months of the end date, plus statutory interest."
+      },
+      {
+        "severity": "high",
+        "title": "Missing the UWV Deadline",
+        "desc": "Compensation after two years of illness must be requested within 6 months of paying the full transition payment. UWV rejects late applications, so diarise the deadline on the day you pay."
+      },
+      {
+        "severity": "high",
+        "title": "Deducting Costs Without Consent",
+        "desc": "Training or outplacement costs are only deductible if you specified them in writing and the employee agreed in writing before you incurred them, unless a CAO or similar collective agreement covers them."
+      },
+      {
+        "severity": "medium",
+        "title": "Ignoring Earlier Contracts",
+        "desc": "Earlier contracts with gaps of 6 months or less, and time with a predecessor employer doing the same work, count towards service. Missing them understates the payment."
+      },
+      {
+        "severity": "medium",
+        "title": "Paying Late",
+        "desc": "Statutory interest runs from 1 month after the end date. Instalments over at most 6 months are only allowed if paying at once would have unacceptable consequences for your business."
+      },
+      {
+        "severity": "low",
+        "title": "Counting on the Cap",
+        "desc": "The cap only makes a difference after more than 36 years of service. For almost every employee it changes nothing, so budget the full formula amount."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Do I have to pay a transition payment if the employee resigns?",
+        "a": "No. An employee who resigns, or turns down your offer to renew a fixed-term contract, has no right to a transition payment. The exception is a resignation caused by seriously culpable acts or omissions by you as the employer, such as discrimination. In that case you owe the transition payment, and the employee can also ask the court for additional fair compensation (billijke vergoeding) on top of it."
+      },
+      {
+        "q": "Is a transition payment due if I dismiss someone during the probation period?",
+        "a": "Yes. Since 1 January 2020 the right to a transition payment starts on the first day of employment, so it also applies when you end the contract during the probation period. The amount is small because it is pro rata. For an employee with a monthly salary basis of \u20ac4,000 who leaves after 2 months, it is \u20ac4,000 \u00d7 2 \u00f7 36 = \u20ac222.22. Pay it through payroll with the final salary."
+      },
+      {
+        "q": "Do I owe a transition payment when a fixed-term contract is not renewed?",
+        "a": "Yes, if the decision not to renew is yours. The length of the contract does not matter. You do not owe it if the employee turns down your offer to renew. You also do not owe it if, before the contract ends, you agree a new contract that starts within 6 months and can be terminated early. Earlier fixed-term contracts with gaps of 6 months or less count towards service."
+      },
+      {
+        "q": "When must the transition payment be paid?",
+        "a": "Pay it no later than one month after the employment ends. It is often paid with the final salary. From one month after the end date, statutory interest (wettelijke rente) runs on any unpaid amount. If paying in one go would have unacceptable consequences for your business, you may spread it over at most 6 months, with interest on the outstanding part. The employee has 3 months after the end date to claim it in court."
+      },
+      {
+        "q": "Is the transition payment taxable in the Netherlands?",
+        "a": "Yes. The transition payment is a gross amount and counts as income from former employment (loon uit vroegere dienstbetrekking). The employer withholds wage tax (loonheffing) through Dutch payroll and the employee receives the net amount. Paying it gross through payroll also matters for UWV compensation: UWV only refunds a transition payment that was calculated and paid gross, with the tax share paid to the Dutch Tax Administration."
+      },
+      {
+        "q": "Do I have to pay a transition payment in a settlement agreement?",
+        "a": "Not by law. A settlement agreement (vaststellingsovereenkomst) ends the contract by mutual consent, which falls outside the statutory obligation. In practice the transition payment is the usual starting point, because the employee would receive it if you went to UWV or the court instead. After two years of illness, a settlement can still qualify for UWV compensation if the contract would otherwise have ended by notice or court dissolution."
+      },
+      {
+        "q": "Can I get the transition payment back from UWV for a long-term sick employee?",
+        "a": "Yes, in 2026. If the contract ends after two years of illness, UWV refunds the transition payment you paid, capped at the amount owed at the end of the two-year period. Apply within 6 months of paying it in full. The government plans to abolish the scheme, with 1 January 2028 as the latest planned date, but the bill had not passed parliament as of November 2026. Check uwv.nl before you budget for a refund."
+      }
+    ],
+    "relatedSlugs": [
+      "dutch-termination-procedures",
+      "settlement-agreement-netherlands",
+      "restructuring-redundancy-netherlands"
+    ],
+    "topic": "Dismissal & Restructuring"
+  },
+  {
+    "slug": "dutch-maternity-leave",
+    "title": "Maternity Leave in the Netherlands: Employer Guide",
+    "subtitle": "Maternity leave in the Netherlands for employers: the 16 weeks, the UWV benefit and 2026 cap, application deadlines, sickness and dismissal rules.",
+    "vertical": "hr-teams",
+    "verticalLabel": "HR Teams Guide",
+    "parentService": "/solutions/hr-teams/",
+    "parentServiceName": "HR Teams",
+    "readTime": "11 min read",
+    "atAGlance": [
+      {
+        "icon": "pregnant_woman",
+        "label": "Total Leave",
+        "value": "At least 16 weeks"
+      },
+      {
+        "icon": "euro",
+        "label": "UWV Benefit",
+        "value": "100% of daily wage"
+      },
+      {
+        "icon": "payments",
+        "label": "Cap from 1 July 2026",
+        "value": "\u20ac309.91 gross per day"
+      },
+      {
+        "icon": "event",
+        "label": "Employer Applies",
+        "value": "2 weeks before leave"
+      }
+    ],
+    "content": "<h2>Maternity leave in the Netherlands: the basics</h2><p>Maternity leave in the Netherlands lasts at least 16 weeks and is funded by a benefit from UWV (the Dutch employee insurance agency), not by the employer. The rules are in chapter 3 of the Work and Care Act (Wet arbeid en zorg, or WAZO). The leave has two parts: pregnancy leave (zwangerschapsverlof) before the birth and maternity leave (bevallingsverlof) after it. Your job as employer is to fix the dates, apply to UWV, run payroll and respect the protection rules.</p><ul><li><strong>Start:</strong> between 6 and 4 weeks before the day after the expected due date (uitgerekende datum). The employee chooses. For twins or more: 10 to 8 weeks.</li><li><strong>After the birth:</strong> at least 10 weeks, starting the day after the birth.</li><li><strong>Total:</strong> at least 16 weeks, or at least 20 weeks for a multiple birth.</li><li><strong>Pay:</strong> UWV pays 100% of the daily wage (dagloon), up to a statutory maximum.</li><li><strong>No opt-out:</strong> no contract or CAO (collective labour agreement) can reduce these rights.</li></ul><p>The Working Hours Act (Arbeidstijdenwet) adds a hard floor: you must make sure she does not work in the 4 weeks before the due date or the 6 weeks after the birth. Partner leave (geboorteverlof, aanvullend geboorteverlof) and parental leave (ouderschapsverlof) are separate schemes, covered in the guide to <a href=\"/guides/dutch-parental-leave-policies/\">parental leave policies in the Netherlands</a>.</p><h2>How the maternity leave weeks are calculated</h2><p>Count from the day after the due date. Pregnancy leave runs up to and including the day of the birth. Maternity leave then runs for 10 weeks, plus the days by which pregnancy leave fell short of 6 weeks (10 for multiples):</p><ul><li><strong>Later start:</strong> starting 4 weeks before moves 2 weeks to after the birth.</li><li><strong>Baby born early:</strong> the missed pregnancy leave days are added after the birth, so the end date stays the same.</li><li><strong>Baby born late:</strong> pregnancy leave continues until the birth and the full 10 weeks follow. The total exceeds 16 weeks and the benefit covers the extra days.</li><li><strong>Sick before the leave:</strong> sick days in the 6 to 4 week window (flexibiliseringsperiode) count as pregnancy leave and are not added after the birth.</li></ul><table><thead><tr><th>Scenario</th><th>Before birth</th><th>After birth</th><th>Total</th></tr></thead><tbody><tr><td>Starts 6 weeks before</td><td>6 weeks</td><td>10 weeks</td><td>16 weeks</td></tr><tr><td>Starts 4 weeks before</td><td>4 weeks</td><td>12 weeks</td><td>16 weeks</td></tr><tr><td>Baby 1 week early</td><td>5 weeks</td><td>11 weeks</td><td>16 weeks</td></tr><tr><td>Baby 10 days late</td><td>6 weeks + 10 days</td><td>10 weeks</td><td>16 weeks + 10 days</td></tr><tr><td>Twins, starts 10 weeks before</td><td>10 weeks</td><td>10 weeks</td><td>20 weeks</td></tr><tr><td>Twins, starts 8 weeks before</td><td>8 weeks</td><td>12 weeks</td><td>20 weeks</td></tr><tr><td>Baby in hospital for first 4 weeks of leave</td><td>6 weeks</td><td>13 weeks</td><td>19 weeks</td></tr></tbody></table><p>Unless stated, the table assumes one baby born on the due date and leave starting 6 weeks before.</p><p><strong>Baby in hospital.</strong> If the newborn is admitted to hospital during maternity leave, the leave is extended by the hospital days from the 8th day of admission, up to 10 weeks. With a standard 10-week leave that means at most 9 weeks, as UWV puts it. She gives you a hospital statement; you request the extension from UWV.</p><p><strong>Spreading the last weeks (gespreid opnemen).</strong> She may ask to take the weeks that remain after the first 6 weeks of maternity leave in parts, spread over 30 weeks, for example by working part-time. She must ask within 3 weeks of the start of maternity leave. You must agree within 2 weeks unless a weighty business reason (zwaarwegend bedrijfs- of dienstbelang) stands in the way.</p><h2>Maternity pay and the UWV application</h2><h3>How much UWV pays</h3><p>The pregnancy and maternity benefit (zwangerschaps- en bevallingsuitkering, or WAZO benefit) is 100% of the daily wage. UWV takes her social security wage (SV-loon) over roughly the previous 12 months, including holiday allowance, and divides it by 261. A recent pay rise is only partly reflected. The benefit is paid for every weekday.</p><p>The daily wage is capped at the maximum daily wage (maximumdagloon): <strong>\u20ac309.91 gross per day from 1 July 2026</strong> (\u20ac304.25 from 1 January 2026), including holiday allowance. The cap is reviewed every 1 January and 1 July, so check the <a href=\"https://www.uwv.nl/nl/premies-bedragen/maximum-dagloon\">UWV maximum daily wage page</a> before you budget.</p><h3>Salary and top-ups</h3><p>By law you owe no salary during the leave (article 7:629(4) Dutch Civil Code). On the application you choose who UWV pays. Usually that is the employer, who keeps paying salary as normal; UWV pays within 4 weeks of the leave start and then every 4 weeks. The WAZO does not oblige you to top up to full salary, as the Minister of Social Affairs confirmed in March 2026. A top-up becomes compulsory if your CAO, the contract or your handbook promises it. Decide your policy once and write it down.</p><h3>Who applies and when</h3><ul><li><strong>Employee to employer:</strong> she gives you her leave start date at least 3 weeks ahead, with a pregnancy statement (zwangerschapsverklaring) from her midwife or doctor showing the due date. She reports the birth by the second day after it.</li><li><strong>Employer to UWV:</strong> you apply, not the employee, through the Verzuimmelder in the UWV employer portal (werkgeversportaal) or Digipoort, report type \"WAZO-verlof\". The window is 4 to 2 weeks before the leave starts; the legal deadline is 2 weeks before. See the UWV <a href=\"https://www.uwv.nl/nl/zwangerschapsverlof-bevallingsverlof/zwangerschapsverlof-aanvragen\">application page</a>.</li><li><strong>Late application:</strong> UWV then only pays for leave within the year before the application date, unless it makes an exception.</li></ul><h2>Worked example: due date 15 March 2027</h2><p>Sanne works full-time for the Dutch subsidiary of a US company on \u20ac6,500 gross a month plus 8% holiday allowance, no bonus, and has been employed for over a year. Her due date is Monday 15 March 2027 and she wants to start leave as early as possible.</p><ul><li><strong>Day after the due date:</strong> 16 March 2027.</li><li><strong>Leave start:</strong> earliest 2 February, latest 16 February 2027. She picks 2 February.</li><li><strong>She must tell you by:</strong> 12 January 2027.</li><li><strong>Your UWV application:</strong> between 5 and 19 January 2027. Diarise 12 January.</li><li><strong>Born on the due date:</strong> maternity leave runs 16 March to 24 May 2027; she returns 25 May.</li><li><strong>Request to spread leave:</strong> by 6 April 2027.</li><li><strong>Notice ban:</strong> until 5 July 2027, 6 weeks after her return.</li></ul><p><strong>The money.</strong> Her SV wage for the reference year is 12 x \u20ac6,500 plus \u20ac6,240 holiday allowance: \u20ac84,240. Her daily wage is \u20ac84,240 / 261 = \u20ac322.76, above the cap, so UWV pays \u20ac309.91 per weekday. (This uses the cap in force since 1 July 2026; the 1 January 2027 cap was not yet published at the time of writing.) Sixteen weeks contain 80 weekdays:</p><ul><li>UWV benefit: 80 x \u20ac309.91 = \u20ac24,792.80 gross.</li><li>Her own daily wage for 80 days: about \u20ac25,820.69 gross.</li><li>Gap: about \u20ac1,028 gross for the whole leave, about \u20ac64 a week.</li></ul><p>If you pay full salary, UWV covers about \u20ac24,793 and the top-up costs you about \u20ac1,028 gross, excluding employer payroll costs. If you only pass on the benefit, Sanne gets about \u20ac1,028 less than normal pay. A late baby extends both the leave and the benefit.</p><h2>Sickness before, during and after the leave</h2><p>Pregnancy-related illness has its own rules under the Sickness Benefits Act (Ziektewet). They work in your favour if you report on time.</p><ul><li><strong>Sick because of the pregnancy, before the 6 to 4 week window:</strong> you keep paying wages and UWV pays a sickness benefit of 100% of her daily wage (capped), normally to you, from day one. Report within 6 weeks.</li><li><strong>Sick for any reason in the 6 to 4 week window:</strong> report by the fourth sick day. The same benefit applies; the sick days are deducted from the leave after the birth.</li><li><strong>Sick during the leave:</strong> no extra leave or benefit, and nothing to report to UWV.</li><li><strong>Sick straight after the leave because of the pregnancy or birth:</strong> report by the fourth sick day. UWV pays the benefit while the illness lasts, up to 104 weeks. Illness that starts later or has another cause falls under your normal sick pay duties.</li></ul><p>Late reporting can cost a UWV fine of up to \u20ac455. Pregnancy-related sickness before the leave is not counted in the 2-year period of sickness during which you cannot give notice. Company doctor (bedrijfsarts) and reintegration rules still apply; see <a href=\"/guides/dutch-sick-leave-management/\">managing sick leave in the Netherlands</a>.</p><h2>Dismissal protection, holiday and pension</h2><ul><li><strong>Notice ban:</strong> you cannot give notice during the pregnancy, the maternity leave or the 6 weeks after she returns. If she is sick from the pregnancy or birth straight after the leave, the 6 weeks run from her return after that sickness. You may ask for a doctor's or midwife's statement confirming the pregnancy.</li><li><strong>Narrow exceptions:</strong> dismissal in the probation period, with her written consent, or summary dismissal for an urgent reason. Closing the whole business counts too, but not while she is on leave. Dismissal in probation because of the pregnancy is still discrimination.</li><li><strong>Court route:</strong> in the protected period a subdistrict court (kantonrechter) only dissolves the contract if the request has nothing to do with the pregnancy, or if ending it is in her own interest.</li><li><strong>Fixed-term contracts:</strong> the contract still ends on its end date, with the usual written notice of (non-)renewal a month before for contracts of 6 months or more. But pregnancy must not be the reason: unequal treatment because of pregnancy, childbirth or motherhood is direct sex discrimination under the Equal Treatment Act for men and women and article 7:646 Civil Code. The employee can ask the Netherlands Institute for Human Rights (College voor de Rechten van de Mens) for an opinion. If the birth is expected within 10 weeks after the contract ends, she keeps the UWV benefit and applies herself.</li><li><strong>Holiday:</strong> she accrues holiday over her full contractual hours during the leave, and leave days cannot be booked as holiday. Statutory days she could not reasonably take do not expire after the usual 6 months.</li><li><strong>Holiday allowance:</strong> the UWV benefit includes it. If you pay salary, keep accruing holiday allowance (vakantiegeld) as usual.</li><li><strong>Pension:</strong> a scheme rule that stops accrual during pregnancy or maternity leave counts as unequal treatment by law. Keep accrual running.</li></ul><p>See also <a href=\"/guides/anti-discrimination-dutch-workplace/\">anti-discrimination in the Dutch workplace</a>.</p><h2>Health, breastfeeding and return to work</h2><p><strong>During pregnancy.</strong> Once you know an employee is pregnant:</p><ul><li>Your risk assessment (RI&amp;E, the mandatory risk inventory and evaluation) must cover risks for pregnant and breastfeeding employees.</li><li>Inform her about those risks and your measures within 2 weeks of her telling you.</li><li>Adapt the work, then the hours, then offer other work. If none of that works, release her from work.</li><li>She may take extra breaks of up to one eighth of her working time per shift, and paid time off for check-ups. She cannot be required to work night shifts (unless you show this cannot reasonably be avoided) or more than 10 hours per shift. Apart from the check-ups, these protections continue for 6 months after the birth.</li></ul><p><strong>Breastfeeding.</strong> Until the child is 9 months old, she may interrupt work to breastfeed or express milk as often and as long as needed, up to one quarter of her working time per shift. These breaks are paid working time. Where needed, provide a suitable private room that can be locked.</p><p><strong>Coming back.</strong> Her contract continues unchanged during the leave, so she returns to her own job on the same terms. Moving her to a lesser role or passing her over for a pay rise or promotion because of the leave is pregnancy discrimination. Expect requests for:</p><ul><li>parental leave (ouderschapsverlof): see <a href=\"/guides/dutch-parental-leave-policies/\">parental leave in the Netherlands</a>;</li><li>fewer hours under the Flexible Working Act (Wet flexibel werken). After 26 weeks of service she can ask in writing at least 2 months ahead. With 10 or more employees, you can refuse only for a weighty business reason, and if you have not decided 1 month before the requested start date, the request is granted.</li></ul><h2>Your maternity leave policy and HR checklist</h2><p><strong>Put in your policy or <a href=\"/guides/employee-handbook-netherlands/\">employee handbook</a>:</strong> who to tell and who receives the pregnancy statement; whether you pay full salary or pass on the benefit, including pay above the cap; who files the UWV application, with an internal deadline of 3 weeks before leave; how spreading requests and breastfeeding breaks work; and how holiday, bonus and pension are handled.</p><p><strong>HR checklist for each pregnancy:</strong></p><ol><li>Confirm the due date and leave start in writing and diarise every deadline above.</li><li>Update the risk assessment and brief her within 2 weeks.</li><li>File \"WAZO-verlof\" at least 2 weeks before leave starts and choose who receives the benefit.</li><li>Set up payroll: salary, any top-up, holiday allowance, pension and UWV reconciliation.</li><li>Arrange cover, then plan the return: hours, breastfeeding room, flexible working requests.</li></ol><p><strong>What head offices abroad often get wrong:</strong> assuming the employer funds the leave (UWV does, up to the cap); assuming UWV replaces full salary for high earners; waiting for the employee to apply; booking leave as holiday; letting a fixed-term contract lapse because of the pregnancy; and planning a redundancy while the notice ban applies.</p><h2>How HRhelp helps</h2><p>We are a Dutch HR consultancy for international companies. Through <a href=\"/solutions/hr-teams/\">HR Teams</a>, our senior consultants:</p><ul><li>write or review your maternity and family leave policy against the WAZO and your CAO;</li><li>work out the dates and pay for each employee, including any top-up above the UWV cap;</li><li>prepare the UWV application and track every deadline;</li><li>manage pregnancy-related absence with the company doctor through our <a href=\"/expertise/sickness-management/\">sickness management</a> support;</li><li>advise on renewals, reorganisations and dismissal in the protected period through our <a href=\"/services/labor-law-advice-international-employer/\">labour law advice for international employers</a>.</li></ul><p>Want maternity leave handled correctly for your Dutch team? <a href=\"/contact/\">Book a Free Consultation</a></p>",
+    "process": [
+      {
+        "step": "01",
+        "title": "Confirm the Dates",
+        "desc": "Get the pregnancy statement, agree the leave start (6 to 4 weeks before the day after the due date) and confirm it in writing with every key deadline diarised."
+      },
+      {
+        "step": "02",
+        "title": "Apply to UWV",
+        "desc": "File the WAZO-verlof request in the UWV employer portal between 4 and 2 weeks before leave starts. Choose who receives the benefit and set payroll accordingly."
+      },
+      {
+        "step": "03",
+        "title": "Manage the Leave",
+        "desc": "Record the birth, request any hospital extension, answer a request to spread leave within 2 weeks, keep holiday and pension accruing, and report pregnancy-related sickness on time."
+      },
+      {
+        "step": "04",
+        "title": "Plan the Return",
+        "desc": "Agree the return date, breastfeeding breaks and any request for fewer hours. Remember the notice ban runs until 6 weeks after she is back at work."
+      }
+    ],
+    "pitfalls": [
+      {
+        "severity": "high",
+        "title": "Assuming UWV Pays Full Salary",
+        "desc": "UWV pays 100% of the daily wage only up to \u20ac309.91 gross a day (from 1 July 2026). For higher earners, decide and document whether you top up; a CAO may make it compulsory."
+      },
+      {
+        "severity": "high",
+        "title": "Missing the UWV Application",
+        "desc": "The employer, not the employee, applies in the Verzuimmelder at least 2 weeks before leave starts. If you file late, UWV only pays for leave within the year before the application."
+      },
+      {
+        "severity": "high",
+        "title": "Not Renewing Because of Pregnancy",
+        "desc": "Letting a fixed-term contract lapse because the employee is pregnant is direct sex discrimination. Record the business reasons for every non-renewal at the time you decide."
+      },
+      {
+        "severity": "medium",
+        "title": "Counting Leave as Holiday",
+        "desc": "Maternity leave days cannot be booked as holiday, and holiday keeps accruing over full contractual hours during the leave. Fix payroll and absence systems that pause accrual."
+      },
+      {
+        "severity": "medium",
+        "title": "Late Sickness Reports",
+        "desc": "Report pregnancy-related sickness within the UWV deadlines: 6 weeks, or the fourth sick day in the window before leave and straight after it. Late reports can cost a fine of up to \u20ac455."
+      },
+      {
+        "severity": "medium",
+        "title": "Restructuring During Protection",
+        "desc": "Notice is banned during pregnancy, maternity leave and the 6 weeks after her return. Any redundancy plan that affects her role in this period needs legal advice first."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How long is maternity leave in the Netherlands?",
+        "a": "At least 16 weeks for one baby and at least 20 weeks for twins or more. Pregnancy leave starts 6 to 4 weeks before the day after the due date (10 to 8 weeks for multiples), and maternity leave lasts at least 10 weeks after the birth. Unused pregnancy leave days are added after the birth. If the baby is late, the total is longer, and a hospital stay of more than 7 days can extend it further."
+      },
+      {
+        "q": "Does the employer pay salary during maternity leave in the Netherlands?",
+        "a": "Not by law. UWV pays a benefit of 100% of the daily wage, capped at \u20ac309.91 gross per day from 1 July 2026. Usually the employer receives the benefit and keeps paying salary through payroll. Topping up to full salary for employees above the cap is voluntary, unless the CAO, the employment contract or your own policy requires it. The cap is reviewed every 1 January and 1 July."
+      },
+      {
+        "q": "Who applies for the zwangerschapsuitkering, the employer or the employee?",
+        "a": "The employer. You apply through the Verzuimmelder in the UWV employer portal, or via Digipoort, choosing the report WAZO-verlof, between 4 and 2 weeks before the leave starts. You need the expected due date from the pregnancy statement and the leave start date. Employees apply themselves only in special cases, for example when they already receive a UWV benefit or their contract ends within 10 weeks before the due date."
+      },
+      {
+        "q": "Can an employer refuse or postpone maternity leave?",
+        "a": "No. The employee chooses the start date within the window of 6 to 4 weeks before the day after the due date and must tell you at least 3 weeks in advance. You may not let her work in the 4 weeks before the due date or the 6 weeks after the birth. The only request you can refuse is spreading the last weeks of maternity leave, and only for a weighty business reason."
+      },
+      {
+        "q": "Can I dismiss a pregnant employee or end her fixed-term contract?",
+        "a": "You cannot give notice during the pregnancy, the maternity leave or the 6 weeks after she returns, apart from narrow exceptions such as dismissal in the probation period or with her written consent. A fixed-term contract can end on its agreed date, but not renewing it because of the pregnancy is sex discrimination under Dutch equal treatment law. Record the business reasons for any non-renewal and get advice before acting."
+      },
+      {
+        "q": "Does an employee build up holiday during maternity leave?",
+        "a": "Yes. While she is entitled to the UWV pregnancy and maternity benefit, she builds up holiday over her full contractual hours. You cannot count leave days as holiday, and statutory holiday she could not reasonably take does not expire after the usual 6 months. The UWV benefit includes holiday allowance; if you keep paying salary, keep accruing holiday allowance in payroll as usual."
+      },
+      {
+        "q": "What if the employee is sick before her maternity leave starts?",
+        "a": "If the illness is caused by the pregnancy, UWV pays a sickness benefit of 100% of the daily wage, capped, usually to you, while you keep paying wages. Report within 6 weeks, or by the fourth sick day if she falls ill in the 6 to 4 week window before the leave. In that window any illness qualifies, and the sick days are deducted from the leave after the birth."
+      }
+    ],
+    "relatedSlugs": [
+      "dutch-parental-leave-policies",
+      "dutch-sick-leave-management",
+      "anti-discrimination-dutch-workplace"
+    ],
+    "topic": "Leave & Working Hours"
+  },
+  {
+    "slug": "probation-period-dutch-law",
+    "title": "Probation Period Netherlands: Proeftijd Rules 2026",
+    "subtitle": "Probation period in the Netherlands (proeftijd) for employers: legal maximums, void clauses, dismissal during probation, sick hires and a model clause.",
+    "vertical": "hr-teams",
+    "verticalLabel": "HR Teams Guide",
+    "parentService": "/solutions/hr-teams/",
+    "parentServiceName": "HR Teams",
+    "readTime": "11 min read",
+    "atAGlance": [
+      {
+        "icon": "schedule",
+        "label": "Maximum Probation",
+        "value": "2 months"
+      },
+      {
+        "icon": "event_busy",
+        "label": "Contract 6 Months or Less",
+        "value": "No probation allowed"
+      },
+      {
+        "icon": "gavel",
+        "label": "Notice During Probation",
+        "value": "None, immediate effect"
+      },
+      {
+        "icon": "warning",
+        "label": "Clause Too Long",
+        "value": "Void in its entirety"
+      }
+    ],
+    "content": "<h2>What a probation period (proeftijd) means in Dutch law</h2><p>A probation period in the Netherlands (proeftijd) is a short trial phase at the start of employment during which either party can end the contract with immediate effect. Article 7:652 of the Dutch Civil Code (Burgerlijk Wetboek, BW) sets the rules for agreeing one, and article 7:676 BW covers ending the contract during it. Three points surprise most foreign employers:</p><ul><li><strong>It is short.</strong> Two months at most, often one month, sometimes none.</li><li><strong>It must be agreed in writing.</strong> No written clause, no probation.</li><li><strong>A wrong clause is worth nothing.</strong> A clause that breaks the rules is void in its entirety. A court will not shorten it to the legal maximum.</li></ul><p>After probation, normal Dutch dismissal law applies: see <a href=\"/guides/dismissing-employee-netherlands-procedure/\">how to dismiss an employee in the Netherlands</a>. For the other contract terms, see the <a href=\"/guides/dutch-employment-contracts-guide/\">guide to Dutch employment contracts</a> and <a href=\"/guides/hiring-first-employee-netherlands/\">hiring your first employee in the Netherlands</a>.</p><h2>Maximum probation period in the Netherlands by contract type</h2><p>The maximum depends on the type and length of the contract you sign (<a href=\"https://wetten.overheid.nl/jci1.3:c:BWBR0005290&amp;boek=7&amp;titeldeel=10&amp;afdeling=5&amp;artikel=652\">art. 7:652 BW</a>).</p><table><thead><tr><th>Contract</th><th>Maximum probation</th><th>Can a CAO allow longer?</th></tr></thead><tbody><tr><td>Fixed-term, 6 months or less</td><td>None</td><td>No</td></tr><tr><td>Fixed-term, more than 6 months but less than 2 years</td><td>1 month</td><td>Yes</td></tr><tr><td>Fixed-term, 2 years or longer</td><td>2 months</td><td>No</td></tr><tr><td>Fixed-term with no calendar end date (for example, until a project ends)</td><td>1 month</td><td>Yes</td></tr><tr><td>Indefinite (permanent)</td><td>2 months</td><td>No</td></tr><tr><td>Follow-on contract for the same kind of work</td><td>None</td><td>No</td></tr></tbody></table><p>Only a collective labour agreement (CAO) or a regulation by an authorised public body can allow longer, and only in the two \"Yes\" rows (art. 7:652 lid 7 BW). The government states that probation is never longer than 2 months. A CAO can also be stricter, so read its probation article first.</p><p><strong>Is anything changing?</strong> No change has been announced for 1 January 2027. A 2019 proposal for 5 months in permanent contracts was dropped by parliament.</p><h2>Formal requirements for a valid probation clause</h2><ul><li><strong>In writing</strong> (art. 7:652 lid 2 BW). A signed contract works, as does one signed with a reliable e-signature tool (art. 6:227a BW) or a probation period in the applicable CAO. An oral promise does not.</li><li><strong>Equal for both parties</strong> (lid 1). Two months for the employee and one for the employer makes the clause void.</li><li><strong>Agreed at the start.</strong> Probation is agreed when the contract is entered into; you cannot add it later.</li><li><strong>Within the maximum.</strong> Any clause contrary to art. 7:652 BW is void (nietig, lid 8). A 3-month clause in a permanent contract does not become 2 months: it disappears, and the employee has normal dismissal protection from day one.</li><li><strong>One fixed length.</strong> Do not copy UK-style extension options. Dutch law has no extension mechanism, and an option that can push the total over the maximum puts the whole clause at risk.</li></ul><p>Get the signed contract back before anyone starts work, onboarding or training.</p><h3>When a new probation period is not allowed</h3><p>A follow-on contract with the same employer cannot contain a probation period unless it clearly requires different skills or responsibilities (art. 7:652 lid 6 BW). So:</p><ul><li><strong>Renewal or conversion to permanent</strong> in the same job: no new probation.</li><li><strong>Promotion to a clearly different role</strong>, for example engineer to engineering manager with staff and budget: a new probation is possible within the maximum. Record why the role differs.</li><li><strong>Successor employer (opvolgend werkgeverschap).</strong> The ban also covers an employer that is reasonably the successor of the previous one for the same work, such as hiring someone who did the job for you through a temp agency. The same risk is likely when someone moves from an employer of record (EOR), payroll company or foreign group company to your Dutch entity.</li></ul><h2>Dismissal during probation: rules and limits</h2><p>With a valid clause, either party may end the contract with immediate effect (art. 7:676 lid 1 BW). No notice period, no permission from UWV (the Dutch employee insurance agency) or the cantonal court (kantonrechter), and no statutory dismissal ground (art. 7:669 lid 7 BW). The bans on dismissal during illness, pregnancy and maternity leave, and of works council members, do not apply (art. 7:670a lid 2 BW). The employee has the same right, which matters if you paid for relocation or a visa.</p><p>The limits:</p><ul><li><strong>Reason on request.</strong> If the employee asks, you must give the reason in writing (art. 7:676 lid 2 BW). Keep it factual and job-related.</li><li><strong>No discrimination.</strong> You may not end the contract because of sex (including pregnancy), race, religion or belief, political opinion, nationality, sexual orientation, civil status, age, disability or chronic illness, or working hours. The employee can ask the court within two months to annul the termination or award fair compensation (billijke vergoeding) (art. 7:681 BW). See <a href=\"/guides/anti-discrimination-dutch-workplace/\">anti-discrimination in the Dutch workplace</a>.</li><li><strong>Union membership, leave and whistleblowing.</strong> Dismissal because someone is a union member or claims parental or care leave stays prohibited (art. 7:670 lid 5 and 7 BW), and so does dismissal for reporting a suspected wrongdoing (Wet bescherming klokkenluiders).</li><li><strong>Timing.</strong> Your notice must reach the employee before the probation ends (art. 3:37 lid 3 BW). One day late and the normal dismissal rules apply.</li></ul><p><strong>What you still pay:</strong> salary to the last day, accrued holiday allowance (vakantiegeld), untaken holiday days (art. 7:641 BW) and the transition payment (transitievergoeding), which applies from the first day of employment, including in probation. At one third of a month's salary per year of service, pro rata, it is a few hundred euros after six or seven weeks, and nothing if the employee resigns. A dismissed employee may claim unemployment benefit (WW); one who resigns generally cannot.</p><h2>Sick during probation: what you can do</h2><p>Illness does not pause or extend the probation (<a href=\"https://business.gov.nl/regulations/trial-period/\">business.gov.nl</a>). You keep paying sick pay, by law 70% of salary (up to a cap) and in the first 52 weeks no less than the minimum wage (art. 7:629 BW), and follow your normal absence process with the company doctor (bedrijfsarts). See <a href=\"/guides/dutch-sick-leave-management/\">managing sick leave in the Netherlands</a>.</p><p>You may still end the contract while the employee is sick, because the illness ban does not apply in probation (art. 7:670a lid 2 BW; UWV confirms this). The risk is the reason. Ordinary illness, such as flu or a sports injury, is not a protected ground. A disability or chronic illness is (equal treatment act WGBH/CZ, art. 4), and dismissal because of pregnancy, including pregnancy-related absence, is sex discrimination (art. 7:646 BW). Decide on suitability for the job, and make sure your file shows that.</p><p>If you end the contract while the employee is sick:</p><ol><li><strong>Report the employee sick to UWV on the last day of employment</strong> via the UWV employer portal (<a href=\"https://www.uwv.nl/nl/ziek/ziek-uit-dienst\">UWV: werknemer gaat ziek uit dienst</a>). A self-insurer for the Sickness Benefits Act (eigenrisicodrager Ziektewet) reports within 6 weeks after the last day.</li><li><strong>UWV takes over</strong> reintegration, and the former employee can receive Sickness Benefits Act benefit (Ziektewet-uitkering).</li><li><strong>The cost can come back to you.</strong> A self-insurer pays that benefit itself. Other employers fund it through the Ziektewet part of the differentiated Whk premium; medium-sized and large employers get an individual rate, which such benefits can push up in later years.</li></ol><h2>Probation vs notice period and fixed-term contracts</h2><p>During probation there is no notice period. After it, the employer's statutory notice period is 1 to 4 months depending on length of service and the employee's is 1 month (art. 7:672 BW), on top of a dismissal ground and UWV or court approval.</p><p>Many Dutch employers use the first contract as a longer trial:</p><ul><li><strong>7 to 12 months with 1 month of probation.</strong> The contract ends on its end date without UWV or the court. Tell the employee in writing at least one month before the end whether you will continue (art. 7:668 BW); a transition payment is due if you do not.</li><li><strong>Permanent, or fixed-term of 2 years or longer, with 2 months.</strong> The longest probation the law allows, useful for senior hires.</li></ul><p>Mind the chain rule: after more than three fixed-term contracts, or more than 36 months, with gaps of 6 months or less, the last one becomes permanent (art. 7:668a BW). From 1 January 2028 (Wet meer zekerheid flexwerkers) the gap needed to start a new chain becomes 3 years instead of 6 months. And after probation, a fixed-term contract can only be ended early if both parties have that right in writing (art. 7:667 lid 3 BW).</p><h2>Worked examples: a void clause and a sick new hire</h2><h3>Example 1: the copied UK template</h3><p>A UK-owned BV hires a sales manager on a 12-month contract from Monday 4 January 2027 to 3 January 2028, at &euro;6,500 gross a month. HR copies the UK clause: \"a probation period of two months\". In week 6 head office wants to end it.</p><ul><li><strong>The clause is void.</strong> The maximum for this contract is 1 month, and the 2-month clause is not cut back. There is no probation at all, not even in week 1.</li><li><strong>No easy exit.</strong> Without an early-termination clause the contract cannot be ended by notice before 3 January 2028.</li><li><strong>The exposure.</strong> If the BV sends a \"probation dismissal\" anyway, the employee can ask the court within two months to annul it or claim compensation. For a fixed-term contract that cannot be ended early, the statutory compensation is the salary for the remaining term (art. 7:677 lid 4 BW): almost 11 months, about &euro;70,000. A court can reduce it, but not below three months' salary (&euro;19,500).</li><li><strong>The realistic route.</strong> A <a href=\"/guides/settlement-agreement-netherlands/\">settlement agreement</a>, or keeping the employee to the end date with written notice of non-renewal at least a month before it, plus the transition payment.</li></ul><p><strong>The fix for the next hire:</strong> write 1 month in a 12-month contract. If you need eight weeks to judge a sales hire, offer a permanent contract with 2 months. Add a mutual early-termination clause to every fixed-term contract.</p><h3>Example 2: sick in week 3</h3><p>The Dutch BV of a German group hires a project engineer on a permanent contract from Monday 1 March 2027, at &euro;5,000 gross a month, with 2 months of probation signed on 10 February. In weeks 1 and 2 the manager records that the engineer lacks a software skill the job needs. On Wednesday 17 March the engineer reports sick.</p><ul><li>The probation still ends on 30 April; sick pay continues.</li><li>On 22 April the manager decides not to continue, based on the skills gap recorded before the absence.</li><li>On Friday 23 April HR holds a short video call, emails the signed letter and gets confirmation of receipt. The contract ends that day, and HR reports the engineer sick to UWV the same day.</li><li>Final pay: salary to 23 April, holiday allowance, untaken holiday days, and a transition payment of about &euro;265 gross (just under 1.8 months of a &euro;5,400 monthly salary including holiday allowance, divided by 36).</li></ul><p>Had the absence been linked to a chronic condition, with no earlier concerns on file, the same dismissal would carry a real discrimination risk.</p><h2>Model probation clause, letter checklist and date maths</h2><h3>Model probation clause (plain English, not legal advice)</h3><p>\"Probation period. The first [one month / two months] of employment, starting on the first day of work, is a probation period within the meaning of article 7:652 of the Dutch Civil Code. During the probation period the Employer and the Employee may each terminate this agreement with immediate effect.\"</p><p>In fixed-term contracts, add: \"Each party may terminate this agreement before the agreed end date by written notice, observing the statutory notice period.\"</p><h3>Termination letter checklist</h3><ul><li>A clear statement that you end the contract during probation with immediate effect under art. 7:676 BW, with the end date and the probation clause.</li><li>The reason, or a line that you will give it in writing on request. Job-related, with nothing on health, pregnancy or another protected ground.</li><li>Final pay items and when you will pay them, plus return of company property.</li><li>Signed by someone authorised to represent the Dutch entity.</li><li>Delivered before the probation ends: in person with a signed copy, or by email with confirmed receipt.</li><li>Follow-up: the UWV sick report if the employee is ill, and a report to the IND (immigration service) if you sponsor the residence permit.</li></ul><h3>Date maths</h3><p>Count in calendar months from the first day of work, conservatively: a 1-month probation starting on 15 January runs to 14 February; a 2-month probation starting on 1 March runs to 30 April. If the employee started before the contract date, count from that day. Diarise a decision meeting two weeks before the end.</p><h2>How HRhelp helps with probation periods</h2><p>We are a Dutch HR consultancy for international companies. Our senior consultants check your contract templates against art. 7:652 BW and your CAO before your next hire, set up a probation review plan for managers abroad, advise on a dismissal during probation (letter, timing, final pay, UWV sick report) and step in when a clause turns out to be void. Read more about our <a href=\"/services/labor-law-advice-international-employer/\">labour law advice for international employers</a> and <a href=\"/expertise/sickness-management/\">sickness management</a>, or see what <a href=\"/solutions/hr-teams/\">HR Teams</a> covers.</p><p><a href=\"/contact/\">Book a Free Consultation</a></p>",
+    "process": [
+      {
+        "step": "01",
+        "title": "Set the Right Length",
+        "desc": "Match the probation to the contract: none for 6 months or less, 1 month for fixed-term under 2 years, 2 months for permanent or 2 years plus. Check your CAO first."
+      },
+      {
+        "step": "02",
+        "title": "Sign Before Day One",
+        "desc": "Put one fixed, equal probation in the written contract and get it signed before any work or onboarding starts. Add a mutual early-termination clause to fixed-term contracts."
+      },
+      {
+        "step": "03",
+        "title": "Review Before the Deadline",
+        "desc": "Diarise check-ins in weeks 2 and 4 and a decision meeting about two weeks before the probation ends. Record job-related observations in writing."
+      },
+      {
+        "step": "04",
+        "title": "Decide and Close Out",
+        "desc": "If you end it, make sure the letter arrives before the last day, pay final salary, holiday pay and transition payment, and report a sick employee to UWV on the last day."
+      }
+    ],
+    "pitfalls": [
+      {
+        "severity": "high",
+        "title": "Copying a Foreign Template",
+        "desc": "A 3 or 6-month UK or US probation, or 2 months in a 12-month contract, is void in its entirety. You then have no probation at all and normal dismissal protection from day one."
+      },
+      {
+        "severity": "high",
+        "title": "New Probation in a Renewal",
+        "desc": "No new probation when you renew a fixed-term contract, convert it to permanent, or directly hire someone who did the same job for you through an agency, unless the role clearly changes."
+      },
+      {
+        "severity": "high",
+        "title": "A Discriminatory Reason",
+        "desc": "Probation dismissal needs no statutory ground, but ending a contract because of pregnancy, disability or chronic illness, age, race or religion can be annulled by the court or lead to fair compensation."
+      },
+      {
+        "severity": "medium",
+        "title": "Missing the Last Day",
+        "desc": "The termination must reach the employee before the probation ends. Count conservatively from the first working day and deliver the letter in person or with confirmed receipt."
+      },
+      {
+        "severity": "medium",
+        "title": "No Early-Termination Clause",
+        "desc": "Without a written mutual right to terminate early, a fixed-term contract cannot be ended by notice once probation is over. You are bound until the end date unless you agree a settlement."
+      },
+      {
+        "severity": "low",
+        "title": "Forgetting the Close-Out",
+        "desc": "Final pay includes accrued holiday allowance, untaken holiday days and a small transition payment. A sick employee must be reported to UWV on the last day of employment."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How long can a probation period be in the Netherlands?",
+        "a": "At most 2 months. For a permanent contract or a fixed-term contract of 2 years or longer, the maximum is 2 months. For a fixed-term contract of more than 6 months but less than 2 years, or one without a calendar end date, it is 1 month. A contract of 6 months or less cannot have a probation period. Only a CAO can allow longer, and only for those shorter fixed-term contracts."
+      },
+      {
+        "q": "Is a 3-month or 6-month probation period valid in the Netherlands?",
+        "a": "No. A probation clause longer than the legal maximum is void in its entirety under article 7:652 of the Dutch Civil Code. It is not shortened to 2 months: there is simply no probation, and the employee has normal dismissal protection from the first day. This often happens when a contract is copied from a UK or US template, so check every Dutch contract before it is signed."
+      },
+      {
+        "q": "Can an employer extend the probation period?",
+        "a": "No. Dutch law has no way to extend a probation period once the contract is signed, and illness during probation does not lengthen it. You also cannot add a probation period after the employee has started. If you need more time to assess someone, use a permanent contract with the full 2 months, or a first fixed-term contract that you can decide not to renew."
+      },
+      {
+        "q": "Do I have to give a reason for dismissal during probation?",
+        "a": "You do not need a statutory dismissal ground or permission from UWV or the court. But if the employee asks, you must give the reason in writing (article 7:676 of the Dutch Civil Code). Keep it factual and linked to the job, such as skills, results or conduct. The reason must never be discriminatory, for example pregnancy, a chronic illness, age or religion."
+      },
+      {
+        "q": "Can I dismiss an employee who is sick during probation?",
+        "a": "Yes. The ban on dismissal during illness does not apply in probation. You must still not dismiss because of a disability or chronic illness, because that is discrimination. If the employee is sick on the last day of employment, report them sick to UWV on that day (self-insurers within 6 weeks). UWV then pays Sickness Benefits Act benefit and takes over reintegration, and the cost can come back to you through your premium."
+      },
+      {
+        "q": "Is there a notice period or severance pay during probation?",
+        "a": "There is no notice period: the contract can end with immediate effect. You do pay salary up to the last day, accrued holiday allowance and untaken holiday days. A transition payment is also owed when you end the contract, because it applies from the first day of employment. During probation it is small: one third of a month's salary per year of service, pro rata, so usually a few hundred euros."
+      },
+      {
+        "q": "Can I dismiss a pregnant employee during probation?",
+        "a": "The specific ban on dismissing pregnant employees does not apply during probation, but discrimination law does. Ending the contract because of the pregnancy is direct sex discrimination, and the employee can ask the court within two months to annul the dismissal or award fair compensation. If you have a genuine job-related reason, document it, ideally from before you learned of the pregnancy."
+      }
+    ],
+    "relatedSlugs": [
+      "dutch-employment-contracts-guide",
+      "dismissing-employee-netherlands-procedure",
+      "hiring-first-employee-netherlands"
+    ],
+    "topic": "Contracts & Policies"
   }
 ]

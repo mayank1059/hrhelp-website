@@ -1646,5 +1646,128 @@
       "starting-business-netherlands-us-company"
     ],
     "topic": "Company Setup"
+  },
+  {
+    "slug": "employer-of-record-netherlands",
+    "title": "Employer of Record Netherlands: When to Use One",
+    "subtitle": "Employer of record in the Netherlands for foreign companies: Dutch payroll law, Wtta rules for 2027, PE risk, visas, 30% ruling and moving to a BV.",
+    "vertical": "hr-settlers",
+    "verticalLabel": "HR Settlers Guide",
+    "parentService": "/solutions/hr-settlers/",
+    "parentServiceName": "HR Settlers",
+    "readTime": "12 min read",
+    "atAGlance": [
+      {
+        "icon": "gavel",
+        "label": "Legal model",
+        "value": "Payrolling (art. 7:692 BW)"
+      },
+      {
+        "icon": "balance",
+        "label": "Pay floor",
+        "value": "Your own staff's terms"
+      },
+      {
+        "icon": "event",
+        "label": "Wtta enforcement",
+        "value": "From 1 January 2028"
+      },
+      {
+        "icon": "badge",
+        "label": "HSM salary 30+ (2026)",
+        "value": "€5,942 gross/month"
+      }
+    ],
+    "content": "<h2>Employer of record in the Netherlands explained</h2><p>An employer of record (EOR) in the Netherlands employs your people on its Dutch payroll while they work for you. For a foreign company hiring its first few people here, it is often the fastest route to a compliant Dutch contract without an entity. But Dutch law has no separate \"EOR\" category. It treats the set-up as making workers available to another business (terbeschikkingstelling van arbeidskrachten), and that brings rules most EOR sales pages leave out.</p><p>In a typical EOR set-up you find the candidate and the EOR only employs them. Dutch law calls this payrolling. A payroll contract (payrollovereenkomst, article 7:692 of the Dutch Civil Code) is an agency-type contract where the formal employer did not match worker and client and may only place the worker elsewhere with the client's consent. Since the Balanced Labour Market Act (Wet arbeidsmarkt in balans, WAB) took effect on 1 January 2020, payroll employees have far stronger rights than temporary agency workers.</p><ul><li><strong>The EOR is the legal employer.</strong> It signs the contract and runs payroll. You direct the work as the hirer (inlener).</li><li><strong>The EOR is a regulated lender.</strong> It must be registered under the Waadi (the Placement of Personnel by Intermediaries Act) and, from 2027, admitted under a new licensing scheme.</li><li><strong>Not a payroll provider.</strong> A payroll company (payrollbedrijf) employs your staff. A payroll provider only processes your salaries; see the <a href=\"/guides/dutch-payroll-setup-guide/\">Dutch payroll setup guide</a>.</li></ul><h2>Equal treatment and Dutch employment rules</h2><h3>Your own terms set the benchmark</h3><p>A payroll employee is entitled to at least the same terms as employees in the same or an equivalent role who work directly for the client: pay, hours, overtime, holiday, leave, training, any 13th month, your chain rule for fixed-term contracts and sick pay. You must give the payroll company your terms before the worker starts. If you have no employees of your own, comparable terms in your sector apply. Since 1 January 2021 the payroll employer must also provide an adequate pension: your scheme or its own scheme that meets the legal standard.</p><ul><li><strong>Your package is the floor.</strong> A \"standard EOR package\" below what comparable staff get does not protect you. The employee is entitled to the difference.</li><li><strong>Agency CAOs do not apply.</strong> The collective labour agreements (CAOs) for temporary agency work do not cover payroll contracts, but a CAO that binds your sector shapes what comparable employees receive.</li><li><strong>Put the benchmark in writing.</strong> Ask the EOR which comparison it uses for each hire.</li></ul><p>The <a href=\"https://business.gov.nl/regulations/payrolling/\">business.gov.nl page on payrolling</a> sets out these rules in English.</p><h3>Rules that apply whatever the model</h3><ul><li><strong>Minimum wage:</strong> €14.99 gross per hour from age 21, from 1 July 2026.</li><li><strong>Holiday allowance (vakantiegeld):</strong> at least 8% of gross annual salary.</li><li><strong>Employer costs:</strong> employer social security premiums, pension and insurance come on top of salary. Under an EOR they normally appear on your invoice next to the EOR fee.</li><li><strong>Sick pay:</strong> at least 70% of salary for up to 104 weeks, plus reintegration duties. EOR contracts usually pass this cost to you. Check who pays the salary and the company doctor (bedrijfsarts), and what happens if you end the EOR agreement during sickness. See <a href=\"/guides/dutch-sick-leave-management/\">sick leave management</a>.</li><li><strong>Dismissal protection:</strong> payroll employees have the same protection as direct employees. Dismissal needs a valid ground and approval from the UWV (the employee insurance agency) or a court, or a settlement agreement. Ending your arrangement with the EOR is not a ground, and the agency clause (uitzendbeding) cannot be used in payroll contracts.</li><li><strong>Transition payment (transitievergoeding):</strong> one third of a month's salary per year of service, capped at €102,000 gross in 2026 (or one annual salary if higher).</li><li><strong>Works council:</strong> required from 50 people; see <a href=\"/guides/works-council-requirements-netherlands/\">works council requirements</a>.</li></ul><h2>Waadi and the 2027 Wtta admission rules</h2><p>Today, every business that supplies workers for payment, including a payroll company, must register that activity in the KVK Business Register (Netherlands Chamber of Commerce). As hirer, you must check that registration, for example with the Waadi check on the KVK website. An unregistered lender and the hirer that uses it can both be fined.</p><p>A stricter admission scheme now takes over: the Wet toelating terbeschikkingstelling arbeidskrachten (Wtta). It covers agencies, secondment firms and payroll companies, including foreign companies supplying workers for work in the Netherlands. The timeline:</p><ul><li><strong>1 November to 31 December 2026:</strong> lenders register with the new regulator, the Nederlandse Autoriteit Uitleenmarkt (NAU), for the transitional arrangement. A lender that misses this loses the transition period.</li><li><strong>1 January 2027:</strong> the Wtta takes effect.</li><li><strong>1 May to 30 June 2027:</strong> lenders apply for admission (toelating) or exemption.</li><li><strong>From 1 July 2027:</strong> the NAU's public register shows whether a lender is admitted, exempt or in transition.</li><li><strong>From 1 January 2028:</strong> you may only hire from admitted or exempt lenders, unless a legal exception applies. The Netherlands Labour Authority (Nederlandse Arbeidsinspectie) enforces, and both unadmitted lenders and their hirers can be fined. The KVK Waadi check stops.</li></ul><p>Admission requires, among other things, correct wages and tax returns, a certificate of conduct (VOG), an inspection and a €100,000 deposit unless an exemption applies (see the <a href=\"https://www.kvk.nl/en/rules-and-laws/wtta-stricter-rules-for-employment-agencies/\">KVK overview of the Wtta</a>). Your action points: get written confirmation that your EOR registered with the NAU before 31 December 2026; diarise July 2027 to check the NAU register, then check before each new hire; and add a clause letting you terminate if the EOR loses admission.</p><h2>Liability and permanent establishment risk</h2><ul><li><strong>Hirer's liability (inlenersaansprakelijkheid):</strong> if the EOR does not pay the wage taxes and VAT due on your workers, the Tax Administration (Belastingdienst) can claim them from you. Reduce the risk with a lender that has the SNA quality mark, a recent statement of payment behaviour (verklaring betalingsgedrag), good records, and if needed payment of the tax share into the lender's blocked account (g-rekening).</li><li><strong>Wage liability:</strong> under the Wet aanpak schijnconstructies (Was), a client can in certain situations be held liable for unpaid wages in its chain.</li></ul><h3>Permanent establishment (vaste inrichting)</h3><p>An EOR solves the employment question, not the corporate tax question. A foreign company owes Dutch corporate income tax on profits earned through a permanent establishment or a permanent representative (vaste vertegenwoordiger) in the Netherlands. Dutch law follows the definition in the tax treaty with your home country, and most treaties follow the OECD model.</p><ul><li><strong>Fixed place:</strong> in the Tax Administration's words, a business space with sufficient facilities from which goods or services are supplied to third parties. Purely preparatory or supporting activities do not count.</li><li><strong>Dependent agent:</strong> a person authorised to conclude contracts for your company who habitually does so, whoever their legal employer is.</li></ul><p>Country managers, sales leads with signing authority and anyone working from an office you rent are higher risk; engineers and non-sales support staff are lower risk. Get tax advice before hiring sales roles and record in writing what each person may sign.</p><h2>30% ruling and visas with an EOR</h2><h3>30% ruling (expatregeling)</h3><p>The employer that withholds Dutch wage tax files the 30% ruling request jointly with the employee. Under an EOR that is the EOR. Conditions include recruitment from abroad, having lived more than 150 km from the Dutch border for more than 16 of the 24 months before starting, and in 2026 a taxable salary above €48,013 excluding the tax-free allowance (€36,497 under age 30 with a qualifying master's degree). File within 4 months of the start date for the ruling to apply from day one. From 1 January 2027 the maximum drops to 27% and new rulings face a higher salary norm (€50,436 in 2024 prices, indexed); employees who used the ruling before 2024 keep 30%. See the <a href=\"/guides/30-percent-ruling-application-2026/\">30% ruling application guide</a>.</p><h3>Highly skilled migrant permits</h3><p>Only a sponsor recognised by the Immigration and Naturalisation Service (IND), an erkend referent, can apply for a highly skilled migrant (kennismigrant) permit. A recognised sponsor that supplies workers for payment must also be listed in the SNA register. The 2026 salary criteria, gross per month excluding holiday allowance, are €5,942 from age 30, €4,357 under 30 and €3,122 for the reduced criterion.</p><p>Two risks. The permit depends on the sponsor, so your own entity must be a recognised sponsor before anyone moves to it. And policy is moving: in November 2024 the government told parliament that recognised sponsors should in principle no longer place highly skilled migrants with other companies, with exceptions such as a client whose own sponsor application is pending. Check the current IND rules before relying on EOR sponsorship. More in <a href=\"/guides/work-permits-visa-sponsorship-netherlands/\">work permits and visa sponsorship</a>.</p><h2>EOR vs payroll company vs BV or branch</h2><p>Under Dutch law, \"EOR\" and \"payroll company\" usually describe the same model: payrolling. EOR platforms serve foreign clients across many countries; Dutch payroll companies mostly serve clients with a Dutch entity.</p><p>The option many foreign companies miss is direct employment without an entity. A foreign company without a permanent establishment can choose to withhold Dutch wage tax. It registers with the Tax Administration using the form \"Aanmelding Onderneming buitenland\", receives a wage tax number (loonheffingennummer) and runs payroll through a payroll provider. You are the direct employer, the Waadi and Wtta do not apply, and the 30% ruling is available. You cannot sponsor visas this way, because IND recognition requires registration in the Dutch Business Register, and the permanent establishment question stays the same. See <a href=\"/guides/employer-registration-netherlands/\">employer registration</a>.</p><table><thead><tr><th>Model</th><th>Speed and cost</th><th>Control and risk</th><th>Best for</th></tr></thead><tbody><tr><td>EOR or payroll company</td><td>Fastest; fee per employee on top of employer costs</td><td>Least control; you keep hirer's liability and PE risk</td><td>Testing the market, 1 to 5 hires</td></tr><tr><td>Foreign employer registration</td><td>Fast; payroll provider fee</td><td>Full control and all employer duties; no visas</td><td>Hires who need no visa</td></tr><tr><td>Branch office (nevenvestiging)</td><td>KVK registration; lower set-up cost</td><td>Parent is employer and fully liable; usually a PE</td><td>Established parent opening a sales office</td></tr><tr><td>Own BV</td><td>Notary, KVK, tax and payroll set-up; fixed running costs</td><td>Full control; limited liability; can become a sponsor</td><td>Growing team, visas, long-term plans</td></tr></tbody></table><p>EOR pricing is usually a monthly fee per employee or a percentage of payroll, on top of full employer costs, plus one-off onboarding, deposit or exit fees. For entity options, compare <a href=\"/guides/netherlands-bv-vs-branch-office/\">BV vs branch office</a> and the guides for <a href=\"/guides/starting-business-netherlands-us-company/\">US companies</a> and <a href=\"/guides/starting-business-netherlands-uk-company/\">UK companies</a>.</p><h2>Worked example: 3 EOR hires to a BV</h2><p>A US SaaS company wants three people working in Amsterdam within six weeks: a Benelux account executive, a customer success manager and a senior engineer moving from India. It has no Dutch entity and is still testing the market, so it starts with an EOR.</p><ol><li><strong>Month 1, vetting.</strong> It checks the EOR's KVK Waadi registration, SNA listing and IND sponsor status, gets written proof of NAU registration, and shares its US commission plan and benefits so the Dutch terms meet the equal treatment rule.</li><li><strong>Month 1, visa and tax.</strong> The engineer, aged 34, is offered €7,000 gross a month plus holiday allowance, above the €5,942 criterion. On €84,000 a year, the taxable part with a 30% allowance is €58,800, above the 2026 norm of €48,013. The EOR files the 30% request within 4 months.</li><li><strong>Month 2, permanent establishment.</strong> The account executive starts negotiating with customers. On tax advice, contracts are approved and signed in the US, and a written authority memo records this.</li><li><strong>Year 2, 12 people.</strong> Four are in sales. EOR fees scale with every head while a BV's costs are largely fixed, the sales team makes a permanent establishment hard to avoid, and the company wants its own benefits and policies. It decides to set up a BV.</li><li><strong>Months 15 to 18, the move.</strong> It incorporates the BV, registers as employer, picks a payroll provider and pension scheme, and applies for IND recognition (fee €5,080 in 2026, reduced for small businesses). All 12 move on the first day of month 18 on the same terms, without probation and with their service years intact.</li></ol><h2>Exiting an EOR: transfer checklist</h2><p>Start at least four months before your target date: IND recognition alone can take up to 3 months.</p><ol><li><strong>Exit terms.</strong> Check notice periods and conversion fees. Negotiate these before you sign.</li><li><strong>Entity and payroll.</strong> Set up the BV or branch, register as an employer, appoint a payroll provider, and arrange pension, sickness absence insurance and an occupational health service (arbodienst) from day one.</li><li><strong>New contracts.</strong> Offer at least the same terms. As a successive employer (opvolgend werkgeverschap) for the same work, you may not agree a new probation period unless the job needs clearly different skills. Earlier contracts count for the chain rule (ketenregeling) and the transition payment if the gap is no more than 6 months; the chain-rule break gets longer from 1 January 2028.</li><li><strong>Close the EOR contract.</strong> The employee agrees in writing to end the EOR contract the day before the new one starts. Settle accrued holiday allowance and untaken holiday.</li><li><strong>30% ruling.</strong> It does not move automatically to an employer outside the EOR's group. Your entity and the employee ask for it to continue: the new job must start within 3 months of the old one ending, and the request must be filed within 4 months of the start date. The remaining term continues.</li><li><strong>Highly skilled migrants.</strong> The EOR and your entity must each report the change to the IND within 4 weeks, and the salary criterion on the new start date applies. If no new sponsor registers the employee within 3 months of deregistration, the IND revokes the permit.</li><li><strong>Pension.</strong> Accrued pension stays with the EOR's provider unless transferred. Ask about a value transfer (waardeoverdracht).</li></ol><h2>How HRhelp helps</h2><p>HRhelp is a Dutch HR consultancy for international companies. We do not sell EOR services, so our advice does not depend on the model you choose. Our senior consultants:</p><ul><li><strong>Compare the models</strong> against your hiring plan and visa needs.</li><li><strong>Review your EOR contract:</strong> pay benchmark, sick pay, dismissal costs, Wtta status, IND sponsorship and exit terms.</li><li><strong>Set up HR in your BV or branch:</strong> contracts, policies, onboarding and payroll provider selection, through our <a href=\"/services/hr-consultancy-foreign-companies/\">HR consultancy for foreign companies</a>.</li><li><strong>Move people out of the EOR</strong> with a transfer plan, new contracts and the 30% ruling and IND steps.</li><li><strong>Keep you compliant</strong> with <a href=\"/services/hr-compliance-dutch-entity-foreign-company/\">HR compliance for your Dutch entity</a> and <a href=\"/services/labor-law-advice-international-employer/\">labour law advice for international employers</a>.</li></ul><p>Planning Dutch hires or leaving an EOR? <a href=\"/contact/\">Book a Free Consultation</a></p>",
+    "process": [
+      {
+        "step": "01",
+        "title": "Choose the model",
+        "desc": "Compare EOR, foreign employer registration, branch and BV against your hiring plan, visa needs, permanent establishment risk, budget and the date you need people working."
+      },
+      {
+        "step": "02",
+        "title": "Vet the EOR",
+        "desc": "Check Waadi registration, NAU transitional registration, SNA listing and IND sponsor status. Agree the pay benchmark, sick pay, dismissal costs and exit fees in writing."
+      },
+      {
+        "step": "03",
+        "title": "Hire and onboard",
+        "desc": "Issue Dutch contracts that match your own terms, start pension from day one, file the 30% ruling request within 4 months and check HSM salary criteria."
+      },
+      {
+        "step": "04",
+        "title": "Plan the exit",
+        "desc": "Set a trigger for moving to your own entity. Prepare sponsor recognition, payroll and pension early, then transfer contracts with service years intact and no new probation."
+      }
+    ],
+    "pitfalls": [
+      {
+        "severity": "high",
+        "title": "Using an unadmitted lender after 2027",
+        "desc": "From 1 January 2028 you may only hire from lenders with Wtta admission or an exemption. Hirers that use unadmitted lenders can be fined by the Netherlands Labour Authority."
+      },
+      {
+        "severity": "high",
+        "title": "Assuming the EOR removes PE risk",
+        "desc": "A person who habitually concludes contracts for your company in the Netherlands can create a permanent establishment, whoever employs them. Dutch corporate income tax then applies to the attributable profits."
+      },
+      {
+        "severity": "high",
+        "title": "Expecting a quick exit via the EOR",
+        "desc": "Ending the EOR agreement is not a ground for dismissal. Payroll employees keep full Dutch dismissal protection, and the EOR will usually pass settlement costs on to you."
+      },
+      {
+        "severity": "medium",
+        "title": "Paying below your own staff",
+        "desc": "Payroll employees are entitled to at least the terms of your comparable employees. A cheaper standard EOR package exposes you to claims for the difference."
+      },
+      {
+        "severity": "medium",
+        "title": "Losing the 30% ruling at the switch",
+        "desc": "The ruling only continues with your entity if the new job starts within 3 months of the old one ending and the joint request is filed within 4 months of the start date."
+      },
+      {
+        "severity": "medium",
+        "title": "HSM permit gap on transfer",
+        "desc": "Your entity must be a recognised sponsor before the transfer date. If no new sponsor registers the employee within 3 months of deregistration, the IND revokes the permit."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Is an employer of record legal in the Netherlands?",
+        "a": "Yes. Dutch law treats most EOR arrangements as payrolling: the EOR is the legal employer and makes the worker available to you. That is legal if the EOR is registered under the Waadi in the KVK Business Register and, from 2027, admitted under the Wtta scheme. From 1 January 2028 you may only hire from admitted or exempt lenders. The employee must get at least the same terms as your own comparable staff, plus an adequate pension."
+      },
+      {
+        "q": "How much does an employer of record cost in the Netherlands?",
+        "a": "Expect two layers. First the EOR's own fee, usually a fixed monthly amount per employee or a percentage of payroll, plus any one-off onboarding or exit fees. On top come the full Dutch employer costs: gross salary, at least 8% holiday allowance, employer social security premiums, pension and any benefits your own comparable staff receive. Ask for a full cost sheet per employee, including sick pay and dismissal costs, before you sign."
+      },
+      {
+        "q": "Can an employer of record sponsor a highly skilled migrant visa?",
+        "a": "Only if the EOR is recognised by the IND as a sponsor (erkend referent). An organisation that supplies workers for payment must also be listed in the SNA register. The employee must meet the salary criterion: in 2026 that is €5,942 gross a month from age 30 and €4,357 under 30, excluding holiday allowance. The government has announced plans to restrict sponsors from placing highly skilled migrants with other companies, so check the current IND rules first."
+      },
+      {
+        "q": "Does an EOR protect us from permanent establishment risk?",
+        "a": "No. An EOR takes over the employer role, not your corporate tax position. If someone working for you in the Netherlands habitually concludes contracts on your behalf, or works from a fixed place of business at your disposal, your company may have a permanent establishment and owe Dutch corporate income tax, whoever employs that person. The exact test depends on the tax treaty with your home country. Get tax advice before hiring sales or management roles."
+      },
+      {
+        "q": "Can we hire in the Netherlands without an entity or an EOR?",
+        "a": "Yes. A foreign company without a permanent establishment can choose to become a Dutch withholding agent. It registers with the Tax Administration using the form Aanmelding Onderneming buitenland, receives a wage tax number and runs Dutch payroll through a payroll provider. You are then the direct employer and can use the 30% ruling. You cannot sponsor visas this way, because IND recognition requires registration in the Dutch Business Register."
+      },
+      {
+        "q": "Can the EOR end the contract when we stop using its services?",
+        "a": "Not just like that. Payroll employees have the same dismissal protection as direct employees. Ending the agreement between you and the EOR is not a valid ground for dismissal, and the agency clause that lets temporary agency contracts end automatically cannot be used for payroll. Dismissal needs UWV approval, a court decision or a settlement agreement, and the EOR will normally pass the cost on to you. Plan a transfer instead."
+      },
+      {
+        "q": "When should we move from an EOR to our own BV?",
+        "a": "Review the model once the team grows beyond a handful of people, and act sooner if sales staff make a permanent establishment likely, you need your own benefits and HR policies, or you see supplier risk under the Wtta or the planned limits on lending highly skilled migrants. Start at least four months before the target date, because IND sponsor recognition can take up to 3 months and the 30% ruling request must follow within 4 months of the move."
+      }
+    ],
+    "relatedSlugs": [
+      "netherlands-bv-vs-branch-office",
+      "work-permits-visa-sponsorship-netherlands",
+      "dutch-payroll-setup-guide"
+    ],
+    "topic": "Company Setup"
   }
 ]

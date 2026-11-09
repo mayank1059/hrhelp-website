@@ -72,9 +72,10 @@ const contactSchema = {
 </PageHero>
 
 <!-- ===== ENQUIRY FORM / CALENDLY (two tabs) + SIDEBAR =====
-     id="book" stays on this section: the site-wide "Book a Free Consultation"
-     CTAs link to /contact#book and land on the form tab (default).
-     /contact?book=calendar and /contact#calendar open the "Book a free 30-min call" tab.
+     id="book" stays on this section: the site-wide "Book ..." CTAs link to
+     /contact#book, which (like /contact?book=calendar and /contact#calendar) picks
+     "employer" and opens the "Book a free 30-min call" tab. Plain /contact (the
+     Contact nav link) shows the who-choice and the short message form.
      Calendly (third party, sets cookies) only loads once that tab is opened. -->
 <section class="ct2-main" id="book">
   <div class="container">
@@ -432,10 +433,10 @@ const contactSchema = {
     if (r) showWho(r.value);
   });
 
-  // Deep links: /contact?book=calendar or /contact#calendar (the chatbot, after
-  // its employer questions) choose "employer" and open the calendar tab.
+  // Deep links: /contact#book (every "Book ..." button), /contact?book=calendar or
+  // /contact#calendar (the chatbot) choose "employer" and open the calendar tab.
   function wantsCalendar() {
-    return location.hash === '#calendar' || new URLSearchParams(location.search).get('book') === 'calendar';
+    return location.hash === '#calendar' || location.hash === '#book' || new URLSearchParams(location.search).get('book') === 'calendar';
   }
   function openFromUrl() {
     if (!wantsCalendar()) return;
@@ -446,7 +447,7 @@ const contactSchema = {
   }
   openFromUrl();
   window.addEventListener('hashchange', function() {
-    if (location.hash === '#calendar') openFromUrl();
+    if (location.hash === '#calendar' || location.hash === '#book') openFromUrl();
   });
 })();
 </script>

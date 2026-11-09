@@ -13,7 +13,45 @@ const pool = [
   'interim-hr-manager-hero', 'fractional-hr-manager-hero',
 ];
 
-export const guidePhotos = (index: number) => {
+// Guides with their own topic photos (public/images/guide-photos/<slug>-<slot>.jpg),
+// keyed by slug, with the alt text for each slot
+const ownPhotos: Record<string, Record<'article' | 'insight' | 'inline', string>> = {
+  'wet-poortwachter-guide': {
+    article: 'HR adviser going through a week-by-week return-to-work plan with an employee',
+    insight: 'Occupational physician taking notes while an employee talks about her recovery',
+    inline: 'Colleague welcoming an employee back to his desk with a cup of coffee',
+  },
+  'transition-payment-rules-netherlands': {
+    article: 'HR manager and employee discussing a settlement agreement at a meeting table',
+    insight: 'Payroll specialist calculating a severance payment from a salary overview',
+    inline: 'Employee signing a settlement agreement next to an HR adviser',
+  },
+  'dutch-maternity-leave': {
+    article: 'Pregnant employee going through her handover plan with a colleague',
+    insight: 'Pregnant employee working at her desk by the window',
+    inline: 'Employee back from maternity leave putting a photo of her baby on her desk as her team lead brings coffee',
+  },
+  'probation-period-dutch-law': {
+    article: 'Team lead helping a new hire set up his laptop on his first day',
+    insight: 'Colleague showing a new hire around the office in her first week',
+    inline: 'Manager giving a new employee feedback in a probation review',
+  },
+  'employer-of-record-netherlands': {
+    article: 'Dutch team welcoming a new international remote hire on a video call',
+    insight: 'Remote employee on a video call with his Dutch team from his home office',
+    inline: 'International hire signing her employment contract with an HR adviser',
+  },
+};
+
+type GuidePhoto = { src: string; width: number; height: number; alt?: string };
+
+export const guidePhotos = (index: number, slug = ''): Record<'article' | 'insight' | 'inline', GuidePhoto> => {
+  const own = ownPhotos[slug];
+  if (own) {
+    const p = (k: 'article' | 'insight' | 'inline', width: number, height: number) =>
+      ({ src: `/images/guide-photos/${slug}-${k}.jpg`, width, height, alt: own[k] });
+    return { article: p('article', 1600, 800), insight: p('insight', 800, 600), inline: p('inline', 800, 600) };
+  }
   const at = (k: number) => pool[(index + k) % pool.length];
   return {
     article: photo(at(4)),

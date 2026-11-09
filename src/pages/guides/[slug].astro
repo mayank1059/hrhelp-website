@@ -62,7 +62,7 @@ const crossServices = crossSolution ? servicesForSolution(crossSolution.slug).sl
 const expertiseSlugs = expertiseForSlug(slug);
 
 // Documentary photos instead of the generated per-guide renders (see src/lib/guidePhotos.ts)
-const photos = guidePhotos(allPages.findIndex(p => p.slug === slug));
+const photos = guidePhotos(allPages.findIndex(p => p.slug === slug), slug);
 // h2 ids for the "In This Guide" navigation
 const { html: articleHtml, toc } = addHeadingIds(page.content);
 const ctaImage = { src: '/images/home/cornelis-candid.jpg', width: 962, height: 825 };
@@ -175,7 +175,7 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
         )}
 
         <ArticleToc items={toc} variant="details" label="In This Guide" />
-        <article class="guide-article ah-progress-target" data-article-img={photos.article.src} data-article-w={photos.article.width} data-article-h={photos.article.height} set:html={articleHtml} />
+        <article class="guide-article ah-progress-target" data-article-img={photos.article.src} data-article-w={photos.article.width} data-article-h={photos.article.height} data-article-alt={photos.article.alt} set:html={articleHtml} />
         <ArticleEnd title={page.title} />
       </div>
 
@@ -238,7 +238,7 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
   <div class="container">
     <div class="guide-insights-top">
       <div class="guide-insights-img-left">
-        <img src={photos.insight.src} alt={`${page.title}, key insight`} loading="lazy" decoding="async" width={photos.insight.width} height={photos.insight.height} />
+        <img src={photos.insight.src} alt={photos.insight.alt ?? `${page.title}, key insight`} loading="lazy" decoding="async" width={photos.insight.width} height={photos.insight.height} />
       </div>
       <div class="guide-insights-content">
         <span class="eyebrow">Why It Matters</span>
@@ -273,7 +273,7 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
         </blockquote>
       </div>
       <div class="guide-insights-img-right">
-        <img src={photos.inline.src} alt={`${page.title}, results`} loading="lazy" decoding="async" width={photos.inline.width} height={photos.inline.height} />
+        <img src={photos.inline.src} alt={photos.inline.alt ?? `${page.title}, results`} loading="lazy" decoding="async" width={photos.inline.width} height={photos.inline.height} />
       </div>
     </div>
   </div>
@@ -435,7 +435,7 @@ const faqSchema = page.faqs && page.faqs.length > 0 ? {
       imgWrapper.className = 'guide-article-img';
       const img = document.createElement('img');
       img.src = imgSrc;
-      img.alt = '';
+      img.alt = article.getAttribute('data-article-alt') || '';
       img.loading = 'lazy';
       img.decoding = 'async';
       img.width = Number(article.getAttribute('data-article-w')) || 1200;

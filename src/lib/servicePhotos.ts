@@ -1,6 +1,6 @@
 // Documentary photos for the service pages (public/images/services-photos/).
-// The four pages that rank get their own hero and story photos; the rest reuse
-// the office set with a different photo per slot.
+// The pages that rank get their own hero and story photos (HR outsourcing also a
+// process photo); the rest reuse the office set with a different photo per slot.
 const P = '/images/services-photos/';
 const dims: Record<string, [number, number]> = {
   'office-open-plan': [1200, 675],
@@ -26,6 +26,7 @@ export const photoSets: Record<string, { hero: string; story: string; process: s
   'interim-hr-support': { hero: 'office-collaboration', story: 'office-workspace', process: 'office-open-plan' },
   'hr-compliance-dutch-entity-foreign-company': { hero: 'office-documents', story: 'office-entrance-amsterdam', process: 'office-workspace' },
   'labor-law-advice-international-employer': { hero: 'office-meeting', story: 'office-video-call', process: 'office-documents' },
+  'hr-outsourcing-netherlands': { hero: 'hr-outsourcing-netherlands-hero', story: 'hr-outsourcing-netherlands-story', process: 'hr-outsourcing-netherlands-process' },
 };
 const fallbackSet = { hero: 'office-consultation', story: 'office-collaboration', process: 'office-documents' };
 export const photosFor = (s: string) => photoSets[s] || fallbackSet;

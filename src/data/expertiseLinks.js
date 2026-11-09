@@ -35,6 +35,7 @@ const pageTopics = {
   'labor-law-advice-international-employer': ['restructuring', 'sickness-management'],
   'hr-compliance-dutch-entity-foreign-company': ['sickness-management'],
   'hr-consultancy-foreign-companies': ['leadership-training'],
+  'hr-outsourcing-netherlands': ['sickness-management'],
 };
 
 // Guides and blog posts: keywords in the slug

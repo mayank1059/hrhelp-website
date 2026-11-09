@@ -1,6 +1,6 @@
 import { servicesData } from './services.js';
 
-// Single source of truth for how the 11 service pages are grouped and labelled.
+// Single source of truth for how the 12 service pages are grouped and labelled.
 // Used by the services index, the header mega menus and the homepage services band.
 // servicesData is already staging-gated, so unapproved services never appear on production.
 
@@ -14,6 +14,7 @@ const shortNames = {
   'fractional-hr-manager': 'Fractional HR Manager',
   'interim-hr-advisor': 'Interim HR Advisor',
   'hr-consultancy-foreign-companies': 'HR Consultancy',
+  'hr-outsourcing-netherlands': 'HR Outsourcing',
   'hr-compliance-dutch-entity-foreign-company': 'Dutch Entity Compliance',
   'labor-law-advice-international-employer': 'Dutch Labour Law Advice',
   'hr-recruitment-netherlands': 'HR Recruitment',
@@ -38,7 +39,7 @@ export const serviceGroupDefs = [
     label: 'For Foreign Companies',
     desc: 'Dutch compliance, labour law and hiring for employers based abroad.',
     icon: 'globe',
-    slugs: ['hr-consultancy-foreign-companies', 'hr-compliance-dutch-entity-foreign-company', 'labor-law-advice-international-employer', 'hr-recruitment-netherlands'],
+    slugs: ['hr-consultancy-foreign-companies', 'hr-outsourcing-netherlands', 'hr-compliance-dutch-entity-foreign-company', 'labor-law-advice-international-employer', 'hr-recruitment-netherlands'],
   },
 ];
 

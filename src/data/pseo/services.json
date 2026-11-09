@@ -2033,5 +2033,240 @@
         "desc": "Our role next to lawyers, response speed and how we charge."
       }
     }
+  },
+  {
+    "slug": "hr-outsourcing-netherlands",
+    "name": "HR Outsourcing in the Netherlands",
+    "title": "HR Outsourcing in the Netherlands, in English",
+    "metaDescription": "Outsourced HR for foreign companies in the Netherlands: a senior, English-speaking consultant runs your HR for a fixed monthly fee. Payroll stays put.",
+    "parentService": "/solutions/hr-teams/",
+    "parentServiceName": "HR Teams",
+    "tagline": "Your Dutch HR, outsourced and run in English",
+    "hero": "With HR outsourcing in the Netherlands, one senior Dutch HR consultant runs the people side of your Dutch entity for you, in English: contracts, sick leave, policies, exits and day-to-day questions. Your staff stay on your own contracts and payroll, and you pay a fixed monthly fee for an agreed scope.",
+    "heroCards": {
+      "tl": {
+        "icon": "euro",
+        "label": "Pricing",
+        "value": "Fixed monthly fee"
+      },
+      "br": {
+        "icon": "domain",
+        "label": "Payroll",
+        "value": "Stays with your provider"
+      }
+    },
+    "premiseHeading": "Payroll runs every month. The HR work around it often has no owner.",
+    "premiseBody": [
+      "When a foreign company opens a Dutch entity, payroll is usually the first thing set up, through a local provider or an accountant. That gets people paid. It does not write a Dutch employment contract, take a sick employee through Wet Poortwachter, tell a manager how to end a fixed-term contract or work out which collective agreement applies. That work falls to a country manager, a finance lead or an HR team abroad.",
+      "Outsourced HR gives that work an owner. One named senior consultant from HRhelp takes on the day-to-day HR of your Dutch entity, works with you and your head office in English, and deals directly with your payroll provider, your occupational health service and, where needed, an employment lawyer. You pay a fixed monthly fee for a written scope instead of hiring an HR manager."
+    ],
+    "included": [
+      {
+        "icon": "description",
+        "title": "Contracts and HR documents",
+        "desc": "Dutch employment contracts, extensions, addenda and exit letters in English and Dutch, checked against any collective agreement that applies to you."
+      },
+      {
+        "icon": "fact_check",
+        "title": "Sick leave and reintegration",
+        "desc": "Each absence case run from the first sick report to return to work, with every Wet Poortwachter deadline tracked and the UWV file kept complete."
+      },
+      {
+        "icon": "menu_book",
+        "title": "Handbook and policies",
+        "desc": "A Dutch staff handbook and core policies on leave, expenses, hybrid working and whistleblowing, kept current as the rules change."
+      },
+      {
+        "icon": "euro",
+        "title": "Payroll input",
+        "desc": "Starters, changes and leavers prepared and checked with your existing payroll provider before each run."
+      },
+      {
+        "icon": "gavel",
+        "title": "Performance, conflict and exits",
+        "desc": "Underperformance, conflict and dismissals handled with your managers: the file, the right termination route and the settlement agreement."
+      },
+      {
+        "icon": "groups",
+        "title": "Managers and head office",
+        "desc": "Line managers get advice before difficult conversations, and head office gets regular updates it can act on."
+      }
+    ],
+    "benefits": [
+      {
+        "icon": "person",
+        "title": "An HR function without an HR hire",
+        "desc": "You get senior Dutch HR capability from the first month, with no recruitment cycle and no permanent salary attached."
+      },
+      {
+        "icon": "euro",
+        "title": "One fixed monthly fee",
+        "desc": "A fixed fee against a written scope, with no hourly billing. Managers ask questions early, which is when they are cheapest to answer."
+      },
+      {
+        "icon": "verified",
+        "title": "Senior, and in English",
+        "desc": "Every HRhelp consultant has 15+ years in Dutch employment practice and is a native Dutch speaker working fluently in English."
+      },
+      {
+        "icon": "shield",
+        "title": "Your staff stay your staff",
+        "desc": "HRhelp is not an employer of record. Your people stay on your Dutch entity's contracts and payroll, and your current provider keeps running the payroll."
+      }
+    ],
+    "examples": [
+      {
+        "tag": "New Dutch entity",
+        "situation": "A foreign company has opened a Dutch B.V. and hired its first few people on contracts translated from head office templates. A local provider runs payroll, but nobody has checked the contracts or set up a process for sick reports.",
+        "result": "The consultant checks the contracts and the collective agreement position, sets up sick reporting with an occupational health service, writes a short staff handbook and becomes the HR contact for staff and managers."
+      },
+      {
+        "tag": "Scale-up without HR",
+        "situation": "A scale-up has grown to around 40 people in the Netherlands. The founders handle HR between other work, and a long-term sickness case and a difficult exit land in the same quarter.",
+        "result": "The consultant takes over both cases, brings contracts and policies up to Dutch standard and gives the founders one person to take every people question to."
+      },
+      {
+        "tag": "One HR person, stretched",
+        "situation": "A single HR manager covers the Dutch office alongside two other countries. Dutch sick leave rules, collective agreements and dismissal routes take more time than they can give.",
+        "result": "The consultant takes on the Dutch casework and the statutory deadlines, while the in-house HR manager keeps the wider people agenda."
+      }
+    ],
+    "process": [
+      {
+        "step": "01",
+        "title": "Free consultation",
+        "desc": "A 30 minute call about your Dutch entity, your headcount, how payroll runs today and what is open right now.",
+        "timeframe": "Day 1"
+      },
+      {
+        "step": "02",
+        "title": "Named consultant and scope",
+        "desc": "We assign a senior consultant and put the scope and the fixed monthly fee in writing before work starts.",
+        "timeframe": "Week 1"
+      },
+      {
+        "step": "03",
+        "title": "HR scan and first fixes",
+        "desc": "Contracts, policies, sick leave files and payroll input are checked, and the items that carry risk are dealt with first.",
+        "timeframe": "Week 2 to 3"
+      },
+      {
+        "step": "04",
+        "title": "Ongoing HR",
+        "desc": "Your consultant runs the day-to-day HR, handles live cases and joins a quarterly review with your leadership.",
+        "timeframe": "Ongoing"
+      }
+    ],
+    "ideal": [
+      "You are a foreign company with a Dutch entity and no HR person in the Netherlands",
+      "You are a scale-up that needs HR handled but is not ready for a full-time HR hire",
+      "Your one HR person is overloaded or also covers other countries",
+      "You are moving staff from an employer of record onto your own Dutch entity"
+    ],
+    "faqs": [
+      {
+        "q": "What does HR outsourcing in the Netherlands include?",
+        "a": "The day-to-day HR of your Dutch entity: employment contracts and changes, sick leave and reintegration, the staff handbook and policies, payroll input, performance and exit cases, and advice to managers. The exact scope is agreed in writing at the start, so you know what is covered."
+      },
+      {
+        "q": "How is outsourced HR different from a payroll provider or an employer of record?",
+        "a": "A payroll provider calculates and pays salaries and usually files the payroll tax returns. An employer of record employs your staff on its own contracts, which mainly helps before you have a Dutch entity. Outsourced HR does neither: your people stay employed by your own entity, and we handle the HR work that payroll and an employer of record leave open, such as contracts, sick leave, policies and exits."
+      },
+      {
+        "q": "Can we keep our current payroll provider?",
+        "a": "Yes. Your existing provider keeps running the payroll. We sit between your business and the provider, preparing and checking the monthly changes, and we deal with the provider directly when something needs correcting."
+      },
+      {
+        "q": "Is everything done in English?",
+        "a": "Yes. Every HRhelp consultant is a native Dutch speaker who works fluently in English, so you, your managers and your head office deal with us in English. Contracts, the handbook and policies are provided in English and Dutch."
+      },
+      {
+        "q": "What does outsourced HR cost?",
+        "a": "A fixed monthly fee based on the agreed scope and the size of your Dutch team, quoted in writing before you start. There is no hourly billing, so the fee does not move because a case runs longer than expected. Genuinely exceptional matters, such as a collective redundancy, are quoted separately and up front."
+      },
+      {
+        "q": "Is there a minimum contract length?",
+        "a": "There is no long-term lock-in. Ongoing HR runs as a monthly plan that can grow with your team, and the scope is set out in writing before we start."
+      },
+      {
+        "q": "Do we always work with the same consultant?",
+        "a": "Yes. One named senior consultant owns your account, and a second HR professional is briefed on it, so holidays and absences do not leave you without cover."
+      },
+      {
+        "q": "Which HR obligations does a Dutch entity have from its first employee?",
+        "a": "You register as an employer with the Dutch Tax Administration and the Chamber of Commerce (KVK) when you hire your first employee, and you need a contract with an occupational health and safety service or a company doctor. If an employee falls ill, you keep paying at least 70% of their salary for up to two years and follow the Wet Poortwachter reintegration steps. Once you employ 50 people or more, you must set up a works council."
+      }
+    ],
+    "relatedSlugs": [
+      "hr-consultancy-foreign-companies",
+      "fractional-hr-solutions",
+      "interim-hr-solutions"
+    ],
+    "furtherReading": [
+      {
+        "href": "/services/hr-compliance-dutch-entity-foreign-company/",
+        "title": "Dutch Entity HR Compliance",
+        "desc": "A one-off check of your contracts, policies and registrations, with a written baseline."
+      },
+      {
+        "href": "/guides/employer-of-record-netherlands/",
+        "title": "Employer of Record in the Netherlands",
+        "desc": "When an employer of record makes sense, and when to move staff onto your own entity."
+      },
+      {
+        "href": "/guides/dutch-payroll-setup-guide/",
+        "title": "Dutch Payroll Setup Guide",
+        "desc": "How compliant payroll is set up in the Netherlands, from registration to the first run."
+      },
+      {
+        "href": "/guides/employer-registration-netherlands/",
+        "title": "Employer Registration in the Netherlands",
+        "desc": "Registering as an employer with the Dutch authorities before your first hire."
+      },
+      {
+        "href": "/guides/dutch-sick-leave-management/",
+        "title": "Managing Sick Leave in the Netherlands",
+        "desc": "The employer's two-year sick leave obligation, step by step."
+      },
+      {
+        "href": "/guides/works-council-requirements-netherlands/",
+        "title": "Works Council Requirements",
+        "desc": "When a works council becomes mandatory and how to set one up."
+      }
+    ],
+    "sections": {
+      "included": {
+        "eyebrow": "What you get",
+        "heading": "What outsourced HR covers in the Netherlands",
+        "desc": "The day-to-day HR of your Dutch entity, in one written scope."
+      },
+      "benefits": {
+        "eyebrow": "Why clients choose it",
+        "heading": "Why companies outsource HR in the Netherlands",
+        "desc": "What changes when HR has a senior owner, without adding headcount."
+      },
+      "examples": {
+        "eyebrow": "Typical situations",
+        "heading": "When outsourcing HR makes sense",
+        "desc": "Three common situations for international employers in the Netherlands.",
+        "resultLabel": "How outsourced HR helps",
+        "note": "These are typical situations described in general terms, not individual client cases."
+      },
+      "process": {
+        "eyebrow": "How it works",
+        "heading": "How outsourcing your HR works",
+        "desc": "A short start, a written scope and one named consultant."
+      },
+      "ideal": {
+        "eyebrow": "Who it suits",
+        "heading": "Outsourced HR fits best when",
+        "desc": "Typical for international employers with roughly 5 to 50 people in the Netherlands."
+      },
+      "faq": {
+        "eyebrow": "Good to know",
+        "heading": "Questions about outsourcing HR in the Netherlands",
+        "desc": "Scope, cost, language and how it works with payroll and an employer of record."
+      }
+    }
   }
 ]

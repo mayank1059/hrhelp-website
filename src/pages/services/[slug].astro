@@ -8,6 +8,7 @@ import { expertiseForPage } from '../../data/expertiseLinks.js';
 
 // Service pages, staging-gated (all on staging; only approved on production).
 import { servicesData } from '../../data/pseo/services.js';
+import { settlersData, teamsData, sosData } from '../../data/pseo/guides.js';
 
 const allPages: any[] = [...(servicesData as any[])];
 const pageMap = new Map<string, any>(allPages.map((p: any) => [p.slug, p]));
@@ -62,6 +63,9 @@ const secExamples = sec('examples', {
   heading: 'What this looks like in real companies',
   desc: 'Three anonymised situations we handled, and what the client walked away with.',
 });
+// Optional: entries whose examples are typical situations (not client cases) relabel them
+const exampleResultLabel: string = (sections.examples && sections.examples.resultLabel) || 'What we delivered';
+const exampleNote: string = (sections.examples && sections.examples.note) || 'Client situations are anonymised. Names and identifying details have been changed.';
 const secProcess = sec('process', {
   eyebrow: 'How It Works',
   heading: 'From first call to work in progress',
@@ -90,6 +94,13 @@ const relatedPages: any[] = (entry.relatedSlugs || [])
 
 // Core expertise pages on the same topics (data/expertiseLinks.js)
 const expertiseSlugs = expertiseForPage(slug as string);
+
+// Optional further reading links; guide and service links only while that page is in this build
+const guideSlugs = new Set([...settlersData, ...teamsData, ...sosData].map((g: any) => g.slug));
+const readingLinks: any[] = (Array.isArray(entry.furtherReading) ? entry.furtherReading : []).filter((l: any) => {
+  const m = /^\/(guides|services)\/([^/]+)\/$/.exec(l.href || '');
+  return !m || (m[1] === 'guides' ? guideSlugs.has(m[2]) : pageMap.has(m[2]));
+});
 
 // Documentary photos per slug (see src/lib/servicePhotos.ts)
 const heroImage = photo(photosFor(slug as string).hero);
@@ -306,13 +317,13 @@ const schemas = [serviceSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : 
             <p class="svc-example-situation">{ex.situation}</p>
           </div>
           <div class="svc-example-result">
-            <span class="svc-example-label svc-label-result">What we delivered</span>
+            <span class="svc-example-label svc-label-result">{exampleResultLabel}</span>
             <p>{ex.result}</p>
           </div>
         </article>
       ))}
     </div>
-    <p class="svc-example-note">Client situations are anonymised. Names and identifying details have been changed.</p>
+    <p class="svc-example-note">{exampleNote}</p>
   </div>
 </section>
 )}
@@ -475,6 +486,21 @@ const schemas = [serviceSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : 
         );
       })}
     </div>
+    {readingLinks.length > 0 && (
+      <div class="svc-reading">
+        <p class="svc-reading-label">Further reading</p>
+        <ul class="svc-reading-list">
+          {readingLinks.map((l: any) => (
+            <li>
+              <a href={l.href} class="svc-reading-card">
+                <span class="svc-reading-title">{l.title}</span>
+                <span class="svc-reading-line">{l.desc}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
     {expertiseSlugs.length > 0 && (
       <div class="svc-expertise"><CoreExpertiseLinks slugs={expertiseSlugs} /></div>
     )}
@@ -1101,6 +1127,42 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.015em; }
   text-decoration-color: var(--orange-ink);
   text-underline-offset: 3px;
 }
+
+/* Further reading: same hairline cards as the Core expertise block below it */
+.svc-reading { margin-top: 2.5rem; }
+.svc-reading-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: #44546d;
+  margin: 0 0 0.75rem;
+}
+.svc-reading-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+  gap: 0.85rem;
+}
+.svc-reading-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  height: 100%;
+  padding: 1rem 1.15rem 1.05rem;
+  background: var(--white);
+  border: 1px solid rgba(15, 37, 72, 0.1);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+.svc-reading-card:hover { border-color: rgba(15, 37, 72, 0.28); }
+.svc-reading-title { font-size: 0.98rem; font-weight: 700; line-height: 1.3; color: var(--navy); }
+.svc-reading-card:hover .svc-reading-title { text-decoration: underline; text-decoration-color: var(--orange-ink); text-underline-offset: 3px; }
+.svc-reading-line { font-size: 0.88rem; line-height: 1.5; color: var(--gray-600); }
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1100px) {

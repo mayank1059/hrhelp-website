@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/_astro/*",
+    "/assets/*",
+    "/images/*",
+    "/fonts/*",
+    "/downloads/*",
+    "/favicon.ico",
+    "/favicon.png",
+    "/favicon.svg",
+    "/apple-touch-icon.png",
+    "/build-info.json"
+  ]
+}

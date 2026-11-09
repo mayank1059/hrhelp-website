@@ -1,0 +1,29 @@
+name: Publish scheduled guides
+
+# Guides in src/data/pseo/scheduled-guides.json go live on their publish date. The build
+# includes a guide once its date has arrived (Amsterdam time), so on each publish day this
+# starts a forced production deploy. Runs at 07:05 UTC (08:05 or 09:05 in Amsterdam).
+on:
+  schedule:
+    - cron: '5 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy when a guide is due today
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          today=$(TZ=Europe/Amsterdam date +%F)
+          due=$(jq -r --arg d "$today" '.[] | select(.publish == $d) | .slug' src/data/pseo/scheduled-guides.json)
+          if [ -z "$due" ]; then echo "No guide scheduled for $today"; exit 0; fi
+          echo "Publishing today ($today): $due"
+          gh workflow run deploy.yml --ref main -f force=true
